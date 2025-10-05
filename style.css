@@ -308,7 +308,7 @@ nav a:hover::after {
     top: 15px;
     right: 20px;
     z-index: 1001;
-    background: rgba(26, 35, 50, 0.95);
+    background: transparent;
     border-radius: 5px;
 }
 
