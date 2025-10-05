@@ -248,20 +248,16 @@ nav {
     position: fixed;
     top: 0;
     width: 100%;
-    background: transparent;
-    backdrop-filter: none;
+    background: rgba(26, 35, 50, 0.95);
+    backdrop-filter: blur(10px);
     z-index: 1000;
     padding: 20px 0;
-    opacity: 0;
-    visibility: hidden;
     transform: translateY(-100%);
-    transition: all 0.5s ease;
-    border-bottom: none;
+    transition: transform 0.5s ease;
+    border-bottom: 2px solid var(--gold);
 }
 
 nav.visible {
-    opacity: 1;
-    visibility: visible;
     transform: translateY(0);
 }
 
@@ -2182,15 +2178,28 @@ footer p {
         display: flex;
     }
 
+    /* Cacher le nav sur mobile (sera affiché via le menu hamburger) */
     nav {
         padding: 10px 0;
         border-bottom: none;
         background: transparent;
+        opacity: 0;
+        visibility: hidden;
+        pointer-events: none;
+    }
+
+    nav.visible {
+        opacity: 0;
+        visibility: hidden;
     }
 
     /* Cacher l'indicateur de scroll sur mobile */
     .scroll-indicator {
-        display: none;
+        display: none !important;
+    }
+
+    #hero .scroll-indicator {
+        display: none !important;
     }
 
     nav ul {
