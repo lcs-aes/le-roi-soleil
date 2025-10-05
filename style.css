@@ -248,13 +248,13 @@ nav {
     position: fixed;
     top: 0;
     width: 100%;
-    background: rgba(26, 35, 50, 0.95);
-    backdrop-filter: blur(10px);
+    background: transparent;
+    backdrop-filter: none;
     z-index: 1000;
     padding: 20px 0;
     transform: translateY(-100%);
     transition: transform 0.5s ease;
-    border-bottom: 2px solid var(--gold);
+    border-bottom: none;
 }
 
 nav.visible {
@@ -2173,6 +2173,12 @@ footer p {
     nav {
         padding: 10px 0;
         border-bottom: none;
+        background: transparent;
+    }
+
+    /* Cacher l'indicateur de scroll sur mobile */
+    .scroll-indicator {
+        display: none;
     }
 
     nav ul {
