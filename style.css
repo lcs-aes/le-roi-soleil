@@ -19,14 +19,14 @@ body {
     overflow-x: hidden;
 }
 
-/* LOADER - SOLEIL LEVANT */
+/* LOADER - CONSTELLATION ROYALE */
 #loader {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background: linear-gradient(180deg, #0a0e1a 0%, #1a2840 40%, #d4af37 70%, #f4e8d0 100%);
+    background: radial-gradient(ellipse at center, #0a0e1a 0%, #000000 100%);
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -41,67 +41,98 @@ body {
     visibility: hidden;
 }
 
-.sun-container {
-    position: relative;
-    width: 250px;
-    height: 250px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    animation: sunRise 3s ease-out infinite;
-}
-
-@keyframes sunRise {
-    0% {
-        transform: translateY(100px);
-        opacity: 0.3;
-    }
-    50% {
-        transform: translateY(-10px);
-        opacity: 1;
-    }
-    100% {
-        transform: translateY(0);
-        opacity: 1;
-    }
-}
-
-.sun-core {
-    width: 120px;
-    height: 120px;
-    background: radial-gradient(circle, #fff9e6 0%, #ffeb99 30%, #d4af37 70%, #b8941e 100%);
-    border-radius: 50%;
-    box-shadow:
-        0 0 40px rgba(212, 175, 55, 0.8),
-        0 0 80px rgba(212, 175, 55, 0.6),
-        0 0 120px rgba(212, 175, 55, 0.4),
-        inset 0 -20px 40px rgba(184, 148, 30, 0.3);
-    animation: sunPulse 2s ease-in-out infinite;
-    position: relative;
-    z-index: 10;
-}
-
-@keyframes sunPulse {
-    0%, 100% {
-        transform: scale(1);
-        box-shadow:
-            0 0 40px rgba(212, 175, 55, 0.8),
-            0 0 80px rgba(212, 175, 55, 0.6),
-            0 0 120px rgba(212, 175, 55, 0.4);
-    }
-    50% {
-        transform: scale(1.05);
-        box-shadow:
-            0 0 60px rgba(212, 175, 55, 1),
-            0 0 100px rgba(212, 175, 55, 0.8),
-            0 0 140px rgba(212, 175, 55, 0.6);
-    }
-}
-
-.sun-rays {
+/* Étoiles scintillantes en arrière-plan */
+.background-stars {
     position: absolute;
     width: 100%;
     height: 100%;
+    top: 0;
+    left: 0;
+}
+
+.bg-star {
+    position: absolute;
+    width: 2px;
+    height: 2px;
+    background: white;
+    border-radius: 50%;
+    animation: twinkle 3s ease-in-out infinite;
+    opacity: 0.6;
+}
+
+@keyframes twinkle {
+    0%, 100% { opacity: 0.3; transform: scale(1); }
+    50% { opacity: 1; transform: scale(1.2); }
+}
+
+/* Conteneur de la constellation */
+.constellation-container {
+    position: relative;
+    width: 600px;
+    height: 600px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Étoiles de la constellation */
+.constellation-star {
+    position: absolute;
+    width: 12px;
+    height: 12px;
+    background: radial-gradient(circle, #fff9e6 0%, #d4af37 100%);
+    border-radius: 50%;
+    opacity: 0;
+    box-shadow:
+        0 0 20px rgba(212, 175, 55, 1),
+        0 0 40px rgba(212, 175, 55, 0.6);
+}
+
+.constellation-star.appear {
+    animation: starAppear 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+@keyframes starAppear {
+    0% {
+        opacity: 0;
+        transform: scale(0);
+    }
+    60% {
+        transform: scale(1.5);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* Effet de brillance des étoiles */
+.constellation-star::before {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle, rgba(255, 249, 230, 0.8), transparent);
+    border-radius: 50%;
+    animation: starPulse 2s ease-in-out infinite;
+}
+
+@keyframes starPulse {
+    0%, 100% {
+        transform: scale(1);
+        opacity: 0.6;
+    }
+    50% {
+        transform: scale(2);
+        opacity: 1;
+    }
+}
+
+/* Rayons dorés pour l'étoile centrale */
+.star-rays {
+    position: absolute;
+    width: 80px;
+    height: 80px;
     animation: raysRotate 20s linear infinite;
 }
 
@@ -110,80 +141,105 @@ body {
     to { transform: rotate(360deg); }
 }
 
-.ray {
-    position: absolute;
-    width: 4px;
-    height: 80px;
-    background: linear-gradient(to bottom, rgba(255, 235, 153, 0.9) 0%, rgba(212, 175, 55, 0.6) 50%, transparent 100%);
-    top: 50%;
-    left: 50%;
-    transform-origin: center -40px;
-    border-radius: 2px;
-    animation: rayGlow 2s ease-in-out infinite;
-}
-
-@keyframes rayGlow {
-    0%, 100% { opacity: 0.6; }
-    50% { opacity: 1; }
-}
-
-.ray:nth-child(1) { transform: translate(-50%, -50%) rotate(0deg); }
-.ray:nth-child(2) { transform: translate(-50%, -50%) rotate(30deg); animation-delay: 0.1s; }
-.ray:nth-child(3) { transform: translate(-50%, -50%) rotate(60deg); animation-delay: 0.2s; }
-.ray:nth-child(4) { transform: translate(-50%, -50%) rotate(90deg); animation-delay: 0.3s; }
-.ray:nth-child(5) { transform: translate(-50%, -50%) rotate(120deg); animation-delay: 0.4s; }
-.ray:nth-child(6) { transform: translate(-50%, -50%) rotate(150deg); animation-delay: 0.5s; }
-.ray:nth-child(7) { transform: translate(-50%, -50%) rotate(180deg); animation-delay: 0.6s; }
-.ray:nth-child(8) { transform: translate(-50%, -50%) rotate(210deg); animation-delay: 0.7s; }
-.ray:nth-child(9) { transform: translate(-50%, -50%) rotate(240deg); animation-delay: 0.8s; }
-.ray:nth-child(10) { transform: translate(-50%, -50%) rotate(270deg); animation-delay: 0.9s; }
-.ray:nth-child(11) { transform: translate(-50%, -50%) rotate(300deg); animation-delay: 1s; }
-.ray:nth-child(12) { transform: translate(-50%, -50%) rotate(330deg); animation-delay: 1.1s; }
-
-.particle {
+.star-ray {
     position: absolute;
     width: 3px;
-    height: 3px;
-    background: var(--gold);
+    height: 40px;
+    background: linear-gradient(to bottom, rgba(212, 175, 55, 0.8), transparent);
+    top: 50%;
+    left: 50%;
+    transform-origin: center -20px;
+    border-radius: 2px;
+}
+
+.star-ray:nth-child(1) { transform: translate(-50%, -50%) rotate(0deg); }
+.star-ray:nth-child(2) { transform: translate(-50%, -50%) rotate(45deg); }
+.star-ray:nth-child(3) { transform: translate(-50%, -50%) rotate(90deg); }
+.star-ray:nth-child(4) { transform: translate(-50%, -50%) rotate(135deg); }
+.star-ray:nth-child(5) { transform: translate(-50%, -50%) rotate(180deg); }
+.star-ray:nth-child(6) { transform: translate(-50%, -50%) rotate(225deg); }
+.star-ray:nth-child(7) { transform: translate(-50%, -50%) rotate(270deg); }
+.star-ray:nth-child(8) { transform: translate(-50%, -50%) rotate(315deg); }
+
+/* Lignes de connexion lumineuses */
+.constellation-line {
+    position: absolute;
+    height: 2px;
+    background: linear-gradient(to right,
+        transparent 0%,
+        rgba(212, 175, 55, 0.8) 50%,
+        transparent 100%);
+    transform-origin: left center;
+    opacity: 0;
+    box-shadow: 0 0 10px rgba(212, 175, 55, 0.6);
+}
+
+.constellation-line.draw {
+    animation: lineDraw 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+@keyframes lineDraw {
+    0% {
+        opacity: 0;
+        width: 0;
+    }
+    100% {
+        opacity: 1;
+        width: var(--line-length);
+    }
+}
+
+/* Particules scintillantes le long des lignes */
+.line-sparkle {
+    position: absolute;
+    width: 4px;
+    height: 4px;
+    background: #d4af37;
     border-radius: 50%;
-    animation: particleRise 4s infinite ease-out;
-    box-shadow: 0 0 8px rgba(212, 175, 55, 0.8);
+    box-shadow: 0 0 8px #d4af37;
     opacity: 0;
 }
 
-@keyframes particleRise {
+.line-sparkle.sparkle {
+    animation: sparkleMove 1s ease-out forwards;
+}
+
+@keyframes sparkleMove {
     0% {
-        transform: translateY(0) translateX(0) scale(0);
         opacity: 0;
     }
     20% {
         opacity: 1;
     }
     80% {
-        opacity: 0.6;
+        opacity: 1;
     }
     100% {
-        transform: translateY(-300px) translateX(var(--drift)) scale(0.5);
         opacity: 0;
     }
 }
 
 .loader-text {
-    margin-top: 60px;
+    position: absolute;
+    bottom: 60px;
     font-family: 'Cinzel', serif;
-    font-size: 1.4em;
+    font-size: 1.6em;
     color: var(--gold);
-    letter-spacing: 4px;
-    text-shadow: 0 0 20px rgba(212, 175, 55, 0.6);
-    animation: textGlow 2s ease-in-out infinite;
+    letter-spacing: 5px;
+    text-shadow:
+        0 0 20px rgba(212, 175, 55, 0.8),
+        0 0 40px rgba(212, 175, 55, 0.4);
+    animation: textGlowAppear 1.5s ease-out forwards;
 }
 
-@keyframes textGlow {
-    0%, 100% {
-        text-shadow: 0 0 20px rgba(212, 175, 55, 0.6);
+@keyframes textGlowAppear {
+    0% {
+        opacity: 0;
+        transform: translateY(20px);
     }
-    50% {
-        text-shadow: 0 0 30px rgba(212, 175, 55, 1), 0 0 40px rgba(212, 175, 55, 0.8);
+    100% {
+        opacity: 1;
+        transform: translateY(0);
     }
 }
 
@@ -277,55 +333,324 @@ nav a:hover::after {
     transform: rotate(-45deg) translate(7px, -7px);
 }
 
-/* HERO SECTION */
+/* HERO SECTION - MASQUE DE BAL RÉVÉLATEUR */
 #hero {
     min-height: 100vh;
+    width: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
     position: relative;
     overflow: hidden;
-    background: linear-gradient(180deg, #1a2332 0%, #2d3e5a 50%, #1a2332 100%);
+    background: #0a0a0a;
 }
 
-#hero::before {
+/* Fond de bal baroque */
+.ballroom-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background:
+        radial-gradient(ellipse at 50% 30%, rgba(212, 175, 55, 0.15) 0%, transparent 50%),
+        linear-gradient(180deg, #1a1412 0%, #2d1f1a 50%, #0a0606 100%);
+    z-index: 1;
+}
+
+.ballroom-background::before {
     content: '';
     position: absolute;
     top: 0;
     left: 0;
     right: 0;
     bottom: 0;
-    background: radial-gradient(circle at 50% 50%, rgba(212, 175, 55, 0.1) 0%, transparent 70%);
+    background-image:
+        repeating-linear-gradient(90deg, transparent, transparent 50px, rgba(212, 175, 55, 0.03) 50px, rgba(212, 175, 55, 0.03) 51px),
+        repeating-linear-gradient(0deg, transparent, transparent 50px, rgba(212, 175, 55, 0.03) 50px, rgba(212, 175, 55, 0.03) 51px);
+    animation: backgroundShimmer 20s ease-in-out infinite;
+}
+
+@keyframes backgroundShimmer {
+    0%, 100% { opacity: 0.3; }
+    50% { opacity: 0.6; }
+}
+
+/* Paillettes qui tombent */
+.glitter-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 8;
+    pointer-events: none;
+}
+
+.glitter {
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    background: linear-gradient(45deg, #d4af37, #f4d03f);
+    clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+    animation: glitterFall var(--fall-duration) linear forwards;
+    opacity: 0;
+    box-shadow: 0 0 10px rgba(212, 175, 55, 0.8);
+}
+
+@keyframes glitterFall {
+    0% {
+        opacity: 0;
+        transform: translateY(-20px) rotate(0deg);
+    }
+    10% {
+        opacity: 1;
+    }
+    90% {
+        opacity: 0.8;
+    }
+    100% {
+        opacity: 0;
+        transform: translateY(100vh) rotate(360deg);
+    }
+}
+
+/* Masque vénitien doré */
+.venetian-mask {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 800px;
+    height: 400px;
+    z-index: 5;
+    animation: maskZoomOut 6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+    transform-origin: center center;
+}
+
+@keyframes maskZoomOut {
+    0% {
+        transform: translate(-50%, -50%) scale(3);
+        opacity: 1;
+    }
+    75% {
+        opacity: 1;
+    }
+    100% {
+        transform: translate(-50%, -60%) scale(1);
+        opacity: 0;
+    }
+}
+
+/* Base du masque */
+.mask-base {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Moitiés du masque */
+.mask-half {
+    position: absolute;
+    width: 350px;
+    height: 250px;
+    background: linear-gradient(135deg,
+        #f4d03f 0%,
+        #d4af37 30%,
+        #b8941e 60%,
+        #d4af37 100%);
+    border-radius: 50%;
+    box-shadow:
+        0 10px 60px rgba(0, 0, 0, 0.8),
+        inset 0 5px 30px rgba(255, 255, 255, 0.3),
+        inset 0 -5px 30px rgba(0, 0, 0, 0.4),
+        0 0 80px rgba(212, 175, 55, 0.6);
+}
+
+.mask-left {
+    left: 0;
+    clip-path: ellipse(50% 100% at 0% 50%);
+}
+
+.mask-right {
+    right: 0;
+    clip-path: ellipse(50% 100% at 100% 50%);
+}
+
+/* Trous des yeux */
+.eye-hole {
+    position: absolute;
+    width: 100px;
+    height: 60px;
+    background: #000000;
+    border-radius: 50%;
+    top: 50%;
+    transform: translateY(-50%);
+    box-shadow:
+        inset 0 0 20px rgba(0, 0, 0, 0.9),
+        0 0 20px rgba(212, 175, 55, 0.4);
+}
+
+.eye-left {
+    right: 20px;
+}
+
+.eye-right {
+    left: 20px;
+}
+
+/* Ornements du masque */
+.mask-ornament {
+    position: absolute;
+    font-size: 4em;
+    color: #f4d03f;
+    text-shadow:
+        0 0 30px rgba(212, 175, 55, 1),
+        0 0 60px rgba(212, 175, 55, 0.6);
+    animation: ornamentSparkle 2s ease-in-out infinite;
+}
+
+@keyframes ornamentSparkle {
+    0%, 100% {
+        filter: brightness(1);
+        transform: scale(1);
+    }
+    50% {
+        filter: brightness(1.5);
+        transform: scale(1.15);
+    }
+}
+
+.mask-center {
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.mask-top {
+    top: 10%;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 3em;
+}
+
+.mask-left-deco {
+    top: 30%;
+    left: 15%;
+    font-size: 2.5em;
+}
+
+.mask-right-deco {
+    top: 30%;
+    right: 15%;
+    font-size: 2.5em;
+}
+
+/* Plumes ondulantes */
+.feathers {
+    position: absolute;
+    top: -100px;
+    right: -150px;
+    width: 400px;
+    height: 500px;
+}
+
+.feather {
+    position: absolute;
+    width: 80px;
+    height: 300px;
+    background: linear-gradient(to bottom,
+        rgba(212, 175, 55, 0.9) 0%,
+        rgba(212, 175, 55, 0.7) 50%,
+        rgba(212, 175, 55, 0.3) 100%);
+    border-radius: 50% 50% 50% 50% / 10% 10% 90% 90%;
+    transform-origin: bottom center;
+    filter: blur(1px);
+    animation: featherWave 3s ease-in-out infinite;
+}
+
+@keyframes featherWave {
+    0%, 100% {
+        transform: rotate(-10deg) translateX(0);
+    }
+    50% {
+        transform: rotate(15deg) translateX(20px);
+    }
+}
+
+.feather-1 {
+    left: 0;
+    animation-delay: 0s;
+}
+
+.feather-2 {
+    left: 60px;
+    height: 320px;
+    animation-delay: 0.2s;
+}
+
+.feather-3 {
+    left: 120px;
+    height: 280px;
+    animation-delay: 0.4s;
+}
+
+.feather-4 {
+    left: 180px;
+    height: 310px;
+    animation-delay: 0.6s;
+}
+
+.feather-5 {
+    left: 240px;
+    height: 290px;
+    animation-delay: 0.8s;
 }
 
 .hero-content {
     text-align: center;
     z-index: 10;
     position: relative;
+    opacity: 0;
+    animation: contentRevealFromMask 2s 4s ease-out forwards;
+}
+
+@keyframes contentRevealFromMask {
+    0% {
+        opacity: 0;
+        transform: scale(0.5) translateY(-100px);
+        filter: blur(10px);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+        filter: blur(0);
+    }
 }
 
 .hero-title {
     font-family: 'Cinzel', serif;
     font-size: 5em;
     font-weight: 900;
-    color: var(--gold);
-    text-shadow: 0 0 30px rgba(212, 175, 55, 0.5), 0 5px 15px rgba(0,0,0,0.5);
+    color: #fff9e6;
+    text-shadow:
+        0 0 40px rgba(212, 175, 55, 1),
+        0 0 80px rgba(212, 175, 55, 0.8),
+        0 5px 25px rgba(0, 0, 0, 0.6),
+        0 0 120px rgba(255, 235, 153, 0.6);
     margin-bottom: 20px;
-    animation: titleReveal 1.5s ease forwards;
-    opacity: 0;
-}
-
-@keyframes titleReveal {
-    from { opacity: 0; transform: translateY(50px); }
-    to { opacity: 1; transform: translateY(0); }
+    letter-spacing: 0.1em;
 }
 
 .hero-subtitle {
     font-size: 1.8em;
-    color: var(--cream);
+    color: #f4e8d0;
+    text-shadow:
+        0 0 20px rgba(212, 175, 55, 0.6),
+        0 2px 10px rgba(0, 0, 0, 0.4);
     margin-bottom: 40px;
-    animation: titleReveal 1.5s 0.3s ease forwards;
-    opacity: 0;
 }
 
 .cards-circle {
@@ -1296,6 +1621,80 @@ section {
 }
 
 @media (max-width: 768px) {
+    /* Hero - Masque mobile */
+    .venetian-mask {
+        width: 400px;
+        height: 200px;
+    }
+
+    @keyframes maskZoomOut {
+        0% {
+            transform: scale(2.5) translateY(0);
+            opacity: 1;
+        }
+        70% {
+            opacity: 1;
+        }
+        100% {
+            transform: scale(1) translateY(-100px);
+            opacity: 0;
+        }
+    }
+
+    .mask-half {
+        width: 200px;
+        height: 150px;
+    }
+
+    .eye-hole {
+        width: 60px;
+        height: 40px;
+    }
+
+    .mask-ornament {
+        font-size: 2.5em;
+    }
+
+    .mask-top {
+        font-size: 2em;
+    }
+
+    .mask-left-deco,
+    .mask-right-deco {
+        font-size: 1.8em;
+    }
+
+    .feathers {
+        top: -50px;
+        right: -80px;
+        width: 200px;
+        height: 300px;
+    }
+
+    .feather {
+        width: 40px;
+        height: 150px;
+    }
+
+    .feather-1 { left: 0; }
+    .feather-2 { left: 30px; height: 160px; }
+    .feather-3 { left: 60px; height: 140px; }
+    .feather-4 { left: 90px; height: 155px; }
+    .feather-5 { left: 120px; height: 145px; }
+
+    .glitter {
+        width: 6px;
+        height: 6px;
+    }
+
+    .hero-title {
+        font-size: 2.5em;
+    }
+
+    .hero-subtitle {
+        font-size: 1.2em;
+    }
+
     .events-grid {
         grid-template-columns: 1fr;
         gap: 16px;
@@ -1873,13 +2272,31 @@ footer p {
         padding: 15px;
     }
 
-    /* Loader responsive - remonter le soleil */
-    .sun-container {
-        transform: translateY(-50px);
+    /* Loader responsive - adaptation mobile */
+    .constellation-container {
+        width: 400px;
+        height: 400px;
+        transform: scale(0.7);
+    }
+
+    .constellation-star {
+        width: 10px;
+        height: 10px;
+    }
+
+    .star-rays {
+        width: 60px;
+        height: 60px;
+    }
+
+    .star-ray {
+        height: 30px;
     }
 
     .loader-text {
-        margin-top: 10px;
+        bottom: 40px;
+        font-size: 1em;
+        letter-spacing: 2px;
     }
 }
 

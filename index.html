@@ -6,28 +6,20 @@
     <title>Le Roi Soleil - Lycée Condorcet Sydney</title>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Cormorant+Garamond:wght@300;400;600&family=Lato:wght@300;400;700;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 </head>
 <body>
     <!-- LOADER -->
     <div id="loader">
-        <div class="sun-container">
-            <div class="sun-rays">
-                <div class="ray"></div>
-                <div class="ray"></div>
-                <div class="ray"></div>
-                <div class="ray"></div>
-                <div class="ray"></div>
-                <div class="ray"></div>
-                <div class="ray"></div>
-                <div class="ray"></div>
-                <div class="ray"></div>
-                <div class="ray"></div>
-                <div class="ray"></div>
-                <div class="ray"></div>
-            </div>
-            <div class="sun-core"></div>
+        <!-- Étoiles scintillantes en arrière-plan -->
+        <div class="background-stars" id="backgroundStars"></div>
+
+        <!-- Constellation du Roi Soleil -->
+        <div class="constellation-container" id="constellationContainer">
+            <!-- Les étoiles et lignes seront ajoutées par JavaScript -->
         </div>
-        <div class="loader-text">LE ROI SOLEIL SE LÈVE...</div>
+
+        <div class="loader-text">CONSTELLATION DU ROI SOLEIL</div>
     </div>
 
     <!-- NAVIGATION -->
@@ -49,9 +41,46 @@
         </ul>
     </nav>
 
-    <!-- HERO SECTION -->
+    <!-- HERO SECTION - MASQUE DE BAL RÉVÉLATEUR -->
     <section id="hero">
-        <div class="cards-circle" id="cardsCircle"></div>
+        <!-- Fond de bal baroque -->
+        <div class="ballroom-background"></div>
+
+        <!-- Paillettes qui tombent -->
+        <div class="glitter-container" id="glitterContainer"></div>
+
+        <!-- Masque vénitien doré -->
+        <div class="venetian-mask">
+            <!-- Structure du masque -->
+            <div class="mask-base">
+                <!-- Partie gauche du masque -->
+                <div class="mask-half mask-left">
+                    <div class="eye-hole eye-left"></div>
+                </div>
+
+                <!-- Partie droite du masque -->
+                <div class="mask-half mask-right">
+                    <div class="eye-hole eye-right"></div>
+                </div>
+
+                <!-- Ornements centraux -->
+                <div class="mask-ornament mask-center">◈</div>
+                <div class="mask-ornament mask-top">❖</div>
+                <div class="mask-ornament mask-left-deco">✦</div>
+                <div class="mask-ornament mask-right-deco">✦</div>
+            </div>
+
+            <!-- Plumes ondulantes -->
+            <div class="feathers">
+                <div class="feather feather-1"></div>
+                <div class="feather feather-2"></div>
+                <div class="feather feather-3"></div>
+                <div class="feather feather-4"></div>
+                <div class="feather feather-5"></div>
+            </div>
+        </div>
+
+        <!-- Contenu révélé -->
         <div class="hero-content">
             <h1 class="hero-title">LE ROI SOLEIL</h1>
             <p class="hero-subtitle">Une Comédie Musicale par le Lycée Condorcet Sydney</p>

@@ -1,52 +1,184 @@
-// LOADER - Soleil Levant
+// LOADER - Constellation Royale
 setTimeout(() => {
     document.getElementById('loader').classList.add('hidden');
     document.getElementById('nav').classList.add('visible');
     initHero();
 }, 5000);
 
-// Particules dorées pour le loader
-const sunContainer = document.querySelector('.sun-container');
-for (let i = 0; i < 40; i++) {
-    const particle = document.createElement('div');
-    particle.className = 'particle';
-
-    // Position aléatoire autour du soleil
-    const angle = Math.random() * Math.PI * 2;
-    const distance = 60 + Math.random() * 40;
-    const x = Math.cos(angle) * distance;
-    const y = Math.sin(angle) * distance;
-
-    particle.style.left = `calc(50% + ${x}px)`;
-    particle.style.top = `calc(50% + ${y}px)`;
-    particle.style.setProperty('--drift', `${Math.random() * 100 - 50}px`);
-    particle.style.animationDelay = `${Math.random() * 4}s`;
-    particle.style.animationDuration = `${3 + Math.random() * 2}s`;
-
-    sunContainer.appendChild(particle);
+// Créer les étoiles d'arrière-plan
+const backgroundStars = document.getElementById('backgroundStars');
+for (let i = 0; i < 100; i++) {
+    const star = document.createElement('div');
+    star.className = 'bg-star';
+    star.style.left = Math.random() * 100 + '%';
+    star.style.top = Math.random() * 100 + '%';
+    star.style.animationDelay = Math.random() * 3 + 's';
+    backgroundStars.appendChild(star);
 }
 
-// HERO CARDS CIRCLE
+// Constellation du Roi Soleil (forme de couronne/soleil)
+const constellationContainer = document.getElementById('constellationContainer');
+
+// Positions des étoiles formant la constellation (en forme de couronne solaire)
+const starPositions = [
+    // Étoile centrale (le Soleil/Roi)
+    { x: 300, y: 300, delay: 500, isCentral: true },
+
+    // Couronne externe (8 étoiles principales)
+    { x: 300, y: 180, delay: 800 },  // Haut
+    { x: 385, y: 215, delay: 1000 }, // Haut-droite
+    { x: 420, y: 300, delay: 1200 }, // Droite
+    { x: 385, y: 385, delay: 1400 }, // Bas-droite
+    { x: 300, y: 420, delay: 1600 }, // Bas
+    { x: 215, y: 385, delay: 1800 }, // Bas-gauche
+    { x: 180, y: 300, delay: 2000 }, // Gauche
+    { x: 215, y: 215, delay: 2200 }, // Haut-gauche
+
+    // Rayons externes (8 étoiles secondaires)
+    { x: 300, y: 120, delay: 2400 }, // Haut loin
+    { x: 450, y: 150, delay: 2500 }, // Haut-droite loin
+    { x: 480, y: 300, delay: 2600 }, // Droite loin
+    { x: 450, y: 450, delay: 2700 }, // Bas-droite loin
+    { x: 300, y: 480, delay: 2800 }, // Bas loin
+    { x: 150, y: 450, delay: 2900 }, // Bas-gauche loin
+    { x: 120, y: 300, delay: 3000 }, // Gauche loin
+    { x: 150, y: 150, delay: 3100 }  // Haut-gauche loin
+];
+
+// Connexions entre les étoiles (lignes de la constellation)
+const connections = [
+    // Du centre vers la couronne interne
+    [0, 1], [0, 2], [0, 3], [0, 4], [0, 5], [0, 6], [0, 7], [0, 8],
+
+    // Couronne interne (octogone)
+    [1, 2], [2, 3], [3, 4], [4, 5], [5, 6], [6, 7], [7, 8], [8, 1],
+
+    // Vers les rayons externes
+    [1, 9], [2, 10], [3, 11], [4, 12], [5, 13], [6, 14], [7, 15], [8, 16]
+];
+
+// Créer les étoiles
+starPositions.forEach((pos, index) => {
+    setTimeout(() => {
+        const star = document.createElement('div');
+        star.className = 'constellation-star';
+        star.style.left = pos.x + 'px';
+        star.style.top = pos.y + 'px';
+        star.dataset.index = index;
+
+        // Étoile centrale plus grande avec rayons
+        if (pos.isCentral) {
+            star.style.width = '20px';
+            star.style.height = '20px';
+
+            // Ajouter les rayons dorés
+            const rays = document.createElement('div');
+            rays.className = 'star-rays';
+            for (let i = 0; i < 8; i++) {
+                const ray = document.createElement('div');
+                ray.className = 'star-ray';
+                rays.appendChild(ray);
+            }
+            star.appendChild(rays);
+        }
+
+        constellationContainer.appendChild(star);
+        setTimeout(() => star.classList.add('appear'), 50);
+    }, pos.delay);
+});
+
+// Fonction pour calculer distance et angle entre deux points
+function getLineProps(x1, y1, x2, y2) {
+    const dx = x2 - x1;
+    const dy = y2 - y1;
+    const length = Math.sqrt(dx * dx + dy * dy);
+    const angle = Math.atan2(dy, dx) * (180 / Math.PI);
+    return { length, angle };
+}
+
+// Créer les lignes de connexion
+connections.forEach((conn, index) => {
+    const [startIdx, endIdx] = conn;
+    const start = starPositions[startIdx];
+    const end = starPositions[endIdx];
+    const delay = Math.max(start.delay, end.delay) + 300;
+
+    setTimeout(() => {
+        const { length, angle } = getLineProps(start.x, start.y, end.x, end.y);
+
+        const line = document.createElement('div');
+        line.className = 'constellation-line';
+        line.style.left = start.x + 'px';
+        line.style.top = start.y + 'px';
+        line.style.transform = `rotate(${angle}deg)`;
+        line.style.setProperty('--line-length', length + 'px');
+
+        constellationContainer.appendChild(line);
+        setTimeout(() => line.classList.add('draw'), 50);
+
+        // Ajouter des particules scintillantes le long de la ligne
+        for (let i = 0; i < 3; i++) {
+            setTimeout(() => {
+                const sparkle = document.createElement('div');
+                sparkle.className = 'line-sparkle';
+                const progress = (i + 1) / 4;
+                sparkle.style.left = (start.x + (end.x - start.x) * progress) + 'px';
+                sparkle.style.top = (start.y + (end.y - start.y) * progress) + 'px';
+                constellationContainer.appendChild(sparkle);
+                setTimeout(() => sparkle.classList.add('sparkle'), 50);
+                setTimeout(() => sparkle.remove(), 1100);
+            }, i * 200);
+        }
+    }, delay);
+});
+
+// HERO - MASQUE DE BAL RÉVÉLATEUR
 function initHero() {
-    const circle = document.getElementById('cardsCircle');
-    const numCards = 12;
-    const radius = 400;
+    const glitterContainer = document.getElementById('glitterContainer');
 
-    for (let i = 0; i < numCards; i++) {
-        const angle = (i / numCards) * 2 * Math.PI;
-        const x = Math.cos(angle) * radius;
-        const y = Math.sin(angle) * radius;
+    // Créer les paillettes qui tombent
+    function createGlitter() {
+        const glitter = document.createElement('div');
+        glitter.className = 'glitter';
 
-        const card = document.createElement('div');
-        card.className = 'floating-card';
-        card.style.left = `calc(50% + ${x}px)`;
-        card.style.top = `calc(50% + ${y}px)`;
-        card.style.transform = 'translate(-50%, -50%)';
-        card.style.animationDelay = `${i * 0.2}s`;
-        card.innerHTML = `<svg viewBox="0 0 708 952"><image href="Carte_vierge.webp" width="708" height="952"/></svg>`;
-        card.onclick = () => document.getElementById('galerie').scrollIntoView({behavior: 'smooth'});
-        circle.appendChild(card);
+        // Position horizontale aléatoire
+        glitter.style.left = Math.random() * 100 + '%';
+
+        // Durée de chute aléatoire (ralentie)
+        const duration = 6 + Math.random() * 6; // Entre 6 et 12 secondes
+        glitter.style.setProperty('--fall-duration', duration + 's');
+
+        // Taille aléatoire
+        const size = 6 + Math.random() * 8; // Entre 6 et 14px
+        glitter.style.width = size + 'px';
+        glitter.style.height = size + 'px';
+
+        // Délai avant de commencer à tomber
+        glitter.style.animationDelay = Math.random() * 1 + 's';
+
+        glitterContainer.appendChild(glitter);
+
+        // Retirer la paillette après l'animation
+        setTimeout(() => {
+            glitter.remove();
+        }, (duration + 2) * 1000);
     }
+
+    // Créer des paillettes en continu
+    function startGlitterRain() {
+        // Créer plusieurs paillettes au départ
+        for (let i = 0; i < 20; i++) {
+            setTimeout(() => createGlitter(), i * 150);
+        }
+
+        // Continuer à créer des paillettes (moins fréquent)
+        setInterval(() => {
+            createGlitter();
+        }, 400);
+    }
+
+    // Démarrer la pluie de paillettes immédiatement
+    startGlitterRain();
 }
 
 // GALLERY
