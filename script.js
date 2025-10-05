@@ -2,6 +2,10 @@
 setTimeout(() => {
     document.getElementById('loader').classList.add('hidden');
     document.getElementById('nav').classList.add('visible');
+    const hamburger = document.getElementById('hamburger');
+    if (hamburger) {
+        hamburger.classList.add('visible');
+    }
     initHero();
 }, 5000);
 
