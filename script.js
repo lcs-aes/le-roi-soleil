@@ -136,59 +136,63 @@ connections.forEach((conn, index) => {
     }, delay);
 });
 
+// PAILLETTES GLOBALES POUR TOUT LE SITE
+const globalGlitterContainer = document.getElementById('globalGlitterContainer');
+
+// Créer les paillettes qui tombent
+function createGlobalGlitter() {
+    const glitter = document.createElement('div');
+    glitter.className = 'glitter';
+
+    // Position horizontale aléatoire
+    glitter.style.left = Math.random() * 100 + '%';
+
+    // Durée de chute aléatoire (ralentie de 60% supplémentaire : 9.6-19.2s devient 15.36-30.72s)
+    const baseDuration = 15.36 + Math.random() * 15.36; // Entre 15.36 et 30.72 secondes
+    glitter.style.setProperty('--fall-duration', baseDuration + 's');
+
+    // Taille aléatoire
+    const size = 6 + Math.random() * 8; // Entre 6 et 14px
+    glitter.style.width = size + 'px';
+    glitter.style.height = size + 'px';
+
+    // Délai avant de commencer à tomber
+    glitter.style.animationDelay = Math.random() * 1 + 's';
+
+    globalGlitterContainer.appendChild(glitter);
+
+    // Retirer la paillette après l'animation
+    setTimeout(() => {
+        glitter.remove();
+    }, (baseDuration + 2) * 1000);
+}
+
+// Créer des paillettes en continu
+function startGlobalGlitterRain() {
+    // Créer plusieurs paillettes au départ
+    for (let i = 0; i < 15; i++) {
+        setTimeout(() => createGlobalGlitter(), i * 200);
+    }
+
+    // Continuer à créer des paillettes (moins fréquent)
+    setInterval(() => {
+        createGlobalGlitter();
+    }, 600);
+}
+
+// Démarrer la pluie de paillettes globale immédiatement
+startGlobalGlitterRain();
+
 // HERO - MASQUE DE BAL RÉVÉLATEUR
 function initHero() {
-    const glitterContainer = document.getElementById('glitterContainer');
-
-    // Créer les paillettes qui tombent
-    function createGlitter() {
-        const glitter = document.createElement('div');
-        glitter.className = 'glitter';
-
-        // Position horizontale aléatoire
-        glitter.style.left = Math.random() * 100 + '%';
-
-        // Durée de chute aléatoire (ralentie)
-        const duration = 6 + Math.random() * 6; // Entre 6 et 12 secondes
-        glitter.style.setProperty('--fall-duration', duration + 's');
-
-        // Taille aléatoire
-        const size = 6 + Math.random() * 8; // Entre 6 et 14px
-        glitter.style.width = size + 'px';
-        glitter.style.height = size + 'px';
-
-        // Délai avant de commencer à tomber
-        glitter.style.animationDelay = Math.random() * 1 + 's';
-
-        glitterContainer.appendChild(glitter);
-
-        // Retirer la paillette après l'animation
-        setTimeout(() => {
-            glitter.remove();
-        }, (duration + 2) * 1000);
-    }
-
-    // Créer des paillettes en continu
-    function startGlitterRain() {
-        // Créer plusieurs paillettes au départ
-        for (let i = 0; i < 20; i++) {
-            setTimeout(() => createGlitter(), i * 150);
-        }
-
-        // Continuer à créer des paillettes (moins fréquent)
-        setInterval(() => {
-            createGlitter();
-        }, 400);
-    }
-
-    // Démarrer la pluie de paillettes immédiatement
-    startGlitterRain();
+    // Le Hero n'a plus besoin de créer ses propres paillettes
+    console.log('Hero initialisé');
 }
 
 // GALLERY
 const rectoSVG = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 708 952" width="708" height="952">
-<image href="marie_mancini.webp" x="28.32" y="145.32" width="651.36" height="651.36" preserveAspectRatio="xMidYMid slice"/>
-<image href="Carte_vierge.webp" x="0" y="0" width="708" height="952"/>
+<image href="images/cartes/portraits_personnages/marie_mancini.webp" x="28.32" y="145.32" width="651.36" height="651.36" preserveAspectRatio="xMidYMid slice"/>
+<image href="images/cartes/recto/carte_vierge_recto.webp" x="0" y="0" width="708" height="952"/>
 <text x="354" y="118" text-anchor="middle" dominant-baseline="middle" font-family="Cinzel, serif" font-size="34" font-weight="800" fill="#6a4d24">MARIE MANCINI</text>
 <text x="86" y="722" text-anchor="start" dominant-baseline="middle" font-family="Cinzel, serif" font-size="22" font-weight="700" fill="#3a2a13">ATT : 450</text>
 <text x="215" y="722" text-anchor="start" dominant-baseline="middle" font-family="Cinzel, serif" font-size="22" font-weight="700" fill="#3a2a13">DEF : 600</text>
@@ -216,10 +220,84 @@ const versoSVG = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 708 952" 
 <text x="329" y="546" text-anchor="middle" dominant-baseline="middle" font-family="Cinzel, serif" font-size="16" font-weight="800" fill="#3a2a13">CITATION</text>
 <text x="315" y="600" text-anchor="middle" dominant-baseline="middle" font-family="Cinzel, serif" font-size="22" font-weight="600" fill="#3a2a13">"Où ça mène quand on s'aime..."</text>
 <text x="354" y="721" text-anchor="middle" dominant-baseline="middle" font-family="Cinzel, serif" font-size="22" font-weight="800" fill="#3a2a13">✦ RELATIONS ✦</text>
-<text x="149" y="774.6" text-anchor="middle" dominant-baseline="middle" font-family="Cinzel, serif" font-size="16" font-weight="600" fill="#3a2a13"><tspan x="149" dy="0">✨ ALLIÉS ✨</tspan><tspan x="149" dy="19.2"> </tspan><tspan x="149" dy="19.2">Mazarin</tspan><tspan x="149" dy="19.2">Ninon de l'Enclos</tspan><tspan x="149" dy="19.2">Molière</tspan></text>
+<text x="149" y="774.6" text-anchor="middle" dominant-baseline="middle" font-family="Cinzel, serif" font-size="16" font-weight="600" fill="#3a2a13"><tspan x="149" dy="0">✦ ALLIÉS ✦</tspan><tspan x="149" dy="19.2"> </tspan><tspan x="149" dy="19.2">Mazarin</tspan><tspan x="149" dy="19.2">Ninon de l'Enclos</tspan><tspan x="149" dy="19.2">Molière</tspan></text>
 <text x="354" y="774.6" text-anchor="middle" dominant-baseline="middle" font-family="Cinzel, serif" font-size="16" font-weight="600" fill="#3a2a13"><tspan x="354" dy="0">✠ RIVAUX ✠</tspan><tspan x="354" dy="19.2"> </tspan><tspan x="354" dy="19.2">Anne d'Autriche</tspan><tspan x="354" dy="19.2">Mme de Montespan</tspan></text>
 <text x="552" y="774.6" text-anchor="middle" dominant-baseline="middle" font-family="Cinzel, serif" font-size="16" font-weight="600" fill="#3a2a13"><tspan x="552" dy="0">❤ AMOURS ❤</tspan><tspan x="552" dy="19.2"> </tspan><tspan x="552" dy="19.2">Louis XIV</tspan></text>
 <text x="354" y="918" text-anchor="middle" dominant-baseline="middle" font-family="Cinzel, serif" font-size="16" font-weight="700" fill="#3a2a13">Classe : Dame de Cœur / Faction : Courtisane</text>
+</svg>`;
+
+// CARTE MOLIÈRE
+const moliereRectoSVG = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 708 952" width="708" height="952">
+<image href="images/cartes/portraits_personnages/moliere.webp" x="28.32" y="145.32" width="651.36" height="651.36" preserveAspectRatio="xMidYMid slice"/>
+<image href="images/cartes/recto/carte_vierge_recto.webp" x="0" y="0" width="708" height="952"/>
+<text x="354" y="118" text-anchor="middle" dominant-baseline="middle" font-family="Cinzel, serif" font-size="34" font-weight="800" fill="#6a4d24">MOLIÈRE</text>
+<text x="86" y="722" text-anchor="start" dominant-baseline="middle" font-family="Cinzel, serif" font-size="22" font-weight="700" fill="#3a2a13">ATT : 550</text>
+<text x="215" y="722" text-anchor="start" dominant-baseline="middle" font-family="Cinzel, serif" font-size="22" font-weight="700" fill="#3a2a13">DEF : 450</text>
+<text x="401" y="722" text-anchor="start" dominant-baseline="middle" font-family="Cinzel, serif" font-size="22" font-weight="700" fill="#3a2a13">HP : 600</text>
+<text x="528" y="722" text-anchor="start" dominant-baseline="middle" font-family="Cinzel, serif" font-size="22" font-weight="700" fill="#3a2a13">MN : 950</text>
+<text x="354" y="774" text-anchor="middle" dominant-baseline="middle" font-family="Cinzel, serif" font-size="16" font-weight="600" fill="#3a2a13"><tspan x="354" dy="0">Jean-Baptiste Poquelin, dit Molière, révolutionne le théâtre</tspan><tspan x="354" dy="19.2">français. Protégé de Louis XIV, il crée une comédie qui mêle</tspan><tspan x="354" dy="19.2">divertissement et critique sociale. Ses pièces comme "Le Bourgeois</tspan><tspan x="354" dy="19.2">Gentilhomme" ou "Le Malade Imaginaire" dépeignent les travers</tspan><tspan x="354" dy="19.2">de son époque. Sa mort en 1673, sur scène, consacre sa légende</tspan><tspan x="354" dy="19.2">d'artiste total.</tspan></text>
+<text x="354" y="918" text-anchor="middle" dominant-baseline="middle" font-family="Cinzel, serif" font-size="16" font-weight="700" fill="#3a2a13">Classe : Maître des Arts / Faction : Peuple</text>
+</svg>`;
+
+const moliereVersoSVG = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 708 952" width="708" height="952">
+<image href="images/cartes/verso/carte_vierge_verso.webp" x="0" y="0" width="708" height="952"/>
+<g transform="translate(142 320) rotate(0)" opacity="1"><image href="images/cartes/verso/moliere_c1.webp" x="-40" y="-40" width="80" height="80"/></g>
+<g transform="translate(284 320) rotate(0)" opacity="1"><image href="images/cartes/verso/moliere_c2.webp" x="-40" y="-40" width="80" height="80"/></g>
+<g transform="translate(425 320) rotate(0)" opacity="1"><image href="images/cartes/verso/moliere_c3.webp" x="-40" y="-40" width="80" height="80"/></g>
+<g transform="translate(567 320) rotate(0)" opacity="1"><image href="images/cartes/verso/moliere_c4.webp" x="-40" y="-40" width="80" height="80"/></g>
+<g transform="translate(600 600) rotate(0)" opacity="1"><image href="images/cartes/verso/moliere_objet.webp" x="-44" y="-44" width="88" height="88"/></g>
+<text x="354" y="120" text-anchor="middle" dominant-baseline="middle" font-family="Cinzel, serif" font-size="34" font-weight="800" fill="#6a4d24">LE GÉNIE COMIQUE</text>
+<text x="354" y="193" text-anchor="middle" dominant-baseline="middle" font-family="Cinzel, serif" font-size="16" font-weight="800" fill="#3a2a13">COMPÉTENCES</text>
+<text x="143" y="252.4" text-anchor="middle" dominant-baseline="middle" font-family="Cinzel, serif" font-size="16" font-weight="600" fill="#3a2a13"><tspan x="143" dy="0">Génie</tspan><tspan x="143" dy="19.2">Dramatique</tspan></text>
+<text x="283" y="252.4" text-anchor="middle" dominant-baseline="middle" font-family="Cinzel, serif" font-size="16" font-weight="600" fill="#3a2a13"><tspan x="283" dy="0">Satire</tspan><tspan x="283" dy="19.2">Brillante</tspan></text>
+<text x="425" y="252.4" text-anchor="middle" dominant-baseline="middle" font-family="Cinzel, serif" font-size="16" font-weight="600" fill="#3a2a13"><tspan x="425" dy="0">Comédie</tspan><tspan x="425" dy="19.2">Humaine</tspan></text>
+<text x="566" y="252.4" text-anchor="middle" dominant-baseline="middle" font-family="Cinzel, serif" font-size="16" font-weight="600" fill="#3a2a13"><tspan x="566" dy="0">Vérité</tspan><tspan x="566" dy="19.2">Sociale</tspan></text>
+<text x="351" y="407" text-anchor="middle" dominant-baseline="middle" font-family="Cinzel, serif" font-size="16" font-weight="800" fill="#3a2a13">POUVOIR ULTIME</text>
+<text x="354" y="441" text-anchor="middle" dominant-baseline="middle" font-family="Cinzel, serif" font-size="15" font-weight="600" fill="#3a2a13"><tspan x="354" dy="0">◈ MIROIR DE LA SOCIÉTÉ ◈</tspan><tspan x="354" dy="18">"Révèle les vérités cachées par l'art de la comédie"</tspan></text>
+<text x="329" y="546" text-anchor="middle" dominant-baseline="middle" font-family="Cinzel, serif" font-size="16" font-weight="800" fill="#3a2a13">CITATION</text>
+<text x="315" y="600" text-anchor="middle" dominant-baseline="middle" font-family="Cinzel, serif" font-size="22" font-weight="600" fill="#3a2a13">"Le rire révèle les vices de son temps"</text>
+<text x="354" y="721" text-anchor="middle" dominant-baseline="middle" font-family="Cinzel, serif" font-size="22" font-weight="800" fill="#3a2a13">✦ RELATIONS ✦</text>
+<text x="149" y="774.6" text-anchor="middle" dominant-baseline="middle" font-family="Cinzel, serif" font-size="16" font-weight="600" fill="#3a2a13"><tspan x="149" dy="0">✦ ALLIÉS ✦</tspan><tspan x="149" dy="19.2"> </tspan><tspan x="149" dy="19.2">Louis XIV</tspan><tspan x="149" dy="19.2">Troupe théâtrale</tspan><tspan x="149" dy="19.2">Artistes</tspan></text>
+<text x="354" y="774.6" text-anchor="middle" dominant-baseline="middle" font-family="Cinzel, serif" font-size="16" font-weight="600" fill="#3a2a13"><tspan x="354" dy="0">✠ RIVAUX ✠</tspan><tspan x="354" dy="19.2"> </tspan><tspan x="354" dy="19.2">Dévots</tspan><tspan x="354" dy="19.2">Critiques</tspan><tspan x="354" dy="19.2">conservateurs</tspan></text>
+<text x="552" y="774.6" text-anchor="middle" dominant-baseline="middle" font-family="Cinzel, serif" font-size="16" font-weight="600" fill="#3a2a13"><tspan x="552" dy="0">❤ AMOURS ❤</tspan><tspan x="552" dy="19.2"> </tspan><tspan x="552" dy="19.2">Armande Béjart</tspan><tspan x="552" dy="19.2">Madeleine Béjart</tspan></text>
+<text x="354" y="918" text-anchor="middle" dominant-baseline="middle" font-family="Cinzel, serif" font-size="16" font-weight="700" fill="#3a2a13">Classe : Maître des Arts / Faction : Peuple</text>
+</svg>`;
+
+// CARTE MAZARIN
+const mazarinRectoSVG = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 708 952" width="708" height="952">
+<image href="images/cartes/portraits_personnages/mazarin.webp" x="28.32" y="145.32" width="651.36" height="651.36" preserveAspectRatio="xMidYMid slice"/>
+<image href="images/cartes/recto/carte_vierge_recto.webp" x="0" y="0" width="708" height="952"/>
+<text x="354" y="118" text-anchor="middle" dominant-baseline="middle" font-family="Cinzel, serif" font-size="34" font-weight="800" fill="#6a4d24">MAZARIN</text>
+<text x="86" y="722" text-anchor="start" dominant-baseline="middle" font-family="Cinzel, serif" font-size="22" font-weight="700" fill="#3a2a13">ATT : 650</text>
+<text x="215" y="722" text-anchor="start" dominant-baseline="middle" font-family="Cinzel, serif" font-size="22" font-weight="700" fill="#3a2a13">DEF : 800</text>
+<text x="401" y="722" text-anchor="start" dominant-baseline="middle" font-family="Cinzel, serif" font-size="22" font-weight="700" fill="#3a2a13">HP : 750</text>
+<text x="528" y="722" text-anchor="start" dominant-baseline="middle" font-family="Cinzel, serif" font-size="22" font-weight="700" fill="#3a2a13">MN : 900</text>
+<text x="354" y="774" text-anchor="middle" dominant-baseline="middle" font-family="Cinzel, serif" font-size="16" font-weight="600" fill="#3a2a13"><tspan x="354" dy="0">Jules Mazarin, cardinal italien, succède à Richelieu comme Premier</tspan><tspan x="354" dy="19.2">ministre. Mentor de Louis XIV, il lui enseigne l'art de régner tout</tspan><tspan x="354" dy="19.2">en consolidant l'autorité royale. Fin diplomate, il négocie la paix</tspan><tspan x="354" dy="19.2">de Westphalie (1648) et le traité des Pyrénées (1659). Malgré les</tspan><tspan x="354" dy="19.2">attaques de la Fronde, il pose les bases de la grandeur française</tspan><tspan x="354" dy="19.2">que Louis XIV développera.</tspan></text>
+<text x="354" y="918" text-anchor="middle" dominant-baseline="middle" font-family="Cinzel, serif" font-size="16" font-weight="700" fill="#3a2a13">Classe : Stratège Politique / Faction : Cour Royale</text>
+</svg>`;
+
+const mazarinVersoSVG = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 708 952" width="708" height="952">
+<image href="images/cartes/verso/carte_vierge_verso.webp" x="0" y="0" width="708" height="952"/>
+<g transform="translate(142 320) rotate(0)" opacity="1"><image href="images/cartes/verso/mazarin_c1.webp" x="-40" y="-40" width="80" height="80"/></g>
+<g transform="translate(284 320) rotate(0)" opacity="1"><image href="images/cartes/verso/mazarin_c2.webp" x="-40" y="-40" width="80" height="80"/></g>
+<g transform="translate(425 320) rotate(0)" opacity="1"><image href="images/cartes/verso/mazarin_c3.webp" x="-40" y="-40" width="80" height="80"/></g>
+<g transform="translate(567 320) rotate(0)" opacity="1"><image href="images/cartes/verso/mazarin_c4.webp" x="-40" y="-40" width="80" height="80"/></g>
+<g transform="translate(600 600) rotate(0)" opacity="1"><image href="images/cartes/verso/mazarin_objet.webp" x="-44" y="-44" width="88" height="88"/></g>
+<text x="354" y="120" text-anchor="middle" dominant-baseline="middle" font-family="Cinzel, serif" font-size="34" font-weight="800" fill="#6a4d24">L'ÉMINENCE</text>
+<text x="354" y="193" text-anchor="middle" dominant-baseline="middle" font-family="Cinzel, serif" font-size="16" font-weight="800" fill="#3a2a13">COMPÉTENCES</text>
+<text x="143" y="252.4" text-anchor="middle" dominant-baseline="middle" font-family="Cinzel, serif" font-size="16" font-weight="600" fill="#3a2a13"><tspan x="143" dy="0">Stratégie</tspan><tspan x="143" dy="19.2">politique</tspan></text>
+<text x="283" y="252.4" text-anchor="middle" dominant-baseline="middle" font-family="Cinzel, serif" font-size="16" font-weight="600" fill="#3a2a13"><tspan x="283" dy="0">Diplomatie</tspan><tspan x="283" dy="19.2">Subtile</tspan></text>
+<text x="425" y="252.4" text-anchor="middle" dominant-baseline="middle" font-family="Cinzel, serif" font-size="16" font-weight="600" fill="#3a2a13"><tspan x="425" dy="0">Vision</tspan><tspan x="425" dy="19.2">d'État</tspan></text>
+<text x="566" y="252.4" text-anchor="middle" dominant-baseline="middle" font-family="Cinzel, serif" font-size="16" font-weight="600" fill="#3a2a13"><tspan x="566" dy="0">Manipulation</tspan></text>
+<text x="351" y="407" text-anchor="middle" dominant-baseline="middle" font-family="Cinzel, serif" font-size="16" font-weight="800" fill="#3a2a13">POUVOIR ULTIME</text>
+<text x="354" y="441" text-anchor="middle" dominant-baseline="middle" font-family="Cinzel, serif" font-size="15" font-weight="600" fill="#3a2a13"><tspan x="354" dy="0">◈ MAÎTRE DU JEU ◈</tspan><tspan x="354" dy="18">Orchestre les événements depuis l'ombre</tspan></text>
+<text x="329" y="546" text-anchor="middle" dominant-baseline="middle" font-family="Cinzel, serif" font-size="16" font-weight="800" fill="#3a2a13">CITATION</text>
+<text x="315" y="600" text-anchor="middle" dominant-baseline="middle" font-family="Cinzel, serif" font-size="22" font-weight="600" fill="#3a2a13">"La politique est l'art du possible."</text>
+<text x="354" y="721" text-anchor="middle" dominant-baseline="middle" font-family="Cinzel, serif" font-size="22" font-weight="800" fill="#3a2a13">✦ RELATIONS ✦</text>
+<text x="149" y="774.6" text-anchor="middle" dominant-baseline="middle" font-family="Cinzel, serif" font-size="16" font-weight="600" fill="#3a2a13"><tspan x="149" dy="0">✦ ALLIÉS ✦</tspan><tspan x="149" dy="19.2"> </tspan><tspan x="149" dy="19.2">Anne d'Autriche</tspan><tspan x="149" dy="19.2">Louis XIV</tspan><tspan x="149" dy="19.2">Famille Mancini</tspan></text>
+<text x="354" y="774.6" text-anchor="middle" dominant-baseline="middle" font-family="Cinzel, serif" font-size="16" font-weight="600" fill="#3a2a13"><tspan x="354" dy="0">✠ RIVAUX ✠</tspan><tspan x="354" dy="19.2"> </tspan><tspan x="354" dy="19.2">Frondeurs</tspan><tspan x="354" dy="19.2">Duc de Beaufort</tspan><tspan x="354" dy="19.2">Parlementaires</tspan></text>
+<text x="552" y="774.6" text-anchor="middle" dominant-baseline="middle" font-family="Cinzel, serif" font-size="16" font-weight="600" fill="#3a2a13"><tspan x="552" dy="0">❤ AMOURS ❤</tspan><tspan x="552" dy="19.2"> </tspan><tspan x="552" dy="19.2">Anne d'Autriche</tspan><tspan x="552" dy="19.2">Nièces Mancini</tspan></text>
+<text x="354" y="918" text-anchor="middle" dominant-baseline="middle" font-family="Cinzel, serif" font-size="16" font-weight="700" fill="#3a2a13">Classe : Stratège Politique / Faction : Cour Royale</text>
 </svg>`;
 
 const cardsGrid = document.getElementById('cardsGrid');
@@ -229,17 +307,36 @@ const cardContainer = document.getElementById('cardContainer');
 const cardFront = document.getElementById('cardFront');
 const cardBack = document.getElementById('cardBack');
 
+// Variable pour stocker la carte actuellement ouverte
+let currentCardRecto = rectoSVG;
+let currentCardVerso = versoSVG;
+
+// Ajouter 24 cartes Marie Mancini
 for (let i = 0; i < 24; i++) {
     const thumbnail = document.createElement('div');
     thumbnail.className = 'card-thumbnail';
     thumbnail.innerHTML = rectoSVG;
-    thumbnail.onclick = () => openCard();
+    thumbnail.onclick = () => openCard(rectoSVG, versoSVG);
     cardsGrid.appendChild(thumbnail);
 }
 
-function openCard() {
-    cardFront.innerHTML = rectoSVG;
-    cardBack.innerHTML = versoSVG;
+// Ajouter 1 carte Molière
+const moliereThumbnail = document.createElement('div');
+moliereThumbnail.className = 'card-thumbnail';
+moliereThumbnail.innerHTML = moliereRectoSVG;
+moliereThumbnail.onclick = () => openCard(moliereRectoSVG, moliereVersoSVG);
+cardsGrid.appendChild(moliereThumbnail);
+
+// Ajouter 1 carte Mazarin
+const mazarinThumbnail = document.createElement('div');
+mazarinThumbnail.className = 'card-thumbnail';
+mazarinThumbnail.innerHTML = mazarinRectoSVG;
+mazarinThumbnail.onclick = () => openCard(mazarinRectoSVG, mazarinVersoSVG);
+cardsGrid.appendChild(mazarinThumbnail);
+
+function openCard(rectoContent, versoContent) {
+    cardFront.innerHTML = rectoContent;
+    cardBack.innerHTML = versoContent;
     cardContainer.classList.remove('flipped');
     modal.classList.add('active');
 }

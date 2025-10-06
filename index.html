@@ -41,13 +41,13 @@
         </ul>
     </nav>
 
+    <!-- Paillettes globales pour tout le site -->
+    <div class="global-glitter-container" id="globalGlitterContainer"></div>
+
     <!-- HERO SECTION - MASQUE DE BAL RÉVÉLATEUR -->
     <section id="hero">
         <!-- Fond de bal baroque -->
         <div class="ballroom-background"></div>
-
-        <!-- Paillettes qui tombent -->
-        <div class="glitter-container" id="glitterContainer"></div>
 
         <!-- Masque vénitien doré -->
         <div class="venetian-mask">
@@ -92,19 +92,21 @@
 
     <!-- GALERIE SECTION -->
     <section id="galerie">
-        <h2 class="section-title galerie-title-dark">✦ Collection de Cartes ✦</h2>
+        <h2 class="section-title">✦ Les Personnages du Spectacle ✦</h2>
         <div class="cards-grid" id="cardsGrid"></div>
     </section>
 
     <!-- INFORMATIONS PRATIQUES SECTION -->
     <section id="informations">
-        <h2 class="section-title info-title">Informations Pratiques</h2>
-        <p class="info-subtitle">Toutes les informations pour assister au spectacle</p>
+        <h2 class="section-title">✦ Informations Pratiques ✦</h2>
+        <p class="section-subtitle">Toutes les informations pour assister au spectacle</p>
+
         <div class="info-grid">
             <div class="info-card info-card-blue">
                 <div class="info-icon">🏫</div>
                 <h3>Lycée Condorcet</h3>
                 <p>Entrée sur Moverly Road</p>
+                <a href="https://www.google.com/maps/place/33%C2%B056'05.6%22S+151%C2%B014'20.2%22E/@-33.9348929,151.2382859,19z/data=!3m1!4b1!4m4!3m3!8m2!3d-33.934894!4d151.238931?entry=ttu&g_ep=EgoyMDI1MTAwMS4wIKXMDSoASAFQAw%3D%3D" target="_blank" class="map-link">📍 Voir sur Google Maps</a>
             </div>
             <div class="info-card info-card-yellow">
                 <div class="info-icon">🎫</div>
@@ -112,33 +114,8 @@
                 <p>Spectacle accessible à tous</p>
             </div>
         </div>
-    </section>
 
-    <!-- DATES SECTION -->
-    <section id="dates">
-        <h2 class="section-title dates-title">📅 Dates des Représentations</h2>
-        <div class="dates-container">
-            <div class="date-card">
-                <div class="date-card-icon">🎭</div>
-                <h3>Samedi 14 Mars 2026</h3>
-                <p class="date-time">18h30</p>
-            </div>
-            <div class="date-card">
-                <div class="date-card-icon">🎭</div>
-                <h3>Jeudi 19 Mars 2026</h3>
-                <p class="date-time">18h30</p>
-            </div>
-            <div class="date-card">
-                <div class="date-card-icon">🎭</div>
-                <h3>Samedi 21 Mars 2026</h3>
-                <p class="date-time">18h30</p>
-            </div>
-        </div>
-    </section>
-
-    <!-- SERVICES SUR PLACE SECTION -->
-    <section id="services">
-        <h2 class="section-title services-title">🎭 Services sur Place</h2>
+        <h3 class="info-section-title">Services sur Place</h3>
         <div class="services-grid">
             <div class="service-card">
                 <div class="service-icon service-icon-green">🍴</div>
@@ -158,10 +135,32 @@
         </div>
     </section>
 
+    <!-- DATES SECTION -->
+    <section id="dates">
+        <h2 class="section-title">✦ Dates des Représentations ✦</h2>
+        <div class="dates-container">
+            <div class="date-card">
+                <div class="date-card-icon">🎭</div>
+                <h3>Samedi 14 Mars 2026</h3>
+                <p class="date-time">18h30</p>
+            </div>
+            <div class="date-card">
+                <div class="date-card-icon">🎭</div>
+                <h3>Jeudi 19 Mars 2026</h3>
+                <p class="date-time">18h30</p>
+            </div>
+            <div class="date-card">
+                <div class="date-card-icon">🎭</div>
+                <h3>Samedi 21 Mars 2026</h3>
+                <p class="date-time">18h30</p>
+            </div>
+        </div>
+    </section>
+
     <!-- DISTRIBUTION SECTION -->
     <section id="distribution">
-        <h2 class="section-title distribution-title">🎬 Distribution des Rôles</h2>
-        <p class="distribution-subtitle">Découvrez qui incarne chaque personnage de la pièce</p>
+        <h2 class="section-title">✦ Distribution des Rôles ✦</h2>
+        <p class="section-subtitle">Découvrez qui incarne chaque personnage de la pièce</p>
         <div class="distribution-cta">
             <button class="distribution-button" id="openDistributionModal">
                 <span class="distribution-button-icon">🎭</span>
@@ -172,8 +171,8 @@
 
     <!-- HISTOIRE SECTION -->
     <section id="histoire">
-        <h2 class="section-title">Faits Historiques</h2>
-        <p class="events-subtitle">Les événements majeurs qui ont marqué le règne du Roi Soleil</p>
+        <h2 class="section-title">✦ Faits Historiques ✦</h2>
+        <p class="section-subtitle">Les événements majeurs qui ont marqué le règne du Roi Soleil</p>
 
         <!-- EVENTS CARDS GRID -->
         <div class="events-grid">
@@ -467,8 +466,8 @@
 
     <!-- SPECTACLE SECTION -->
     <section id="spectacle">
-        <h2 class="section-title">L'Histoire du Roi Soleil - Le Spectacle</h2>
-        <p class="spectacle-intro">
+        <h2 class="section-title">✦ Le Spectacle ✦</h2>
+        <p class="section-subtitle">
             Découvrez l'épopée fascinante de Louis XIV à travers notre comédie musicale originale
         </p>
 
@@ -525,18 +524,53 @@
 
     <!-- APROPOS SECTION -->
     <section id="apropos">
-        <h2 class="section-title">À Propos du Projet</h2>
+        <h2 class="section-title">✦ À Propos du Projet ✦</h2>
         <div class="about-content">
             <p>
-                <strong>Le Roi Soleil</strong> est une comédie musicale produite par les talentueux élèves du 
-                <strong>Lycée Condorcet Sydney</strong>. Ce spectacle vous plonge dans l'univers fascinant 
+                <strong>Le Roi Soleil</strong> est une comédie musicale produite par les talentueux élèves du
+                <strong>Lycée Condorcet Sydney</strong>. Ce spectacle vous plonge dans l'univers fascinant
                 de la cour de Louis XIV, entre intrigues politiques, romances passionnées et ballets grandioses.
             </p>
             <br>
             <p>
-                Nos étudiants se sont investis avec passion pour recréer l'atmosphère de Versailles 
+                Nos étudiants se sont investis avec passion pour recréer l'atmosphère de Versailles
                 et vous offrir un spectacle inoubliable mêlant histoire, musique et performance théâtrale.
             </p>
+            <br>
+
+            <!-- ÉQUIPE ARTISTIQUE -->
+            <div class="team-section team-v4">
+                <h3 class="team-title">Derrière le Rideau</h3>
+                <div class="team-horizontal">
+                    <div class="team-h-card">
+                        <div class="team-h-left">
+                            <span class="team-h-icon">🎭</span>
+                        </div>
+                        <div class="team-h-right">
+                            <div class="team-h-role">Mise en scène et décors</div>
+                            <div class="team-h-name">Raïcha Douady</div>
+                        </div>
+                    </div>
+                    <div class="team-h-card">
+                        <div class="team-h-left">
+                            <span class="team-h-icon">🎵</span>
+                        </div>
+                        <div class="team-h-right">
+                            <div class="team-h-role">Chant</div>
+                            <div class="team-h-name">Céline Pozzo</div>
+                        </div>
+                    </div>
+                    <div class="team-h-card">
+                        <div class="team-h-left">
+                            <span class="team-h-icon">👗</span>
+                        </div>
+                        <div class="team-h-right">
+                            <div class="team-h-role">Costumes</div>
+                            <div class="team-h-name">Nadia Guérin</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </section>
 
