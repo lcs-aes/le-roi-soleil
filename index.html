@@ -94,61 +94,65 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* --- ACCORDÉON (PERSONNAGES CLÉS) --- */
-        .accordion {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
+        /* --- LISTE DES PERSONNAGES (CARTES) --- */
+        .chars-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 15px;
         }
 
-        details {
+        @media (min-width: 768px) {
+            .chars-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        .char-card {
             background-color: var(--card-bg);
-            color: var(--dark-text);
             border-radius: 12px;
-            overflow: hidden;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            padding: 15px 20px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+            transition: transform 0.2s, box-shadow 0.2s;
         }
 
-        summary {
-            padding: 18px 16px;
+        .char-card:hover, .char-card:active {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(0,0,0,0.25);
+            border-left: 4px solid #5C65CD;
+        }
+
+        .char-card-icon {
+            font-size: 2.2rem;
+            background: rgba(92, 101, 205, 0.1);
+            width: 60px;
+            height: 60px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+
+        .char-card-info h3 {
+            margin: 0 0 5px 0;
+            color: #3B4387;
             font-family: Georgia, serif;
             font-size: 1.25rem;
-            color: #3B4387;
-            cursor: pointer;
-            list-style: none;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-weight: bold;
-            background: var(--card-bg);
         }
 
-        summary::-webkit-details-marker { display: none; }
-        summary::after {
-            content: '+';
-            font-size: 1.5rem;
-            color: #3B4387;
-            font-family: monospace;
+        .char-card-info p {
+            margin: 0;
+            font-size: 0.85rem;
+            color: var(--dark-text);
+            opacity: 0.8;
+            font-weight: 500;
         }
-        details[open] summary::after { content: '−'; }
 
         /* --- CONTENU MODALE & ACCORDÉON --- */
-        .content-inner {
-            padding: 0 16px 20px 16px;
-        }
-
-        .char-header { text-align: center; margin-bottom: 20px; }
-        .char-subtitle { font-family: Georgia, serif; font-size: 1.1rem; color: var(--dark-text); opacity: 0.8; margin-bottom: 8px; }
-        .dates-badge {
-            display: inline-block;
-            background: rgba(92, 101, 205, 0.1);
-            color: #5C65CD;
-            padding: 4px 14px;
-            border-radius: 20px;
-            font-size: 0.85rem;
-            font-weight: bold;
-        }
-        
         .intro-text { font-size: 0.95rem; text-align: justify; opacity: 0.9; margin-bottom: 20px; color: var(--dark-text); }
         
         .section-title {
@@ -297,7 +301,22 @@
         .modal-icon { font-size: 2.5rem; margin-bottom: 10px; }
         .modal-title { font-family: Georgia, serif; font-size: 1.8rem; margin: 0 0 5px 0; }
         .modal-subtitle { font-size: 1rem; opacity: 0.9; margin-bottom: 10px; }
-        .modal-dates { background: rgba(255,255,255,0.2); padding: 4px 14px; border-radius: 20px; font-size: 0.85rem; display: inline-block; font-weight: bold; }
+        
+        .modal-dates { 
+            background: rgba(255,255,255,0.2); 
+            padding: 4px 14px; 
+            border-radius: 20px; 
+            font-size: 0.85rem; 
+            display: inline-block; 
+            font-weight: bold; 
+        }
+        
+        /* Style distinctif pour les personnages fictifs */
+        .modal-dates.fictif {
+            background: transparent;
+            border: 1px dashed rgba(255, 255, 255, 0.7);
+            color: #FFF;
+        }
 
         .modal-body { padding: 20px; }
     </style>
@@ -315,7 +334,7 @@
 
         <!-- ONGLET 1 : PERSONNAGES -->
         <div id="tab-personnages" class="tab-content active">
-            <div class="accordion" id="accordion-container">
+            <div class="chars-grid" id="chars-container">
                 <!-- Généré par JS -->
             </div>
         </div>
@@ -348,134 +367,176 @@
         // --- DONNÉES DES PERSONNAGES ---
         const characters = {
             "louis-xiv": {
-                name: "Louis XIV", subtitle: "Le Roi-Soleil", dates: "1638-1715", icon: "👑", mainList: true,
+                name: "Louis XIV", subtitle: "Le Roi-Soleil", dates: "1638-1715", icon: "👑", mainList: true, isFictional: false,
                 intro: "Roi de France de 1643 à 1715, Louis XIV incarne l'absolutisme royal français. Surnommé le Roi-Soleil, il fait de la France la première puissance européenne.",
                 facts: ["Règne de 72 ans, le plus long de l'histoire de France.", "Créateur du château de Versailles.", "Instaure l'étiquette de cour la plus raffinée d'Europe.", "Mène de nombreuses guerres pour étendre le territoire français."],
                 role: "Monarque absolu qui centralise le pouvoir royal et fait rayonner la culture française en Europe.",
                 heritage: "Modèle de l'absolutisme royal, créateur de Versailles, symbole de la grandeur française."
             },
             "marie-mancini": {
-                name: "Marie Mancini", subtitle: "Le premier amour", dates: "1639-1715", icon: "🌹", mainList: true,
+                name: "Marie Mancini", subtitle: "Le premier amour", dates: "1639-1715", icon: "🌹", mainList: true, isFictional: false,
                 intro: "Nièce du cardinal Mazarin, Marie Mancini est une intellectuelle brillante qui fut le premier grand amour passionné du jeune Louis XIV.",
                 facts: ["Initie le jeune roi à la littérature, à l'art et à la beauté.", "Sa liaison avec le roi manque de faire échouer la paix avec l'Espagne.", "Est exilée de la cour par son propre oncle pour forcer le mariage royal."],
                 role: "Catalyseur de l'éveil culturel et sentimental du jeune souverain avant qu'il n'assume son rôle d'État.",
                 heritage: "L'image tragique du sacrifice de l'amour personnel sur l'autel impitoyable de la raison d'État."
             },
             "mazarin": {
-                name: "Cardinal Mazarin", subtitle: "Le principal ministre", dates: "1602-1661", icon: "📜", mainList: true,
+                name: "Cardinal Mazarin", subtitle: "Le principal ministre", dates: "1602-1661", icon: "📜", mainList: true, isFictional: false,
                 intro: "Parrain de Louis XIV et habile diplomate, il gouverne la France avec Anne d'Autriche durant la minorité du roi.",
                 facts: ["Triomphe des révoltes nobles et parlementaires de la Fronde.", "Signe des traités de paix majeurs qui étendent les frontières.", "Forme politiquement Louis XIV à l'exercice du pouvoir absolu."],
                 role: "Artisan de la pacification du royaume et maître à penser politique du jeune Roi-Soleil.",
                 heritage: "A légué à Louis XIV un royaume puissant, uni, et une autorité royale totalement restaurée."
             },
             "anne-autriche": {
-                name: "Anne d'Autriche", subtitle: "La Reine Mère", dates: "1601-1666", icon: "👑", mainList: true,
+                name: "Anne d'Autriche", subtitle: "La Reine Mère", dates: "1601-1666", icon: "👑", mainList: true, isFictional: false,
                 intro: "Reine de France, mère de Louis XIV, elle assure la régence du royaume d'une main de fer aux côtés de Mazarin.",
                 facts: ["Défend farouchement l'autorité de son fils face aux frondeurs.", "Soutient indéfectiblement Mazarin malgré la haine du peuple.", "Transmet à Louis XIV une profonde piété catholique."],
                 role: "Régente inflexible et garante de la transmission intacte du pouvoir absolu à son fils.",
                 heritage: "L'incarnation de la mère protectrice de la couronne dans la tempête."
             },
-            "monsieur": {
-                name: "Monsieur", subtitle: "Le frère du Roi", dates: "1640-1701", icon: "⚜️", mainList: true,
-                intro: "Philippe d'Orléans, frère cadet de Louis XIV. Brillant stratège, il est souvent écarté du pouvoir politique par son frère.",
-                facts: ["Remporte de grandes victoires militaires pour la France.", "Connu pour son excentricité, ses mœurs libérées et ses favoris.", "Mène une vie de cour brillante et mondaine au Palais-Royal."],
-                role: "Soutien indéfectible de la couronne tout en incarnant une cour alternative, intellectuelle et festive.",
-                heritage: "Fondateur de la maison d'Orléans, ancêtre de presque toutes les familles royales catholiques actuelles."
-            },
             "montespan": {
-                name: "Mme de Montespan", subtitle: "La favorite flamboyante", dates: "1640-1707", icon: "✨", mainList: true,
+                name: "Mme de Montespan", subtitle: "La favorite flamboyante", dates: "1640-1707", icon: "✨", mainList: true, isFictional: false,
                 intro: "Favorite incontestée de Louis XIV pendant plus d'une décennie, elle domine la cour par sa beauté et son ambition.",
                 facts: ["Donne sept enfants au roi, légitimés par la suite.", "Grande protectrice des arts et du luxe à Versailles.", "Chute dramatiquement lors de la sombre affaire des Poisons."],
                 role: "Incarne le faste, l'esprit piquant et la démesure des premières décennies du règne.",
                 heritage: "Symbole de l'influence féminine absolue mais éphémère à la cour."
             },
             "maintenon": {
-                name: "Mme de Maintenon", subtitle: "L'épouse secrète", dates: "1635-1719", icon: "📖", mainList: true,
+                name: "Mme de Maintenon", subtitle: "L'épouse secrète", dates: "1635-1719", icon: "📖", mainList: true, isFictional: false,
                 intro: "D'abord gouvernante des enfants illégitimes du roi, elle devient sa dernière favorite puis son épouse secrète.",
                 facts: ["Épouse secrètement Louis XIV à la mort de la reine.", "Exerce une influence moralisatrice et religieuse sur la cour.", "Fonde la Maison d'éducation de Saint-Cyr pour jeunes filles."],
                 role: "Confidente suprême et influence stabilisatrice (et austère) de la seconde moitié du règne.",
                 heritage: "La création de Saint-Cyr, modèle pionnier pour l'éducation des femmes."
             },
+            "monsieur": {
+                name: "Monsieur", subtitle: "Le frère du Roi", dates: "1640-1701", icon: "⚜️", mainList: true, isFictional: false,
+                intro: "Philippe d'Orléans, frère cadet de Louis XIV. Brillant stratège, il est souvent écarté du pouvoir politique par son frère.",
+                facts: ["Remporte de grandes victoires militaires pour la France.", "Connu pour son excentricité, ses mœurs libérées et ses favoris.", "Mène une vie de cour brillante et mondaine au Palais-Royal."],
+                role: "Soutien indéfectible de la couronne tout en incarnant une cour alternative, intellectuelle et festive.",
+                heritage: "Fondateur de la maison d'Orléans, ancêtre de presque toutes les familles royales catholiques actuelles."
+            },
             "colbert": {
-                name: "Jean-Baptiste Colbert", subtitle: "Le grand intendant", dates: "1619-1683", icon: "⚖️", mainList: true,
+                name: "Jean-Baptiste Colbert", subtitle: "Le grand intendant", dates: "1619-1683", icon: "⚖️", mainList: true, isFictional: false,
                 intro: "Contrôleur général des finances, architecte infatigable de la puissance économique française.",
                 facts: ["Redresse spectaculairement les finances du royaume.", "Fonde les grandes manufactures royales (Gobelins).", "Développe massivement le commerce et la marine de guerre."],
                 role: "Bâtisseur de la puissance matérielle, industrielle et navale de la France.",
                 heritage: "Le 'colbertisme' et des institutions administratives toujours existantes."
             },
             "beaufort": {
-                name: "Duc de Beaufort", subtitle: "Le Roi des Halles", dates: "1616-1669", icon: "⚓", mainList: true,
+                name: "Duc de Beaufort", subtitle: "Le Roi des Halles", dates: "1616-1669", icon: "⚓", mainList: true, isFictional: false,
                 intro: "Prince charismatique, figure de proue populaire de la Fronde, puis amiral de la flotte française.",
                 facts: ["S'évade du donjon de Vincennes en 1648.", "Devient le leader populaire de la rébellion contre Mazarin.", "Se réconcilie avec le roi pour commander en Méditerranée."],
                 role: "Symbole de l'insoumission domptée puis de la bravoure au service de la couronne.",
                 heritage: "Figure romantique inspirant la littérature de cape et d'épée (A. Dumas)."
             },
             "moliere": {
-                name: "Molière", subtitle: "Le génie de la comédie", dates: "1622-1673", icon: "🎭", mainList: true,
+                name: "Molière", subtitle: "Le génie de la comédie", dates: "1622-1673", icon: "🎭", mainList: true, isFictional: false,
                 intro: "Jean-Baptiste Poquelin, immense homme de théâtre et comédien, est l'organisateur des divertissements royaux.",
                 facts: ["Révolutionne le théâtre comique.", "Dresse une satire brillante des travers de la société.", "Meurt à l'issue d'une représentation du Malade imaginaire."],
                 role: "Peintre implacable des mœurs et pilier du rayonnement culturel versaillais.",
                 heritage: "Le répertoire le plus joué ; la 'langue de Molière'."
             },
-            // Nouveaux personnages pour les Faits Historiques :
+            "scarron": {
+                name: "Scarron", subtitle: "Le maître du burlesque", dates: "1610-1660", icon: "✒️", mainList: true, isFictional: false,
+                intro: "Auteur majeur, pionnier du burlesque, lourdement handicapé par la maladie. Il fut le premier époux de Françoise d'Aubigné (future Mme de Maintenon).",
+                facts: ["Tient un salon littéraire parisien brillant et farouchement libre.", "Épouse la jeune et pauvre Françoise d'Aubigné pour la sauver de la misère.", "Offre un regard ironique et décalé, loin des fastes de la cour royale."],
+                role: "Animateur d'une vie intellectuelle parisienne alternative, frondeuse et décomplexée.",
+                heritage: "L'un des fondateurs du genre comique et parodique dans la littérature classique du XVIIe siècle."
+            },
+            "ninon": {
+                name: "Ninon de l'Enclos", subtitle: "La femme libre", dates: "1620-1705", icon: "🍷", mainList: true, isFictional: false,
+                intro: "Célèbre courtisane, femme de lettres et amie des grands esprits de son temps, elle est la figure de proue de l'épicurisme à Paris.",
+                facts: ["Tient le célèbre salon 'Le Marais', point de ralliement des élites intellectuelles.", "Revendique ouvertement l'indépendance financière, morale et amoureuse des femmes.", "Fascine et est respectée par la haute société, incarnant un libertinage philosophique."],
+                role: "Incarnation éclatante de la liberté d'esprit et du désir d'affranchissement au sein du Grand Siècle.",
+                heritage: "Symbole intemporel de la femme forte, moderne et affranchie des conventions morales strictes."
+            },
+            "voisin": {
+                name: "La Voisin", subtitle: "La devineresse des poisons", dates: "Personnage fictif (Création 2005)", icon: "🧪", mainList: true, isFictional: true,
+                intro: "Figure de l'ombre redoutable et mystérieuse. Elle gravite dans les bas-fonds de Paris en vendant philtres d'amour, prédictions et poisons aux nobles prêts à tout.",
+                facts: ["Fournit à Madame de Montespan les remèdes occultes pour retenir le cœur du Roi.", "Incarne la part sombre, immorale et dangereuse de la haute société du Grand Siècle.", "Déclenche le scandale terrifiant de l'Affaire des Poisons qui secouera toute la cour."],
+                role: "Représenter la folie des grandeurs, l'avidité et la noirceur cachée derrière les dorures de Versailles.",
+                heritage: "Incarne la transgression ultime et la chute morale inévitable des courtisans aveuglés par l'ambition."
+            },
+            "lisieux": {
+                name: "Mademoiselle de Lisieux", subtitle: "L'ingénue à la cour", dates: "Personnage fictif (Création 2005)", icon: "🪞", mainList: true, isFictional: true,
+                intro: "Issue de la petite noblesse provinciale, elle monte à la cour avec des rêves de grandeur et de succès, gravitant innocemment autour des plus puissants.",
+                facts: ["Cherche désespérément à exister et à se faire remarquer dans la lumière du Roi-Soleil.", "Se confronte très rapidement aux rivalités impitoyables et aux manipulations cruelles des courtisans.", "Représente l'ambition d'élévation sociale absolue et parfois naïve propre à l'époque."],
+                role: "Illustrer la très grande fragilité des courtisans et le miroir aux alouettes que représentait l'entourage direct du Roi.",
+                heritage: "Dévoile les coulisses souvent terribles, froides et impitoyables cachées derrière l'étiquette royale."
+            },
+            "isabelle": {
+                name: "Isabelle", subtitle: "La fille du peuple", dates: "Personnage fictif (Création 2005)", icon: "🕊️", mainList: true, isFictional: true,
+                intro: "Jeune roturière rebelle et passionnée au destin romanesque. Elle se dresse contre les injustices et vit une romance impossible avec le noble Duc de Beaufort.",
+                facts: ["Incarne avec force la voix de la rue, la misère et les aspirations brisées des roturiers.", "Met en lumière la rigidité absolue des barrières sociales de l'époque à travers ses tourments amoureux.", "Soutient activement la Fronde et la rébellion populaire contre Mazarin."],
+                role: "Représenter le peuple de France, dramatiquement oublié de la grande Histoire, qui subit seul les guerres et les impôts.",
+                heritage: "Apporte l'indispensable dimension populaire, pure, humaine et intimement tragique à l'œuvre musicale."
+            },
+            "enfant-roi": {
+                name: "L'enfant roi", subtitle: "Le Grand Dauphin", dates: "1661-1711", icon: "👑", mainList: true, isFictional: false,
+                intro: "Louis de France, fils aîné et héritier légitime de Louis XIV. Il est élevé dans l'exigence implacable de son futur rôle de monarque.",
+                facts: ["Reçoit l'éducation la plus stricte de son temps, supervisée par le théoricien Bossuet.", "S'illustre comme un excellent commandant lors des grandes campagnes militaires.", "Décède tragiquement avant son père, sans jamais avoir accédé au trône."],
+                role: "Héritier loyal, compétent, mais vivant perpétuellement écrasé sous l'ombre de son père.",
+                heritage: "A assuré la pérennité de la dynastie (il est le grand-père du futur Louis XV)."
+            },
+            // Nouveaux personnages pour les Faits Historiques (Uniquement dans les cartes historiques) :
             "le-notre": {
-                name: "André Le Nôtre", subtitle: "L'Architecte des Jardins", dates: "1613-1700", icon: "🌳", mainList: false,
+                name: "André Le Nôtre", subtitle: "L'Architecte des Jardins", dates: "1613-1700", icon: "🌳", mainList: false, isFictional: false,
                 intro: "Architecte paysagiste français, créateur des jardins de Versailles. Il révolutionne l'art des jardins à la française.",
                 facts: ["Créateur des jardins de Versailles.", "Invente le style des jardins à la française.", "Aménage aussi Vaux-le-Vicomte et les Tuileries.", "Anobli par Louis XIV en reconnaissance de son génie."],
                 role: "Génie créateur qui donne à Versailles sa splendeur paysagère unique au monde.",
                 heritage: "Maître incontesté de l'art paysager, ses créations inspirent l'Europe entière."
             },
             "mansart": {
-                name: "Jules Hardouin-Mansart", subtitle: "Le Premier Architecte", dates: "1646-1708", icon: "🏛️", mainList: false,
+                name: "Jules Hardouin-Mansart", subtitle: "Le Premier Architecte", dates: "1646-1708", icon: "🏛️", mainList: false, isFictional: false,
                 intro: "Architecte prodige de Louis XIV, il donne au classicisme français ses lettres de noblesse grandioses.",
                 facts: ["Achève le château de Versailles (Galerie des Glaces).", "Construit le somptueux dôme des Invalides à Paris.", "Architecte favori de la seconde moitié du règne."],
                 role: "Traducteur architectural de la grandeur absolue du Roi-Soleil.",
                 heritage: "L'esthétique classique française, majestueuse et équilibrée."
             },
             "turenne": {
-                name: "Turenne", subtitle: "Le Maréchal de France", dates: "1611-1675", icon: "⚔️", mainList: false,
+                name: "Turenne", subtitle: "Le Maréchal de France", dates: "1611-1675", icon: "⚔️", mainList: false, isFictional: false,
                 intro: "L'un des plus grands tacticiens militaires de l'histoire de France, commandant en chef des armées du Roi.",
                 facts: ["Brille pendant la guerre de Trente Ans et la Fronde.", "Commande les troupes lors de la guerre de Hollande.", "Seul maréchal inhumé à Saint-Denis avec les rois de France."],
                 role: "Le bras armé et le stratège le plus fiable du début du règne.",
                 heritage: "Considéré par Napoléon comme l'un des plus grands capitaines de l'Histoire."
             },
             "conde": {
-                name: "Le Grand Condé", subtitle: "Le Prince rebelle", dates: "1621-1686", icon: "🐎", mainList: false,
+                name: "Le Grand Condé", subtitle: "Le Prince rebelle", dates: "1621-1686", icon: "🐎", mainList: false, isFictional: false,
                 intro: "Prince du sang au tempérament de feu, général de génie, tour à tour héros, rebelle puis serviteur fidèle.",
                 facts: ["Remporte la bataille de Rocroi à 22 ans.", "Mène la Fronde des princes contre Mazarin.", "Reprend son service triomphal lors de la guerre de Hollande."],
                 role: "Figure emblématique de la haute noblesse frondeuse finalement soumise au Roi.",
                 heritage: "Le mythe du prince chevaleresque et du génie militaire foudroyant."
             },
             "bossuet": {
-                name: "Bossuet", subtitle: "L'Aigle de Meaux", dates: "1627-1704", icon: "✝️", mainList: false,
+                name: "Bossuet", subtitle: "L'Aigle de Meaux", dates: "1627-1704", icon: "✝️", mainList: false, isFictional: false,
                 intro: "Évêque, prédicateur redoutable et précepteur du Grand Dauphin. Grand théoricien de la monarchie absolue.",
                 facts: ["Prononce des oraisons funèbres magistrales.", "Justifie religieusement le pouvoir absolu du roi de droit divin.", "Soutient fermement la révocation de l'édit de Nantes."],
                 role: "La caution théologique, intellectuelle et morale de l'absolutisme royal.",
                 heritage: "L'un des plus grands maîtres de la prose et de l'éloquence française."
             },
             "luxembourg": {
-                name: "Duc de Luxembourg", subtitle: "Le Tapissier de Notre-Dame", dates: "1628-1695", icon: "🛡️", mainList: false,
+                name: "Duc de Luxembourg", subtitle: "Le Tapissier de Notre-Dame", dates: "1628-1695", icon: "🛡️", mainList: false, isFictional: false,
                 intro: "Brillant maréchal de France, surnommé ainsi pour les drapeaux ennemis qu'il ramenait à la cathédrale.",
                 facts: ["Général en chef durant la guerre de la Ligue d'Augsbourg.", "Reste invaincu lors de ses grandes batailles en Flandre.", "Compense l'infériorité numérique par sa rapidité tactique."],
                 role: "Le bouclier de la France face à la coalition européenne de la fin du XVIIe siècle.",
                 heritage: "Une réputation militaire intacte de général invaincu."
             },
             "vauban": {
-                name: "Vauban", subtitle: "L'ingénieur du Roi", dates: "1633-1707", icon: "🏰", mainList: false,
+                name: "Vauban", subtitle: "L'ingénieur du Roi", dates: "1633-1707", icon: "🏰", mainList: false, isFictional: false,
                 intro: "Ingénieur militaire et architecte. Il révolutionne l'art de la guerre par les sièges et la fortification.",
                 facts: ["Construit ou remanie plus de 130 places fortes (la Ceinture de fer).", "Ne perd presque aucun siège qu'il mène.", "Écrivain visionnaire s'inquiétant de la misère du peuple."],
                 role: "Sécurise physiquement les frontières du royaume de France.",
                 heritage: "Un réseau de fortifications classé à l'UNESCO et une méthode de siège novatrice."
             },
             "philippe-anjou": {
-                name: "Philippe d'Anjou", subtitle: "Le petit-fils couronné", dates: "1683-1746", icon: "👑", mainList: false,
+                name: "Philippe d'Anjou", subtitle: "Le petit-fils couronné", dates: "1683-1746", icon: "👑", mainList: false, isFictional: false,
                 intro: "Petit-fils de Louis XIV. Désigné héritier de l'Empire espagnol, son accession au trône déclenche une guerre.",
                 facts: ["Devient roi d'Espagne (Philippe V) en 1700.", "Renonce à ses droits sur la couronne de France.", "Fonde la dynastie des Bourbons d'Espagne."],
                 role: "L'instrument de la politique dynastique suprême de Louis XIV face aux Habsbourg.",
                 heritage: "La dynastie des Bourbons règne encore sur l'Espagne de nos jours."
             },
             "marlborough": {
-                name: "Duc de Marlborough", subtitle: "Le grand stratège anglais", dates: "1650-1722", icon: "⚔️", mainList: false,
+                name: "Duc de Marlborough", subtitle: "Le grand stratège anglais", dates: "1650-1722", icon: "⚔️", mainList: false, isFictional: false,
                 intro: "Général en chef des forces britanniques. L'adversaire le plus redoutable des armées de Louis XIV.",
                 facts: ["Inflige de lourdes défaites aux Français (Blenheim, Ramillies).", "Empêche la domination totale de l'Europe par la France.", "Finit disgracié par des intrigues de cour à Londres."],
                 role: "Le frein principal à l'expansionnisme militaire français.",
@@ -531,55 +592,21 @@
 
         // --- GÉNÉRATION HTML ---
         
-        // 1. Accordéon Personnages
-        const accContainer = document.getElementById('accordion-container');
+        // 1. Grille des Personnages (Remplace l'ancien accordéon)
+        const charsContainer = document.getElementById('chars-container');
         for (const [id, char] of Object.entries(characters)) {
             if (!char.mainList) continue; // Uniquement les personnages principaux
-            let factsHtml = char.facts.map(f => `<li><span>👑</span> <span>${f}</span></li>`).join('');
             
-            // On ajoute l'attribut name="personnages" pour les navigateurs récents, et on gérera le reste via JS pour la compatibilité
             let html = `
-            <details class="char-accordion-item">
-                <summary>${char.name}</summary>
-                <div class="content-inner">
-                    <div class="char-header">
-                        <div class="char-subtitle">${char.subtitle}</div>
-                        <div class="dates-badge">${char.dates}</div>
-                    </div>
-                    <div class="intro-text">${char.intro}</div>
-                    
-                    <div class="section-title">✨ FAITS MARQUANTS</div>
-                    <ul class="facts-list">${factsHtml}</ul>
-
-                    <div class="role-box">
-                        <div class="box-title">RÔLE HISTORIQUE :</div>
-                        <div class="box-content">${char.role}</div>
-                    </div>
-                    <div class="heritage-box">
-                        <div class="box-title">HÉRITAGE :</div>
-                        <div class="box-content">${char.heritage}</div>
-                    </div>
+            <div class="char-card" onclick="openCharModal('${id}')">
+                <div class="char-card-icon">${char.icon}</div>
+                <div class="char-card-info">
+                    <h3>${char.name}</h3>
+                    <p>${char.subtitle}</p>
                 </div>
-            </details>`;
-            accContainer.insertAdjacentHTML('beforeend', html);
+            </div>`;
+            charsContainer.insertAdjacentHTML('beforeend', html);
         }
-
-        // --- EXCLUSIVITÉ DE L'ACCORDÉON (Mobile-first) ---
-        // Ce script ferme les autres sections quand on en ouvre une nouvelle
-        const allDetails = accContainer.querySelectorAll('.char-accordion-item');
-        allDetails.forEach((targetDetail) => {
-            targetDetail.addEventListener('toggle', (e) => {
-                // Si l'élément vient d'être ouvert
-                if (targetDetail.open) {
-                    allDetails.forEach((otherDetail) => {
-                        // On ferme tous les autres qui sont actuellement ouverts
-                        if (otherDetail !== targetDetail && otherDetail.open) {
-                            otherDetail.removeAttribute('open');
-                        }
-                    });
-                }
-            });
-        });
 
         // 2. Cartes Faits Historiques
         const factsContainer = document.getElementById('facts-container');
@@ -628,20 +655,32 @@
             document.getElementById('modalIcon').innerText = char.icon || "👑";
             document.getElementById('modalTitle').innerText = char.name;
             document.getElementById('modalSubtitle').innerText = char.subtitle;
-            document.getElementById('modalDates').innerText = char.dates;
+            
+            // Gestion du badge de dates (visuel différent si fictif)
+            const datesEl = document.getElementById('modalDates');
+            datesEl.innerText = char.dates;
+            if (char.isFictional) {
+                datesEl.classList.add('fictif');
+            } else {
+                datesEl.classList.remove('fictif');
+            }
 
             let factsHtml = char.facts.map(f => `<li><span>👑</span> <span>${f}</span></li>`).join('');
             
+            // Textes dynamiques pour historique vs fictif
+            const roleTitle = char.isFictional ? "RÔLE SYMBOLIQUE :" : "RÔLE HISTORIQUE :";
+            const heritageTitle = char.isFictional ? "SIGNIFICATION :" : "HÉRITAGE :";
+
             document.getElementById('modalBody').innerHTML = `
                 <div class="intro-text">${char.intro}</div>
                 <div class="section-title">✨ FAITS MARQUANTS</div>
                 <ul class="facts-list">${factsHtml}</ul>
                 <div class="role-box">
-                    <div class="box-title">RÔLE HISTORIQUE :</div>
+                    <div class="box-title">${roleTitle}</div>
                     <div class="box-content">${char.role}</div>
                 </div>
                 <div class="heritage-box">
-                    <div class="box-title">HÉRITAGE :</div>
+                    <div class="box-title">${heritageTitle}</div>
                     <div class="box-content">${char.heritage}</div>
                 </div>
             `;
