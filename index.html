@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="robots" content="noindex, nofollow">
+    <title>Le Roi Soleil – Personnages et Histoire</title>
+    <style>
+        :root {
+            --bg-color: #1A2238;
+            --text-color: #FDFBF7;
+            --dark-text: #2C3550;
+            --accent-color: #E2B86A;
+            --gold-light: #F4D38B;
+            --primary-gradient: linear-gradient(135deg, #5C65CD 0%, #764BA4 100%);
+            --card-bg: #FFFFFF;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            background-image: 
+                radial-gradient(1.5px 1.5px at 20px 30px, var(--gold-light), rgba(0,0,0,0)),
+                radial-gradient(1.5px 1.5px at 40px 70px, #fff, rgba(0,0,0,0)),
+                radial-gradient(2px 2px at 90px 40px, var(--gold-light), rgba(0,0,0,0)),
+                radial-gradient(1.5px 1.5px at 160px 120px, #fff, rgba(0,0,0,0)),
+                radial-gradient(2.5px 2.5px at 300px 80px, var(--gold-light), rgba(0,0,0,0)),
+                radial-gradient(1px 1px at 250px 180px, #fff, rgba(0,0,0,0));
+            background-size: 350px 250px;
+            color: var(--text-color);
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            line-height: 1.5;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px 15px 40px 15px;
+        }
+
+        h1 {
+            font-family: Georgia, serif;
+            color: var(--accent-color);
+            text-align: center;
+            font-size: 2.2rem;
+            font-weight: normal;
+            margin: 10px 0 25px 0;
+        }
+
+        /* --- MENU / CTA TABS --- */
+        .tab-menu {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 30px;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 5px;
+            border-radius: 12px;
+        }
+
+        .tab-btn {
+            flex: 1;
+            padding: 14px 10px;
+            border: none;
+            background: transparent;
+            color: rgba(253, 251, 247, 0.6);
+            border-radius: 8px;
+            font-size: 0.95rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .tab-btn.active {
+            background: var(--primary-gradient);
+            color: #FFF;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+            animation: fadeIn 0.4s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* --- ACCORDÉON (PERSONNAGES CLÉS) --- */
+        .accordion {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        details {
+            background-color: var(--card-bg);
+            color: var(--dark-text);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+        }
+
+        summary {
+            padding: 18px 16px;
+            font-family: Georgia, serif;
+            font-size: 1.25rem;
+            color: #3B4387;
+            cursor: pointer;
+            list-style: none;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: bold;
+            background: var(--card-bg);
+        }
+
+        summary::-webkit-details-marker { display: none; }
+        summary::after {
+            content: '+';
+            font-size: 1.5rem;
+            color: #3B4387;
+            font-family: monospace;
+        }
+        details[open] summary::after { content: '−'; }
+
+        /* --- CONTENU MODALE & ACCORDÉON --- */
+        .content-inner {
+            padding: 0 16px 20px 16px;
+        }
+
+        .char-header { text-align: center; margin-bottom: 20px; }
+        .char-subtitle { font-family: Georgia, serif; font-size: 1.1rem; color: var(--dark-text); opacity: 0.8; margin-bottom: 8px; }
+        .dates-badge {
+            display: inline-block;
+            background: rgba(92, 101, 205, 0.1);
+            color: #5C65CD;
+            padding: 4px 14px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: bold;
+        }
+        
+        .intro-text { font-size: 0.95rem; text-align: justify; opacity: 0.9; margin-bottom: 20px; color: var(--dark-text); }
+        
+        .section-title {
+            color: #5C65CD;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: bold;
+            margin: 0 0 12px 0;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .facts-list { list-style: none; padding: 0; margin: 0 0 20px 0; }
+        .facts-list li {
+            margin-bottom: 10px; display: flex; align-items: flex-start; gap: 10px; font-size: 0.9rem; color: var(--dark-text); opacity: 0.9;
+        }
+        
+        .role-box, .heritage-box { border-radius: 8px; padding: 15px; margin-bottom: 12px; }
+        .role-box {
+            background: var(--primary-gradient);
+            color: #FFF;
+        }
+        .heritage-box {
+            background: rgba(92, 101, 205, 0.05);
+            border: 1px solid #5C65CD;
+            color: var(--dark-text);
+        }
+
+        .box-title { font-weight: bold; text-transform: uppercase; font-size: 0.8rem; margin-bottom: 8px; letter-spacing: 0.5px; opacity: 0.9; }
+        .box-content { font-size: 0.9rem; margin: 0; line-height: 1.4; }
+
+        /* --- CARTES FAITS HISTORIQUES --- */
+        .facts-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 20px;
+        }
+        @media (min-width: 768px) {
+            .facts-grid { grid-template-columns: 1fr 1fr; }
+        }
+
+        .fact-card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 20px;
+            color: var(--dark-text);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .fact-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 15px;
+        }
+
+        .fact-icon { font-size: 1.8rem; }
+        .fact-meta { text-align: right; }
+        .fact-dates {
+            background: #6366F1;
+            color: #FFF;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            display: inline-block;
+            margin-bottom: 5px;
+        }
+        .fact-category { font-size: 0.7rem; color: #888; text-transform: uppercase; letter-spacing: 1px; font-weight: bold; }
+
+        .fact-title { font-family: Georgia, serif; font-size: 1.4rem; color: #1A2238; margin: 0 0 10px 0; }
+        .fact-desc { font-size: 0.95rem; opacity: 0.8; margin-bottom: 15px; }
+
+        .fact-subtitle { color: #5C65CD; font-size: 0.75rem; font-weight: bold; margin-bottom: 5px; letter-spacing: 0.5px; }
+        .fact-impact { font-size: 0.9rem; margin-bottom: 15px; font-weight: 500;}
+        
+        .fact-ul { padding-left: 20px; margin: 0 0 15px 0; font-size: 0.9rem; opacity: 0.8; }
+        .fact-ul li { margin-bottom: 4px; }
+
+        .tags-container { display: flex; flex-wrap: wrap; gap: 8px; }
+        .tag {
+            background: transparent;
+            border: 1px solid #CCC;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            color: var(--dark-text);
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .tag:hover, .tag:active { border-color: #5C65CD; color: #5C65CD; background: rgba(92, 101, 205, 0.05); }
+
+        /* --- POPUP / MODALE --- */
+        .modal-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.6);
+            backdrop-filter: blur(3px);
+            z-index: 1000;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+        
+        .modal-overlay.active { display: flex; animation: fadeIn 0.3s ease; }
+
+        .modal-card {
+            background: var(--card-bg);
+            width: 100%;
+            max-width: 500px;
+            max-height: 90vh;
+            border-radius: 16px;
+            overflow-y: auto;
+            position: relative;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+
+        .modal-header-bg {
+            background: var(--primary-gradient);
+            padding: 30px 20px 20px 20px;
+            text-align: center;
+            color: #FFF;
+            position: relative;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: rgba(255,255,255,0.2);
+            border: none;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            color: #FFF;
+            font-size: 1.2rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-icon { font-size: 2.5rem; margin-bottom: 10px; }
+        .modal-title { font-family: Georgia, serif; font-size: 1.8rem; margin: 0 0 5px 0; }
+        .modal-subtitle { font-size: 1rem; opacity: 0.9; margin-bottom: 10px; }
+        .modal-dates { background: rgba(255,255,255,0.2); padding: 4px 14px; border-radius: 20px; font-size: 0.85rem; display: inline-block; font-weight: bold; }
+
+        .modal-body { padding: 20px; }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Le Roi Soleil</h1>
+
+        <!-- TABS MENU -->
+        <div class="tab-menu">
+            <button class="tab-btn active" onclick="switchTab('personnages')">Personnages clés</button>
+            <button class="tab-btn" onclick="switchTab('faits')">✨ Faits historiques</button>
+        </div>
+
+        <!-- ONGLET 1 : PERSONNAGES -->
+        <div id="tab-personnages" class="tab-content active">
+            <div class="accordion" id="accordion-container">
+                <!-- Généré par JS -->
+            </div>
+        </div>
+
+        <!-- ONGLET 2 : FAITS HISTORIQUES -->
+        <div id="tab-faits" class="tab-content">
+            <div class="facts-grid" id="facts-container">
+                <!-- Généré par JS -->
+            </div>
+        </div>
+    </div>
+
+    <!-- MODALE PERSONNAGE -->
+    <div class="modal-overlay" id="charModal" onclick="closeModal(event)">
+        <div class="modal-card" onclick="event.stopPropagation()">
+            <div class="modal-header-bg">
+                <button class="modal-close" onclick="closeModal(event)">✕</button>
+                <div class="modal-icon" id="modalIcon">👑</div>
+                <h2 class="modal-title" id="modalTitle">Nom</h2>
+                <div class="modal-subtitle" id="modalSubtitle">Sous-titre</div>
+                <div class="modal-dates" id="modalDates">Dates</div>
+            </div>
+            <div class="modal-body" id="modalBody">
+                <!-- Contenu injecté par JS -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // --- DONNÉES DES PERSONNAGES ---
+        const characters = {
+            "louis-xiv": {
+                name: "Louis XIV", subtitle: "Le Roi-Soleil", dates: "1638-1715", icon: "👑", mainList: true,
+                intro: "Roi de France de 1643 à 1715, Louis XIV incarne l'absolutisme royal français. Surnommé le Roi-Soleil, il fait de la France la première puissance européenne.",
+                facts: ["Règne de 72 ans, le plus long de l'histoire de France.", "Créateur du château de Versailles.", "Instaure l'étiquette de cour la plus raffinée d'Europe.", "Mène de nombreuses guerres pour étendre le territoire français."],
+                role: "Monarque absolu qui centralise le pouvoir royal et fait rayonner la culture française en Europe.",
+                heritage: "Modèle de l'absolutisme royal, créateur de Versailles, symbole de la grandeur française."
+            },
+            "marie-mancini": {
+                name: "Marie Mancini", subtitle: "Le premier amour", dates: "1639-1715", icon: "🌹", mainList: true,
+                intro: "Nièce du cardinal Mazarin, Marie Mancini est une intellectuelle brillante qui fut le premier grand amour passionné du jeune Louis XIV.",
+                facts: ["Initie le jeune roi à la littérature, à l'art et à la beauté.", "Sa liaison avec le roi manque de faire échouer la paix avec l'Espagne.", "Est exilée de la cour par son propre oncle pour forcer le mariage royal."],
+                role: "Catalyseur de l'éveil culturel et sentimental du jeune souverain avant qu'il n'assume son rôle d'État.",
+                heritage: "L'image tragique du sacrifice de l'amour personnel sur l'autel impitoyable de la raison d'État."
+            },
+            "mazarin": {
+                name: "Cardinal Mazarin", subtitle: "Le principal ministre", dates: "1602-1661", icon: "📜", mainList: true,
+                intro: "Parrain de Louis XIV et habile diplomate, il gouverne la France avec Anne d'Autriche durant la minorité du roi.",
+                facts: ["Triomphe des révoltes nobles et parlementaires de la Fronde.", "Signe des traités de paix majeurs qui étendent les frontières.", "Forme politiquement Louis XIV à l'exercice du pouvoir absolu."],
+                role: "Artisan de la pacification du royaume et maître à penser politique du jeune Roi-Soleil.",
+                heritage: "A légué à Louis XIV un royaume puissant, uni, et une autorité royale totalement restaurée."
+            },
+            "anne-autriche": {
+                name: "Anne d'Autriche", subtitle: "La Reine Mère", dates: "1601-1666", icon: "👑", mainList: true,
+                intro: "Reine de France, mère de Louis XIV, elle assure la régence du royaume d'une main de fer aux côtés de Mazarin.",
+                facts: ["Défend farouchement l'autorité de son fils face aux frondeurs.", "Soutient indéfectiblement Mazarin malgré la haine du peuple.", "Transmet à Louis XIV une profonde piété catholique."],
+                role: "Régente inflexible et garante de la transmission intacte du pouvoir absolu à son fils.",
+                heritage: "L'incarnation de la mère protectrice de la couronne dans la tempête."
+            },
+            "monsieur": {
+                name: "Monsieur", subtitle: "Le frère du Roi", dates: "1640-1701", icon: "⚜️", mainList: true,
+                intro: "Philippe d'Orléans, frère cadet de Louis XIV. Brillant stratège, il est souvent écarté du pouvoir politique par son frère.",
+                facts: ["Remporte de grandes victoires militaires pour la France.", "Connu pour son excentricité, ses mœurs libérées et ses favoris.", "Mène une vie de cour brillante et mondaine au Palais-Royal."],
+                role: "Soutien indéfectible de la couronne tout en incarnant une cour alternative, intellectuelle et festive.",
+                heritage: "Fondateur de la maison d'Orléans, ancêtre de presque toutes les familles royales catholiques actuelles."
+            },
+            "montespan": {
+                name: "Mme de Montespan", subtitle: "La favorite flamboyante", dates: "1640-1707", icon: "✨", mainList: true,
+                intro: "Favorite incontestée de Louis XIV pendant plus d'une décennie, elle domine la cour par sa beauté et son ambition.",
+                facts: ["Donne sept enfants au roi, légitimés par la suite.", "Grande protectrice des arts et du luxe à Versailles.", "Chute dramatiquement lors de la sombre affaire des Poisons."],
+                role: "Incarne le faste, l'esprit piquant et la démesure des premières décennies du règne.",
+                heritage: "Symbole de l'influence féminine absolue mais éphémère à la cour."
+            },
+            "maintenon": {
+                name: "Mme de Maintenon", subtitle: "L'épouse secrète", dates: "1635-1719", icon: "📖", mainList: true,
+                intro: "D'abord gouvernante des enfants illégitimes du roi, elle devient sa dernière favorite puis son épouse secrète.",
+                facts: ["Épouse secrètement Louis XIV à la mort de la reine.", "Exerce une influence moralisatrice et religieuse sur la cour.", "Fonde la Maison d'éducation de Saint-Cyr pour jeunes filles."],
+                role: "Confidente suprême et influence stabilisatrice (et austère) de la seconde moitié du règne.",
+                heritage: "La création de Saint-Cyr, modèle pionnier pour l'éducation des femmes."
+            },
+            "colbert": {
+                name: "Jean-Baptiste Colbert", subtitle: "Le grand intendant", dates: "1619-1683", icon: "⚖️", mainList: true,
+                intro: "Contrôleur général des finances, architecte infatigable de la puissance économique française.",
+                facts: ["Redresse spectaculairement les finances du royaume.", "Fonde les grandes manufactures royales (Gobelins).", "Développe massivement le commerce et la marine de guerre."],
+                role: "Bâtisseur de la puissance matérielle, industrielle et navale de la France.",
+                heritage: "Le 'colbertisme' et des institutions administratives toujours existantes."
+            },
+            "beaufort": {
+                name: "Duc de Beaufort", subtitle: "Le Roi des Halles", dates: "1616-1669", icon: "⚓", mainList: true,
+                intro: "Prince charismatique, figure de proue populaire de la Fronde, puis amiral de la flotte française.",
+                facts: ["S'évade du donjon de Vincennes en 1648.", "Devient le leader populaire de la rébellion contre Mazarin.", "Se réconcilie avec le roi pour commander en Méditerranée."],
+                role: "Symbole de l'insoumission domptée puis de la bravoure au service de la couronne.",
+                heritage: "Figure romantique inspirant la littérature de cape et d'épée (A. Dumas)."
+            },
+            "moliere": {
+                name: "Molière", subtitle: "Le génie de la comédie", dates: "1622-1673", icon: "🎭", mainList: true,
+                intro: "Jean-Baptiste Poquelin, immense homme de théâtre et comédien, est l'organisateur des divertissements royaux.",
+                facts: ["Révolutionne le théâtre comique.", "Dresse une satire brillante des travers de la société.", "Meurt à l'issue d'une représentation du Malade imaginaire."],
+                role: "Peintre implacable des mœurs et pilier du rayonnement culturel versaillais.",
+                heritage: "Le répertoire le plus joué ; la 'langue de Molière'."
+            },
+            // Nouveaux personnages pour les Faits Historiques :
+            "le-notre": {
+                name: "André Le Nôtre", subtitle: "L'Architecte des Jardins", dates: "1613-1700", icon: "🌳", mainList: false,
+                intro: "Architecte paysagiste français, créateur des jardins de Versailles. Il révolutionne l'art des jardins à la française.",
+                facts: ["Créateur des jardins de Versailles.", "Invente le style des jardins à la française.", "Aménage aussi Vaux-le-Vicomte et les Tuileries.", "Anobli par Louis XIV en reconnaissance de son génie."],
+                role: "Génie créateur qui donne à Versailles sa splendeur paysagère unique au monde.",
+                heritage: "Maître incontesté de l'art paysager, ses créations inspirent l'Europe entière."
+            },
+            "mansart": {
+                name: "Jules Hardouin-Mansart", subtitle: "Le Premier Architecte", dates: "1646-1708", icon: "🏛️", mainList: false,
+                intro: "Architecte prodige de Louis XIV, il donne au classicisme français ses lettres de noblesse grandioses.",
+                facts: ["Achève le château de Versailles (Galerie des Glaces).", "Construit le somptueux dôme des Invalides à Paris.", "Architecte favori de la seconde moitié du règne."],
+                role: "Traducteur architectural de la grandeur absolue du Roi-Soleil.",
+                heritage: "L'esthétique classique française, majestueuse et équilibrée."
+            },
+            "turenne": {
+                name: "Turenne", subtitle: "Le Maréchal de France", dates: "1611-1675", icon: "⚔️", mainList: false,
+                intro: "L'un des plus grands tacticiens militaires de l'histoire de France, commandant en chef des armées du Roi.",
+                facts: ["Brille pendant la guerre de Trente Ans et la Fronde.", "Commande les troupes lors de la guerre de Hollande.", "Seul maréchal inhumé à Saint-Denis avec les rois de France."],
+                role: "Le bras armé et le stratège le plus fiable du début du règne.",
+                heritage: "Considéré par Napoléon comme l'un des plus grands capitaines de l'Histoire."
+            },
+            "conde": {
+                name: "Le Grand Condé", subtitle: "Le Prince rebelle", dates: "1621-1686", icon: "🐎", mainList: false,
+                intro: "Prince du sang au tempérament de feu, général de génie, tour à tour héros, rebelle puis serviteur fidèle.",
+                facts: ["Remporte la bataille de Rocroi à 22 ans.", "Mène la Fronde des princes contre Mazarin.", "Reprend son service triomphal lors de la guerre de Hollande."],
+                role: "Figure emblématique de la haute noblesse frondeuse finalement soumise au Roi.",
+                heritage: "Le mythe du prince chevaleresque et du génie militaire foudroyant."
+            },
+            "bossuet": {
+                name: "Bossuet", subtitle: "L'Aigle de Meaux", dates: "1627-1704", icon: "✝️", mainList: false,
+                intro: "Évêque, prédicateur redoutable et précepteur du Grand Dauphin. Grand théoricien de la monarchie absolue.",
+                facts: ["Prononce des oraisons funèbres magistrales.", "Justifie religieusement le pouvoir absolu du roi de droit divin.", "Soutient fermement la révocation de l'édit de Nantes."],
+                role: "La caution théologique, intellectuelle et morale de l'absolutisme royal.",
+                heritage: "L'un des plus grands maîtres de la prose et de l'éloquence française."
+            },
+            "luxembourg": {
+                name: "Duc de Luxembourg", subtitle: "Le Tapissier de Notre-Dame", dates: "1628-1695", icon: "🛡️", mainList: false,
+                intro: "Brillant maréchal de France, surnommé ainsi pour les drapeaux ennemis qu'il ramenait à la cathédrale.",
+                facts: ["Général en chef durant la guerre de la Ligue d'Augsbourg.", "Reste invaincu lors de ses grandes batailles en Flandre.", "Compense l'infériorité numérique par sa rapidité tactique."],
+                role: "Le bouclier de la France face à la coalition européenne de la fin du XVIIe siècle.",
+                heritage: "Une réputation militaire intacte de général invaincu."
+            },
+            "vauban": {
+                name: "Vauban", subtitle: "L'ingénieur du Roi", dates: "1633-1707", icon: "🏰", mainList: false,
+                intro: "Ingénieur militaire et architecte. Il révolutionne l'art de la guerre par les sièges et la fortification.",
+                facts: ["Construit ou remanie plus de 130 places fortes (la Ceinture de fer).", "Ne perd presque aucun siège qu'il mène.", "Écrivain visionnaire s'inquiétant de la misère du peuple."],
+                role: "Sécurise physiquement les frontières du royaume de France.",
+                heritage: "Un réseau de fortifications classé à l'UNESCO et une méthode de siège novatrice."
+            },
+            "philippe-anjou": {
+                name: "Philippe d'Anjou", subtitle: "Le petit-fils couronné", dates: "1683-1746", icon: "👑", mainList: false,
+                intro: "Petit-fils de Louis XIV. Désigné héritier de l'Empire espagnol, son accession au trône déclenche une guerre.",
+                facts: ["Devient roi d'Espagne (Philippe V) en 1700.", "Renonce à ses droits sur la couronne de France.", "Fonde la dynastie des Bourbons d'Espagne."],
+                role: "L'instrument de la politique dynastique suprême de Louis XIV face aux Habsbourg.",
+                heritage: "La dynastie des Bourbons règne encore sur l'Espagne de nos jours."
+            },
+            "marlborough": {
+                name: "Duc de Marlborough", subtitle: "Le grand stratège anglais", dates: "1650-1722", icon: "⚔️", mainList: false,
+                intro: "Général en chef des forces britanniques. L'adversaire le plus redoutable des armées de Louis XIV.",
+                facts: ["Inflige de lourdes défaites aux Français (Blenheim, Ramillies).", "Empêche la domination totale de l'Europe par la France.", "Finit disgracié par des intrigues de cour à Londres."],
+                role: "Le frein principal à l'expansionnisme militaire français.",
+                heritage: "Une légende militaire britannique."
+            }
+        };
+
+        // --- DONNÉES DES FAITS HISTORIQUES ---
+        const historicalFacts = [
+            {
+                title: "La Fronde", dates: "1648-1653", cat: "GUERRE CIVILE", icon: "⚔️",
+                desc: "Série de guerres civiles contre l'autorité royale et Mazarin. Cette révolte marque profondément le jeune Louis XIV.",
+                impact: "Renforce la volonté d'absolutisme royal",
+                cons: ["Méfiance envers Paris", "Volonté de contrôler la noblesse"],
+                chars: [{id: "louis-xiv", name: "Louis XIV"}, {id: "anne-autriche", name: "Anne d'Autriche"}, {id: "mazarin", name: "Mazarin"}]
+            },
+            {
+                title: "Construction de Versailles", dates: "1661-1710", cat: "ARCHITECTURE", icon: "🏰",
+                desc: "Transformation d'un pavillon de chasse en palais somptueux. Versailles devient le symbole de la grandeur française.",
+                impact: "Centralisation du pouvoir et de la cour",
+                cons: ["Contrôle de la noblesse", "Rayonnement artistique"],
+                chars: [{id: "louis-xiv", name: "Louis XIV"}, {id: "le-notre", name: "Le Nôtre"}, {id: "mansart", name: "Mansart"}]
+            },
+            {
+                title: "Guerre de Hollande", dates: "1672-1678", cat: "CONFLIT MILITAIRE", icon: "⚔️",
+                desc: "Guerre menée par Louis XIV contre les Provinces-Unies. Apogée de la puissance militaire française.",
+                impact: "Affirmation de l'hégémonie française en Europe",
+                cons: ["Conquêtes territoriales", "Prestige militaire"],
+                chars: [{id: "louis-xiv", name: "Louis XIV"}, {id: "turenne", name: "Turenne"}, {id: "conde", name: "Condé"}]
+            },
+            {
+                title: "Révocation de l'Édit de Nantes", dates: "1685", cat: "DÉCISION RELIGIEUSE", icon: "⛪",
+                desc: "Louis XIV révoque l'édit de tolérance religieuse d'Henri IV. Les protestants perdent leurs droits.",
+                impact: "Unification religieuse du royaume mais massif exil",
+                cons: ["Exode des huguenots", "Affaiblissement économique"],
+                chars: [{id: "louis-xiv", name: "Louis XIV"}, {id: "maintenon", name: "Mme de Maintenon"}, {id: "bossuet", name: "Bossuet"}]
+            },
+            {
+                title: "Guerre de la Ligue d'Augsbourg", dates: "1688-1697", cat: "GUERRE EUROPÉENNE", icon: "🛡️",
+                desc: "Coalition européenne contre l'hégémonie française. Première grande limite rencontrée par Louis XIV.",
+                impact: "Limites de la puissance française révélées",
+                cons: ["Épuisement financier", "Famines"],
+                chars: [{id: "louis-xiv", name: "Louis XIV"}, {id: "luxembourg", name: "Luxembourg"}, {id: "vauban", name: "Vauban"}]
+            },
+            {
+                title: "Guerre de Succession d'Espagne", dates: "1701-1714", cat: "CONFLIT DYNASTIQUE", icon: "⚔️",
+                desc: "Dernière grande guerre du règne pour placer le petit-fils du roi sur le trône d'Espagne.",
+                impact: "Épuisement du royaume mais victoire dynastique",
+                cons: ["Philippe V roi d'Espagne", "Traité d'Utrecht"],
+                chars: [{id: "louis-xiv", name: "Louis XIV"}, {id: "philippe-anjou", name: "Philippe d'Anjou"}, {id: "marlborough", name: "Marlborough"}]
+            }
+        ];
+
+        // --- GÉNÉRATION HTML ---
+        
+        // 1. Accordéon Personnages
+        const accContainer = document.getElementById('accordion-container');
+        for (const [id, char] of Object.entries(characters)) {
+            if (!char.mainList) continue; // Uniquement les personnages principaux
+            let factsHtml = char.facts.map(f => `<li><span>👑</span> <span>${f}</span></li>`).join('');
+            
+            // On ajoute l'attribut name="personnages" pour les navigateurs récents, et on gérera le reste via JS pour la compatibilité
+            let html = `
+            <details class="char-accordion-item">
+                <summary>${char.name}</summary>
+                <div class="content-inner">
+                    <div class="char-header">
+                        <div class="char-subtitle">${char.subtitle}</div>
+                        <div class="dates-badge">${char.dates}</div>
+                    </div>
+                    <div class="intro-text">${char.intro}</div>
+                    
+                    <div class="section-title">✨ FAITS MARQUANTS</div>
+                    <ul class="facts-list">${factsHtml}</ul>
+
+                    <div class="role-box">
+                        <div class="box-title">RÔLE HISTORIQUE :</div>
+                        <div class="box-content">${char.role}</div>
+                    </div>
+                    <div class="heritage-box">
+                        <div class="box-title">HÉRITAGE :</div>
+                        <div class="box-content">${char.heritage}</div>
+                    </div>
+                </div>
+            </details>`;
+            accContainer.insertAdjacentHTML('beforeend', html);
+        }
+
+        // --- EXCLUSIVITÉ DE L'ACCORDÉON (Mobile-first) ---
+        // Ce script ferme les autres sections quand on en ouvre une nouvelle
+        const allDetails = accContainer.querySelectorAll('.char-accordion-item');
+        allDetails.forEach((targetDetail) => {
+            targetDetail.addEventListener('toggle', (e) => {
+                // Si l'élément vient d'être ouvert
+                if (targetDetail.open) {
+                    allDetails.forEach((otherDetail) => {
+                        // On ferme tous les autres qui sont actuellement ouverts
+                        if (otherDetail !== targetDetail && otherDetail.open) {
+                            otherDetail.removeAttribute('open');
+                        }
+                    });
+                }
+            });
+        });
+
+        // 2. Cartes Faits Historiques
+        const factsContainer = document.getElementById('facts-container');
+        historicalFacts.forEach(fact => {
+            let tagsHtml = fact.chars.map(c => `<button class="tag" onclick="openCharModal('${c.id}')">${c.name}</button>`).join('');
+            let consHtml = fact.cons.map(c => `<li>${c}</li>`).join('');
+            
+            let html = `
+            <div class="fact-card">
+                <div class="fact-header">
+                    <div class="fact-icon">${fact.icon}</div>
+                    <div class="fact-meta">
+                        <div class="fact-dates">${fact.dates}</div><br>
+                        <span class="fact-category">${fact.cat}</span>
+                    </div>
+                </div>
+                <h3 class="fact-title">${fact.title}</h3>
+                <div class="fact-desc">${fact.desc}</div>
+                
+                <div class="fact-subtitle">IMPACT :</div>
+                <div class="fact-impact">${fact.impact}</div>
+                
+                <div class="fact-subtitle">CONSÉQUENCES :</div>
+                <ul class="fact-ul">${consHtml}</ul>
+                
+                <div class="fact-subtitle">PERSONNAGES CLÉS :</div>
+                <div class="tags-container">${tagsHtml}</div>
+            </div>`;
+            factsContainer.insertAdjacentHTML('beforeend', html);
+        });
+
+        // --- LOGIQUE INTERACTIVE ---
+
+        // Onglets
+        function switchTab(tabId) {
+            document.querySelectorAll('.tab-content, .tab-btn').forEach(el => el.classList.remove('active'));
+            document.getElementById('tab-' + tabId).classList.add('active');
+            event.currentTarget.classList.add('active');
+        }
+
+        // Modale Personnage
+        function openCharModal(charId) {
+            const char = characters[charId];
+            if (!char) return;
+
+            document.getElementById('modalIcon').innerText = char.icon || "👑";
+            document.getElementById('modalTitle').innerText = char.name;
+            document.getElementById('modalSubtitle').innerText = char.subtitle;
+            document.getElementById('modalDates').innerText = char.dates;
+
+            let factsHtml = char.facts.map(f => `<li><span>👑</span> <span>${f}</span></li>`).join('');
+            
+            document.getElementById('modalBody').innerHTML = `
+                <div class="intro-text">${char.intro}</div>
+                <div class="section-title">✨ FAITS MARQUANTS</div>
+                <ul class="facts-list">${factsHtml}</ul>
+                <div class="role-box">
+                    <div class="box-title">RÔLE HISTORIQUE :</div>
+                    <div class="box-content">${char.role}</div>
+                </div>
+                <div class="heritage-box">
+                    <div class="box-title">HÉRITAGE :</div>
+                    <div class="box-content">${char.heritage}</div>
+                </div>
+            `;
+            
+            document.getElementById('charModal').classList.add('active');
+        }
+
+        function closeModal(e) {
+            if (e.target.classList.contains('modal-overlay') || e.target.classList.contains('modal-close')) {
+                document.getElementById('charModal').classList.remove('active');
+            }
+        }
+    </script>
+</body>
+</html>
