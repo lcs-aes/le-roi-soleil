@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="theme-color" content="#1A2238"> <!-- Couleur de la barre d'adresse mobile -->
     <meta name="robots" content="noindex, nofollow">
     <title>Le Roi Soleil – Personnages et Histoire</title>
     <style>
@@ -86,12 +87,17 @@
 
         .tab-content.active {
             display: block;
-            animation: fadeIn 0.4s ease;
         }
 
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
+        /* --- ANIMATIONS --- */
+        @keyframes fadeInUp {
             to { opacity: 1; transform: translateY(0); }
+        }
+
+        .fade-in-up {
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 0.5s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
         }
 
         /* --- LISTE DES PERSONNAGES (CARTES) --- */
@@ -117,6 +123,7 @@
             cursor: pointer;
             box-shadow: 0 4px 10px rgba(0,0,0,0.15);
             transition: transform 0.2s, box-shadow 0.2s;
+            -webkit-tap-highlight-color: transparent;
         }
 
         .char-card:hover, .char-card:active {
@@ -138,7 +145,7 @@
         }
 
         .char-card-info h3 {
-            margin: 0 0 5px 0;
+            margin: 0 0 2px 0;
             color: #3B4387;
             font-family: Georgia, serif;
             font-size: 1.25rem;
@@ -150,6 +157,19 @@
             color: var(--dark-text);
             opacity: 0.8;
             font-weight: 500;
+        }
+
+        .list-badge-fictif {
+            font-size: 0.65rem;
+            padding: 2px 8px;
+            border-radius: 10px;
+            border: 1px dashed rgba(92, 101, 205, 0.5);
+            color: #5C65CD;
+            margin-top: 6px;
+            display: inline-block;
+            font-weight: bold;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
         }
 
         /* --- CONTENU MODALE & ACCORDÉON --- */
@@ -244,6 +264,7 @@
             color: var(--dark-text);
             cursor: pointer;
             transition: all 0.2s;
+            -webkit-tap-highlight-color: transparent;
         }
         .tag:hover, .tag:active { border-color: #5C65CD; color: #5C65CD; background: rgba(92, 101, 205, 0.05); }
 
@@ -261,6 +282,11 @@
         }
         
         .modal-overlay.active { display: flex; animation: fadeIn 0.3s ease; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
 
         .modal-card {
             background: var(--card-bg);
@@ -287,15 +313,17 @@
             right: 15px;
             background: rgba(255,255,255,0.2);
             border: none;
-            width: 30px;
-            height: 30px;
+            width: 36px; /* Bouton agrandi pour mobile */
+            height: 36px;
             border-radius: 50%;
             color: #FFF;
-            font-size: 1.2rem;
+            font-size: 1.4rem;
             cursor: pointer;
             display: flex;
             justify-content: center;
             align-items: center;
+            touch-action: manipulation;
+            -webkit-tap-highlight-color: transparent;
         }
 
         .modal-icon { font-size: 2.5rem; margin-bottom: 10px; }
@@ -311,7 +339,6 @@
             font-weight: bold; 
         }
         
-        /* Style distinctif pour les personnages fictifs */
         .modal-dates.fictif {
             background: transparent;
             border: 1px dashed rgba(255, 255, 255, 0.7);
@@ -327,20 +354,20 @@
         <h1>Le Roi Soleil</h1>
 
         <!-- TABS MENU -->
-        <div class="tab-menu">
-            <button class="tab-btn active" onclick="switchTab('personnages')">Personnages clés</button>
-            <button class="tab-btn" onclick="switchTab('faits')">✨ Faits historiques</button>
+        <div class="tab-menu" role="tablist">
+            <button class="tab-btn active" role="tab" onclick="switchTab('personnages')">Personnages clés</button>
+            <button class="tab-btn" role="tab" onclick="switchTab('faits')">✨ Faits historiques</button>
         </div>
 
         <!-- ONGLET 1 : PERSONNAGES -->
-        <div id="tab-personnages" class="tab-content active">
+        <div id="tab-personnages" class="tab-content active" role="tabpanel">
             <div class="chars-grid" id="chars-container">
                 <!-- Généré par JS -->
             </div>
         </div>
 
         <!-- ONGLET 2 : FAITS HISTORIQUES -->
-        <div id="tab-faits" class="tab-content">
+        <div id="tab-faits" class="tab-content" role="tabpanel">
             <div class="facts-grid" id="facts-container">
                 <!-- Généré par JS -->
             </div>
@@ -349,10 +376,10 @@
 
     <!-- MODALE PERSONNAGE -->
     <div class="modal-overlay" id="charModal" onclick="closeModal(event)">
-        <div class="modal-card" onclick="event.stopPropagation()">
+        <div class="modal-card" onclick="event.stopPropagation()" role="dialog" aria-modal="true">
             <div class="modal-header-bg">
-                <button class="modal-close" onclick="closeModal(event)">✕</button>
-                <div class="modal-icon" id="modalIcon">👑</div>
+                <button class="modal-close" aria-label="Fermer" onclick="closeModal(event)">✕</button>
+                <div class="modal-icon" aria-hidden="true" id="modalIcon">👑</div>
                 <h2 class="modal-title" id="modalTitle">Nom</h2>
                 <div class="modal-subtitle" id="modalSubtitle">Sous-titre</div>
                 <div class="modal-dates" id="modalDates">Dates</div>
@@ -592,32 +619,41 @@
 
         // --- GÉNÉRATION HTML ---
         
-        // 1. Grille des Personnages (Remplace l'ancien accordéon)
+        // 1. Grille des Personnages
         const charsContainer = document.getElementById('chars-container');
+        let charDelay = 0; // Pour l'animation d'apparition
+
         for (const [id, char] of Object.entries(characters)) {
             if (!char.mainList) continue; // Uniquement les personnages principaux
             
+            // Ajout visuel du badge fictif
+            let badgeHtml = char.isFictional ? `<span class="list-badge-fictif">Création 2005</span>` : '';
+            
             let html = `
-            <div class="char-card" onclick="openCharModal('${id}')">
-                <div class="char-card-icon">${char.icon}</div>
+            <div class="char-card fade-in-up" style="animation-delay: ${charDelay}s" onclick="openCharModal('${id}')" role="button" tabindex="0">
+                <div class="char-card-icon" aria-hidden="true">${char.icon}</div>
                 <div class="char-card-info">
                     <h3>${char.name}</h3>
                     <p>${char.subtitle}</p>
+                    ${badgeHtml}
                 </div>
             </div>`;
             charsContainer.insertAdjacentHTML('beforeend', html);
+            charDelay += 0.05; // Décalage pour l'animation en cascade
         }
 
         // 2. Cartes Faits Historiques
         const factsContainer = document.getElementById('facts-container');
+        let factDelay = 0;
+
         historicalFacts.forEach(fact => {
             let tagsHtml = fact.chars.map(c => `<button class="tag" onclick="openCharModal('${c.id}')">${c.name}</button>`).join('');
             let consHtml = fact.cons.map(c => `<li>${c}</li>`).join('');
             
             let html = `
-            <div class="fact-card">
+            <div class="fact-card fade-in-up" style="animation-delay: ${factDelay}s">
                 <div class="fact-header">
-                    <div class="fact-icon">${fact.icon}</div>
+                    <div class="fact-icon" aria-hidden="true">${fact.icon}</div>
                     <div class="fact-meta">
                         <div class="fact-dates">${fact.dates}</div><br>
                         <span class="fact-category">${fact.cat}</span>
@@ -636,6 +672,7 @@
                 <div class="tags-container">${tagsHtml}</div>
             </div>`;
             factsContainer.insertAdjacentHTML('beforeend', html);
+            factDelay += 0.1;
         });
 
         // --- LOGIQUE INTERACTIVE ---
@@ -656,7 +693,7 @@
             document.getElementById('modalTitle').innerText = char.name;
             document.getElementById('modalSubtitle').innerText = char.subtitle;
             
-            // Gestion du badge de dates (visuel différent si fictif)
+            // Gestion du badge de dates
             const datesEl = document.getElementById('modalDates');
             datesEl.innerText = char.dates;
             if (char.isFictional) {
@@ -665,9 +702,8 @@
                 datesEl.classList.remove('fictif');
             }
 
-            let factsHtml = char.facts.map(f => `<li><span>👑</span> <span>${f}</span></li>`).join('');
+            let factsHtml = char.facts.map(f => `<li><span aria-hidden="true">👑</span> <span>${f}</span></li>`).join('');
             
-            // Textes dynamiques pour historique vs fictif
             const roleTitle = char.isFictional ? "RÔLE SYMBOLIQUE :" : "RÔLE HISTORIQUE :";
             const heritageTitle = char.isFictional ? "SIGNIFICATION :" : "HÉRITAGE :";
 
@@ -686,11 +722,17 @@
             `;
             
             document.getElementById('charModal').classList.add('active');
+            
+            // Bloque le défilement du fond (UX)
+            document.body.style.overflow = 'hidden'; 
         }
 
         function closeModal(e) {
             if (e.target.classList.contains('modal-overlay') || e.target.classList.contains('modal-close')) {
                 document.getElementById('charModal').classList.remove('active');
+                
+                // Restaure le défilement du fond (UX)
+                document.body.style.overflow = ''; 
             }
         }
     </script>
