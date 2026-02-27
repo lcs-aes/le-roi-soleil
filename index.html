@@ -40,6 +40,7 @@
             padding: 0;
             line-height: 1.5;
             -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
         }
 
         /* --- ANIMATION LEVER DE RIDEAU --- */
@@ -76,10 +77,20 @@
             top: 0;
             z-index: 100;
             backdrop-filter: blur(5px);
-            transition: transform 0.4s ease-out, opacity 0.4s;
+            max-height: 100px;
+            overflow: hidden;
+            transition: max-height 0.4s ease-out, padding 0.4s ease-out, opacity 0.3s ease-out, transform 0.4s ease-out;
             box-shadow: 0 4px 10px rgba(0,0,0,0.2);
         }
-        .savoir-vivre-banner.hidden { transform: translateY(-100%); opacity: 0; pointer-events: none; }
+        .savoir-vivre-banner.hidden { 
+            max-height: 0;
+            padding-top: 0; 
+            padding-bottom: 0; 
+            opacity: 0; 
+            pointer-events: none; 
+            border: none;
+            transform: translateY(-100%);
+        }
 
         .container { max-width: 800px; margin: 0 auto; padding: 20px 15px 40px 15px; position: relative; z-index: 10;}
 
@@ -98,7 +109,7 @@
             width: 40px; height: 40px; border-radius: 50%;
             display: none; justify-content: center; align-items: center;
             cursor: pointer; transition: all 0.3s ease; -webkit-tap-highlight-color: transparent;
-            z-index: 50; font-size: 18px; line-height: 1;
+            z-index: 50; color: var(--accent-color);
         }
         .share-btn:active { background: rgba(255, 255, 255, 0.2); transform: scale(0.95); }
 
@@ -120,10 +131,11 @@
         }
         .tab-btn.active { background: var(--primary-gradient); color: #FFF; box-shadow: 0 4px 15px rgba(0,0,0,0.3); }
         .tab-content { display: none; }
-        .tab-content.active { display: block; }
+        .tab-content.active { display: block; animation: fadeIn 0.4s ease; }
 
         /* --- ANIMATIONS --- */
         @keyframes fadeInUp { to { opacity: 1; transform: translateY(0); } }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
         .fade-in-up { opacity: 0; transform: translateY(20px); animation: fadeInUp 0.5s cubic-bezier(0.2, 0.8, 0.2, 1) forwards; }
         @keyframes iconPulse { 0% { transform: scale(1) rotate(0deg); } 50% { transform: scale(1.2) rotate(5deg); } 100% { transform: scale(1) rotate(0deg); } }
 
@@ -154,27 +166,34 @@
         .fictional-star { color: var(--accent-color); font-size: 1.1rem; margin-left: 6px; }
         .fictional-legend { text-align: center; font-size: 0.85rem; color: var(--accent-color); opacity: 0.8; margin-top: 25px; margin-bottom: 25px; font-style: italic; }
 
-        /* --- ORNEMENTS & CONTENU MODALE --- */
-        .ornament-divider { text-align: center; margin: 20px 0; position: relative; }
-        .ornament-divider::before { content: ''; position: absolute; top: 50%; left: 15%; width: 30%; height: 1px; background: linear-gradient(to right, transparent, rgba(92, 101, 205, 0.3)); }
-        .ornament-divider::after { content: ''; position: absolute; top: 50%; right: 15%; width: 30%; height: 1px; background: linear-gradient(to left, transparent, rgba(92, 101, 205, 0.3)); }
-        .ornament-divider span { color: #5C65CD; font-size: 1rem; opacity: 0.5; }
-        .modal-quote { font-style: italic; color: #FFF; opacity: 0.9; text-align: center; margin: 15px auto 0 auto; font-family: 'Playfair Display', serif; font-size: 1.1rem; max-width: 90%; line-height: 1.4;}
-        .intro-text { font-size: 0.95rem; text-align: justify; opacity: 0.9; margin-bottom: 20px; color: var(--dark-text); }
-        .section-title { color: #5C65CD; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px; font-weight: bold; margin: 0 0 12px 0; display: flex; align-items: center; gap: 8px; }
-        .facts-list { list-style: none; padding: 0; margin: 0 0 20px 0; }
-        .facts-list li { margin-bottom: 10px; display: flex; align-items: flex-start; gap: 10px; font-size: 0.9rem; color: var(--dark-text); opacity: 0.9; }
-        .facts-list li .emoji-icon { font-size: 16px; flex-shrink: 0; margin-top: 2px; }
-        .role-box, .heritage-box { border-radius: 8px; padding: 15px; margin-bottom: 12px; }
-        .role-box { background: var(--primary-gradient); color: #FFF; }
-        .heritage-box { background: rgba(92, 101, 205, 0.05); border: 1px solid #5C65CD; color: var(--dark-text); }
-        .box-title { font-weight: bold; text-transform: uppercase; font-size: 0.8rem; margin-bottom: 8px; letter-spacing: 0.5px; opacity: 0.9; }
-        .box-content { font-size: 0.9rem; margin: 0; line-height: 1.4; }
-
-        /* --- CARTES FAITS HISTORIQUES --- */
-        .facts-grid { display: grid; grid-template-columns: 1fr; gap: 20px; }
-        @media (min-width: 768px) { .facts-grid { grid-template-columns: 1fr 1fr; } }
-        .fact-card { border-radius: 12px; padding: 20px; color: var(--dark-text); }
+        /* --- TIMELINE HISTORIQUE (FRISE) --- */
+        .timeline {
+            position: relative;
+            max-width: 100%;
+            margin: 20px auto;
+            padding: 10px 0;
+        }
+        .timeline::after {
+            content: ''; position: absolute; width: 4px;
+            background: linear-gradient(to bottom, transparent, var(--accent-color), transparent);
+            top: 0; bottom: 0; left: 50%; transform: translateX(-50%);
+        }
+        .timeline-item {
+            padding: 10px 40px; position: relative;
+            width: 50%; box-sizing: border-box;
+        }
+        .timeline-item:nth-child(odd) { left: 0; }
+        .timeline-item:nth-child(even) { left: 50%; }
+        /* Point central de la timeline */
+        .timeline-item::after {
+            content: ''; position: absolute; width: 20px; height: 20px;
+            background-color: var(--bg-color); border: 4px solid var(--accent-color);
+            border-radius: 50%; top: 40px; right: -14px; z-index: 1;
+            box-shadow: 0 0 10px rgba(0,0,0,0.5);
+        }
+        .timeline-item:nth-child(even)::after { left: -14px; }
+        
+        .fact-card { border-radius: 12px; padding: 20px; color: var(--dark-text); position: relative;}
         .fact-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 15px; }
         .fact-meta { text-align: right; }
         .fact-dates { background: #6366F1; color: #FFF; padding: 4px 12px; border-radius: 20px; font-size: 0.8rem; font-weight: bold; display: inline-block; margin-bottom: 5px; }
@@ -189,16 +208,20 @@
         .tag { background: transparent; border: 1px solid #CCC; padding: 5px 12px; border-radius: 20px; font-size: 0.8rem; color: var(--dark-text); cursor: pointer; transition: all 0.2s; -webkit-tap-highlight-color: transparent; }
         .tag:active { border-color: #5C65CD; color: #5C65CD; background: rgba(92, 101, 205, 0.05); transform: scale(0.95); }
 
+        @media screen and (max-width: 768px) {
+            .timeline::after { left: 31px; transform: none; background: linear-gradient(to bottom, transparent, var(--accent-color), transparent);}
+            .timeline-item { width: 100%; padding-left: 70px; padding-right: 0; }
+            .timeline-item:nth-child(even) { left: 0%; }
+            .timeline-item::after { left: 18px; right: auto; top: 40px; }
+            .timeline-item:nth-child(even)::after { left: 18px; }
+        }
+
         /* --- CARTES LEXIQUE (STYLE PARCHEMIN) --- */
         .lexicon-grid { display: flex; flex-direction: column; gap: 15px; }
         .lexicon-card { 
-            background: var(--parchment-bg); 
-            border-radius: 6px; 
-            padding: 20px; 
-            color: #3b2f21; 
+            background: var(--parchment-bg); border-radius: 6px; padding: 20px; color: #3b2f21; 
             box-shadow: inset 0 0 30px rgba(139, 101, 8, 0.1), 0 5px 15px rgba(0,0,0,0.15); 
-            border: 1px solid rgba(139, 101, 8, 0.2); 
-            border-left: 5px solid var(--accent-color); 
+            border: 1px solid rgba(139, 101, 8, 0.2); border-left: 5px solid var(--accent-color); 
         }
         .lexicon-title { color: #5c4018; font-size: 1.4rem; margin: 0 0 10px 0; display: flex; align-items: center; gap: 10px; }
         .lexicon-title .emoji-icon { font-size: 24px; }
@@ -252,143 +275,94 @@
         
         .modal-body { padding: 25px 20px; flex-grow: 1;}
 
+        /* --- ORNEMENTS & CONTENU MODALE RECTO --- */
+        .ornament-divider { text-align: center; margin: 20px 0; position: relative; }
+        .ornament-divider::before { content: ''; position: absolute; top: 50%; left: 15%; width: 30%; height: 1px; background: linear-gradient(to right, transparent, rgba(92, 101, 205, 0.3)); }
+        .ornament-divider::after { content: ''; position: absolute; top: 50%; right: 15%; width: 30%; height: 1px; background: linear-gradient(to left, transparent, rgba(92, 101, 205, 0.3)); }
+        .ornament-divider span { color: #5C65CD; font-size: 1rem; opacity: 0.5; }
+        .modal-quote { font-style: italic; color: #FFF; opacity: 0.9; text-align: center; margin: 15px auto 0 auto; font-family: 'Playfair Display', serif; font-size: 1.1rem; max-width: 90%; line-height: 1.4;}
+        .intro-text { font-size: 0.95rem; text-align: justify; opacity: 0.9; margin-bottom: 20px; color: var(--dark-text); }
+        .section-title { color: #5C65CD; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px; font-weight: bold; margin: 0 0 12px 0; display: flex; align-items: center; gap: 8px; }
+        .facts-list { list-style: none; padding: 0; margin: 0 0 20px 0; }
+        .facts-list li { margin-bottom: 10px; display: flex; align-items: flex-start; gap: 10px; font-size: 0.9rem; color: var(--dark-text); opacity: 0.9; }
+        .facts-list li .emoji-icon { font-size: 16px; flex-shrink: 0; margin-top: 2px; }
+        .role-box, .heritage-box { border-radius: 8px; padding: 15px; margin-bottom: 12px; }
+        .role-box { background: var(--primary-gradient); color: #FFF; }
+        .heritage-box { background: rgba(92, 101, 205, 0.05); border: 1px solid #5C65CD; color: var(--dark-text); }
+        .box-title { font-weight: bold; text-transform: uppercase; font-size: 0.8rem; margin-bottom: 8px; letter-spacing: 0.5px; opacity: 0.9; }
+        .box-content { font-size: 0.9rem; margin: 0; line-height: 1.4; }
+
         /* --- FLIP ANIMATION --- */
         .flip-container {
-            display: grid;
-            perspective: 1200px;
-            width: 100%;
+            display: grid; perspective: 1200px; width: 100%;
         }
         .flip-inner {
-            grid-area: 1 / 1;
-            display: grid;
-            transition: transform 0.6s cubic-bezier(0.4, 0.2, 0.2, 1);
-            transform-style: preserve-3d;
-            width: 100%;
+            grid-area: 1 / 1; display: grid; transition: transform 0.6s cubic-bezier(0.4, 0.2, 0.2, 1);
+            transform-style: preserve-3d; width: 100%;
         }
         .flip-front, .flip-back {
-            grid-area: 1 / 1;
-            backface-visibility: hidden;
-            -webkit-backface-visibility: hidden;
-            width: 100%;
+            grid-area: 1 / 1; backface-visibility: hidden; -webkit-backface-visibility: hidden; width: 100%;
         }
-        .flip-back {
-            transform: rotateY(180deg);
-        }
-        .flip-inner.is-flipped {
-            transform: rotateY(180deg);
-        }
+        .flip-back { transform: rotateY(180deg); }
+        .flip-inner.is-flipped { transform: rotateY(180deg); }
 
-        /* --- RPG CARD STYLING --- */
+        /* --- RPG CARD STYLING (VERSO PARCHEMIN) --- */
         .rpg-card {
-            background: transparent; 
-            border: none;
-            border-radius: 0;
-            padding: 0;
-            color: var(--dark-text);
+            background: var(--parchment-bg); 
+            border: 1px solid rgba(139, 101, 8, 0.2);
+            border-radius: 8px;
+            padding: 20px;
+            color: #3b2f21;
             font-family: 'Playfair Display', serif;
-            box-shadow: none;
-            margin-top: -8px;
+            box-shadow: inset 0 0 30px rgba(139, 101, 8, 0.05), 0 4px 15px rgba(0,0,0,0.1);
+            margin-top: -5px;
             margin-bottom: 10px;
         }
         .rpg-section-title {
-            text-align: center;
-            position: relative;
-            margin: 12px 0 10px 0;
-            z-index: 1;
+            text-align: center; position: relative; margin: 15px 0 12px 0; z-index: 1;
         }
-        .rpg-card > .rpg-section-title:first-child {
-            margin-top: 0;
-        }
+        .rpg-card > .rpg-section-title:first-child { margin-top: 0; }
         .rpg-section-title::before {
             content: ''; position: absolute; top: 50%; left: 0; right: 0;
-            border-top: 1px solid rgba(92, 101, 205, 0.3); z-index: -1;
+            border-top: 1px solid rgba(139, 101, 8, 0.3); z-index: -1;
         }
         .rpg-section-title span {
-            background: #fff;
-            color: #5C65CD;
+            background: var(--parchment-bg);
+            color: #5c4018;
             padding: 0 15px;
             font-size: 0.95rem;
             font-weight: bold;
             letter-spacing: 1px;
+            text-transform: uppercase;
         }
-        .rpg-skills {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 10px;
-        }
+        .rpg-skills { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
         .rpg-skill-box, .rpg-ult-box {
-            background: rgba(92, 101, 205, 0.05);
-            color: var(--dark-text);
-            border: 1px solid rgba(92, 101, 205, 0.2);
-            border-radius: 6px;
-            padding: 12px 8px;
-            text-align: center;
-            box-shadow: none;
+            background: rgba(255,255,255,0.6); color: #3b2f21;
+            border: 1px solid rgba(139, 101, 8, 0.2); border-radius: 6px;
+            padding: 12px 8px; text-align: center; box-shadow: none;
         }
-        .rpg-skill-name {
-            font-size: 0.8rem;
-            font-weight: bold;
-            margin-bottom: 5px;
-            letter-spacing: 0.5px;
-        }
-        .rpg-skill-icon {
-            font-size: 28px;
-            margin: 8px 0;
-        }
-        .rpg-skill-desc {
-            font-size: 0.75rem;
-            font-family: sans-serif;
-            line-height: 1.3;
-            opacity: 0.9;
-        }
-        .rpg-ult-name {
-            font-size: 1rem;
-            font-weight: bold;
-            color: #5C65CD;
-            letter-spacing: 1px;
-        }
-        .rpg-relations {
-            display: grid;
-            grid-template-columns: 1fr 1fr 1fr;
-            gap: 8px;
-        }
+        .rpg-skill-name { font-size: 0.8rem; font-weight: bold; text-transform: uppercase; margin-bottom: 5px; letter-spacing: 0.5px; }
+        .rpg-skill-icon { font-size: 28px; margin: 8px 0; }
+        .rpg-skill-desc { font-size: 0.75rem; font-family: sans-serif; line-height: 1.3; opacity: 0.9; }
+        .rpg-ult-name { font-size: 1rem; font-weight: bold; color: #5c4018; text-transform: uppercase; letter-spacing: 1px; }
+        
+        .rpg-relations { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; }
         .rpg-rel-col {
-            background: rgba(92, 101, 205, 0.05);
-            color: var(--dark-text);
-            border: 1px solid rgba(92, 101, 205, 0.2);
-            border-radius: 4px;
-            padding: 8px 5px;
-            text-align: center;
-            display: flex;
-            flex-direction: column;
+            background: rgba(255,255,255,0.6); color: #3b2f21;
+            border: 1px solid rgba(139, 101, 8, 0.2); border-radius: 4px;
+            padding: 8px 5px; text-align: center; display: flex; flex-direction: column;
         }
         .rpg-rel-title {
-            font-size: 0.8rem;
-            font-weight: bold;
-            margin-bottom: 6px;
-            border-bottom: 1px solid rgba(92, 101, 205, 0.2);
-            padding-bottom: 4px;
-            color: #5C65CD;
+            font-size: 0.8rem; font-weight: bold; margin-bottom: 6px;
+            border-bottom: 1px solid rgba(139, 101, 8, 0.2); padding-bottom: 4px; color: #5c4018;
         }
-        .rpg-rel-list {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-            font-size: 0.7rem;
-            font-family: sans-serif;
-            font-weight: 500;
-        }
+        .rpg-rel-list { list-style: none; padding: 0; margin: 0; font-size: 0.7rem; font-family: sans-serif; font-weight: 500; }
         .rpg-rel-list li { margin-bottom: 3px; }
+        
         .rpg-footer {
-            text-align: center;
-            font-size: 0.75rem;
-            color: #5C65CD;
-            font-family: sans-serif;
-            letter-spacing: 1px;
-            margin-top: 15px;
-            border-top: 1px dashed rgba(92, 101, 205, 0.3);
-            padding-top: 12px;
-            font-weight: bold;
+            text-align: center; font-size: 0.75rem; color: #5c4018; font-family: sans-serif;
+            letter-spacing: 1px; margin-top: 15px; border-top: 1px dashed rgba(139, 101, 8, 0.3);
+            padding-top: 12px; font-weight: bold;
         }
 
         .back-to-top {
@@ -403,25 +377,11 @@
         
         /* --- TOAST NOTIFICATION --- */
         #toast {
-            visibility: hidden;
-            min-width: 250px;
-            background-color: #333;
-            color: #fff;
-            text-align: center;
-            border-radius: 8px;
-            padding: 16px;
-            position: fixed;
-            z-index: 10000;
-            left: 50%;
-            bottom: 30px;
-            font-size: 14px;
-            transform: translateX(-50%);
-            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+            visibility: hidden; min-width: 250px; background-color: #333; color: #fff; text-align: center;
+            border-radius: 8px; padding: 16px; position: fixed; z-index: 10000; left: 50%; bottom: 30px;
+            font-size: 14px; transform: translateX(-50%); box-shadow: 0 4px 12px rgba(0,0,0,0.3);
         }
-        #toast.show {
-            visibility: visible;
-            animation: fadein 0.5s, fadeout 0.5s 2.5s;
-        }
+        #toast.show { visibility: visible; animation: fadein 0.5s, fadeout 0.5s 2.5s; }
         @keyframes fadein { from {bottom: 0; opacity: 0;} to {bottom: 30px; opacity: 1;} }
         @keyframes fadeout { from {bottom: 30px; opacity: 1;} to {bottom: 0; opacity: 0;} }
     </style>
@@ -441,9 +401,9 @@
     </div>
 
     <div class="container">
-        <!-- Bouton de partage natif -->
+        <!-- Bouton de partage natif (SVG Standard) -->
         <button class="share-btn" id="shareBtn" aria-label="Partager l'application" onclick="shareApp()">
-            📤
+            <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line></svg>
         </button>
 
         <h1>Le Roi Soleil<span class="h1-subtitle">LA COMÉDIE MUSICALE</span></h1>
@@ -468,9 +428,9 @@
             <div class="fictional-legend">✦ Personnage créé pour la comédie musicale</div>
         </div>
 
-        <!-- ONGLET 2 : FAITS HISTORIQUES -->
+        <!-- ONGLET 2 : FAITS HISTORIQUES (TIMELINE) -->
         <div id="tab-faits" class="tab-content" role="tabpanel" aria-labelledby="btn-faits" aria-hidden="true">
-            <div class="facts-grid" id="facts-container">
+            <div class="timeline" id="facts-container">
                 <!-- Généré par JS -->
             </div>
         </div>
@@ -537,7 +497,8 @@
             "le-medecin": "🩺", "le-ministre": "💼", "le-notre": "🌳", "mansart": "🏰", "turenne": "🐎",
             "conde": "🛡️", "bossuet": "📖", "luxembourg": "⚔️", "vauban": "🧱", "philippe-anjou": "👑",
             "marlborough": "💂", "lex-etiquette": "📜", "lex-fronde": "💥", "lex-prince": "🩸",
-            "lex-droit": "🕊️", "lex-libertinage": "🍷", "lex-lettre": "✉️"
+            "lex-droit": "🕊️", "lex-libertinage": "🍷", "lex-lettre": "✉️", "lex-mousquetaire": "🤺",
+            "lex-bourbon": "⚜️", "lex-absolutisme": "👑", "lex-siecle": "✨"
         };
 
         const characters = {
@@ -550,7 +511,7 @@
                 rpg: {
                     classe: "Roi Légendaire", faction: "Royauté",
                     competences: [ { nom: "Règne Absolu", desc: "Impose sa volonté royale", icon: "⚔️" }, { nom: "Éclat Royal", desc: "Éblouit par sa magnificence", icon: "✨" }, { nom: "Majesté Divine", desc: "Incarne le pouvoir divin", icon: "🌟" }, { nom: "Vision d'Empire", desc: "Bâtit la grandeur française", icon: "🏰" } ],
-                    ultime: { nom: "ÉCLAT DU SOLEIL", desc: "Éblouit tous ses adversaires par sa magnificence royale" },
+                    ultime: { nom: "Éclat du Soleil", desc: "Éblouit tous ses adversaires par sa magnificence royale" },
                     relations: { allies: ["Anne d'Autriche", "Mazarin", "Colbert", "Mme de Maintenon"], rivaux: ["Duc de Beaufort", "La Voisin"], amours: ["Marie Mancini", "Mme de Montespan", "Mme de Maintenon"] }
                 }
             },
@@ -562,7 +523,7 @@
                 rpg: {
                     classe: "Roi en Devenir", faction: "Royauté",
                     competences: [ { nom: "Innocence", desc: "Pureté enfantine", icon: "😇" }, { nom: "Apprentissage", desc: "Soif de grandir", icon: "📚" }, { nom: "Détermination", desc: "Volonté d'acier", icon: "💪" }, { nom: "Charme", desc: "Attendrissement", icon: "✨" } ],
-                    ultime: { nom: "PROMESSE D'AVENIR", desc: "Porte en lui la promesse de la grandeur future de la France" },
+                    ultime: { nom: "Promesse d'avenir", desc: "Porte en lui la promesse de la grandeur future de la France" },
                     relations: { allies: ["Anne d'Autriche", "Précepteurs"], rivaux: ["La Fronde"], amours: ["Amour filial"] }
                 }
             },
@@ -574,7 +535,7 @@
                 rpg: {
                     classe: "Régente Sage", faction: "Royauté",
                     competences: [ { nom: "Amour Maternel", desc: "Dévouement absolu", icon: "💝" }, { nom: "Sagesse", desc: "Expérience du pouvoir", icon: "👑" }, { nom: "Force Intérieure", desc: "Résiste aux épreuves", icon: "💪" }, { nom: "Dévotion", desc: "Foi profonde", icon: "🙏" } ],
-                    ultime: { nom: "PROTECTION MATERNELLE", desc: "Protège et guide par l'amour inconditionnel d'une mère" },
+                    ultime: { nom: "Protection maternelle", desc: "Protège et guide par l'amour inconditionnel d'une mère" },
                     relations: { allies: ["Mazarin", "Louis XIV", "Clergé"], rivaux: ["Frondeurs", "Ennemis du roi"], amours: ["Louis XIII", "Mazarin"] }
                 }
             },
@@ -586,7 +547,7 @@
                 rpg: {
                     classe: "Prince Rebelle", faction: "Royauté",
                     competences: [ { nom: "Élégance", desc: "Style sophistiqué", icon: "💅" }, { nom: "Bravoure", desc: "Héros de guerre", icon: "⚔️" }, { nom: "Esprit Libre", desc: "Rejette les conventions", icon: "🦋" }, { nom: "Loyauté", desc: "Fidélité au Roi", icon: "👑" } ],
-                    ultime: { nom: "AUTHENTICITÉ ROYALE", desc: "Inspire par son courage à être soi-même malgré les conventions" },
+                    ultime: { nom: "Authenticité royale", desc: "Inspire par son courage à être soi-même malgré les conventions" },
                     relations: { allies: ["Louis XIV", "Artistes"], rivaux: ["Courtisans"], amours: ["Épouses", "Favoris"] }
                 }
             },
@@ -600,7 +561,7 @@
                 rpg: {
                     classe: "Stratège Politique", faction: "Cour Royale",
                     competences: [ { nom: "Stratégie", desc: "Maître du jeu", icon: "🧩" }, { nom: "Diplomatie", desc: "Négociateur né", icon: "🤝" }, { nom: "Vision d'État", desc: "Pense la grandeur", icon: "🏛️" }, { nom: "Mentor", desc: "Éducateur royal", icon: "👨‍🏫" } ],
-                    ultime: { nom: "MAÎTRE DU JEU", desc: "Manipule les événements pour servir la grandeur de la France" },
+                    ultime: { nom: "Maître du jeu", desc: "Manipule les événements pour servir la grandeur de la France" },
                     relations: { allies: ["Anne d'Autriche", "Louis XIV", "Mancini"], rivaux: ["Frondeurs", "Duc de Beaufort"], amours: ["Anne d'Autriche"] }
                 }
             },
@@ -612,7 +573,7 @@
                 rpg: {
                     classe: "Génie Économique", faction: "État",
                     competences: [ { nom: "Finances", desc: "Maîtrise de l'argent", icon: "💎" }, { nom: "Industrie", desc: "Vision économique", icon: "🏭" }, { nom: "Réformes", desc: "Transformation", icon: "⚖️" }, { nom: "Rigueur", desc: "Organisation", icon: "📊" } ],
-                    ultime: { nom: "PROSPÉRITÉ ROYALE", desc: "Transforme les finances du royaume par son génie économique" },
+                    ultime: { nom: "Prospérité royale", desc: "Transforme les finances du royaume par son génie économique" },
                     relations: { allies: ["Louis XIV", "Industriels"], rivaux: ["Louvois", "Noblesse frondeuse"], amours: ["La France", "Épouse"] }
                 }
             },
@@ -626,7 +587,7 @@
                 rpg: {
                     classe: "Dame de Cœur", faction: "Courtisane",
                     competences: [ { nom: "Charme Italien", desc: "Séduction naturelle", icon: "🇮🇹" }, { nom: "Poésie", desc: "Touche les cœurs", icon: "📝" }, { nom: "Mélancolie", desc: "Émotion profonde", icon: "😢" }, { nom: "Passion", desc: "Amour impossible", icon: "💔" } ],
-                    ultime: { nom: "CŒUR BRISÉ", desc: "Son amour interdit touche l'âme de tous ceux qui l'entendent" },
+                    ultime: { nom: "Cœur brisé", desc: "Son amour interdit touche l'âme de tous ceux qui l'entendent" },
                     relations: { allies: ["Mazarin", "Ninon", "Molière"], rivaux: ["Anne d'Autriche", "Mme de Montespan"], amours: ["Louis XIV"] }
                 }
             },
@@ -638,7 +599,7 @@
                 rpg: {
                     classe: "Enchanteresse", faction: "Courtisane",
                     competences: [ { nom: "Séduction", desc: "Charme irrésistible", icon: "💋" }, { nom: "Intrigue", desc: "Maîtrise des complots", icon: "🎭" }, { nom: "Mystères", desc: "Pratiques occultes", icon: "🔮" }, { nom: "Fascination", desc: "Beauté envoûtante", icon: "✨" } ],
-                    ultime: { nom: "SORTILÈGE D'AMOUR", desc: "Ensorcelle par sa beauté et ses mystères occultes" },
+                    ultime: { nom: "Sortilège d'amour", desc: "Ensorcelle par sa beauté et ses mystères occultes" },
                     relations: { allies: ["La Voisin", "Molière"], rivaux: ["Mme de Maintenon", "Marie Mancini"], amours: ["Louis XIV"] }
                 }
             },
@@ -650,7 +611,7 @@
                 rpg: {
                     classe: "Conseillère Sage", faction: "Dame de cour",
                     competences: [ { nom: "Sagesse Politique", desc: "Conseil avisé", icon: "🧠" }, { nom: "Éducation Noble", desc: "Pédagogie", icon: "🎓" }, { nom: "Discrétion", desc: "Pouvoir dans l'ombre", icon: "👤" }, { nom: "Piété", desc: "Foi sincère", icon: "🙏" } ],
-                    ultime: { nom: "CONSEIL ÉCLAIRÉ", desc: "Guide les décisions par sa sagesse et sa discrétion" },
+                    ultime: { nom: "Conseil éclairé", desc: "Guide les décisions par sa sagesse et sa discrétion" },
                     relations: { allies: ["Louis XIV", "Éducateurs"], rivaux: ["Mme de Montespan", "Libertins"], amours: ["Louis XIV", "Paul Scarron"] }
                 }
             },
@@ -664,7 +625,7 @@
                 rpg: {
                     classe: "Héros Populaire", faction: "Peuple",
                     competences: [ { nom: "Bravoure", desc: "Courage légendaire", icon: "🛡️" }, { nom: "Charisme", desc: "Adoré du peuple", icon: "👥" }, { nom: "Fronde", desc: "Rébellion", icon: "🏴‍☠️" }, { nom: "Honneur", desc: "Code martial", icon: "🎖️" } ],
-                    ultime: { nom: "CRI DE GUERRE", desc: "Galvanise les troupes par son courage exemplaire" },
+                    ultime: { nom: "Cri de guerre", desc: "Galvanise les troupes par son courage exemplaire" },
                     relations: { allies: ["Peuple de Paris", "Frondeurs"], rivaux: ["Mazarin", "Louis XIV (Fronde)"], amours: ["Dames de la Cour"] }
                 }
             },
@@ -676,7 +637,7 @@
                 rpg: {
                     classe: "Maître des Arts", faction: "Peuple",
                     competences: [ { nom: "Dramaturgie", desc: "Génie créatif", icon: "🎭" }, { nom: "Satire", desc: "Critique acérée", icon: "😂" }, { nom: "Observation", desc: "Peintre des mœurs", icon: "👁️" }, { nom: "Esprit Critique", desc: "Brise les dogmes", icon: "🧠" } ],
-                    ultime: { nom: "MIROIR DE LA SOCIÉTÉ", desc: "Révèle les vérités cachées par l'art de la comédie" },
+                    ultime: { nom: "Miroir de la société", desc: "Révèle les vérités cachées par l'art de la comédie" },
                     relations: { allies: ["Louis XIV", "Troupe"], rivaux: ["Dévots", "Critiques"], amours: ["Armande Béjart"] }
                 }
             },
@@ -688,7 +649,7 @@
                 rpg: {
                     classe: "Poète Courageux", faction: "Peuple",
                     competences: [ { nom: "Burlesque", desc: "Humour décalé", icon: "😂" }, { nom: "Courage", desc: "Face à l'adversité", icon: "💪" }, { nom: "Littérature", desc: "Plume de génie", icon: "✍️" }, { nom: "Humour", desc: "Rire salvateur", icon: "😄" } ],
-                    ultime: { nom: "RIRE THÉRAPEUTIQUE", desc: "Guérit les âmes par l'humour et la littérature" },
+                    ultime: { nom: "Rire thérapeutique", desc: "Guérit les âmes par l'humour et la littérature" },
                     relations: { allies: ["F. d'Aubigné", "Poètes"], rivaux: ["Auteurs classiques"], amours: ["F. d'Aubigné"] }
                 }
             },
@@ -700,7 +661,7 @@
                 rpg: {
                     classe: "Philosophe Libertine", faction: "Courtisane",
                     competences: [ { nom: "Esprit Libre", desc: "Sans dogmes", icon: "🕊️" }, { nom: "Philosophie", desc: "Pensée moderne", icon: "💭" }, { nom: "Indépendance", desc: "Refus de soumission", icon: "🚫" }, { nom: "Charme", desc: "Séduction intellectuelle", icon: "🧠" } ],
-                    ultime: { nom: "LIBERTÉ D'ESPRIT", desc: "Inspire la liberté de pensée et l'émancipation" },
+                    ultime: { nom: "Liberté d'esprit", desc: "Inspire la liberté de pensée et l'émancipation" },
                     relations: { allies: ["Philosophes", "Artistes"], rivaux: ["Dévots"], amours: ["Nombreux amants"] }
                 }
             },
@@ -714,7 +675,7 @@
                 rpg: {
                     classe: "Empoisonneuse", faction: "Bas-fonds",
                     competences: [ { nom: "Arts Occultes", desc: "Magie et rituels", icon: "🌙" }, { nom: "Poisons", desc: "Breuvages létaux", icon: "☠️" }, { nom: "Messes Noires", desc: "Cérémonies", icon: "⚫" }, { nom: "Manipulation", desc: "Contrôle mental", icon: "🧠" } ],
-                    ultime: { nom: "MALÉFICE FATAL", desc: "Maîtrise les forces obscures et les poisons les plus redoutables" },
+                    ultime: { nom: "Maléfice fatal", desc: "Maîtrise les forces obscures et les poisons les plus redoutables" },
                     relations: { allies: ["Sorcières", "Clients"], rivaux: ["Police", "La Reynie"], amours: ["Intérêts vénaux"] }
                 }
             },
@@ -726,7 +687,7 @@
                 rpg: {
                     classe: "Dame de Compagnie", faction: "Dame de cour",
                     competences: [ { nom: "Discrétion", desc: "Silence absolu", icon: "🤫" }, { nom: "Loyauté", desc: "Fidélité sans faille", icon: "💯" }, { nom: "Observation", desc: "Perception fine", icon: "👁️" }, { nom: "Service", desc: "Dévouement total", icon: "🤝" } ],
-                    ultime: { nom: "OMBRE FIDÈLE", desc: "Sert avec une loyauté et une discrétion exemplaires" },
+                    ultime: { nom: "Ombre fidèle", desc: "Sert avec une loyauté et une discrétion exemplaires" },
                     relations: { allies: ["Noblesse provinciale"], rivaux: ["Intrigants"], amours: ["Rêves romantiques"] }
                 }
             },
@@ -738,7 +699,7 @@
                 rpg: {
                     classe: "Âme Pure", faction: "Peuple",
                     competences: [ { nom: "Pureté", desc: "Innocence touchante", icon: "😇" }, { nom: "Nature", desc: "Beauté authentique", icon: "🌿" }, { nom: "Simplicité", desc: "Émotions vraies", icon: "💫" }, { nom: "Amour", desc: "Sentiments sincères", icon: "💖" } ],
-                    ultime: { nom: "GRÂCE INNOCENTE", desc: "Touche les cœurs par sa pureté et sa sincérité absolue" },
+                    ultime: { nom: "Grâce innocente", desc: "Touche les cœurs par sa pureté et sa sincérité absolue" },
                     relations: { allies: ["Artisans", "Paysans"], rivaux: ["Dames hautaines"], amours: ["Duc de Beaufort"] }
                 }
             },
@@ -752,7 +713,7 @@
                 rpg: {
                     classe: "Illusionniste", faction: "Cour Royale",
                     competences: [ { nom: "Mode", desc: "Dicte les tendances", icon: "👗" }, { nom: "Médisance", desc: "Brisent des vies", icon: "🗣️" }, { nom: "Danse", desc: "Brille au bal", icon: "💃" }, { nom: "Masque", desc: "Cache les émotions", icon: "🎭" } ],
-                    ultime: { nom: "ILLUSION DORÉE", desc: "Éblouit et dupe par le luxe et l'artifice" },
+                    ultime: { nom: "Illusion dorée", desc: "Éblouit et dupe par le luxe et l'artifice" },
                     relations: { allies: ["Modistes", "Joailliers"], rivaux: ["Dévots", "Rivales"], amours: ["Pouvoir"] }
                 }
             },
@@ -764,7 +725,7 @@
                 rpg: {
                     classe: "Artistes", faction: "Troupe",
                     competences: [ { nom: "Grâce", desc: "Élégance naturelle", icon: "🌟" }, { nom: "Rythme", desc: "Harmonie musicale", icon: "🎵" }, { nom: "Esthétique", desc: "Beauté visuelle", icon: "✨" }, { nom: "Expression", desc: "Langage corporel", icon: "💫" } ],
-                    ultime: { nom: "DANSE ENVOÛTANTE", desc: "Hypnotise l'assemblée par la beauté de son art" },
+                    ultime: { nom: "Danse envoûtante", desc: "Hypnotise l'assemblée par la beauté de son art" },
                     relations: { allies: ["Musiciens", "Lully"], rivaux: ["Critiques", "Dévots"], amours: ["L'Art"] }
                 }
             },
@@ -776,7 +737,7 @@
                 rpg: {
                     classe: "Représentants", faction: "Tiers État",
                     competences: [ { nom: "Gronde", desc: "Voix du peuple", icon: "🗣️" }, { nom: "Force", desc: "Puissance de l'union", icon: "💪" }, { nom: "Sagesse", desc: "Bon sens rural", icon: "🌾" }, { nom: "Solidarité", desc: "Entraide", icon: "❤️" } ],
-                    ultime: { nom: "ÂME DE LA FRANCE", desc: "Incarne l'esprit et les valeurs profondes de la nation" },
+                    ultime: { nom: "Âme de la France", desc: "Incarne l'esprit et les valeurs profondes de la nation" },
                     relations: { allies: ["Artisans", "Paysans"], rivaux: ["Noblesse arrogante", "Collecteurs d'impôts"], amours: ["La France"] }
                 }
             },
@@ -788,7 +749,7 @@
                 rpg: {
                     classe: "Maîtres de l'Ombre", faction: "Troupe",
                     competences: [ { nom: "Mécanique", desc: "Gestion des décors", icon: "⚙️" }, { nom: "Illusion", desc: "Magie scénique", icon: "🎭" }, { nom: "Chronomètre", desc: "Maîtrise du temps", icon: "⏱️" }, { nom: "Ombre", desc: "Invisibilité", icon: "🤫" } ],
-                    ultime: { nom: "L'ILLUSION PARFAITE", desc: "Permet l'immersion totale du public sans accroc" },
+                    ultime: { nom: "L'illusion parfaite", desc: "Permet l'immersion totale du public sans accroc" },
                     relations: { allies: ["Molière", "Comédiens"], rivaux: ["Contretemps", "Pannes techniques"], amours: ["La Scène"] }
                 }
             },
@@ -800,7 +761,7 @@
                 rpg: {
                     classe: "Guerriers Loyaux", faction: "Armée Royale",
                     competences: [ { nom: "Bravoure", desc: "Courage au combat", icon: "🛡️" }, { nom: "Armes", desc: "Maîtrise de l'épée", icon: "⚔️" }, { nom: "Patrie", desc: "Amour du pays", icon: "🇫🇷" }, { nom: "Bataillon", desc: "Esprit de corps", icon: "🤝" } ],
-                    ultime: { nom: "POUR LA FRANCE", desc: "Se bat avec un courage héroïque jusqu'à la mort" },
+                    ultime: { nom: "Pour la France", desc: "Se bat avec un courage héroïque jusqu'à la mort" },
                     relations: { allies: ["Louvois", "Officiers"], rivaux: ["Ennemis de l'État", "Déserteurs"], amours: ["Fiancées au village"] }
                 }
             },
@@ -812,7 +773,7 @@
                 rpg: {
                     classe: "Maîtres d'Hôtel", faction: "Service",
                     competences: [ { nom: "Précision", desc: "Service millimétré", icon: "🍽️" }, { nom: "Œnologie", desc: "Savoir des vins", icon: "🍷" }, { nom: "Agilité", desc: "Rapidité discrète", icon: "🏃" }, { nom: "Écoute", desc: "Oreille attentive", icon: "👂" } ],
-                    ultime: { nom: "LE GRAND COUVERT", desc: "Orchestre le banquet le plus fastueux du siècle" },
+                    ultime: { nom: "Le Grand Couvert", desc: "Orchestre le banquet le plus fastueux du siècle" },
                     relations: { allies: ["Cuisiniers", "Intendants"], rivaux: ["Convives capricieux", "Chiens de cour"], amours: ["Gastronomie"] }
                 }
             },
@@ -824,7 +785,7 @@
                 rpg: {
                     classe: "Guides Spirituels", faction: "Clergé",
                     competences: [ { nom: "Éloquence", desc: "Prêches enflammés", icon: "📖" }, { nom: "Autorité", desc: "Pression morale", icon: "⚖️" }, { nom: "Pardon", desc: "Absolution des péchés", icon: "🕊️" }, { nom: "Ferveur", desc: "Prière sincère", icon: "🙏" } ],
-                    ultime: { nom: "COURROUX DIVIN", desc: "Abat la foudre morale sur les pécheurs" },
+                    ultime: { nom: "Courroux Divin", desc: "Abat la foudre morale sur les pécheurs" },
                     relations: { allies: ["Dévots", "Mme de Maintenon"], rivaux: ["Libertins", "Comédiens"], amours: ["L'Église"] }
                 }
             },
@@ -836,7 +797,7 @@
                 rpg: {
                     classe: "Confidente Noble", faction: "Cour Royale",
                     competences: [ { nom: "Étiquette", desc: "Maintien strict", icon: "🪭" }, { nom: "Secrets", desc: "Écoute les murmures", icon: "👂" }, { nom: "Alliances", desc: "Liens discrets", icon: "🤝" }, { nom: "Paraître", desc: "Garde la face", icon: "👗" } ],
-                    ultime: { nom: "GRÂCE VERSAILLAISE", desc: "Navigue dans les pires scandales sans une égratignure" },
+                    ultime: { nom: "Grâce Versaillaise", desc: "Navigue dans les pires scandales sans une égratignure" },
                     relations: { allies: ["La Reine", "Princesses"], rivaux: ["Intrigantes", "Parvenus"], amours: ["Alliances de raison"] }
                 }
             },
@@ -848,7 +809,7 @@
                 rpg: {
                     classe: "Serviteur Loyal", faction: "Service",
                     competences: [ { nom: "Efficacité", desc: "Service impeccable", icon: "🏠" }, { nom: "Silence", desc: "Discrétion totale", icon: "🤐" }, { nom: "Dévouement", desc: "Loyauté absolue", icon: "💝" }, { nom: "Intimité", desc: "Connaît les secrets", icon: "🔍" } ],
-                    ultime: { nom: "INVISIBLE PRÉSENCE", desc: "Observe et agit sans jamais être remarquée" },
+                    ultime: { nom: "Invisible présence", desc: "Observe et agit sans jamais être remarquée" },
                     relations: { allies: ["Autres serviteurs", "Le Peuple"], rivaux: ["Courtisans tyranniques"], amours: ["Fiancé roturier"] }
                 }
             },
@@ -860,7 +821,7 @@
                 rpg: {
                     classe: "Savant Guérisseur", faction: "Science",
                     competences: [ { nom: "Saignée", desc: "Médecine brutale", icon: "🩸" }, { nom: "Botanique", desc: "Remèdes naturels", icon: "🌿" }, { nom: "Alchimie", desc: "Préparations savantes", icon: "💊" }, { nom: "Soin", desc: "Compassion médicale", icon: "❤️" } ],
-                    ultime: { nom: "GUÉRISON MIRACULEUSE", desc: "Tente le tout pour le tout et sauve la mise... parfois." },
+                    ultime: { nom: "Guérison miraculeuse", desc: "Tente le tout pour le tout et sauve la mise... parfois." },
                     relations: { allies: ["Apothicaires", "Chirurgiens"], rivaux: ["Charlatans", "Molière"], amours: ["La Science"] }
                 }
             },
@@ -872,7 +833,7 @@
                 rpg: {
                     classe: "Commis de l'État", faction: "Administration",
                     competences: [ { nom: "Gestion", desc: "Organisation rigide", icon: "📜" }, { nom: "Justice", desc: "Loi du Roi", icon: "⚖️" }, { nom: "Décrets", desc: "Plume d'acier", icon: "✍️" }, { nom: "Raison", desc: "Logique d'État", icon: "💼" } ],
-                    ultime: { nom: "ORDRE ABSOLU", desc: "Fait taire toute contestation par la force de la loi" },
+                    ultime: { nom: "Ordre absolu", desc: "Fait taire toute contestation par la force de la loi" },
                     relations: { allies: ["Colbert", "Louis XIV"], rivaux: ["Noblesse rebelle", "Contribuables"], amours: ["Le Pouvoir"] }
                 }
             },
@@ -884,7 +845,7 @@
                 rpg: {
                     classe: "Maître Jardinier", faction: "Artisans Royaux",
                     competences: [ { nom: "Géométrie", desc: "Symétrie parfaite", icon: "📐" }, { nom: "Hydraulique", desc: "Jeux d'eau", icon: "⛲" }, { nom: "Botanique", desc: "Plantes rares", icon: "🌺" }, { nom: "Perspective", desc: "Optique infinie", icon: "👁️" } ],
-                    ultime: { nom: "JARDINS DE LÉGENDE", desc: "Dompte la nature pour la gloire du Roi" },
+                    ultime: { nom: "Jardins de Légende", desc: "Dompte la nature pour la gloire du Roi" },
                     relations: { allies: ["Louis XIV", "Mansart"], rivaux: ["Nature Sauvage"], amours: ["La Beauté Végétale"] }
                 }
             },
@@ -894,7 +855,7 @@
                 rpg: {
                     classe: "Premier Architecte", faction: "Artisans Royaux",
                     competences: [ { nom: "Classicisme", desc: "Style parfait", icon: "🏛️" }, { nom: "Démesure", desc: "Projets immenses", icon: "🏰" }, { nom: "Ingéniosité", desc: "Techniques neuves", icon: "⚙️" }, { nom: "Esthétique", desc: "Toits mansardés", icon: "🏠" } ],
-                    ultime: { nom: "GALERIE DES GLACES", desc: "Érige le couloir le plus resplendissant du monde" },
+                    ultime: { nom: "Galerie des Glaces", desc: "Érige le couloir le plus resplendissant du monde" },
                     relations: { allies: ["Le Brun", "Le Nôtre"], rivaux: ["Financiers stricts"], amours: ["La Pierre et l'Or"] }
                 }
             },
@@ -904,7 +865,7 @@
                 rpg: {
                     classe: "Maréchal de Génie", faction: "Armée Royale",
                     competences: [ { nom: "Tactique", desc: "Esprit vif", icon: "🧠" }, { nom: "Mouvement", desc: "Troupes rapides", icon: "🐎" }, { nom: "Loyauté", desc: "Bras du Roi", icon: "⚔️" }, { nom: "Stratégie", desc: "Anticipation", icon: "🗺️" } ],
-                    ultime: { nom: "GLOIRE MILITAIRE", desc: "Remporte la victoire par des manœuvres imprévisibles" },
+                    ultime: { nom: "Gloire Militaire", desc: "Remporte la victoire par des manœuvres imprévisibles" },
                     relations: { allies: ["Louis XIV", "Soldats"], rivaux: ["Condé (pendant Fronde)"], amours: ["La Patrie"] }
                 }
             },
@@ -914,7 +875,7 @@
                 rpg: {
                     classe: "Prince Combattant", faction: "Haute Noblesse",
                     competences: [ { nom: "Charge", desc: "Attaque frontale", icon: "🐎" }, { nom: "Fierté", desc: "Orgueil de sang", icon: "👑" }, { nom: "Rebellion", desc: "Esprit frondeur", icon: "💥" }, { nom: "Bravoure", desc: "Témérité", icon: "🛡️" } ],
-                    ultime: { nom: "FOUDRE DE ROCROI", desc: "Écrase les lignes ennemies avec une charge fulgurante" },
+                    ultime: { nom: "Foudre de Rocroi", desc: "Écrase les lignes ennemies avec une charge fulgurante" },
                     relations: { allies: ["Frondeurs (jadis)", "L'Armée"], rivaux: ["Mazarin", "Turenne"], amours: ["La Gloire"] }
                 }
             },
@@ -924,7 +885,7 @@
                 rpg: {
                     classe: "Théologien Royal", faction: "Clergé",
                     competences: [ { nom: "Éloquence", desc: "Orateur né", icon: "📖" }, { nom: "Doctrine", desc: "Droit divin", icon: "👑" }, { nom: "Pédagogie", desc: "Éduque le Dauphin", icon: "👨‍🏫" }, { nom: "Morale", desc: "Rigueur religieuse", icon: "⚖️" } ],
-                    ultime: { nom: "ORAISON FUNÈBRE", desc: "Marque les esprits par des discours éternels" },
+                    ultime: { nom: "Oraison Funèbre", desc: "Marque les esprits par des discours éternels" },
                     relations: { allies: ["Mme de Maintenon", "Louis XIV"], rivaux: ["Protestants", "Libertins"], amours: ["Dieu"] }
                 }
             },
@@ -934,7 +895,7 @@
                 rpg: {
                     classe: "Maréchal Invaincu", faction: "Armée Royale",
                     competences: [ { nom: "Surprise", desc: "Attaque éclair", icon: "⚡" }, { nom: "Victoire", desc: "Jamais défait", icon: "🏆" }, { nom: "Bravoure", desc: "Férocité", icon: "⚔️" }, { nom: "Trophées", desc: "Prend les drapeaux", icon: "🚩" } ],
-                    ultime: { nom: "BOUCLIER DES FLANDRES", desc: "Défend la frontière avec une efficacité redoutable" },
+                    ultime: { nom: "Bouclier des Flandres", desc: "Défend la frontière avec une efficacité redoutable" },
                     relations: { allies: ["Louis XIV", "Louvois"], rivaux: ["Coalition européenne"], amours: ["La Guerre"] }
                 }
             },
@@ -944,7 +905,7 @@
                 rpg: {
                     classe: "Génie Fortificateur", faction: "Armée Royale",
                     competences: [ { nom: "Citadelles", desc: "Bâtisseur inouï", icon: "🏰" }, { nom: "Sièges", desc: "Fait tomber les murs", icon: "💥" }, { nom: "Calculs", desc: "Précision mortelle", icon: "📐" }, { nom: "Protection", desc: "Épargne ses hommes", icon: "🛡️" } ],
-                    ultime: { nom: "CEINTURE DE FER", desc: "Rend les frontières de la France totalement imprenables" },
+                    ultime: { nom: "Ceinture de Fer", desc: "Rend les frontières de la France totalement imprenables" },
                     relations: { allies: ["Louis XIV", "L'Armée"], rivaux: ["Ennemis d'Europe"], amours: ["L'Ingénierie"] }
                 }
             },
@@ -954,7 +915,7 @@
                 rpg: {
                     classe: "Héritier Dynastique", faction: "Bourbons",
                     competences: [ { nom: "Sang Bleu", desc: "Héritier légitime", icon: "🩸" }, { nom: "Adaptation", desc: "Culture espagnole", icon: "🇪🇸" }, { nom: "Couronne", desc: "Prend le pouvoir", icon: "👑" }, { nom: "Alliances", desc: "Union des royaumes", icon: "🤝" } ],
-                    ultime: { nom: "SOLEIL SUR L'ESPAGNE", desc: "Installe la famille Bourbon sur un nouveau trône" },
+                    ultime: { nom: "Soleil sur l'Espagne", desc: "Installe la famille Bourbon sur un nouveau trône" },
                     relations: { allies: ["Louis XIV (grand-père)"], rivaux: ["Habsbourg", "Coalition"], amours: ["Marie-Louise de Savoie"] }
                 }
             },
@@ -964,7 +925,7 @@
                 rpg: {
                     classe: "Général Ennemi", faction: "Coalition Anglaise",
                     competences: [ { nom: "Discipline", desc: "Troupes de fer", icon: "💂" }, { nom: "Alliance", desc: "Unit l'Europe", icon: "🤝" }, { nom: "Ténacité", desc: "Acharnement", icon: "💪" }, { nom: "Stratégie", desc: "Contre le Roi", icon: "🗺️" } ],
-                    ultime: { nom: "COALITION FATALE", desc: "Freine l'hégémonie de la France par des victoires décisives" },
+                    ultime: { nom: "Coalition Fatale", desc: "Freine l'hégémonie de la France par des victoires décisives" },
                     relations: { allies: ["Prince Eugène", "Angleterre"], rivaux: ["Louis XIV", "Armée Française"], amours: ["Sarah Churchill"] }
                 }
             }
@@ -1015,7 +976,11 @@
             { id: "lex-prince", title: "Prince du Sang", icon: "fleur", desc: "Titre donné exclusivement aux princes légitimes descendant de la maison royale de France (comme le Grand Condé)." },
             { id: "lex-droit", title: "Droit Divin", icon: "church", desc: "Doctrine politique stipulant que le pouvoir absolu du Roi lui est directement confié par Dieu. Il n'a de comptes à rendre à personne d'autre." },
             { id: "lex-libertinage", title: "Libertinage", icon: "feather", desc: "Au XVIIe siècle, c'est avant tout une très grande liberté de pensée philosophique et un affranchissement des dogmes religieux et des conventions (ex: Ninon de l'Enclos)." },
-            { id: "lex-lettre", title: "Lettre de cachet", icon: "book", desc: "Lettre fermée par le sceau personnel du Roi contenant un ordre direct et incontestable, souvent utilisée pour emprisonner sans jugement." }
+            { id: "lex-lettre", title: "Lettre de cachet", icon: "book", desc: "Lettre fermée par le sceau personnel du Roi contenant un ordre direct et incontestable, souvent utilisée pour emprisonner sans jugement." },
+            { id: "lex-mousquetaire", title: "Mousquetaire", icon: "sword", desc: "Soldat d'élite de la maison militaire du Roi, armé d'un mousquet et d'une épée. Ils forment la garde personnelle du souverain." },
+            { id: "lex-bourbon", title: "Maison de Bourbon", icon: "fleur", desc: "Importante dynastie royale européenne dont est issu Louis XIV. Ses descendants règnent encore en Espagne aujourd'hui." },
+            { id: "lex-absolutisme", title: "Absolutisme", icon: "crown", desc: "Régime politique dans lequel le roi concentre tous les pouvoirs (législatif, exécutif, judiciaire) sans aucun contrôle externe." },
+            { id: "lex-siecle", title: "Grand Siècle", icon: "sparkles", desc: "Période de l'histoire de France (XVIIe siècle) marquée par le règne de Louis XIV, et par un rayonnement culturel, militaire et artistique exceptionnel." }
         ];
 
         // --- GÉNÉRATION HTML ---
@@ -1030,7 +995,7 @@
             { id: "amours", title: "Les amours du roi", chars: ["marie-mancini", "montespan", "maintenon"] },
             { id: "frondeurs", title: "Les frondeurs et artistes", chars: ["beaufort", "moliere", "scarron", "ninon"] },
             { id: "ombre", title: "L'ombre, le peuple et la fiction", chars: ["voisin", "lisieux", "isabelle"] },
-            { id: "troupe", title: "La troupe et les autres rôles", chars: ["les-courtisanes", "les-danseurs", "le-peuple", "les-operateurs", "les-soldats", "les-serveurs", "le-clerge", "la-dame-de-cour", "la-femme-de-chambre", "le-medecin", "le-ministre"] }
+            { id: "troupe", title: "La troupe et les rôles de cour", chars: ["les-courtisanes", "les-danseurs", "le-peuple", "les-operateurs", "les-soldats", "les-serveurs", "le-clerge", "la-dame-de-cour", "la-femme-de-chambre", "le-medecin", "le-ministre"] }
         ];
 
         categoriesPersonnages.forEach(cat => {
@@ -1051,7 +1016,7 @@
                     actorsArr.sort((a, b) => a.localeCompare(b, 'fr'));
                     actorTagHtml = `
                     <div class="actor-tag">
-                        <span class="actor-name">${actorsArr.join(', ')}</span>
+                        <span class="actor-name">🎭 ${actorsArr.join(', ')}</span>
                     </div>`;
                 }
 
@@ -1071,32 +1036,34 @@
             charsContainer.insertAdjacentHTML('beforeend', catHtml);
         });
 
-        // 2. Faits Historiques
+        // 2. Faits Historiques (Timeline)
         const factsContainer = document.getElementById('facts-container');
         let factDelay = 0;
-        historicalFacts.forEach(fact => {
+        historicalFacts.forEach((fact, index) => {
             let tagsHtml = fact.chars.map(c => `<button class="tag" aria-label="Voir la fiche de ${c.name}" onclick="openCharModal('${c.id}')">${c.name}</button>`).join('');
             let consHtml = fact.cons.map(c => `<li>${c}</li>`).join('');
             
             let emojiStrFact = icons[fact.icon] || icons.crown;
             
             let html = `
-            <div class="fact-card glass-card fade-in-up" style="animation-delay: ${factDelay}s">
-                <div class="fact-header">
-                    <div class="fact-icon" aria-hidden="true"><span class="emoji-icon">${emojiStrFact}</span></div>
-                    <div class="fact-meta">
-                        <div class="fact-dates">${fact.dates}</div><br>
-                        <span class="fact-category">${fact.cat}</span>
+            <div class="timeline-item fade-in-up" style="animation-delay: ${factDelay}s">
+                <div class="fact-card glass-card">
+                    <div class="fact-header">
+                        <div class="fact-icon" aria-hidden="true"><span class="emoji-icon">${emojiStrFact}</span></div>
+                        <div class="fact-meta">
+                            <div class="fact-dates">${fact.dates}</div><br>
+                            <span class="fact-category">${fact.cat}</span>
+                        </div>
                     </div>
+                    <h3 class="fact-title">${fact.title}</h3>
+                    <div class="fact-desc">${fact.desc}</div>
+                    <div class="fact-subtitle">IMPACT :</div>
+                    <div class="fact-impact">${fact.impact}</div>
+                    <div class="fact-subtitle">CONSÉQUENCES :</div>
+                    <ul class="fact-ul">${consHtml}</ul>
+                    <div class="fact-subtitle">PERSONNAGES CLÉS :</div>
+                    <div class="tags-container">${tagsHtml}</div>
                 </div>
-                <h3 class="fact-title">${fact.title}</h3>
-                <div class="fact-desc">${fact.desc}</div>
-                <div class="fact-subtitle">IMPACT :</div>
-                <div class="fact-impact">${fact.impact}</div>
-                <div class="fact-subtitle">CONSÉQUENCES :</div>
-                <ul class="fact-ul">${consHtml}</ul>
-                <div class="fact-subtitle">PERSONNAGES CLÉS :</div>
-                <div class="tags-container">${tagsHtml}</div>
             </div>`;
             factsContainer.insertAdjacentHTML('beforeend', html);
             factDelay += 0.1;
@@ -1120,8 +1087,12 @@
 
         // --- LOGIQUE INTERACTIVE ---
 
+        // Bandeau disparition
         window.addEventListener('scroll', () => {
-            if(window.scrollY > 50) document.getElementById('savoirVivre').classList.add('hidden');
+            const bandeau = document.getElementById('savoirVivre');
+            if(window.scrollY > 50) {
+                bandeau.classList.add('hidden');
+            }
             const btn = document.getElementById('bttBtn');
             if (window.scrollY > 300) btn.classList.add('visible');
             else btn.classList.remove('visible');
@@ -1130,6 +1101,40 @@
         window.addEventListener('DOMContentLoaded', () => {
             document.getElementById('shareBtn').style.display = 'flex';
         });
+
+        // Logique de SWIPE sur Mobile
+        let touchstartX = 0;
+        let touchendX = 0;
+        let touchstartY = 0;
+        let touchendY = 0;
+        const mainTabs = ['personnages', 'faits', 'lexique'];
+
+        document.addEventListener('touchstart', e => {
+            touchstartX = e.changedTouches[0].screenX;
+            touchstartY = e.changedTouches[0].screenY;
+        }, {passive: true});
+
+        document.addEventListener('touchend', e => {
+            touchendX = e.changedTouches[0].screenX;
+            touchendY = e.changedTouches[0].screenY;
+            
+            // Ne pas swiper si la modale est ouverte
+            if (document.getElementById('charModal').classList.contains('active')) return;
+
+            // Détection si c'est un swipe horizontal fort et pas un scroll vertical
+            if (Math.abs(touchendX - touchstartX) > 75 && Math.abs(touchendY - touchstartY) < 50) {
+                let currentTabIndex = mainTabs.findIndex(tab => document.getElementById('tab-' + tab).classList.contains('active'));
+                if (touchendX < touchstartX) {
+                    // Swipe gauche -> onglet suivant
+                    if (currentTabIndex < mainTabs.length - 1) switchTab(mainTabs[currentTabIndex + 1]);
+                }
+                if (touchendX > touchstartX) {
+                    // Swipe droit -> onglet précédent
+                    if (currentTabIndex > 0) switchTab(mainTabs[currentTabIndex - 1]);
+                }
+            }
+        }, {passive: true});
+
 
         function showToastMessage(msg) {
             const toast = document.getElementById("toast");
@@ -1238,7 +1243,7 @@
                         
                         <div class="rpg-section-title"><span>Pouvoir ultime</span></div>
                         <div class="rpg-ult-box">
-                            <div class="rpg-ult-name">✦ ${rpg.ultime.nom} ✦</div>
+                            <div class="rpg-ult-name">${rpg.ultime.nom}</div>
                             <div class="rpg-skill-desc" style="margin-top: 5px;">"${rpg.ultime.desc}"</div>
                         </div>
 
