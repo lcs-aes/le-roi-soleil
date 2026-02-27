@@ -905,7 +905,7 @@
             },
             "elise-devaux": {
                 name: "Élise Devaux", subtitle: "La Maîtresse du Temps", dates: "L'Équipe", icon: "stopwatch", mainList: true, isFictional: false,
-                quote: "La grâce dans le mouvement, la rigueur dans l'ombre.", intro: "À la fois créatrice des mouvements sur scène en tant que chorégraphe, et gardienne absolue du bon déroulement en coulisses en tant que Stage Manager.",
+                quote: "La grace dans le mouvement, la rigueur dans l'ombre.", intro: "À la fois créatrice des mouvements sur scène en tant que chorégraphe, et gardienne absolue du bon déroulement en coulisses en tant que Stage Manager.",
                 facts: ["Règle les ballets de cour et les chorégraphies modernes du spectacle.", "Orchestre les entrées, les sorties et les transitions avec une précision militaire.", "Assure la sécurité et le rythme implacable de la représentation."],
                 role: "Donner vie à l'espace scénique tout en maîtrisant les rouages cachés.", heritage: "La fluidité parfaite du spectacle et l'élégance de la troupe.",
                 rpg: {
@@ -1017,16 +1017,34 @@
                 chars: [{id: "louis-xiv", name: "Louis XIV"}, {id: "anne-autriche", name: "Anne d'Autriche"}, {id: "mazarin", name: "Mazarin"}]
             },
             {
+                title: "Prise de pouvoir absolu", dates: "1661", cat: "POLITIQUE INTÉRIEURE", icon: "crown",
+                desc: "À la mort de Mazarin, Louis XIV, âgé de 22 ans, décide de gouverner seul sans principal ministre. Il fait arrêter le surintendant Fouquet pour affirmer son autorité totale.",
+                impact: "Naissance de la monarchie absolue de droit divin", cons: ["Centralisation extrême", "Ascension de Colbert"],
+                chars: [{id: "louis-xiv", name: "Louis XIV"}, {id: "mazarin", name: "Mazarin"}, {id: "colbert", name: "Colbert"}]
+            },
+            {
                 title: "Construction de Versailles", dates: "1661-1710", cat: "ARCHITECTURE", icon: "castle",
                 desc: "Transformation d'un pavillon de chasse en palais somptueux. Versailles devient le symbole de la grandeur française.",
                 impact: "Centralisation du pouvoir et de la cour", cons: ["Contrôle strict de la noblesse", "Rayonnement artistique européen"],
                 chars: [{id: "louis-xiv", name: "Louis XIV"}, {id: "le-notre", name: "Le Nôtre"}, {id: "mansart", name: "Mansart"}]
             },
             {
+                title: "Les Plaisirs de l'Île enchantée", dates: "1664", cat: "ART & CULTURE", icon: "masks",
+                desc: "Une fête grandiose de plusieurs jours organisée à Versailles mêlant théâtre, ballets, feux d'artifice et festins. Molière et Lully y présentent leurs œuvres.",
+                impact: "Rayonnement culturel de la France dans toute l'Europe", cons: ["Domestication de la noblesse par le divertissement", "Naissance de la comédie-ballet"],
+                chars: [{id: "louis-xiv", name: "Louis XIV"}, {id: "moliere", name: "Molière"}, {id: "les-danseurs", name: "Les Danseurs"}, {id: "les-serveurs", name: "Les Serveurs"}]
+            },
+            {
                 title: "Guerre de Hollande", dates: "1672-1678", cat: "CONFLIT MILITAIRE", icon: "sword",
                 desc: "Guerre menée par Louis XIV contre les Provinces-Unies. Apogée de la puissance militaire française.",
                 impact: "Affirmation de l'hégémonie française en Europe", cons: ["Conquêtes territoriales", "Prestige militaire absolu"],
                 chars: [{id: "louis-xiv", name: "Louis XIV"}, {id: "turenne", name: "Turenne"}, {id: "conde", name: "Condé"}]
+            },
+            {
+                title: "L'Affaire des Poisons", dates: "1679-1682", cat: "SCANDALE D'ÉTAT", icon: "flask",
+                desc: "Une vaste vague d'enquêtes révèle que de hauts membres de la cour (dont Mme de Montespan) ont recours à la magie noire et aux poisons pour s'attirer les faveurs du Roi.",
+                impact: "Choc moral et paranoïa au sommet de l'État", cons: ["Exécution de La Voisin", "Disgrâce de la Montespan", "Montée de Mme de Maintenon"],
+                chars: [{id: "voisin", name: "La Voisin"}, {id: "montespan", name: "Madame de Montespan"}, {id: "maintenon", name: "Madame de Maintenon"}]
             },
             {
                 title: "Révocation de l'Édit de Nantes", dates: "1685", cat: "DÉCISION RELIGIEUSE", icon: "church",
@@ -1045,6 +1063,12 @@
                 desc: "Dernière grande guerre du règne pour placer le petit-fils du roi sur le trône d'Espagne.",
                 impact: "Épuisement du royaume mais victoire dynastique", cons: ["Philippe V devient roi d'Espagne", "Traité d'Utrecht"],
                 chars: [{id: "louis-xiv", name: "Louis XIV"}, {id: "philippe-anjou", name: "Philippe d'Anjou"}, {id: "marlborough", name: "Marlborough"}]
+            },
+            {
+                title: "La Mort du Roi-Soleil", dates: "1715", cat: "SUCCESSION", icon: "crown",
+                desc: "Après 72 ans de règne, Louis XIV s'éteint à Versailles de la gangrène, laissant un royaume puissant mais financièrement exsangue et un peuple affamé.",
+                impact: "Fin du Grand Siècle", cons: ["Régence du duc d'Orléans", "Libération des mœurs après l'austérité"],
+                chars: [{id: "louis-xiv", name: "Louis XIV"}, {id: "maintenon", name: "Madame de Maintenon"}, {id: "le-peuple", name: "Le Peuple"}]
             }
         ];
 
