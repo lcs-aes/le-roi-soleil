@@ -17,7 +17,8 @@
             --accent-color: #E2B86A;
             --gold-light: #F4D38B;
             --primary-gradient: linear-gradient(135deg, #5C65CD 0%, #764BA4 100%);
-            --card-bg: #FFFFFF;
+            /* Glassmorphism : blanc très légèrement transparent */
+            --card-bg: rgba(255, 255, 255, 0.93);
         }
 
         body {
@@ -30,6 +31,7 @@
                 radial-gradient(2.5px 2.5px at 300px 80px, var(--gold-light), rgba(0,0,0,0)),
                 radial-gradient(1px 1px at 250px 180px, #fff, rgba(0,0,0,0));
             background-size: 350px 250px;
+            background-attachment: fixed;
             color: var(--text-color);
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
             margin: 0;
@@ -42,6 +44,7 @@
             max-width: 800px;
             margin: 0 auto;
             padding: 20px 15px 40px 15px;
+            position: relative;
         }
 
         h1, .modal-title, .char-card-info h3, .fact-title, .lexicon-title {
@@ -54,7 +57,30 @@
             font-size: 2.2rem;
             font-weight: 600;
             margin: 10px 0 20px 0;
+            position: relative;
         }
+
+        /* --- BOUTON PARTAGER --- */
+        .share-btn {
+            position: absolute;
+            top: 25px;
+            right: 15px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: none; /* Masqué par défaut, affiché via JS si supporté */
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            -webkit-tap-highlight-color: transparent;
+        }
+        .share-btn:active { background: rgba(255, 255, 255, 0.2); transform: scale(0.95); }
+        .share-btn svg { width: 20px; height: 20px; fill: var(--accent-color); }
 
         .welcome-banner {
             text-align: center;
@@ -70,10 +96,13 @@
             display: flex;
             gap: 8px;
             margin-bottom: 30px;
-            background: rgba(255, 255, 255, 0.05);
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
             padding: 5px;
             border-radius: 12px;
-            overflow-x: auto; /* Permet le défilement si l'écran est très étroit */
+            overflow-x: auto;
             scrollbar-width: none;
         }
         .tab-menu::-webkit-scrollbar { display: none; }
@@ -84,7 +113,7 @@
             padding: 12px 5px;
             border: none;
             background: transparent;
-            color: rgba(253, 251, 247, 0.6);
+            color: rgba(253, 251, 247, 0.7);
             border-radius: 8px;
             font-size: 0.85rem;
             font-weight: bold;
@@ -113,16 +142,32 @@
             animation: fadeInUp 0.5s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
         }
 
+        @keyframes iconPulse {
+            0% { transform: scale(1) rotate(0deg); }
+            50% { transform: scale(1.15) rotate(5deg); }
+            100% { transform: scale(1) rotate(0deg); }
+        }
+
         /* --- SVG ICONS --- */
         .svg-icon {
             width: 32px;
             height: 32px;
             fill: var(--accent-color);
+            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
         .modal-header-bg .svg-icon {
             width: 48px;
             height: 48px;
             fill: #FFF;
+        }
+
+        /* Effet Glassmorphism partagé */
+        .glass-card {
+            background-color: var(--card-bg);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
         }
 
         /* --- LISTE DES PERSONNAGES --- */
@@ -134,18 +179,26 @@
         @media (min-width: 768px) { .chars-grid { grid-template-columns: 1fr 1fr; } }
 
         .char-card {
-            background-color: var(--card-bg);
             border-radius: 12px;
             padding: 15px 20px;
             display: flex;
             align-items: center;
             gap: 15px;
             cursor: pointer;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
-            transition: transform 0.2s, box-shadow 0.2s;
+            transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
             -webkit-tap-highlight-color: transparent;
         }
-        .char-card:active { transform: translateY(-2px); box-shadow: 0 6px 15px rgba(0,0,0,0.25); border-left: 4px solid #5C65CD; }
+        
+        .char-card:hover, .char-card:active { 
+            transform: translateY(-2px); 
+            box-shadow: 0 8px 20px rgba(0,0,0,0.2); 
+            border-left: 4px solid #5C65CD; 
+        }
+
+        /* Micro-interaction d'icône */
+        .char-card:hover .svg-icon, .char-card:active .svg-icon {
+            animation: iconPulse 0.4s ease-in-out;
+        }
 
         .char-card-icon {
             background: rgba(92, 101, 205, 0.1);
@@ -198,7 +251,7 @@
         .facts-grid { display: grid; grid-template-columns: 1fr; gap: 20px; }
         @media (min-width: 768px) { .facts-grid { grid-template-columns: 1fr 1fr; } }
         
-        .fact-card { background: var(--card-bg); border-radius: 12px; padding: 20px; color: var(--dark-text); box-shadow: 0 5px 15px rgba(0,0,0,0.2); }
+        .fact-card { border-radius: 12px; padding: 20px; color: var(--dark-text); }
         .fact-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 15px; }
         .fact-meta { text-align: right; }
         .fact-dates { background: #6366F1; color: #FFF; padding: 4px 12px; border-radius: 20px; font-size: 0.8rem; font-weight: bold; display: inline-block; margin-bottom: 5px; }
@@ -212,11 +265,11 @@
 
         .tags-container { display: flex; flex-wrap: wrap; gap: 8px; }
         .tag { background: transparent; border: 1px solid #CCC; padding: 5px 12px; border-radius: 20px; font-size: 0.8rem; color: var(--dark-text); cursor: pointer; transition: all 0.2s; -webkit-tap-highlight-color: transparent; }
-        .tag:active { border-color: #5C65CD; color: #5C65CD; background: rgba(92, 101, 205, 0.05); }
+        .tag:active { border-color: #5C65CD; color: #5C65CD; background: rgba(92, 101, 205, 0.05); transform: scale(0.95); }
 
         /* --- CARTES LEXIQUE --- */
         .lexicon-grid { display: flex; flex-direction: column; gap: 15px; }
-        .lexicon-card { background: var(--card-bg); border-radius: 12px; padding: 18px; color: var(--dark-text); box-shadow: 0 4px 10px rgba(0,0,0,0.15); border-left: 4px solid var(--accent-color); }
+        .lexicon-card { border-radius: 12px; padding: 18px; color: var(--dark-text); border-left: 4px solid var(--accent-color); }
         .lexicon-title { color: #3B4387; font-size: 1.3rem; margin: 0 0 8px 0; display: flex; align-items: center; gap: 8px; }
         .lexicon-title svg { width: 20px; height: 20px; fill: var(--accent-color); }
         .lexicon-desc { font-size: 0.95rem; margin: 0; opacity: 0.9; text-align: justify; }
@@ -224,7 +277,7 @@
         /* --- POPUP / MODALE --- */
         .modal-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.7); backdrop-filter: blur(4px);
+            background: rgba(0,0,0,0.5); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
             z-index: 1000; display: none; justify-content: center; align-items: center;
             padding: 20px; box-sizing: border-box;
         }
@@ -232,15 +285,16 @@
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
         .modal-card {
-            background: var(--card-bg); width: 100%; max-width: 500px;
+            background: rgba(255, 255, 255, 0.98); width: 100%; max-width: 500px;
             max-height: 90vh; border-radius: 16px; overflow-y: auto;
-            position: relative; box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            position: relative; box-shadow: 0 15px 40px rgba(0,0,0,0.4);
+            border: 1px solid rgba(255,255,255,0.4);
         }
 
         /* Ergonomie mobile : Plein écran */
         @media (max-width: 600px) {
             .modal-overlay { padding: 0; }
-            .modal-card { max-width: 100%; height: 100vh; max-height: 100vh; border-radius: 0; display: flex; flex-direction: column; }
+            .modal-card { max-width: 100%; height: 100vh; max-height: 100vh; border-radius: 0; display: flex; flex-direction: column; border: none; }
             .modal-body { flex: 1; overflow-y: auto; }
         }
 
@@ -249,8 +303,9 @@
             position: absolute; top: 15px; right: 15px; background: rgba(255,255,255,0.2);
             border: none; width: 36px; height: 36px; border-radius: 50%; color: #FFF;
             font-size: 1.4rem; cursor: pointer; display: flex; justify-content: center; align-items: center;
-            touch-action: manipulation; -webkit-tap-highlight-color: transparent;
+            touch-action: manipulation; -webkit-tap-highlight-color: transparent; transition: background 0.2s;
         }
+        .modal-close:active { background: rgba(255,255,255,0.4); transform: scale(0.9); }
         .modal-icon { margin-bottom: 15px; display: flex; justify-content: center; }
         .modal-title { font-size: 2rem; margin: 0 0 5px 0; }
         .modal-subtitle { font-size: 1rem; opacity: 0.9; margin-bottom: 12px; }
@@ -264,29 +319,35 @@
             color: white; width: 45px; height: 45px; border-radius: 50%; border: none;
             font-size: 1.5rem; box-shadow: 0 4px 10px rgba(0,0,0,0.3); cursor: pointer;
             display: none; justify-content: center; align-items: center; z-index: 100;
-            -webkit-tap-highlight-color: transparent;
+            -webkit-tap-highlight-color: transparent; transition: transform 0.2s;
         }
+        .back-to-top:active { transform: scale(0.9); }
         .back-to-top.visible { display: flex; animation: fadeIn 0.3s; }
     </style>
 </head>
 <body>
 
     <div class="container">
+        <!-- Bouton de partage natif (masqué si non supporté) -->
+        <button class="share-btn" id="shareBtn" aria-label="Partager l'application" onclick="shareApp()">
+            <svg viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92s2.92-1.31 2.92-2.92c0-1.61-1.31-2.92-2.92-2.92z"/></svg>
+        </button>
+
         <h1>Le Roi Soleil</h1>
         
         <div class="welcome-banner">
             En attendant le lever de rideau, découvrez la véritable Histoire de la cour de Versailles...
         </div>
 
-        <!-- TABS MENU -->
-        <div class="tab-menu" role="tablist">
-            <button class="tab-btn active" role="tab" onclick="switchTab('personnages')">Personnages</button>
-            <button class="tab-btn" role="tab" onclick="switchTab('faits')">Histoire</button>
-            <button class="tab-btn" role="tab" onclick="switchTab('lexique')">Lexique</button>
+        <!-- TABS MENU (ARIA mis à jour pour lecteur d'écran) -->
+        <div class="tab-menu" role="tablist" aria-label="Menu principal">
+            <button class="tab-btn active" id="btn-personnages" role="tab" aria-selected="true" aria-controls="tab-personnages" onclick="switchTab('personnages')">Personnages</button>
+            <button class="tab-btn" id="btn-faits" role="tab" aria-selected="false" aria-controls="tab-faits" onclick="switchTab('faits')">Histoire</button>
+            <button class="tab-btn" id="btn-lexique" role="tab" aria-selected="false" aria-controls="tab-lexique" onclick="switchTab('lexique')">Lexique</button>
         </div>
 
         <!-- ONGLET 1 : PERSONNAGES -->
-        <div id="tab-personnages" class="tab-content active" role="tabpanel">
+        <div id="tab-personnages" class="tab-content active" role="tabpanel" aria-labelledby="btn-personnages">
             <div class="chars-grid" id="chars-container">
                 <!-- Généré par JS -->
             </div>
@@ -294,14 +355,14 @@
         </div>
 
         <!-- ONGLET 2 : FAITS HISTORIQUES -->
-        <div id="tab-faits" class="tab-content" role="tabpanel">
+        <div id="tab-faits" class="tab-content" role="tabpanel" aria-labelledby="btn-faits" aria-hidden="true">
             <div class="facts-grid" id="facts-container">
                 <!-- Généré par JS -->
             </div>
         </div>
 
         <!-- ONGLET 3 : LEXIQUE -->
-        <div id="tab-lexique" class="tab-content" role="tabpanel">
+        <div id="tab-lexique" class="tab-content" role="tabpanel" aria-labelledby="btn-lexique" aria-hidden="true">
             <div class="lexicon-grid" id="lexicon-container">
                 <!-- Généré par JS -->
             </div>
@@ -313,9 +374,9 @@
 
     <!-- MODALE PERSONNAGE -->
     <div class="modal-overlay" id="charModal" onclick="closeModal(event)">
-        <div class="modal-card" onclick="event.stopPropagation()" role="dialog" aria-modal="true">
+        <div class="modal-card" onclick="event.stopPropagation()" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
             <div class="modal-header-bg">
-                <button class="modal-close" aria-label="Fermer" onclick="closeModal(event)">✕</button>
+                <button class="modal-close" aria-label="Fermer la fiche" onclick="closeModal(event)">✕</button>
                 <div class="modal-icon" aria-hidden="true" id="modalIcon"></div>
                 <h2 class="modal-title" id="modalTitle">Nom</h2>
                 <div class="modal-subtitle" id="modalSubtitle">Sous-titre</div>
@@ -379,7 +440,7 @@
                 heritage: "L'incarnation de la mère protectrice de la couronne et d'une souveraine inébranlable dans la tempête."
             },
             "montespan": {
-                name: "Mme de Montespan", subtitle: "La favorite flamboyante", dates: "1640-1707", icon: "sparkles", mainList: true, isFictional: false,
+                name: "Madame de Montespan", subtitle: "La favorite flamboyante", dates: "1640-1707", icon: "sparkles", mainList: true, isFictional: false,
                 quote: "Je veux être la maîtresse du maître.",
                 intro: "Favorite incontestée de Louis XIV pendant plus d'une décennie, elle domine la cour par sa beauté, son luxe et son ambition redoutable.",
                 facts: ["Donne sept enfants au roi, légitimés par la suite.", "Grande protectrice des arts et du luxe à Versailles.", "Chute dramatiquement lors de la sombre affaire des Poisons."],
@@ -387,7 +448,7 @@
                 heritage: "Symbole intemporel de l'influence féminine absolue mais éphémère à la cour."
             },
             "maintenon": {
-                name: "Mme de Maintenon", subtitle: "L'épouse secrète", dates: "1635-1719", icon: "feather", mainList: true, isFictional: false,
+                name: "Madame de Maintenon", subtitle: "L'épouse secrète", dates: "1635-1719", icon: "feather", mainList: true, isFictional: false,
                 quote: "Il n'y a rien de plus habile qu'une conduite irréprochable.",
                 intro: "D'abord discrète gouvernante des enfants illégitimes du roi, Françoise d'Aubigné devient sa dernière favorite puis son épouse secrète.",
                 facts: ["Épouse secrètement Louis XIV à la mort de la reine.", "Exerce une influence moralisatrice et profondément religieuse sur la cour.", "Fonde la Maison royale d'éducation de Saint-Cyr pour les jeunes filles nobles."],
@@ -429,7 +490,7 @@
             "scarron": {
                 name: "Scarron", subtitle: "Le maître du burlesque", dates: "1610-1660", icon: "feather", mainList: true, isFictional: false,
                 quote: "Je ne suis pas fait comme les autres hommes.",
-                intro: "Auteur majeur, pionnier du burlesque, lourdement handicapé par la maladie. Il fut le premier époux de Françoise d'Aubigné (Mme de Maintenon).",
+                intro: "Auteur majeur, pionnier du burlesque, lourdement handicapé par la maladie. Il fut le premier époux de Françoise d'Aubigné (Madame de Maintenon).",
                 facts: ["Tient un salon littéraire parisien brillant, anti-conformiste et libre.", "Épouse la jeune et pauvre Françoise d'Aubigné pour la sauver de la misère.", "Offre un regard ironique et décalé, loin des fastes rigides de la cour royale."],
                 role: "Animateur d'une vie intellectuelle parisienne alternative, frondeuse et décomplexée.",
                 heritage: "L'un des fondateurs du genre comique et parodique dans la littérature classique française du XVIIe siècle."
@@ -451,7 +512,7 @@
                 heritage: "Incarne la transgression ultime et la chute morale inévitable des courtisans aveuglés par l'ambition."
             },
             "lisieux": {
-                name: "Mlle de Lisieux", subtitle: "L'ingénue à la cour", dates: "(Personnage créé pour la comédie musicale)", icon: "fleur", mainList: true, isFictional: true,
+                name: "Mademoiselle de Lisieux", subtitle: "L'ingénue à la cour", dates: "(Personnage créé pour la comédie musicale)", icon: "fleur", mainList: true, isFictional: true,
                 quote: "La lumière du Soleil brûle ceux qui s'en approchent de trop près.",
                 intro: "Issue de la petite noblesse provinciale, elle monte à la cour avec des rêves de grandeur et de succès, gravitant innocemment autour des plus puissants.",
                 facts: ["Cherche désespérément à exister et à se faire remarquer dans la lumière du Roi-Soleil.", "Se confronte très rapidement aux rivalités impitoyables et aux manipulations cruelles des courtisans.", "Représente l'ambition d'élévation sociale absolue et parfois naïve propre à l'époque."],
@@ -541,7 +602,7 @@
                 desc: "Louis XIV révoque l'édit de tolérance religieuse d'Henri IV. Les protestants perdent leurs droits.",
                 impact: "Unification religieuse du royaume",
                 cons: ["Exode massif des huguenots", "Affaiblissement économique"],
-                chars: [{id: "louis-xiv", name: "Louis XIV"}, {id: "maintenon", name: "Mme de Maintenon"}, {id: "bossuet", name: "Bossuet"}]
+                chars: [{id: "louis-xiv", name: "Louis XIV"}, {id: "maintenon", name: "Madame de Maintenon"}, {id: "bossuet", name: "Bossuet"}]
             },
             {
                 title: "Guerre de la Ligue d'Augsbourg", dates: "1688-1697", cat: "GUERRE EUROPÉENNE", icon: "sword",
@@ -594,9 +655,9 @@
         let charDelay = 0;
         for (const [id, char] of Object.entries(characters)) {
             if (!char.mainList) continue;
-            let starHtml = char.isFictional ? `<span class="fictional-star" aria-hidden="true">✦</span>` : '';
+            let starHtml = char.isFictional ? `<span class="fictional-star" aria-hidden="true" title="Personnage créé pour la comédie musicale">✦</span>` : '';
             let html = `
-            <div class="char-card fade-in-up" style="animation-delay: ${charDelay}s" onclick="openCharModal('${id}')" role="button" tabindex="0">
+            <div class="char-card glass-card fade-in-up" style="animation-delay: ${charDelay}s" onclick="openCharModal('${id}')" role="button" tabindex="0">
                 <div class="char-card-icon" aria-hidden="true">${svgs[char.icon]}</div>
                 <div class="char-card-info">
                     <h3>${char.name}${starHtml}</h3>
@@ -611,10 +672,10 @@
         const factsContainer = document.getElementById('facts-container');
         let factDelay = 0;
         historicalFacts.forEach(fact => {
-            let tagsHtml = fact.chars.map(c => `<button class="tag" onclick="openCharModal('${c.id}')">${c.name}</button>`).join('');
+            let tagsHtml = fact.chars.map(c => `<button class="tag" aria-label="Voir la fiche de ${c.name}" onclick="openCharModal('${c.id}')">${c.name}</button>`).join('');
             let consHtml = fact.cons.map(c => `<li>${c}</li>`).join('');
             let html = `
-            <div class="fact-card fade-in-up" style="animation-delay: ${factDelay}s">
+            <div class="fact-card glass-card fade-in-up" style="animation-delay: ${factDelay}s">
                 <div class="fact-header">
                     <div class="fact-icon" aria-hidden="true">${svgs[fact.icon]}</div>
                     <div class="fact-meta">
@@ -640,7 +701,7 @@
         let lexDelay = 0;
         lexiconTerms.forEach(term => {
             let html = `
-            <div class="lexicon-card fade-in-up" style="animation-delay: ${lexDelay}s">
+            <div class="lexicon-card glass-card fade-in-up" style="animation-delay: ${lexDelay}s">
                 <h3 class="lexicon-title">${svgs[term.icon]} ${term.title}</h3>
                 <p class="lexicon-desc">${term.desc}</p>
             </div>`;
@@ -650,12 +711,39 @@
 
         // --- LOGIQUE INTERACTIVE ---
 
-        // Onglets
+        // Support du Web Share API
+        window.addEventListener('DOMContentLoaded', () => {
+            if (navigator.share) {
+                document.getElementById('shareBtn').style.display = 'flex';
+            }
+        });
+
+        function shareApp() {
+            if (navigator.share) {
+                navigator.share({
+                    title: 'Le Roi Soleil - Personnages et Histoire',
+                    text: 'Découvrez la véritable histoire des personnages de la comédie musicale !',
+                    url: window.location.href,
+                })
+                .catch((error) => console.log('Erreur de partage', error));
+            }
+        }
+
+        // Onglets avec mise à jour ARIA
         function switchTab(tabId) {
+            // Mise à jour de l'affichage
             document.querySelectorAll('.tab-content, .tab-btn').forEach(el => el.classList.remove('active'));
             document.getElementById('tab-' + tabId).classList.add('active');
-            event.currentTarget.classList.add('active');
-            window.scrollTo({top: 0, behavior: 'smooth'}); // Remonte en haut lors du changement d'onglet
+            document.getElementById('btn-' + tabId).classList.add('active');
+            
+            // Mise à jour de l'accessibilité (ARIA)
+            document.querySelectorAll('.tab-btn').forEach(el => el.setAttribute('aria-selected', 'false'));
+            document.querySelectorAll('.tab-content').forEach(el => el.setAttribute('aria-hidden', 'true'));
+            
+            document.getElementById('btn-' + tabId).setAttribute('aria-selected', 'true');
+            document.getElementById('tab-' + tabId).setAttribute('aria-hidden', 'false');
+
+            window.scrollTo({top: 0, behavior: 'smooth'});
         }
 
         // Scroll Retour en haut
@@ -709,13 +797,17 @@
                 </div>
             `;
             
-            document.getElementById('charModal').classList.add('active');
+            const modal = document.getElementById('charModal');
+            modal.classList.add('active');
+            modal.setAttribute('aria-hidden', 'false');
             document.body.style.overflow = 'hidden'; // Empêche scroll
         }
 
         function closeModal(e) {
             if (e.target.classList.contains('modal-overlay') || e.target.classList.contains('modal-close')) {
-                document.getElementById('charModal').classList.remove('active');
+                const modal = document.getElementById('charModal');
+                modal.classList.remove('active');
+                modal.setAttribute('aria-hidden', 'true');
                 document.body.style.overflow = ''; // Restaure scroll
             }
         }
