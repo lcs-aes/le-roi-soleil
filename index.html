@@ -6,6 +6,8 @@
     <meta name="theme-color" content="#1A2238">
     <meta name="robots" content="noindex, nofollow">
     <title>Le Roi Soleil – Personnages et Histoire</title>
+    <!-- Favicon Couronne -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path fill='%23E2B86A' d='M5 16L3 5l5.5 5L12 4l3.5 6L21 5l-2 11H5zm14 3H5v-1h14v1z'/></svg>" type="image/svg+xml">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
@@ -18,6 +20,7 @@
             --gold-light: #F4D38B;
             --primary-gradient: linear-gradient(135deg, #5C65CD 0%, #764BA4 100%);
             --card-bg: rgba(255, 255, 255, 0.93);
+            --parchment-bg: #F4E8D1; /* Couleur vieux papier */
         }
 
         body {
@@ -39,217 +42,140 @@
             -webkit-font-smoothing: antialiased;
         }
 
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 20px 15px 40px 15px;
-            position: relative;
+        /* --- ANIMATION LEVER DE RIDEAU --- */
+        .curtain-overlay {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: var(--bg-color);
+            background-image: linear-gradient(180deg, #1A2238 0%, #0d1222 100%);
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            animation: fadeOut 1.2s ease-in-out 1.8s forwards;
+            pointer-events: none;
         }
+        .curtain-icon svg { width: 80px; height: 80px; fill: var(--accent-color); margin-bottom: 20px; animation: scaleUp 1.5s ease-out; }
+        .curtain-title { font-family: 'Playfair Display', serif; color: var(--accent-color); font-size: 2.5rem; text-transform: uppercase; letter-spacing: 2px; opacity: 0; animation: fadeInIntro 1s ease-out 0.3s forwards; text-align: center; padding: 0 20px;}
+        .curtain-subtitle { font-size: 1.1rem; color: #FFF; opacity: 0; animation: fadeInIntro 1s ease-out 0.8s forwards; margin-top: 10px; font-style: italic;}
 
-        h1, .modal-title, .char-card-info h3, .fact-title, .lexicon-title {
+        @keyframes fadeOut { to { opacity: 0; visibility: hidden; } }
+        @keyframes fadeInIntro { to { opacity: 1; transform: translateY(0); } from { opacity: 0; transform: translateY(15px); } }
+        @keyframes scaleUp { from { transform: scale(0.8); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+
+        /* --- BANDEAU SAVOIR-VIVRE --- */
+        .savoir-vivre-banner {
+            background: rgba(197, 160, 89, 0.95);
+            color: #2C3550;
+            text-align: center;
+            padding: 12px 15px;
+            font-size: 0.85rem;
+            font-weight: bold;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            backdrop-filter: blur(5px);
+            transition: transform 0.4s ease-out, opacity 0.4s;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+        }
+        .savoir-vivre-banner.hidden { transform: translateY(-100%); opacity: 0; pointer-events: none; }
+
+        .container { max-width: 800px; margin: 0 auto; padding: 20px 15px 40px 15px; position: relative; }
+
+        h1, .modal-title, .char-card-info h3, .fact-title, .lexicon-title, .troupe-title {
             font-family: 'Playfair Display', Georgia, serif;
         }
 
-        h1 {
-            color: var(--accent-color);
-            text-align: center;
-            font-size: 2.2rem;
-            font-weight: 600;
-            margin: 10px 0 20px 0;
-            position: relative;
-        }
+        h1 { color: var(--accent-color); text-align: center; font-size: 2.2rem; font-weight: 600; margin: 10px 0 20px 0; position: relative; }
 
         /* --- BOUTON PARTAGER --- */
         .share-btn {
-            position: absolute;
-            top: 25px;
-            right: 15px;
-            background: rgba(255, 255, 255, 0.1);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            backdrop-filter: blur(5px);
-            -webkit-backdrop-filter: blur(5px);
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            display: none; 
-            justify-content: center;
-            align-items: center;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            -webkit-tap-highlight-color: transparent;
-            z-index: 50; /* Correction : Priorité élevée pour éviter les conflits de clic */
+            position: absolute; top: 25px; right: 15px;
+            background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(5px); -webkit-backdrop-filter: blur(5px);
+            width: 40px; height: 40px; border-radius: 50%;
+            display: none; justify-content: center; align-items: center;
+            cursor: pointer; transition: all 0.3s ease; -webkit-tap-highlight-color: transparent;
+            z-index: 50;
         }
         .share-btn:active { background: rgba(255, 255, 255, 0.2); transform: scale(0.95); }
         .share-btn svg { width: 20px; height: 20px; fill: var(--accent-color); }
 
-        .welcome-banner {
-            text-align: center;
-            font-size: 0.9rem;
-            opacity: 0.9;
-            margin-bottom: 25px;
-            padding: 0 10px;
-            font-style: italic;
-        }
+        .welcome-banner { text-align: center; font-size: 0.95rem; opacity: 0.95; margin-bottom: 25px; padding: 0 10px; font-style: italic; line-height: 1.6; }
 
         /* --- MENU / CTA TABS --- */
         .tab-menu {
-            display: flex;
-            gap: 8px;
-            margin-bottom: 30px;
-            background: rgba(255, 255, 255, 0.08);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            padding: 5px;
-            border-radius: 12px;
-            overflow-x: auto;
-            scrollbar-width: none;
+            display: flex; gap: 8px; margin-bottom: 30px; background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1); padding: 5px; border-radius: 12px;
+            overflow-x: auto; scrollbar-width: none;
         }
         .tab-menu::-webkit-scrollbar { display: none; }
-
         .tab-btn {
-            flex: 1;
-            min-width: 100px;
-            padding: 12px 5px;
-            border: none;
-            background: transparent;
-            color: rgba(253, 251, 247, 0.7);
-            border-radius: 8px;
-            font-size: 0.85rem;
-            font-weight: bold;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            white-space: nowrap;
-            -webkit-tap-highlight-color: transparent;
+            flex: 1; min-width: 100px; padding: 12px 5px; border: none; background: transparent;
+            color: rgba(253, 251, 247, 0.7); border-radius: 8px; font-size: 0.85rem; font-weight: bold;
+            text-transform: uppercase; letter-spacing: 0.5px; cursor: pointer; transition: all 0.3s ease;
+            white-space: nowrap; -webkit-tap-highlight-color: transparent;
         }
-
-        .tab-btn.active {
-            background: var(--primary-gradient);
-            color: #FFF;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
-        }
-
+        .tab-btn.active { background: var(--primary-gradient); color: #FFF; box-shadow: 0 4px 15px rgba(0,0,0,0.3); }
         .tab-content { display: none; }
         .tab-content.active { display: block; }
 
         /* --- ANIMATIONS --- */
         @keyframes fadeInUp { to { opacity: 1; transform: translateY(0); } }
-        .fade-in-up {
-            opacity: 0;
-            transform: translateY(20px);
-            animation: fadeInUp 0.5s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
-        }
-
-        @keyframes iconPulse {
-            0% { transform: scale(1) rotate(0deg); }
-            50% { transform: scale(1.15) rotate(5deg); }
-            100% { transform: scale(1) rotate(0deg); }
-        }
+        .fade-in-up { opacity: 0; transform: translateY(20px); animation: fadeInUp 0.5s cubic-bezier(0.2, 0.8, 0.2, 1) forwards; }
+        @keyframes iconPulse { 0% { transform: scale(1) rotate(0deg); } 50% { transform: scale(1.15) rotate(5deg); } 100% { transform: scale(1) rotate(0deg); } }
 
         /* --- SVG ICONS --- */
-        .svg-icon {
-            width: 32px;
-            height: 32px;
-            fill: var(--accent-color);
-            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
-        .modal-header-bg .svg-icon {
-            width: 48px;
-            height: 48px;
-            fill: #FFF;
-        }
+        .svg-icon { width: 32px; height: 32px; fill: var(--accent-color); transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+        .modal-header-bg .svg-icon { width: 48px; height: 48px; fill: #FFF; }
 
-        /* Effet Glassmorphism partagé */
-        .glass-card {
-            background-color: var(--card-bg);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-        }
+        .glass-card { background-color: var(--card-bg); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.2); box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
 
         /* --- LISTE DES PERSONNAGES --- */
-        .chars-grid {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 15px;
-        }
+        .chars-grid { display: grid; grid-template-columns: 1fr; gap: 15px; }
         @media (min-width: 768px) { .chars-grid { grid-template-columns: 1fr 1fr; } }
-
-        .char-card {
-            border-radius: 12px;
-            padding: 15px 20px;
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            cursor: pointer;
-            transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
-            -webkit-tap-highlight-color: transparent;
-        }
-        
-        .char-card:hover, .char-card:active { 
-            transform: translateY(-2px); 
-            box-shadow: 0 8px 20px rgba(0,0,0,0.2); 
-            border-left: 4px solid #5C65CD; 
-        }
-
-        .char-card:hover .svg-icon, .char-card:active .svg-icon {
-            animation: iconPulse 0.4s ease-in-out;
-        }
-
-        .char-card-icon {
-            background: rgba(92, 101, 205, 0.1);
-            width: 55px;
-            height: 55px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            border-radius: 50%;
-            flex-shrink: 0;
-        }
-
+        .char-card { border-radius: 12px; padding: 15px 20px; display: flex; align-items: center; gap: 15px; cursor: pointer; transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s; -webkit-tap-highlight-color: transparent; }
+        .char-card:hover, .char-card:active { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(0,0,0,0.2); border-left: 4px solid #5C65CD; }
+        .char-card:hover .svg-icon, .char-card:active .svg-icon { animation: iconPulse 0.4s ease-in-out; }
+        .char-card-icon { background: rgba(92, 101, 205, 0.1); width: 55px; height: 55px; display: flex; justify-content: center; align-items: center; border-radius: 50%; flex-shrink: 0; }
         .char-card-info h3 { margin: 0 0 2px 0; color: #3B4387; font-size: 1.3rem; display: flex; align-items: center; }
         .char-card-info p { margin: 0; font-size: 0.85rem; color: var(--dark-text); opacity: 0.8; font-weight: 500; }
-        
         .fictional-star { color: var(--accent-color); font-size: 1.1rem; margin-left: 6px; }
-        .fictional-legend { text-align: center; font-size: 0.85rem; color: var(--accent-color); opacity: 0.8; margin-top: 25px; font-style: italic; }
+        .fictional-legend { text-align: center; font-size: 0.85rem; color: var(--accent-color); opacity: 0.8; margin-top: 25px; margin-bottom: 25px; font-style: italic; }
+
+        /* --- SECTION LA TROUPE --- */
+        .troupe-section { background: rgba(0,0,0,0.2); border: 1px solid rgba(197, 160, 89, 0.3); border-radius: 12px; padding: 20px; margin-top: 15px; }
+        .troupe-title { text-align: center; color: var(--accent-color); font-size: 1.5rem; margin: 0 0 15px 0; }
+        .troupe-list { list-style: none; padding: 0; margin: 0; display: grid; gap: 12px; }
+        @media (min-width: 768px) { .troupe-list { grid-template-columns: 1fr 1fr; } }
+        .troupe-list li { background: rgba(255,255,255,0.05); padding: 10px 15px; border-radius: 8px; font-size: 0.9rem; display: flex; flex-direction: column; border-left: 3px solid var(--accent-color); }
+        .troupe-name { font-weight: bold; color: #FFF; margin-bottom: 2px; }
+        .troupe-role { color: rgba(255,255,255,0.7); font-size: 0.8rem; font-style: italic; }
 
         /* --- ORNEMENTS & CONTENU MODALE --- */
         .ornament-divider { text-align: center; margin: 20px 0; position: relative; }
         .ornament-divider::before { content: ''; position: absolute; top: 50%; left: 15%; width: 30%; height: 1px; background: linear-gradient(to right, transparent, rgba(92, 101, 205, 0.3)); }
         .ornament-divider::after { content: ''; position: absolute; top: 50%; right: 15%; width: 30%; height: 1px; background: linear-gradient(to left, transparent, rgba(92, 101, 205, 0.3)); }
         .ornament-divider span { color: #5C65CD; font-size: 1rem; opacity: 0.5; }
-
-        .modal-quote {
-            font-style: italic;
-            color: #FFF;
-            opacity: 0.9;
-            text-align: center;
-            margin: 15px auto 0 auto;
-            font-family: 'Playfair Display', serif;
-            font-size: 1.1rem;
-            max-width: 90%;
-        }
-
+        .modal-quote { font-style: italic; color: #FFF; opacity: 0.9; text-align: center; margin: 15px auto 0 auto; font-family: 'Playfair Display', serif; font-size: 1.1rem; max-width: 90%; }
         .intro-text { font-size: 0.95rem; text-align: justify; opacity: 0.9; margin-bottom: 20px; color: var(--dark-text); }
         .section-title { color: #5C65CD; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px; font-weight: bold; margin: 0 0 12px 0; display: flex; align-items: center; gap: 8px; }
-        
         .facts-list { list-style: none; padding: 0; margin: 0 0 20px 0; }
         .facts-list li { margin-bottom: 10px; display: flex; align-items: flex-start; gap: 10px; font-size: 0.9rem; color: var(--dark-text); opacity: 0.9; }
         .facts-list li svg { width: 16px; height: 16px; flex-shrink: 0; fill: var(--accent-color); margin-top: 3px; }
-
         .role-box, .heritage-box { border-radius: 8px; padding: 15px; margin-bottom: 12px; }
         .role-box { background: var(--primary-gradient); color: #FFF; }
         .heritage-box { background: rgba(92, 101, 205, 0.05); border: 1px solid #5C65CD; color: var(--dark-text); }
         .box-title { font-weight: bold; text-transform: uppercase; font-size: 0.8rem; margin-bottom: 8px; letter-spacing: 0.5px; opacity: 0.9; }
         .box-content { font-size: 0.9rem; margin: 0; line-height: 1.4; }
+        .actor-credit { text-align: center; font-size: 0.85rem; margin-top: 25px; padding-top: 15px; border-top: 1px dashed rgba(92, 101, 205, 0.3); color: #5C65CD; font-weight: bold; }
+        .actor-credit span { color: var(--dark-text); font-weight: normal; display: block; font-style: italic; font-size: 0.8rem; margin-top: 3px;}
 
         /* --- CARTES FAITS HISTORIQUES --- */
         .facts-grid { display: grid; grid-template-columns: 1fr; gap: 20px; }
         @media (min-width: 768px) { .facts-grid { grid-template-columns: 1fr 1fr; } }
-        
         .fact-card { border-radius: 12px; padding: 20px; color: var(--dark-text); }
         .fact-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 15px; }
         .fact-meta { text-align: right; }
@@ -261,17 +187,30 @@
         .fact-impact { font-size: 0.9rem; margin-bottom: 15px; font-weight: 500;}
         .fact-ul { padding-left: 20px; margin: 0 0 15px 0; font-size: 0.9rem; opacity: 0.8; }
         .fact-ul li { margin-bottom: 4px; }
-
         .tags-container { display: flex; flex-wrap: wrap; gap: 8px; }
         .tag { background: transparent; border: 1px solid #CCC; padding: 5px 12px; border-radius: 20px; font-size: 0.8rem; color: var(--dark-text); cursor: pointer; transition: all 0.2s; -webkit-tap-highlight-color: transparent; }
         .tag:active { border-color: #5C65CD; color: #5C65CD; background: rgba(92, 101, 205, 0.05); transform: scale(0.95); }
 
-        /* --- CARTES LEXIQUE --- */
+        /* --- CARTES LEXIQUE (STYLE PARCHEMIN) --- */
         .lexicon-grid { display: flex; flex-direction: column; gap: 15px; }
-        .lexicon-card { border-radius: 12px; padding: 18px; color: var(--dark-text); border-left: 4px solid var(--accent-color); }
-        .lexicon-title { color: #3B4387; font-size: 1.3rem; margin: 0 0 8px 0; display: flex; align-items: center; gap: 8px; }
-        .lexicon-title svg { width: 20px; height: 20px; fill: var(--accent-color); }
-        .lexicon-desc { font-size: 0.95rem; margin: 0; opacity: 0.9; text-align: justify; }
+        .lexicon-card { 
+            background: var(--parchment-bg); 
+            border-radius: 6px; 
+            padding: 20px; 
+            color: #3b2f21; 
+            box-shadow: inset 0 0 30px rgba(139, 101, 8, 0.1), 0 5px 15px rgba(0,0,0,0.15); 
+            border: 1px solid rgba(139, 101, 8, 0.2); 
+            border-left: 5px solid var(--accent-color); 
+        }
+        .lexicon-title { color: #5c4018; font-size: 1.4rem; margin: 0 0 10px 0; display: flex; align-items: center; gap: 10px; }
+        .lexicon-title svg { width: 22px; height: 22px; fill: var(--accent-color); }
+        .lexicon-desc { font-size: 0.95rem; margin: 0; opacity: 0.95; text-align: justify; line-height: 1.6; }
+
+        /* --- FOOTER ÉQUIPE --- */
+        footer { margin-top: 40px; padding-top: 20px; border-top: 1px solid rgba(197, 160, 89, 0.3); text-align: center; }
+        .footer-title { font-family: 'Playfair Display', serif; color: var(--accent-color); font-size: 1.5rem; margin-bottom: 15px; text-transform: uppercase; }
+        .footer-credits { font-size: 0.85rem; line-height: 1.8; color: rgba(253, 251, 247, 0.8); }
+        .footer-credits strong { color: #FFF; font-weight: normal; }
 
         /* --- POPUP / MODALE --- */
         .modal-overlay {
@@ -281,44 +220,18 @@
             padding: 20px; box-sizing: border-box;
         }
         .modal-overlay.active { display: flex; animation: fadeIn 0.3s ease; }
-
         .modal-card {
             background: rgba(255, 255, 255, 0.98); width: 100%; max-width: 500px;
             max-height: 90vh; border-radius: 16px; overflow-y: auto;
-            position: relative; box-shadow: 0 15px 40px rgba(0,0,0,0.4);
-            border: 1px solid rgba(255,255,255,0.4);
+            position: relative; box-shadow: 0 15px 40px rgba(0,0,0,0.4); border: 1px solid rgba(255,255,255,0.4);
         }
-
-        /* --- CORRECTION ERGONOMIE MOBILE : Modale --- */
         @media (max-width: 600px) {
-            .modal-overlay { 
-                padding: 0; 
-                align-items: flex-start; /* Fixe le problème du haut coupé */
-            }
-            .modal-card { 
-                max-width: 100%; 
-                height: 100%; 
-                height: 100dvh; /* S'adapte à la barre d'adresse mobile */
-                max-height: none; 
-                border-radius: 0; 
-                display: flex; 
-                flex-direction: column; 
-                border: none; 
-            }
-            .modal-header-bg {
-                /* Protège contre l'encoche des iPhones */
-                padding-top: max(35px, env(safe-area-inset-top, 35px));
-            }
-            .modal-close {
-                top: max(15px, env(safe-area-inset-top, 15px));
-            }
-            .modal-body { 
-                flex: 1; 
-                overflow-y: auto; 
-                -webkit-overflow-scrolling: touch; 
-            }
+            .modal-overlay { padding: 0; align-items: flex-start; }
+            .modal-card { max-width: 100%; height: 100%; height: 100dvh; max-height: none; border-radius: 0; display: flex; flex-direction: column; border: none; }
+            .modal-header-bg { padding-top: max(35px, env(safe-area-inset-top, 35px)); }
+            .modal-close { top: max(15px, env(safe-area-inset-top, 15px)); }
+            .modal-body { flex: 1; overflow-y: auto; -webkit-overflow-scrolling: touch; }
         }
-
         .modal-header-bg { background: var(--primary-gradient); padding: 35px 20px 25px 20px; text-align: center; color: #FFF; position: relative; }
         .modal-close {
             position: absolute; top: 15px; right: 15px; background: rgba(255,255,255,0.2);
@@ -334,7 +247,6 @@
         .modal-dates.fictif { background: transparent; border: 1px dashed rgba(255, 255, 255, 0.7); color: #FFF; }
         .modal-body { padding: 25px 20px; }
 
-        /* --- BACK TO TOP BUTTON --- */
         .back-to-top {
             position: fixed; bottom: 20px; right: 20px; background: var(--primary-gradient);
             color: white; width: 45px; height: 45px; border-radius: 50%; border: none;
@@ -348,6 +260,20 @@
 </head>
 <body>
 
+    <!-- Animation d'ouverture -->
+    <div id="curtain" class="curtain-overlay">
+        <div class="curtain-icon">
+            <svg viewBox="0 0 24 24"><path d="M5 16L3 5l5.5 5L12 4l3.5 6L21 5l-2 11H5zm14 3H5v-1h14v1z"/></svg>
+        </div>
+        <div class="curtain-title">Le Roi Soleil</div>
+        <div class="curtain-subtitle">La Comédie Musicale</div>
+    </div>
+
+    <!-- Bandeau Savoir-Vivre -->
+    <div id="savoirVivre" class="savoir-vivre-banner">
+        🤫 Pensez à baisser la luminosité de votre écran et à couper la sonnerie. Bon spectacle !
+    </div>
+
     <div class="container">
         <!-- Bouton de partage natif -->
         <button class="share-btn" id="shareBtn" aria-label="Partager l'application" onclick="shareApp()">
@@ -357,7 +283,8 @@
         <h1>Le Roi Soleil</h1>
         
         <div class="welcome-banner">
-            En attendant le lever de rideau, découvrez la véritable Histoire de la cour de Versailles...
+            L'équipe éducative et les élèves vous remercient de votre présence.<br>
+            En attendant le lever de rideau, découvrez la véritable Histoire qui a inspiré notre spectacle...
         </div>
 
         <!-- TABS MENU -->
@@ -373,6 +300,14 @@
                 <!-- Généré par JS -->
             </div>
             <div class="fictional-legend">✦ Personnage créé pour la comédie musicale</div>
+
+            <!-- SECTION LA TROUPE -->
+            <div class="troupe-section fade-in-up" style="animation-delay: 0.8s">
+                <h3 class="troupe-title">🎭 L'Ensemble & Autres Rôles</h3>
+                <ul class="troupe-list" id="troupe-container">
+                    <!-- Généré par JS -->
+                </ul>
+            </div>
         </div>
 
         <!-- ONGLET 2 : FAITS HISTORIQUES -->
@@ -388,6 +323,18 @@
                 <!-- Généré par JS -->
             </div>
         </div>
+
+        <!-- FOOTER CREDITS -->
+        <footer>
+            <h3 class="footer-title">L'Équipe Artistique</h3>
+            <div class="footer-credits">
+                Mise en scène : <strong>Natacha Muller</strong><br>
+                Chant : <strong>Gabriel Gitman</strong><br>
+                Chant (choeur) : <strong>Frédérique Bouwer</strong><br>
+                Costumes & décors : <strong>Nadia Guérin</strong><br>
+                Chorégraphie & stage manager : <strong>Élise Devaux</strong>
+            </div>
+        </footer>
     </div>
 
     <!-- BOUTON RETOUR EN HAUT -->
@@ -411,7 +358,6 @@
     </div>
 
     <script>
-        // --- DICTIONNAIRE DES ICÔNES SVG ---
         const svgs = {
             crown: '<svg class="svg-icon" viewBox="0 0 24 24"><path d="M5 16L3 5l5.5 5L12 4l3.5 6L21 5l-2 11H5zm14 3H5v-1h14v1z"/></svg>',
             sword: '<svg class="svg-icon" viewBox="0 0 24 24"><path d="M19.7 4.3c-.4-.4-1-.4-1.4 0L12 10.6 9.4 8c-.4-.4-1-.4-1.4 0s-.4 1 0 1.4l2.6 2.6-6.3 6.3c-.4.4-.4 1 0 1.4.2.2.5.3.7.3s.5-.1.7-.3l6.3-6.3 2.6 2.6c.2.2.5.3.7.3s.5-.1.7-.3c.4-.4.4-1 0-1.4L13.4 12l6.3-6.3c.4-.4.4-1 0-1.4z"/></svg>',
@@ -421,142 +367,109 @@
             sparkles: '<svg class="svg-icon" viewBox="0 0 24 24"><path d="M12 2l2.4 7.6H22l-6.2 4.5 2.4 7.6-6.2-4.5-6.2 4.5 2.4-7.6L2 9.6h7.6z"/></svg>',
             fleur: '<svg class="svg-icon" viewBox="0 0 24 24"><path d="M12 2c-.5 0-1 .5-1 1v6.5c-1.5-1.5-3.5-2.5-6-2.5-1.5 0-2.5 1-2.5 2.5 0 2 3 4.5 7 6.5v2c-2 0-4 1-4 2.5s2 2.5 4 2.5h5c2 0 4-1 4-2.5s-2-2.5-4-2.5v-2c4-2 7-4.5 7-6.5 0-1.5-1-2.5-2.5-2.5-2.5 0-4.5 1-6 2.5V3c0-.5-.5-1-1-1z"/></svg>',
             tree: '<svg class="svg-icon" viewBox="0 0 24 24"><path d="M11 21v-5c-2.8-.2-5-2.5-5-5.3 0-2 1.1-3.7 2.8-4.6-.2-.6-.3-1.3-.3-2 0-2.8 2.2-5 5-5s5 2.2 5 5c0 .7-.1 1.4-.3 2 1.7.9 2.8 2.6 2.8 4.6 0 2.8-2.2 5.1-5 5.3v5h-2z"/></svg>',
-            castle: '<svg class="svg-icon" viewBox="0 0 24 24"><path d="M21 9v2h-2v11h-4v-6h-6v6H5V11H3V9h2V3h2v2h2V3h2v4h2V3h2v2h2V3h2v6h2z"/></svg>',
+            castle: '<svg class="svg-icon" viewBox="0 0 24 24"><path d="M21 9v2h-2v11h-4v-6h-6v6H5V11H3V9h2V3h2v4h2V3h2v2h2V3h2v4h2V3h2v2h2V3h2v6h2z"/></svg>',
             flask: '<svg class="svg-icon" viewBox="0 0 24 24"><path d="M19.8 17.6l-5.8-8V4h1V2H9v2h1v5.6l-5.8 8C3.5 18.6 4 20 5 20h14c1 0 1.5-1.4.8-2.4zM12 11.2l3.8 5.3H8.2L12 11.2z"/></svg>',
             church: '<svg class="svg-icon" viewBox="0 0 24 24"><path d="M12 2l-6 6v2h2v12h3v-6h2v6h3V10h2V8l-6-6zm-1 6h2v2h-2V8z"/></svg>'
         };
 
-        // --- DONNÉES DES PERSONNAGES ---
         const characters = {
             "louis-xiv": {
-                name: "Louis XIV", subtitle: "Le Roi-Soleil", dates: "1638-1715", icon: "crown", mainList: true, isFictional: false,
-                quote: "Je m'en vais, mais l'État demeurera toujours.",
-                intro: "Roi de France de 1643 à 1715, Louis XIV incarne l'absolutisme royal français. Surnommé le Roi-Soleil, il fait de la France la première puissance européenne.",
+                name: "Louis XIV", subtitle: "Le Roi-Soleil", dates: "1638-1715", icon: "crown", mainList: true, isFictional: false, actor: "Matthieu Desrosiers",
+                quote: "Je m'en vais, mais l'État demeurera toujours.", intro: "Roi de France de 1643 à 1715, Louis XIV incarne l'absolutisme royal français. Surnommé le Roi-Soleil, il fait de la France la première puissance européenne.",
                 facts: ["Règne de 72 ans, le plus long de l'histoire de France.", "Créateur du fastueux château de Versailles.", "Instaure l'étiquette de cour la plus raffinée d'Europe.", "Mène de nombreuses guerres pour étendre le territoire français."],
-                role: "Monarque absolu qui centralise le pouvoir royal et fait rayonner la culture française en Europe.",
-                heritage: "Modèle de l'absolutisme royal, créateur de Versailles, symbole intemporel de la grandeur française."
+                role: "Monarque absolu qui centralise le pouvoir royal et fait rayonner la culture française en Europe.", heritage: "Modèle de l'absolutisme royal, créateur de Versailles, symbole intemporel de la grandeur française."
             },
             "marie-mancini": {
-                name: "Marie Mancini", subtitle: "Le premier amour", dates: "1639-1715", icon: "sparkles", mainList: true, isFictional: false,
-                quote: "Vous êtes roi, vous pleurez, et je pars.",
-                intro: "Nièce du puissant cardinal Mazarin, Marie Mancini est une intellectuelle brillante qui fut le premier grand amour passionné du jeune Louis XIV.",
+                name: "Marie Mancini", subtitle: "Le premier amour", dates: "1639-1715", icon: "sparkles", mainList: true, isFictional: false, actor: "Valentine Delassus", extraRoles: "opératrice rideaux",
+                quote: "Vous êtes roi, vous pleurez, et je pars.", intro: "Nièce du puissant cardinal Mazarin, Marie Mancini est une intellectuelle brillante qui fut le premier grand amour passionné du jeune Louis XIV.",
                 facts: ["Initie le jeune roi à la littérature, à l'art et à la beauté.", "Sa liaison avec le roi manque de faire échouer la paix avec l'Espagne.", "Est exilée de la cour par son propre oncle pour forcer le mariage royal."],
-                role: "Catalyseur de l'éveil culturel et sentimental du jeune souverain avant qu'il n'assume son rôle d'État.",
-                heritage: "L'image tragique du sacrifice de l'amour personnel sur l'autel impitoyable de la raison d'État."
+                role: "Catalyseur de l'éveil culturel et sentimental du jeune souverain avant qu'il n'assume son rôle d'État.", heritage: "L'image tragique du sacrifice de l'amour personnel sur l'autel impitoyable de la raison d'État."
             },
             "mazarin": {
-                name: "Cardinal Mazarin", subtitle: "Le principal ministre", dates: "1602-1661", icon: "book", mainList: true, isFictional: false,
-                quote: "Le temps et moi, nous sommes deux.",
-                intro: "Parrain de Louis XIV et habile diplomate, il gouverne la France avec Anne d'Autriche durant la minorité du roi.",
+                name: "Cardinal Mazarin", subtitle: "Le principal ministre", dates: "1602-1661", icon: "book", mainList: true, isFictional: false, actor: "Baptiste Desrosiers", extraRoles: "Molière",
+                quote: "Le temps et moi, nous sommes deux.", intro: "Parrain de Louis XIV et habile diplomate, il gouverne la France avec Anne d'Autriche durant la minorité du roi.",
                 facts: ["Triomphe des révoltes nobles et parlementaires de la Fronde.", "Signe des traités de paix majeurs qui étendent les frontières.", "Forme politiquement Louis XIV à l'exercice implacable du pouvoir absolu."],
-                role: "Artisan de la pacification du royaume et maître à penser politique du jeune Roi-Soleil.",
-                heritage: "A légué à Louis XIV un royaume puissant, uni, et une autorité royale totalement restaurée."
+                role: "Artisan de la pacification du royaume et maître à penser politique du jeune Roi-Soleil.", heritage: "A légué à Louis XIV un royaume puissant, uni, et une autorité royale totalement restaurée."
             },
             "anne-autriche": {
-                name: "Anne d'Autriche", subtitle: "La Reine Mère", dates: "1601-1666", icon: "crown", mainList: true, isFictional: false,
-                quote: "Mon fils, soyez le maître.",
-                intro: "Reine de France, mère de Louis XIV, elle assure la régence du royaume d'une main de fer aux côtés de Mazarin.",
+                name: "Anne d'Autriche", subtitle: "La Reine Mère", dates: "1601-1666", icon: "crown", mainList: true, isFictional: false, actor: "Léa Douady", extraRoles: "danseuse",
+                quote: "Mon fils, soyez le maître.", intro: "Reine de France, mère de Louis XIV, elle assure la régence du royaume d'une main de fer aux côtés de Mazarin.",
                 facts: ["Défend farouchement l'autorité de son fils face aux frondeurs.", "Soutient indéfectiblement Mazarin malgré la haine du peuple.", "Transmet à Louis XIV une profonde piété catholique."],
-                role: "Régente inflexible et garante de la transmission intacte du pouvoir absolu à son fils.",
-                heritage: "L'incarnation de la mère protectrice de la couronne et d'une souveraine inébranlable dans la tempête."
+                role: "Régente inflexible et garante de la transmission intacte du pouvoir absolu à son fils.", heritage: "L'incarnation de la mère protectrice de la couronne et d'une souveraine inébranlable dans la tempête."
             },
             "montespan": {
-                name: "Madame de Montespan", subtitle: "La favorite flamboyante", dates: "1640-1707", icon: "sparkles", mainList: true, isFictional: false,
-                quote: "Je veux être la maîtresse du maître.",
-                intro: "Favorite incontestée de Louis XIV pendant plus d'une décennie, elle domine la cour par sa beauté, son luxe et son ambition redoutable.",
+                name: "Madame de Montespan", subtitle: "La favorite flamboyante", dates: "1640-1707", icon: "sparkles", mainList: true, isFictional: false, actor: "Chloé Woringer", extraRoles: "danseuse, figure du peuple",
+                quote: "Je veux être la maîtresse du maître.", intro: "Favorite incontestée de Louis XIV pendant plus d'une décennie, elle domine la cour par sa beauté, son luxe et son ambition redoutable.",
                 facts: ["Donne sept enfants au roi, légitimés par la suite.", "Grande protectrice des arts et du luxe à Versailles.", "Chute dramatiquement lors de la sombre affaire des Poisons."],
-                role: "Incarne le faste, l'esprit piquant et la démesure des premières décennies triomphales du règne.",
-                heritage: "Symbole intemporel de l'influence féminine absolue mais éphémère à la cour."
+                role: "Incarne le faste, l'esprit piquant et la démesure des premières décennies triomphales du règne.", heritage: "Symbole intemporel de l'influence féminine absolue mais éphémère à la cour."
             },
             "maintenon": {
-                name: "Madame de Maintenon", subtitle: "L'épouse secrète", dates: "1635-1719", icon: "feather", mainList: true, isFictional: false,
-                quote: "Il n'y a rien de plus habile qu'une conduite irréprochable.",
-                intro: "D'abord discrète gouvernante des enfants illégitimes du roi, Françoise d'Aubigné devient sa dernière favorite puis son épouse secrète.",
+                name: "Madame de Maintenon", subtitle: "L'épouse secrète", dates: "1635-1719", icon: "feather", mainList: true, isFictional: false, actor: "Mila Le Nestour", extraRoles: "danseuse, figure du peuple",
+                quote: "Il n'y a rien de plus habile qu'une conduite irréprochable.", intro: "D'abord discrète gouvernante des enfants illégitimes du roi, Françoise d'Aubigné devient sa dernière favorite puis son épouse secrète.",
                 facts: ["Épouse secrètement Louis XIV à la mort de la reine.", "Exerce une influence moralisatrice et profondément religieuse sur la cour.", "Fonde la Maison royale d'éducation de Saint-Cyr pour les jeunes filles nobles."],
-                role: "Confidente suprême et influence stabilisatrice (et austère) de la seconde moitié du règne de Louis XIV.",
-                heritage: "La création de Saint-Cyr, qui représente un modèle pionnier pour l'éducation des femmes en France."
+                role: "Confidente suprême et influence stabilisatrice (et austère) de la seconde moitié du règne de Louis XIV.", heritage: "La création de Saint-Cyr, qui représente un modèle pionnier pour l'éducation des femmes en France."
             },
             "monsieur": {
-                name: "Monsieur", subtitle: "Le frère du Roi", dates: "1640-1701", icon: "fleur", mainList: true, isFictional: false,
-                quote: "Je suis né pour briller à l'ombre du Soleil.",
-                intro: "Philippe d'Orléans, frère cadet de Louis XIV. Brillant stratège, il est souvent écarté du pouvoir politique par un roi redoutant son envergure.",
+                name: "Monsieur", subtitle: "Le frère du Roi", dates: "1640-1701", icon: "fleur", mainList: true, isFictional: false, actor: "Lucas Liaubet Correa",
+                quote: "Je suis né pour briller à l'ombre du Soleil.", intro: "Philippe d'Orléans, frère cadet de Louis XIV. Brillant stratège, il est souvent écarté du pouvoir politique par un roi redoutant son envergure.",
                 facts: ["Remporte de grandes victoires militaires pour la France.", "Connu pour son excentricité, son goût du faste, ses mœurs libérées et ses favoris.", "Mène une vie de cour brillante et mondaine au Palais-Royal."],
-                role: "Soutien indéfectible de la couronne tout en incarnant une cour alternative, intellectuelle et festive.",
-                heritage: "Fondateur de la maison d'Orléans, ancêtre de presque toutes les familles royales catholiques actuelles."
+                role: "Soutien indéfectible de la couronne tout en incarnant une cour alternative, intellectuelle et festive.", heritage: "Fondateur de la maison d'Orléans, ancêtre de presque toutes les familles royales catholiques actuelles."
             },
             "colbert": {
-                name: "Jean-Baptiste Colbert", subtitle: "Le grand intendant", dates: "1619-1683", icon: "book", mainList: true, isFictional: false,
-                quote: "Il faut jeter des millions quand il s'agit de votre gloire.",
-                intro: "Contrôleur général des finances et ministre infatigable, il est l'homme de l'ombre et l'architecte de la puissance économique française.",
+                name: "Jean-Baptiste Colbert", subtitle: "Le grand intendant", dates: "1619-1683", icon: "book", mainList: true, isFictional: false, actor: "Arthur Devaux", extraRoles: "danseur, figure du peuple",
+                quote: "Il faut jeter des millions quand il s'agit de votre gloire.", intro: "Contrôleur général des finances et ministre infatigable, il est l'homme de l'ombre et l'architecte de la puissance économique française.",
                 facts: ["Redresse spectaculairement les finances du royaume de France.", "Fonde les grandes manufactures royales (Gobelins, Saint-Gobain).", "Développe massivement le commerce et la puissante marine de guerre."],
-                role: "Bâtisseur de la puissance matérielle, industrielle, navale et administrative de la France sous Louis XIV.",
-                heritage: "Le 'colbertisme' (doctrine politico-économique) et des institutions administratives toujours existantes."
+                role: "Bâtisseur de la puissance matérielle, industrielle, navale et administrative de la France sous Louis XIV.", heritage: "Le 'colbertisme' (doctrine politico-économique) et des institutions administratives toujours existantes."
             },
             "beaufort": {
-                name: "Duc de Beaufort", subtitle: "Le Roi des Halles", dates: "1616-1669", icon: "sword", mainList: true, isFictional: false,
-                quote: "Je suis le roi des Halles, et vous n'êtes que le ministre du roi.",
-                intro: "Petit-fils d'Henri IV, ce prince charismatique et impétueux gagne la ferveur du peuple parisien lors des révoltes de la Fronde.",
+                name: "Duc de Beaufort", subtitle: "Le Roi des Halles", dates: "1616-1669", icon: "sword", mainList: true, isFictional: false, actor: "Alice Augereau",
+                quote: "Je suis le roi des Halles, et vous n'êtes que le ministre du roi.", intro: "Petit-fils d'Henri IV, ce prince charismatique et impétueux gagne la ferveur du peuple parisien lors des révoltes de la Fronde.",
                 facts: ["S'évade de manière rocambolesque du donjon de Vincennes en 1648.", "Devient la figure de proue populaire de la rébellion contre Mazarin.", "Se réconcilie avec le roi et devient un valeureux amiral de la flotte française."],
-                role: "Symbole de l'insoumission nobiliaire domptée, puis de la bravoure militaire au service strict de la couronne.",
-                heritage: "Une figure romantique et populaire ayant inspiré la littérature de cape et d'épée (dont Alexandre Dumas)."
+                role: "Symbole de l'insoumission nobiliaire domptée, puis de la bravoure militaire au service strict de la couronne.", heritage: "Une figure romantique et populaire ayant inspiré la littérature de cape et d'épée (dont Alexandre Dumas)."
             },
             "moliere": {
-                name: "Molière", subtitle: "Le génie de la comédie", dates: "1622-1673", icon: "masks", mainList: true, isFictional: false,
-                quote: "Le devoir de la comédie est de corriger les hommes en les divertissant.",
-                intro: "Jean-Baptiste Poquelin, immense homme de théâtre et comédien, est le protégé de Louis XIV et l'organisateur de ses grands divertissements.",
+                name: "Molière", subtitle: "Le génie de la comédie", dates: "1622-1673", icon: "masks", mainList: true, isFictional: false, actor: "Baptiste Desrosiers", extraRoles: "Le Cardinal Mazarin",
+                quote: "Le devoir de la comédie est de corriger les hommes en les divertissant.", intro: "Jean-Baptiste Poquelin, immense homme de théâtre et comédien, est le protégé de Louis XIV et l'organisateur de ses grands divertissements.",
                 facts: ["Révolutionne le théâtre comique et invente la comédie-ballet avec Lully.", "Dresse une satire féroce et brillante des travers de la société.", "Meurt de maladie à l'issue d'une représentation du Malade imaginaire."],
-                role: "Peintre implacable des mœurs de son temps et pilier indispensable du rayonnement culturel versaillais.",
-                heritage: "Le répertoire le plus joué en France ; la langue française est couramment appelée la 'langue de Molière'."
+                role: "Peintre implacable des mœurs de son temps et pilier indispensable du rayonnement culturel versaillais.", heritage: "Le répertoire le plus joué en France ; la langue française est couramment appelée la 'langue de Molière'."
             },
             "scarron": {
-                name: "Scarron", subtitle: "Le maître du burlesque", dates: "1610-1660", icon: "feather", mainList: true, isFictional: false,
-                quote: "Je ne suis pas fait comme les autres hommes.",
-                intro: "Auteur majeur, pionnier du burlesque, lourdement handicapé par la maladie. Il fut le premier époux de Françoise d'Aubigné (Madame de Maintenon).",
+                name: "Scarron", subtitle: "Le maître du burlesque", dates: "1610-1660", icon: "feather", mainList: true, isFictional: false, actor: "Chloé Roumanus", extraRoles: "danseuse",
+                quote: "Je ne suis pas fait comme les autres hommes.", intro: "Auteur majeur, pionnier du burlesque, lourdement handicapé par la maladie. Il fut le premier époux de Françoise d'Aubigné (Madame de Maintenon).",
                 facts: ["Tient un salon littéraire parisien brillant, anti-conformiste et libre.", "Épouse la jeune et pauvre Françoise d'Aubigné pour la sauver de la misère.", "Offre un regard ironique et décalé, loin des fastes rigides de la cour royale."],
-                role: "Animateur d'une vie intellectuelle parisienne alternative, frondeuse et décomplexée.",
-                heritage: "L'un des fondateurs du genre comique et parodique dans la littérature classique française du XVIIe siècle."
+                role: "Animateur d'une vie intellectuelle parisienne alternative, frondeuse et décomplexée.", heritage: "L'un des fondateurs du genre comique et parodique dans la littérature classique française du XVIIe siècle."
             },
             "ninon": {
-                name: "Ninon de l'Enclos", subtitle: "La femme libre", dates: "1620-1705", icon: "sparkles", mainList: true, isFictional: false,
-                quote: "La joie de l'esprit en marque la force.",
-                intro: "Célèbre courtisane, femme de lettres et amie des grands esprits de son temps, elle est la figure de proue de l'épicurisme à Paris.",
+                name: "Ninon de l'Enclos", subtitle: "La femme libre", dates: "1620-1705", icon: "sparkles", mainList: true, isFictional: false, actor: "Inga Lee Yeskova", extraRoles: "danseuse",
+                quote: "La joie de l'esprit en marque la force.", intro: "Célèbre courtisane, femme de lettres et amie des grands esprits de son temps, elle est la figure de proue de l'épicurisme à Paris.",
                 facts: ["Tient le célèbre salon 'Le Marais', point de ralliement des élites intellectuelles.", "Revendique ouvertement l'indépendance financière, morale et amoureuse des femmes.", "Fascine et est respectée par la haute société malgré ses mœurs libres."],
-                role: "Incarnation éclatante de la liberté d'esprit et du libertinage philosophique au sein du Grand Siècle.",
-                heritage: "Symbole intemporel de la femme affranchie des conventions morales strictes de son époque."
+                role: "Incarnation éclatante de la liberté d'esprit et du libertinage philosophique au sein du Grand Siècle.", heritage: "Symbole intemporel de la femme affranchie des conventions morales strictes de son époque."
             },
             "voisin": {
-                name: "La Voisin", subtitle: "La devineresse des poisons", dates: "(Personnage créé pour la comédie musicale)", icon: "flask", mainList: true, isFictional: true,
-                quote: "La mort est un commerce comme un autre.",
-                intro: "Figure de l'ombre redoutable et mystérieuse. Elle gravite dans les bas-fonds de Paris en vendant philtres d'amour, prédictions et poisons aux nobles prêts à tout.",
+                name: "La Voisin", subtitle: "La devineresse des poisons", dates: "(Création pour la comédie musicale)", icon: "flask", mainList: true, isFictional: true, actor: "Louise Oziès Fournier", extraRoles: "opératrice rideaux",
+                quote: "La mort est un commerce comme un autre.", intro: "Figure de l'ombre redoutable et mystérieuse. Elle gravite dans les bas-fonds de Paris en vendant philtres d'amour, prédictions et poisons aux nobles prêts à tout.",
                 facts: ["Fournit à Madame de Montespan les remèdes occultes pour retenir le cœur du Roi.", "Incarne la part sombre, immorale et dangereuse de la haute société du Grand Siècle.", "Déclenche le scandale terrifiant de l'Affaire des Poisons qui secouera toute la cour."],
-                role: "Représenter la folie des grandeurs, l'avidité et la noirceur cachée derrière les dorures de Versailles.",
-                heritage: "Incarne la transgression ultime et la chute morale inévitable des courtisans aveuglés par l'ambition."
+                role: "Représenter la folie des grandeurs, l'avidité et la noirceur cachée derrière les dorures de Versailles.", heritage: "Incarne la transgression ultime et la chute morale inévitable des courtisans aveuglés par l'ambition."
             },
             "lisieux": {
-                name: "Mademoiselle de Lisieux", subtitle: "L'ingénue à la cour", dates: "(Personnage créé pour la comédie musicale)", icon: "fleur", mainList: true, isFictional: true,
-                quote: "La lumière du Soleil brûle ceux qui s'en approchent de trop près.",
-                intro: "Issue de la petite noblesse provinciale, elle monte à la cour avec des rêves de grandeur et de succès, gravitant innocemment autour des plus puissants.",
+                name: "Mlle de Lisieux", subtitle: "L'ingénue à la cour", dates: "(Création pour la comédie musicale)", icon: "fleur", mainList: true, isFictional: true, actor: "Eyleen Douat", extraRoles: "danseuse",
+                quote: "La lumière du Soleil brûle ceux qui s'en approchent de trop près.", intro: "Issue de la petite noblesse provinciale, elle monte à la cour avec des rêves de grandeur et de succès, gravitant innocemment autour des plus puissants.",
                 facts: ["Cherche désespérément à exister et à se faire remarquer dans la lumière du Roi-Soleil.", "Se confronte très rapidement aux rivalités impitoyables et aux manipulations cruelles des courtisans.", "Représente l'ambition d'élévation sociale absolue et parfois naïve propre à l'époque."],
-                role: "Illustrer la très grande fragilité des courtisans et le miroir aux alouettes que représentait l'entourage direct du Roi.",
-                heritage: "Dévoile les coulisses souvent terribles, froides et impitoyables cachées derrière l'étiquette royale."
+                role: "Illustrer la très grande fragilité des courtisans et le miroir aux alouettes que représentait l'entourage direct du Roi.", heritage: "Dévoile les coulisses souvent terribles, froides et impitoyables cachées derrière l'étiquette royale."
             },
             "isabelle": {
-                name: "Isabelle", subtitle: "La fille du peuple", dates: "(Personnage créé pour la comédie musicale)", icon: "sparkles", mainList: true, isFictional: true,
-                quote: "Même les ombres ont le droit d'aimer.",
-                intro: "Jeune roturière rebelle et passionnée au destin romanesque. Elle se dresse contre les injustices et vit une romance impossible avec le noble Duc de Beaufort.",
+                name: "Isabelle", subtitle: "La fille du peuple", dates: "(Création pour la comédie musicale)", icon: "sparkles", mainList: true, isFictional: true, actor: "Inès Berger",
+                quote: "Même les ombres ont le droit d'aimer.", intro: "Jeune roturière rebelle et passionnée au destin romanesque. Elle se dresse contre les injustices et vit une romance impossible avec le noble Duc de Beaufort.",
                 facts: ["Incarne avec force la voix de la rue, la misère et les aspirations brisées des roturiers.", "Met en lumière la rigidité absolue des barrières sociales de l'époque à travers ses tourments amoureux.", "Soutient activement la Fronde et la rébellion populaire contre Mazarin."],
-                role: "Représenter le peuple de France, dramatiquement oublié de la grande Histoire, qui subit seul les guerres et les impôts.",
-                heritage: "Apporte l'indispensable dimension populaire, pure, humaine et intimement tragique à l'œuvre musicale."
+                role: "Représenter le peuple de France, dramatiquement oublié de la grande Histoire, qui subit seul les guerres et les impôts.", heritage: "Apporte l'indispensable dimension populaire, pure, humaine et intimement tragique à l'œuvre musicale."
             },
             "enfant-roi": {
-                name: "L'enfant roi", subtitle: "Le Grand Dauphin", dates: "1661-1711", icon: "crown", mainList: true, isFictional: false,
-                quote: "Je serai roi un jour... si Dieu le veut.",
-                intro: "Louis de France, fils aîné et héritier légitime de Louis XIV. Il est élevé dans l'exigence implacable de son futur rôle de monarque.",
+                name: "L'enfant roi", subtitle: "Le Grand Dauphin", dates: "1661-1711", icon: "crown", mainList: true, isFictional: false, actor: "Leyton Guillot", extraRoles: "danseur, opérateur rideaux",
+                quote: "Je serai roi un jour... si Dieu le veut.", intro: "Louis de France, fils aîné et héritier légitime de Louis XIV. Il est élevé dans l'exigence implacable de son futur rôle de monarque.",
                 facts: ["Reçoit l'éducation la plus stricte de son temps, supervisée par le théoricien Bossuet.", "S'illustre comme un excellent commandant lors des grandes campagnes militaires.", "Décède tragiquement avant son père, sans jamais avoir accédé au trône."],
-                role: "Héritier loyal, compétent, mais vivant perpétuellement écrasé sous l'ombre de son père.",
-                heritage: "A assuré la pérennité de la dynastie (il est le grand-père du futur Louis XV et du roi d'Espagne)."
+                role: "Héritier loyal, compétent, mais vivant perpétuellement écrasé sous l'ombre de son père.", heritage: "A assuré la pérennité de la dynastie (il est le grand-père du futur Louis XV et du roi d'Espagne)."
             },
-            // HISTORIQUES (Cartes uniquement)
+            // HISTORIQUES (Cartes historiques uniquement)
             "le-notre": {
                 name: "André Le Nôtre", dates: "1613-1700", icon: "tree", mainList: false, isFictional: false, subtitle: "L'Architecte des Jardins",
                 quote: "La nature est mon seul guide.", intro: "Architecte paysagiste, créateur des jardins de Versailles.", facts: ["Créateur des jardins de Versailles.", "Invente le style à la française."], role: "Donne à Versailles sa splendeur paysagère.", heritage: "Maître incontesté de l'art paysager."
@@ -595,78 +508,64 @@
             }
         };
 
-        // --- DONNÉES DES FAITS HISTORIQUES ---
         const historicalFacts = [
             {
                 title: "La Fronde", dates: "1648-1653", cat: "GUERRE CIVILE", icon: "sword",
                 desc: "Série de guerres civiles contre l'autorité royale et Mazarin. Cette révolte marque profondément le jeune Louis XIV.",
-                impact: "Renforce la volonté d'absolutisme royal",
-                cons: ["Méfiance envers Paris", "Volonté de contrôler la noblesse"],
+                impact: "Renforce la volonté d'absolutisme royal", cons: ["Méfiance envers Paris", "Volonté de contrôler la noblesse"],
                 chars: [{id: "louis-xiv", name: "Louis XIV"}, {id: "anne-autriche", name: "Anne d'Autriche"}, {id: "mazarin", name: "Mazarin"}]
             },
             {
                 title: "Construction de Versailles", dates: "1661-1710", cat: "ARCHITECTURE", icon: "castle",
                 desc: "Transformation d'un pavillon de chasse en palais somptueux. Versailles devient le symbole de la grandeur française.",
-                impact: "Centralisation du pouvoir et de la cour",
-                cons: ["Contrôle strict de la noblesse", "Rayonnement artistique européen"],
+                impact: "Centralisation du pouvoir et de la cour", cons: ["Contrôle strict de la noblesse", "Rayonnement artistique européen"],
                 chars: [{id: "louis-xiv", name: "Louis XIV"}, {id: "le-notre", name: "Le Nôtre"}, {id: "mansart", name: "Mansart"}]
             },
             {
                 title: "Guerre de Hollande", dates: "1672-1678", cat: "CONFLIT MILITAIRE", icon: "sword",
                 desc: "Guerre menée par Louis XIV contre les Provinces-Unies. Apogée de la puissance militaire française.",
-                impact: "Affirmation de l'hégémonie française en Europe",
-                cons: ["Conquêtes territoriales", "Prestige militaire absolu"],
+                impact: "Affirmation de l'hégémonie française en Europe", cons: ["Conquêtes territoriales", "Prestige militaire absolu"],
                 chars: [{id: "louis-xiv", name: "Louis XIV"}, {id: "turenne", name: "Turenne"}, {id: "conde", name: "Condé"}]
             },
             {
                 title: "Révocation de l'Édit de Nantes", dates: "1685", cat: "DÉCISION RELIGIEUSE", icon: "church",
                 desc: "Louis XIV révoque l'édit de tolérance religieuse d'Henri IV. Les protestants perdent leurs droits.",
-                impact: "Unification religieuse du royaume",
-                cons: ["Exode massif des huguenots", "Affaiblissement économique"],
+                impact: "Unification religieuse du royaume", cons: ["Exode massif des huguenots", "Affaiblissement économique"],
                 chars: [{id: "louis-xiv", name: "Louis XIV"}, {id: "maintenon", name: "Madame de Maintenon"}, {id: "bossuet", name: "Bossuet"}]
             },
             {
                 title: "Guerre de la Ligue d'Augsbourg", dates: "1688-1697", cat: "GUERRE EUROPÉENNE", icon: "sword",
                 desc: "Coalition européenne contre l'hégémonie française. Première grande limite rencontrée par Louis XIV.",
-                impact: "Limites de la puissance française révélées",
-                cons: ["Épuisement financier du royaume", "Famines tragiques"],
+                impact: "Limites de la puissance française révélées", cons: ["Épuisement financier du royaume", "Famines tragiques"],
                 chars: [{id: "louis-xiv", name: "Louis XIV"}, {id: "luxembourg", name: "Luxembourg"}, {id: "vauban", name: "Vauban"}]
             },
             {
                 title: "Guerre de Succession d'Espagne", dates: "1701-1714", cat: "CONFLIT DYNASTIQUE", icon: "fleur",
                 desc: "Dernière grande guerre du règne pour placer le petit-fils du roi sur le trône d'Espagne.",
-                impact: "Épuisement du royaume mais victoire dynastique",
-                cons: ["Philippe V devient roi d'Espagne", "Traité d'Utrecht"],
+                impact: "Épuisement du royaume mais victoire dynastique", cons: ["Philippe V devient roi d'Espagne", "Traité d'Utrecht"],
                 chars: [{id: "louis-xiv", name: "Louis XIV"}, {id: "philippe-anjou", name: "Philippe d'Anjou"}, {id: "marlborough", name: "Marlborough"}]
             }
         ];
 
-        // --- DONNÉES DU LEXIQUE ---
         const lexiconTerms = [
-            {
-                title: "L'Étiquette", icon: "crown",
-                desc: "Ensemble complexe et rigide des règles de comportement à la cour de Versailles. Louis XIV l'utilisait comme un instrument de pouvoir absolu pour domestiquer la noblesse, l'obligeant à s'épuiser en dépenses et en temps pour obtenir un simple regard du souverain."
-            },
-            {
-                title: "La Fronde", icon: "sword",
-                desc: "Période de graves révoltes (1648-1653) de la haute noblesse, du Parlement et du peuple contre l'autorité royale incarnée par Mazarin. Cet événement a profondément traumatisé Louis XIV, forgeant sa volonté inébranlable de centraliser tous les pouvoirs."
-            },
-            {
-                title: "Prince du Sang", icon: "fleur",
-                desc: "Titre donné exclusivement aux princes légitimes descendant de la maison royale de France (comme le Grand Condé). Ils se trouvent au sommet de la hiérarchie nobiliaire et commandent souvent les armées du roi."
-            },
-            {
-                title: "Droit Divin", icon: "church",
-                desc: "Doctrine politique stipulant que le pouvoir absolu du Roi lui est directement confié par Dieu. Le monarque est considéré comme le « lieutenant de Dieu sur terre », il n'a de comptes à rendre à personne d'autre."
-            },
-            {
-                title: "Libertinage", icon: "feather",
-                desc: "Au XVIIe siècle, c'est avant tout une très grande liberté de pensée philosophique. Les libertins s'affranchissent des dogmes religieux et des croyances officielles, souvent accompagnant cela d'une liberté de mœurs (incarnée par Ninon de l'Enclos)."
-            },
-            {
-                title: "Lettre de cachet", icon: "book",
-                desc: "Lettre fermée par le sceau personnel du Roi contenant un ordre direct et incontestable. Elle était très souvent utilisée pour emprisonner à la Bastille ou exiler une personne subversante, sans aucun jugement préalable."
-            }
+            { title: "L'Étiquette", icon: "crown", desc: "Ensemble complexe et rigide des règles de comportement à la cour de Versailles. Louis XIV l'utilisait comme un instrument de pouvoir absolu pour domestiquer la noblesse." },
+            { title: "La Fronde", icon: "sword", desc: "Période de graves révoltes (1648-1653) de la haute noblesse, du Parlement et du peuple contre l'autorité royale incarnée par Mazarin." },
+            { title: "Prince du Sang", icon: "fleur", desc: "Titre donné exclusivement aux princes légitimes descendant de la maison royale de France (comme le Grand Condé)." },
+            { title: "Droit Divin", icon: "church", desc: "Doctrine politique stipulant que le pouvoir absolu du Roi lui est directement confié par Dieu. Il n'a de comptes à rendre à personne d'autre." },
+            { title: "Libertinage", icon: "feather", desc: "Au XVIIe siècle, c'est avant tout une très grande liberté de pensée philosophique et un affranchissement des dogmes religieux et des conventions (ex: Ninon de l'Enclos)." },
+            { title: "Lettre de cachet", icon: "book", desc: "Lettre fermée par le sceau personnel du Roi contenant un ordre direct et incontestable, souvent utilisée pour emprisonner sans jugement." }
+        ];
+
+        // Membres de l'ensemble n'ayant pas de fiche personnage individuelle
+        const ensembleMembers = [
+            { name: "Charlotte Lespets", role: "Courtisane, danseuse solo, figure du peuple" },
+            { name: "Colette Disney", role: "Courtisane, danseuse solo, figure du peuple" },
+            { name: "Élise Devaux", role: "Femme de chambre, danseuse" },
+            { name: "Juliette Pedron", role: "Dame de cour, danseuse, opératrice rideaux" },
+            { name: "Justine Douady", role: "Courtisane, danseuse, figure du peuple" },
+            { name: "Manon Alliaume", role: "Courtisane, danseuse, figure du peuple" },
+            { name: "Madeline Quantin", role: "Courtisane, danseuse, figure du peuple" },
+            { name: "Santina Grech", role: "Courtisane, danseuse, un ministre" }
         ];
 
         // --- GÉNÉRATION HTML ---
@@ -689,7 +588,18 @@
             charDelay += 0.05;
         }
 
-        // 2. Faits Historiques
+        // 2. Ensemble & Autres Rôles
+        const troupeContainer = document.getElementById('troupe-container');
+        ensembleMembers.forEach(member => {
+            let html = `
+            <li>
+                <div class="troupe-name">${member.name}</div>
+                <div class="troupe-role">${member.role}</div>
+            </li>`;
+            troupeContainer.insertAdjacentHTML('beforeend', html);
+        });
+
+        // 3. Faits Historiques
         const factsContainer = document.getElementById('facts-container');
         let factDelay = 0;
         historicalFacts.forEach(fact => {
@@ -717,12 +627,12 @@
             factDelay += 0.1;
         });
 
-        // 3. Lexique
+        // 4. Lexique (Style Parchemin)
         const lexiconContainer = document.getElementById('lexicon-container');
         let lexDelay = 0;
         lexiconTerms.forEach(term => {
             let html = `
-            <div class="lexicon-card glass-card fade-in-up" style="animation-delay: ${lexDelay}s">
+            <div class="lexicon-card fade-in-up" style="animation-delay: ${lexDelay}s">
                 <h3 class="lexicon-title">${svgs[term.icon]} ${term.title}</h3>
                 <p class="lexicon-desc">${term.desc}</p>
             </div>`;
@@ -732,29 +642,29 @@
 
         // --- LOGIQUE INTERACTIVE ---
 
-        // Toujours afficher le bouton (Fallback intégré si l'API native ne marche pas)
+        // Masquer le bandeau Savoir-Vivre au scroll
+        window.addEventListener('scroll', () => {
+            if(window.scrollY > 50) {
+                document.getElementById('savoirVivre').classList.add('hidden');
+            }
+        });
+
+        // Support du Web Share API
         window.addEventListener('DOMContentLoaded', () => {
             document.getElementById('shareBtn').style.display = 'flex';
         });
 
         function shareApp() {
-            const shareUrl = window.location.origin + window.location.pathname; // URL propre
-
+            const shareUrl = window.location.origin + window.location.pathname;
             if (navigator.share) {
-                // Si le téléphone supporte le menu de partage natif
                 navigator.share({
                     title: 'Le Roi Soleil - Personnages et Histoire',
                     text: 'Découvrez la véritable histoire des personnages de la comédie musicale !',
                     url: shareUrl,
-                }).catch((error) => {
-                    console.log('Erreur de partage', error);
-                });
+                }).catch(err => console.log('Erreur de partage', err));
             } else {
-                // SYSTÈME DE SECOURS : Copie dans le presse-papier
                 try {
-                    navigator.clipboard.writeText(shareUrl).then(() => {
-                        alert("Le lien de la page a été copié dans votre presse-papier !");
-                    });
+                    navigator.clipboard.writeText(shareUrl).then(() => alert("Le lien de la page a été copié dans votre presse-papier !"));
                 } catch (e) {
                     const tempInput = document.createElement("input");
                     tempInput.value = shareUrl;
@@ -798,7 +708,6 @@
             document.getElementById('modalTitle').innerText = char.name;
             document.getElementById('modalSubtitle').innerText = char.subtitle;
             
-            // Citation
             const quoteEl = document.getElementById('modalQuote');
             if(char.quote) {
                 quoteEl.innerText = `« ${char.quote} »`;
@@ -807,7 +716,6 @@
                 quoteEl.style.display = "none";
             }
             
-            // Dates fictif
             const datesEl = document.getElementById('modalDates');
             datesEl.innerText = char.dates;
             if (char.isFictional) datesEl.classList.add('fictif');
@@ -817,6 +725,13 @@
             
             const roleTitle = char.isFictional ? "RÔLE SYMBOLIQUE :" : "RÔLE HISTORIQUE :";
             const heritageTitle = char.isFictional ? "SIGNIFICATION :" : "HÉRITAGE :";
+            
+            // Formatage du texte du casting (Avec rôles secondaires si existants)
+            let actorHtml = '';
+            if(char.actor) {
+                let extraRoles = char.extraRoles ? `<span>(également ${char.extraRoles})</span>` : '';
+                actorHtml = `<div class="actor-credit">Interprété sur scène par : ${char.actor} ${extraRoles}</div>`;
+            }
 
             document.getElementById('modalBody').innerHTML = `
                 <div class="intro-text">${char.intro}</div>
@@ -831,6 +746,7 @@
                     <div class="box-title">${heritageTitle}</div>
                     <div class="box-content">${char.heritage}</div>
                 </div>
+                ${actorHtml}
             `;
             
             const modal = document.getElementById('charModal');
