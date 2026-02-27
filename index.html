@@ -134,6 +134,9 @@
         .glass-card { background-color: var(--card-bg); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.2); box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
 
         /* --- LISTE DES PERSONNAGES --- */
+        .category-title { font-family: 'Playfair Display', serif; color: var(--accent-color); font-size: 1.6rem; margin: 35px 0 15px 0; text-align: center; position: relative; }
+        .category-title:first-child { margin-top: 5px; }
+        .category-title::after { content: '♦'; display: block; font-size: 1rem; color: #5C65CD; opacity: 0.5; margin-top: 2px; }
         .chars-grid { display: grid; grid-template-columns: 1fr; gap: 15px; }
         @media (min-width: 768px) { .chars-grid { grid-template-columns: 1fr 1fr; } }
         .char-card { border-radius: 12px; padding: 15px 20px; display: flex; align-items: center; gap: 15px; cursor: pointer; transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s; -webkit-tap-highlight-color: transparent; }
@@ -284,13 +287,17 @@
             color: var(--dark-text);
             font-family: 'Playfair Display', serif;
             box-shadow: none;
+            margin-top: -8px;
             margin-bottom: 10px;
         }
         .rpg-section-title {
             text-align: center;
             position: relative;
-            margin: 15px 0 10px 0;
+            margin: 12px 0 10px 0;
             z-index: 1;
+        }
+        .rpg-card > .rpg-section-title:first-child {
+            margin-top: 0;
         }
         .rpg-section-title::before {
             content: ''; position: absolute; top: 50%; left: 0; right: 0;
@@ -300,10 +307,9 @@
             background: #fff;
             color: #5C65CD;
             padding: 0 15px;
-            font-size: 0.85rem;
+            font-size: 0.95rem;
             font-weight: bold;
-            letter-spacing: 1.5px;
-            text-transform: uppercase;
+            letter-spacing: 1px;
         }
         .rpg-skills {
             display: grid;
@@ -320,9 +326,8 @@
             box-shadow: none;
         }
         .rpg-skill-name {
-            font-size: 0.75rem;
+            font-size: 0.8rem;
             font-weight: bold;
-            text-transform: uppercase;
             margin-bottom: 5px;
             letter-spacing: 0.5px;
         }
@@ -340,7 +345,6 @@
             font-size: 1rem;
             font-weight: bold;
             color: #5C65CD;
-            text-transform: uppercase;
             letter-spacing: 1px;
         }
         .rpg-relations {
@@ -359,7 +363,7 @@
             flex-direction: column;
         }
         .rpg-rel-title {
-            font-size: 0.65rem;
+            font-size: 0.8rem;
             font-weight: bold;
             margin-bottom: 6px;
             border-bottom: 1px solid rgba(92, 101, 205, 0.2);
@@ -458,7 +462,7 @@
 
         <!-- ONGLET 1 : PERSONNAGES -->
         <div id="tab-personnages" class="tab-content active" role="tabpanel" aria-labelledby="btn-personnages">
-            <div class="chars-grid" id="chars-container">
+            <div id="chars-container">
                 <!-- Généré par JS -->
             </div>
             <div class="fictional-legend">✦ Personnage créé pour la comédie musicale</div>
@@ -537,7 +541,7 @@
         };
 
         const characters = {
-            // PERSONNAGES PRINCIPAUX
+            // --- 1. LA FAMILLE ROYALE ---
             "louis-xiv": {
                 name: "Louis XIV", subtitle: "Le Roi-Soleil", dates: "1638-1715", icon: "crown", mainList: true, isFictional: false, actor: "Matthieu Desrosiers",
                 quote: "Je m'en vais, mais l'État demeurera toujours.", intro: "Roi de France de 1643 à 1715, Louis XIV incarne l'absolutisme royal français. Surnommé le Roi-Soleil, il fait de la France la première puissance européenne.",
@@ -547,31 +551,19 @@
                     classe: "Roi Légendaire", faction: "Royauté",
                     competences: [ { nom: "Règne Absolu", desc: "Impose sa volonté royale", icon: "⚔️" }, { nom: "Éclat Royal", desc: "Éblouit par sa magnificence", icon: "✨" }, { nom: "Majesté Divine", desc: "Incarne le pouvoir divin", icon: "🌟" }, { nom: "Vision d'Empire", desc: "Bâtit la grandeur française", icon: "🏰" } ],
                     ultime: { nom: "ÉCLAT DU SOLEIL", desc: "Éblouit tous ses adversaires par sa magnificence royale" },
-                    relations: { allies: ["Anne d'Autriche", "Mazarin", "Colbert", "Mme de Maintenon"], rivaux: ["Duc de Beaufort", "La Voisin"], amours: ["Marie Mancini", "Mme de Montespan"] }
+                    relations: { allies: ["Anne d'Autriche", "Mazarin", "Colbert", "Mme de Maintenon"], rivaux: ["Duc de Beaufort", "La Voisin"], amours: ["Marie Mancini", "Mme de Montespan", "Mme de Maintenon"] }
                 }
             },
-            "marie-mancini": {
-                name: "Marie Mancini", subtitle: "Le premier amour", dates: "1639-1715", icon: "sparkles", mainList: true, isFictional: false, actor: "Valentine Delassus",
-                quote: "Vous êtes roi, vous pleurez, et je pars.", intro: "Nièce du puissant cardinal Mazarin, Marie Mancini est une intellectuelle brillante qui fut le premier grand amour passionné du jeune Louis XIV.",
-                facts: ["Initie le jeune roi à la littérature, à l'art et à la beauté.", "Sa liaison avec le roi manque de faire échouer la paix avec l'Espagne.", "Est exilée de la cour par son propre oncle pour forcer le mariage royal."],
-                role: "Catalyseur de l'éveil culturel et sentimental du jeune souverain avant qu'il n'assume son rôle d'État.", heritage: "L'image tragique du sacrifice de l'amour personnel sur l'autel impitoyable de la raison d'État.",
+            "enfant-roi": {
+                name: "L'enfant roi", subtitle: "Le Grand Dauphin", dates: "1661-1711", icon: "crown", mainList: true, isFictional: false, actor: "Leyton Guillot",
+                quote: "Je serai roi un jour... si Dieu le veut.", intro: "Louis de France, fils aîné et héritier légitime de Louis XIV. Il est élevé dans l'exigence implacable de son futur rôle de monarque.",
+                facts: ["Reçoit l'éducation la plus stricte de son temps, supervisée par le théoricien Bossuet.", "S'illustre comme un excellent commandant lors des grandes campagnes militaires.", "Décède tragiquement avant son père, sans jamais avoir accédé au trône."],
+                role: "Héritier loyal, compétent, mais vivant perpétuellement écrasé sous l'ombre de son père.", heritage: "A assuré la pérennité de la dynastie (il est le grand-père du futur Louis XV et du roi d'Espagne).",
                 rpg: {
-                    classe: "Dame de Cœur", faction: "Courtisane",
-                    competences: [ { nom: "Charme Italien", desc: "Séduction naturelle", icon: "🇮🇹" }, { nom: "Poésie", desc: "Touche les cœurs", icon: "📝" }, { nom: "Mélancolie", desc: "Émotion profonde", icon: "😢" }, { nom: "Passion", desc: "Amour impossible", icon: "💔" } ],
-                    ultime: { nom: "CŒUR BRISÉ", desc: "Son amour interdit touche l'âme de tous ceux qui l'entendent" },
-                    relations: { allies: ["Mazarin", "Ninon", "Molière"], rivaux: ["Anne d'Autriche", "Mme de Montespan"], amours: ["Louis XIV"] }
-                }
-            },
-            "mazarin": {
-                name: "Cardinal Mazarin", subtitle: "Le principal ministre", dates: "1602-1661", icon: "book", mainList: true, isFictional: false, actor: "Baptiste Desrosiers",
-                quote: "Le temps et moi, nous sommes deux.", intro: "Parrain de Louis XIV et habile diplomate, il gouverne la France avec Anne d'Autriche durant la minorité du roi.",
-                facts: ["Triomphe des révoltes nobles et parlementaires de la Fronde.", "Signe des traités de paix majeurs qui étendent les frontières.", "Forme politiquement Louis XIV à l'exercice implacable du pouvoir absolu."],
-                role: "Artisan de la pacification du royaume et maître à penser politique du jeune Roi-Soleil.", heritage: "A légué à Louis XIV un royaume puissant, uni, et une autorité royale restaurée.",
-                rpg: {
-                    classe: "Stratège Politique", faction: "Cour Royale",
-                    competences: [ { nom: "Stratégie", desc: "Maître du jeu", icon: "🧩" }, { nom: "Diplomatie", desc: "Négociateur né", icon: "🤝" }, { nom: "Vision d'État", desc: "Pense la grandeur", icon: "🏛️" }, { nom: "Mentor", desc: "Éducateur royal", icon: "👨‍🏫" } ],
-                    ultime: { nom: "MAÎTRE DU JEU", desc: "Manipule les événements pour servir la grandeur de la France" },
-                    relations: { allies: ["Anne d'Autriche", "Louis XIV", "Mancini"], rivaux: ["Frondeurs", "Duc de Beaufort"], amours: ["Anne d'Autriche"] }
+                    classe: "Roi en Devenir", faction: "Royauté",
+                    competences: [ { nom: "Innocence", desc: "Pureté enfantine", icon: "😇" }, { nom: "Apprentissage", desc: "Soif de grandir", icon: "📚" }, { nom: "Détermination", desc: "Volonté d'acier", icon: "💪" }, { nom: "Charme", desc: "Attendrissement", icon: "✨" } ],
+                    ultime: { nom: "PROMESSE D'AVENIR", desc: "Porte en lui la promesse de la grandeur future de la France" },
+                    relations: { allies: ["Anne d'Autriche", "Précepteurs"], rivaux: ["La Fronde"], amours: ["Amour filial"] }
                 }
             },
             "anne-autriche": {
@@ -584,6 +576,58 @@
                     competences: [ { nom: "Amour Maternel", desc: "Dévouement absolu", icon: "💝" }, { nom: "Sagesse", desc: "Expérience du pouvoir", icon: "👑" }, { nom: "Force Intérieure", desc: "Résiste aux épreuves", icon: "💪" }, { nom: "Dévotion", desc: "Foi profonde", icon: "🙏" } ],
                     ultime: { nom: "PROTECTION MATERNELLE", desc: "Protège et guide par l'amour inconditionnel d'une mère" },
                     relations: { allies: ["Mazarin", "Louis XIV", "Clergé"], rivaux: ["Frondeurs", "Ennemis du roi"], amours: ["Louis XIII", "Mazarin"] }
+                }
+            },
+            "monsieur": {
+                name: "Monsieur", subtitle: "Le frère du Roi", dates: "1640-1701", icon: "fleur", mainList: true, isFictional: false, actor: "Lucas Liaubet Correa",
+                quote: "Je suis né pour briller à l'ombre du Soleil.", intro: "Philippe d'Orléans, frère cadet de Louis XIV. Brillant stratège, il est souvent écarté du pouvoir politique par un roi redoutant son envergure.",
+                facts: ["Remporte de grandes victoires militaires pour la France.", "Connu pour son excentricité, son goût du faste, ses mœurs libérées et ses favoris.", "Mène une vie de cour brillante et mondaine au Palais-Royal."],
+                role: "Soutien indéfectible de la couronne tout en incarnant une cour alternative, intellectuelle et festive.", heritage: "Fondateur de la maison d'Orléans, ancêtre de presque toutes les familles royales catholiques actuelles.",
+                rpg: {
+                    classe: "Prince Rebelle", faction: "Royauté",
+                    competences: [ { nom: "Élégance", desc: "Style sophistiqué", icon: "💅" }, { nom: "Bravoure", desc: "Héros de guerre", icon: "⚔️" }, { nom: "Esprit Libre", desc: "Rejette les conventions", icon: "🦋" }, { nom: "Loyauté", desc: "Fidélité au Roi", icon: "👑" } ],
+                    ultime: { nom: "AUTHENTICITÉ ROYALE", desc: "Inspire par son courage à être soi-même malgré les conventions" },
+                    relations: { allies: ["Louis XIV", "Artistes"], rivaux: ["Courtisans"], amours: ["Épouses", "Favoris"] }
+                }
+            },
+
+            // --- 2. LES PILIERS DE L'ÉTAT ---
+            "mazarin": {
+                name: "Cardinal Mazarin", subtitle: "Le principal ministre", dates: "1602-1661", icon: "book", mainList: true, isFictional: false, actor: "Baptiste Desrosiers",
+                quote: "Le temps et moi, nous sommes deux.", intro: "Parrain de Louis XIV et habile diplomate, il gouverne la France avec Anne d'Autriche durant la minorité du roi.",
+                facts: ["Triomphe des révoltes nobles et parlementaires de la Fronde.", "Signe des traités de paix majeurs qui étendent les frontières.", "Forme politiquement Louis XIV à l'exercice implacable du pouvoir absolu."],
+                role: "Artisan de la pacification du royaume et maître à penser politique du jeune Roi-Soleil.", heritage: "A légué à Louis XIV un royaume puissant, uni, et une autorité royale restaurée.",
+                rpg: {
+                    classe: "Stratège Politique", faction: "Cour Royale",
+                    competences: [ { nom: "Stratégie", desc: "Maître du jeu", icon: "🧩" }, { nom: "Diplomatie", desc: "Négociateur né", icon: "🤝" }, { nom: "Vision d'État", desc: "Pense la grandeur", icon: "🏛️" }, { nom: "Mentor", desc: "Éducateur royal", icon: "👨‍🏫" } ],
+                    ultime: { nom: "MAÎTRE DU JEU", desc: "Manipule les événements pour servir la grandeur de la France" },
+                    relations: { allies: ["Anne d'Autriche", "Louis XIV", "Mancini"], rivaux: ["Frondeurs", "Duc de Beaufort"], amours: ["Anne d'Autriche"] }
+                }
+            },
+            "colbert": {
+                name: "Jean-Baptiste Colbert", subtitle: "Le grand intendant", dates: "1619-1683", icon: "book", mainList: true, isFictional: false, actor: "Arthur Devaux",
+                quote: "Il faut jeter des millions quand il s'agit de votre gloire.", intro: "Contrôleur général des finances et ministre infatigable, il est l'homme de l'ombre et l'architecte de la puissance économique française.",
+                facts: ["Redresse spectaculairement les finances du royaume de France.", "Fonde les grandes manufactures royales (Gobelins, Saint-Gobain).", "Développe massivement le commerce et la puissante marine de guerre."],
+                role: "Bâtisseur de la puissance matérielle, industrielle, navale et administrative de la France sous Louis XIV.", heritage: "Le 'colbertisme' (doctrine politico-économique) et des institutions administratives toujours existantes.",
+                rpg: {
+                    classe: "Génie Économique", faction: "État",
+                    competences: [ { nom: "Finances", desc: "Maîtrise de l'argent", icon: "💎" }, { nom: "Industrie", desc: "Vision économique", icon: "🏭" }, { nom: "Réformes", desc: "Transformation", icon: "⚖️" }, { nom: "Rigueur", desc: "Organisation", icon: "📊" } ],
+                    ultime: { nom: "PROSPÉRITÉ ROYALE", desc: "Transforme les finances du royaume par son génie économique" },
+                    relations: { allies: ["Louis XIV", "Industriels"], rivaux: ["Louvois", "Noblesse frondeuse"], amours: ["La France", "Épouse"] }
+                }
+            },
+
+            // --- 3. LES AMOURS DU ROI ---
+            "marie-mancini": {
+                name: "Marie Mancini", subtitle: "Le premier amour", dates: "1639-1715", icon: "sparkles", mainList: true, isFictional: false, actor: "Valentine Delassus",
+                quote: "Vous êtes roi, vous pleurez, et je pars.", intro: "Nièce du puissant cardinal Mazarin, Marie Mancini est une intellectuelle brillante qui fut le premier grand amour passionné du jeune Louis XIV.",
+                facts: ["Initie le jeune roi à la littérature, à l'art et à la beauté.", "Sa liaison avec le roi manque de faire échouer la paix avec l'Espagne.", "Est exilée de la cour par son propre oncle pour forcer le mariage royal."],
+                role: "Catalyseur de l'éveil culturel et sentimental du jeune souverain avant qu'il n'assume son rôle d'État.", heritage: "L'image tragique du sacrifice de l'amour personnel sur l'autel impitoyable de la raison d'État.",
+                rpg: {
+                    classe: "Dame de Cœur", faction: "Courtisane",
+                    competences: [ { nom: "Charme Italien", desc: "Séduction naturelle", icon: "🇮🇹" }, { nom: "Poésie", desc: "Touche les cœurs", icon: "📝" }, { nom: "Mélancolie", desc: "Émotion profonde", icon: "😢" }, { nom: "Passion", desc: "Amour impossible", icon: "💔" } ],
+                    ultime: { nom: "CŒUR BRISÉ", desc: "Son amour interdit touche l'âme de tous ceux qui l'entendent" },
+                    relations: { allies: ["Mazarin", "Ninon", "Molière"], rivaux: ["Anne d'Autriche", "Mme de Montespan"], amours: ["Louis XIV"] }
                 }
             },
             "montespan": {
@@ -610,30 +654,8 @@
                     relations: { allies: ["Louis XIV", "Éducateurs"], rivaux: ["Mme de Montespan", "Libertins"], amours: ["Louis XIV", "Paul Scarron"] }
                 }
             },
-            "monsieur": {
-                name: "Monsieur", subtitle: "Le frère du Roi", dates: "1640-1701", icon: "fleur", mainList: true, isFictional: false, actor: "Lucas Liaubet Correa",
-                quote: "Je suis né pour briller à l'ombre du Soleil.", intro: "Philippe d'Orléans, frère cadet de Louis XIV. Brillant stratège, il est souvent écarté du pouvoir politique par un roi redoutant son envergure.",
-                facts: ["Remporte de grandes victoires militaires pour la France.", "Connu pour son excentricité, son goût du faste, ses mœurs libérées et ses favoris.", "Mène une vie de cour brillante et mondaine au Palais-Royal."],
-                role: "Soutien indéfectible de la couronne tout en incarnant une cour alternative, intellectuelle et festive.", heritage: "Fondateur de la maison d'Orléans, ancêtre de presque toutes les familles royales catholiques actuelles.",
-                rpg: {
-                    classe: "Prince Rebelle", faction: "Royauté",
-                    competences: [ { nom: "Élégance", desc: "Style sophistiqué", icon: "💅" }, { nom: "Bravoure", desc: "Héros de guerre", icon: "⚔️" }, { nom: "Esprit Libre", desc: "Rejette les conventions", icon: "🦋" }, { nom: "Loyauté", desc: "Fidélité au Roi", icon: "👑" } ],
-                    ultime: { nom: "AUTHENTICITÉ ROYALE", desc: "Inspire par son courage à être soi-même malgré les conventions" },
-                    relations: { allies: ["Louis XIV", "Artistes"], rivaux: ["Courtisans"], amours: ["Épouses", "Favoris"] }
-                }
-            },
-            "colbert": {
-                name: "Jean-Baptiste Colbert", subtitle: "Le grand intendant", dates: "1619-1683", icon: "book", mainList: true, isFictional: false, actor: "Arthur Devaux",
-                quote: "Il faut jeter des millions quand il s'agit de votre gloire.", intro: "Contrôleur général des finances et ministre infatigable, il est l'homme de l'ombre et l'architecte de la puissance économique française.",
-                facts: ["Redresse spectaculairement les finances du royaume de France.", "Fonde les grandes manufactures royales (Gobelins, Saint-Gobain).", "Développe massivement le commerce et la puissante marine de guerre."],
-                role: "Bâtisseur de la puissance matérielle, industrielle, navale et administrative de la France sous Louis XIV.", heritage: "Le 'colbertisme' (doctrine politico-économique) et des institutions administratives toujours existantes.",
-                rpg: {
-                    classe: "Génie Économique", faction: "État",
-                    competences: [ { nom: "Finances", desc: "Maîtrise de l'argent", icon: "💎" }, { nom: "Industrie", desc: "Vision économique", icon: "🏭" }, { nom: "Réformes", desc: "Transformation", icon: "⚖️" }, { nom: "Rigueur", desc: "Organisation", icon: "📊" } ],
-                    ultime: { nom: "PROSPÉRITÉ ROYALE", desc: "Transforme les finances du royaume par son génie économique" },
-                    relations: { allies: ["Louis XIV", "Industriels"], rivaux: ["Louvois", "Noblesse frondeuse"], amours: ["La France", "Épouse"] }
-                }
-            },
+
+            // --- 4. LES FRONDEURS ET ARTISTES ---
             "beaufort": {
                 name: "Duc de Beaufort", subtitle: "Le Roi des Halles", dates: "1616-1669", icon: "sword", mainList: true, isFictional: false, actor: "Alice Augereau",
                 quote: "Je suis le roi des Halles, et vous n'êtes que le ministre du roi.", intro: "Petit-fils d'Henri IV, ce prince charismatique et impétueux gagne la ferveur du peuple parisien lors des révoltes de la Fronde.",
@@ -682,6 +704,8 @@
                     relations: { allies: ["Philosophes", "Artistes"], rivaux: ["Dévots"], amours: ["Nombreux amants"] }
                 }
             },
+
+            // --- 5. L'OMBRE, LE PEUPLE ET LA FICTION ---
             "voisin": {
                 name: "La Voisin", subtitle: "La devineresse des poisons", dates: "1640-1680", icon: "flask", mainList: true, isFictional: true, actor: "Louise Oziès Fournier",
                 quote: "La mort est un commerce comme un autre.", intro: "Figure de l'ombre redoutable et mystérieuse. Elle gravite dans les bas-fonds de Paris en vendant philtres d'amour, prédictions et poisons aux nobles prêts à tout.",
@@ -718,20 +742,8 @@
                     relations: { allies: ["Artisans", "Paysans"], rivaux: ["Dames hautaines"], amours: ["Duc de Beaufort"] }
                 }
             },
-            "enfant-roi": {
-                name: "L'enfant roi", subtitle: "Le Grand Dauphin", dates: "1661-1711", icon: "crown", mainList: true, isFictional: false, actor: "Leyton Guillot",
-                quote: "Je serai roi un jour... si Dieu le veut.", intro: "Louis de France, fils aîné et héritier légitime de Louis XIV. Il est élevé dans l'exigence implacable de son futur rôle de monarque.",
-                facts: ["Reçoit l'éducation la plus stricte de son temps, supervisée par le théoricien Bossuet.", "S'illustre comme un excellent commandant lors des grandes campagnes militaires.", "Décède tragiquement avant son père, sans jamais avoir accédé au trône."],
-                role: "Héritier loyal, compétent, mais vivant perpétuellement écrasé sous l'ombre de son père.", heritage: "A assuré la pérennité de la dynastie (il est le grand-père du futur Louis XV et du roi d'Espagne).",
-                rpg: {
-                    classe: "Roi en Devenir", faction: "Royauté",
-                    competences: [ { nom: "Innocence", desc: "Pureté enfantine", icon: "😇" }, { nom: "Apprentissage", desc: "Soif de grandir", icon: "📚" }, { nom: "Détermination", desc: "Volonté d'acier", icon: "💪" }, { nom: "Charme", desc: "Attendrissement", icon: "✨" } ],
-                    ultime: { nom: "PROMESSE D'AVENIR", desc: "Porte en lui la promesse de la grandeur future de la France" },
-                    relations: { allies: ["Anne d'Autriche", "Précepteurs"], rivaux: ["La Fronde"], amours: ["Amour filial"] }
-                }
-            },
 
-            // RÔLES DE L'ENSEMBLE
+            // --- 6. RÔLES DE L'ENSEMBLE ---
             "les-courtisanes": {
                 name: "Les Courtisanes", subtitle: "L'art de paraître", dates: "17e Siècle", icon: "fleur", mainList: true, isFictional: false, actor: "Charlotte Lespets, Colette Disney, Justine Douady, Madeline Quantin, Manon Alliaume, Santina Grech",
                 quote: "L'apparence est notre première noblesse, et la médisance notre épée.", intro: "Évoluant dans les salons de Versailles, elles utilisent la mode, les bijoux et l'esprit pour se démarquer dans la foule de nobles au plus près du pouvoir.",
@@ -865,7 +877,7 @@
                 }
             },
 
-            // HISTORIQUES (Cartes historiques uniquement - onglet 2)
+            // --- 7. HISTORIQUES (Cartes historiques uniquement - onglet 2) ---
             "le-notre": {
                 name: "André Le Nôtre", dates: "1613-1700", icon: "tree", mainList: false, isFictional: false, subtitle: "L'Architecte des Jardins",
                 quote: "La nature est mon seul guide.", intro: "Architecte paysagiste, créateur des jardins de Versailles.", facts: ["Créateur des jardins de Versailles.", "Invente le style à la française."], role: "Donne à Versailles sa splendeur paysagère.", heritage: "Maître incontesté de l'art paysager.",
@@ -1011,36 +1023,53 @@
         // 1. Personnages
         const charsContainer = document.getElementById('chars-container');
         let charDelay = 0;
-        for (const [id, char] of Object.entries(characters)) {
-            if (!char.mainList) continue;
-            
-            let emojiStr = icons[id] || icons[char.icon] || icons.crown;
-            let charIcon = `<span class="emoji-icon">${emojiStr}</span>`;
-            
-            let starHtml = char.isFictional ? `<span class="fictional-star" aria-hidden="true" title="Personnage créé pour la comédie musicale">✦</span>` : '';
-            
-            let actorTagHtml = '';
-            if (char.actor) {
-                let actorsArr = char.actor.split(',').map(s => s.trim());
-                actorsArr.sort((a, b) => a.localeCompare(b, 'fr'));
-                actorTagHtml = `
-                <div class="actor-tag">
-                    <span class="actor-name">${actorsArr.join(', ')}</span>
-                </div>`;
-            }
 
-            let html = `
-            <div class="char-card glass-card fade-in-up" style="animation-delay: ${charDelay}s" onclick="openCharModal('${id}')" role="button" tabindex="0">
-                <div class="char-card-icon" aria-hidden="true">${charIcon}</div>
-                <div class="char-card-info">
-                    <h3>${char.name}${starHtml}</h3>
-                    <p class="char-subtitle">${char.subtitle}</p>
-                    ${actorTagHtml}
-                </div>
-            </div>`;
-            charsContainer.insertAdjacentHTML('beforeend', html);
-            charDelay += 0.05;
-        }
+        const categoriesPersonnages = [
+            { id: "famille", title: "La famille royale", chars: ["louis-xiv", "enfant-roi", "anne-autriche", "monsieur"] },
+            { id: "etat", title: "Les piliers de l'État", chars: ["mazarin", "colbert"] },
+            { id: "amours", title: "Les amours du roi", chars: ["marie-mancini", "montespan", "maintenon"] },
+            { id: "frondeurs", title: "Les frondeurs et artistes", chars: ["beaufort", "moliere", "scarron", "ninon"] },
+            { id: "ombre", title: "L'ombre, le peuple et la fiction", chars: ["voisin", "lisieux", "isabelle"] },
+            { id: "troupe", title: "La troupe et les autres rôles", chars: ["les-courtisanes", "les-danseurs", "le-peuple", "les-operateurs", "les-soldats", "les-serveurs", "le-clerge", "la-dame-de-cour", "la-femme-de-chambre", "le-medecin", "le-ministre"] }
+        ];
+
+        categoriesPersonnages.forEach(cat => {
+            let catHtml = `<h2 class="category-title fade-in-up" style="animation-delay: ${charDelay}s">${cat.title}</h2><div class="chars-grid">`;
+            
+            cat.chars.forEach(id => {
+                const char = characters[id];
+                if (!char || !char.mainList) return;
+                
+                let emojiStr = icons[id] || icons[char.icon] || icons.crown;
+                let charIcon = `<span class="emoji-icon">${emojiStr}</span>`;
+                
+                let starHtml = char.isFictional ? `<span class="fictional-star" aria-hidden="true" title="Personnage créé pour la comédie musicale">✦</span>` : '';
+                
+                let actorTagHtml = '';
+                if (char.actor) {
+                    let actorsArr = char.actor.split(',').map(s => s.trim());
+                    actorsArr.sort((a, b) => a.localeCompare(b, 'fr'));
+                    actorTagHtml = `
+                    <div class="actor-tag">
+                        <span class="actor-name">${actorsArr.join(', ')}</span>
+                    </div>`;
+                }
+
+                catHtml += `
+                <div class="char-card glass-card fade-in-up" style="animation-delay: ${charDelay}s" onclick="openCharModal('${id}')" role="button" tabindex="0">
+                    <div class="char-card-icon" aria-hidden="true">${charIcon}</div>
+                    <div class="char-card-info">
+                        <h3>${char.name}${starHtml}</h3>
+                        <p class="char-subtitle">${char.subtitle}</p>
+                        ${actorTagHtml}
+                    </div>
+                </div>`;
+                charDelay += 0.05;
+            });
+            
+            catHtml += `</div>`;
+            charsContainer.insertAdjacentHTML('beforeend', catHtml);
+        });
 
         // 2. Faits Historiques
         const factsContainer = document.getElementById('facts-container');
@@ -1204,31 +1233,31 @@
 
                 backHtml = `
                     <div class="rpg-card">
-                        <div class="rpg-section-title"><span>COMPÉTENCES</span></div>
+                        <div class="rpg-section-title"><span>Compétences</span></div>
                         <div class="rpg-skills">${skillsHtml}</div>
                         
-                        <div class="rpg-section-title"><span>POUVOIR ULTIME</span></div>
+                        <div class="rpg-section-title"><span>Pouvoir ultime</span></div>
                         <div class="rpg-ult-box">
                             <div class="rpg-ult-name">✦ ${rpg.ultime.nom} ✦</div>
                             <div class="rpg-skill-desc" style="margin-top: 5px;">"${rpg.ultime.desc}"</div>
                         </div>
 
-                        <div class="rpg-section-title"><span>✦ RELATIONS ✦</span></div>
+                        <div class="rpg-section-title"><span>Relations</span></div>
                         <div class="rpg-relations">
                             <div class="rpg-rel-col">
-                                <div class="rpg-rel-title">✦ ALLIÉS ✦</div>
+                                <div class="rpg-rel-title">🛡️ Alliés</div>
                                 <ul class="rpg-rel-list">${alliesHtml}</ul>
                             </div>
                             <div class="rpg-rel-col">
-                                <div class="rpg-rel-title">✠ RIVAUX ✠</div>
+                                <div class="rpg-rel-title">⚔️ Rivaux</div>
                                 <ul class="rpg-rel-list">${rivauxHtml}</ul>
                             </div>
                             <div class="rpg-rel-col">
-                                <div class="rpg-rel-title">♥ AMOURS ♥</div>
+                                <div class="rpg-rel-title">❤️ Amours</div>
                                 <ul class="rpg-rel-list">${amoursHtml}</ul>
                             </div>
                         </div>
-                        <div class="rpg-footer">CLASSE : ${rpg.classe.toUpperCase()} / FACTION : ${rpg.faction.toUpperCase()}</div>
+                        <div class="rpg-footer">Classe : ${rpg.classe} / Faction : ${rpg.faction}</div>
                     </div>
                 `;
             } else {
