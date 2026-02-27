@@ -2,7 +2,7 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <meta name="theme-color" content="#1A2238">
     <meta name="robots" content="noindex, nofollow">
     <title>Le Roi Soleil – Personnages et Histoire</title>
@@ -17,7 +17,6 @@
             --accent-color: #E2B86A;
             --gold-light: #F4D38B;
             --primary-gradient: linear-gradient(135deg, #5C65CD 0%, #764BA4 100%);
-            /* Glassmorphism : blanc très légèrement transparent */
             --card-bg: rgba(255, 255, 255, 0.93);
         }
 
@@ -72,12 +71,13 @@
             width: 40px;
             height: 40px;
             border-radius: 50%;
-            display: none; /* Masqué par défaut, affiché via JS si supporté */
+            display: none; 
             justify-content: center;
             align-items: center;
             cursor: pointer;
             transition: all 0.3s ease;
             -webkit-tap-highlight-color: transparent;
+            z-index: 50; /* Correction : Priorité élevée pour éviter les conflits de clic */
         }
         .share-btn:active { background: rgba(255, 255, 255, 0.2); transform: scale(0.95); }
         .share-btn svg { width: 20px; height: 20px; fill: var(--accent-color); }
@@ -195,7 +195,6 @@
             border-left: 4px solid #5C65CD; 
         }
 
-        /* Micro-interaction d'icône */
         .char-card:hover .svg-icon, .char-card:active .svg-icon {
             animation: iconPulse 0.4s ease-in-out;
         }
@@ -282,7 +281,6 @@
             padding: 20px; box-sizing: border-box;
         }
         .modal-overlay.active { display: flex; animation: fadeIn 0.3s ease; }
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
         .modal-card {
             background: rgba(255, 255, 255, 0.98); width: 100%; max-width: 500px;
@@ -291,11 +289,34 @@
             border: 1px solid rgba(255,255,255,0.4);
         }
 
-        /* Ergonomie mobile : Plein écran */
+        /* --- CORRECTION ERGONOMIE MOBILE : Modale --- */
         @media (max-width: 600px) {
-            .modal-overlay { padding: 0; }
-            .modal-card { max-width: 100%; height: 100vh; max-height: 100vh; border-radius: 0; display: flex; flex-direction: column; border: none; }
-            .modal-body { flex: 1; overflow-y: auto; }
+            .modal-overlay { 
+                padding: 0; 
+                align-items: flex-start; /* Fixe le problème du haut coupé */
+            }
+            .modal-card { 
+                max-width: 100%; 
+                height: 100%; 
+                height: 100dvh; /* S'adapte à la barre d'adresse mobile */
+                max-height: none; 
+                border-radius: 0; 
+                display: flex; 
+                flex-direction: column; 
+                border: none; 
+            }
+            .modal-header-bg {
+                /* Protège contre l'encoche des iPhones */
+                padding-top: max(35px, env(safe-area-inset-top, 35px));
+            }
+            .modal-close {
+                top: max(15px, env(safe-area-inset-top, 15px));
+            }
+            .modal-body { 
+                flex: 1; 
+                overflow-y: auto; 
+                -webkit-overflow-scrolling: touch; 
+            }
         }
 
         .modal-header-bg { background: var(--primary-gradient); padding: 35px 20px 25px 20px; text-align: center; color: #FFF; position: relative; }
@@ -328,7 +349,7 @@
 <body>
 
     <div class="container">
-        <!-- Bouton de partage natif (masqué si non supporté) -->
+        <!-- Bouton de partage natif -->
         <button class="share-btn" id="shareBtn" aria-label="Partager l'application" onclick="shareApp()">
             <svg viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92s2.92-1.31 2.92-2.92c0-1.61-1.31-2.92-2.92-2.92z"/></svg>
         </button>
@@ -339,7 +360,7 @@
             En attendant le lever de rideau, découvrez la véritable Histoire de la cour de Versailles...
         </div>
 
-        <!-- TABS MENU (ARIA mis à jour pour lecteur d'écran) -->
+        <!-- TABS MENU -->
         <div class="tab-menu" role="tablist" aria-label="Menu principal">
             <button class="tab-btn active" id="btn-personnages" role="tab" aria-selected="true" aria-controls="tab-personnages" onclick="switchTab('personnages')">Personnages</button>
             <button class="tab-btn" id="btn-faits" role="tab" aria-selected="false" aria-controls="tab-faits" onclick="switchTab('faits')">Histoire</button>
@@ -711,32 +732,47 @@
 
         // --- LOGIQUE INTERACTIVE ---
 
-        // Support du Web Share API
+        // Toujours afficher le bouton (Fallback intégré si l'API native ne marche pas)
         window.addEventListener('DOMContentLoaded', () => {
-            if (navigator.share) {
-                document.getElementById('shareBtn').style.display = 'flex';
-            }
+            document.getElementById('shareBtn').style.display = 'flex';
         });
 
         function shareApp() {
+            const shareUrl = window.location.origin + window.location.pathname; // URL propre
+
             if (navigator.share) {
+                // Si le téléphone supporte le menu de partage natif
                 navigator.share({
                     title: 'Le Roi Soleil - Personnages et Histoire',
                     text: 'Découvrez la véritable histoire des personnages de la comédie musicale !',
-                    url: window.location.href,
-                })
-                .catch((error) => console.log('Erreur de partage', error));
+                    url: shareUrl,
+                }).catch((error) => {
+                    console.log('Erreur de partage', error);
+                });
+            } else {
+                // SYSTÈME DE SECOURS : Copie dans le presse-papier
+                try {
+                    navigator.clipboard.writeText(shareUrl).then(() => {
+                        alert("Le lien de la page a été copié dans votre presse-papier !");
+                    });
+                } catch (e) {
+                    const tempInput = document.createElement("input");
+                    tempInput.value = shareUrl;
+                    document.body.appendChild(tempInput);
+                    tempInput.select();
+                    document.execCommand("copy");
+                    document.body.removeChild(tempInput);
+                    alert("Le lien de la page a été copié dans votre presse-papier !");
+                }
             }
         }
 
         // Onglets avec mise à jour ARIA
         function switchTab(tabId) {
-            // Mise à jour de l'affichage
             document.querySelectorAll('.tab-content, .tab-btn').forEach(el => el.classList.remove('active'));
             document.getElementById('tab-' + tabId).classList.add('active');
             document.getElementById('btn-' + tabId).classList.add('active');
             
-            // Mise à jour de l'accessibilité (ARIA)
             document.querySelectorAll('.tab-btn').forEach(el => el.setAttribute('aria-selected', 'false'));
             document.querySelectorAll('.tab-content').forEach(el => el.setAttribute('aria-hidden', 'true'));
             
@@ -800,7 +836,7 @@
             const modal = document.getElementById('charModal');
             modal.classList.add('active');
             modal.setAttribute('aria-hidden', 'false');
-            document.body.style.overflow = 'hidden'; // Empêche scroll
+            document.body.style.overflow = 'hidden'; 
         }
 
         function closeModal(e) {
@@ -808,7 +844,7 @@
                 const modal = document.getElementById('charModal');
                 modal.classList.remove('active');
                 modal.setAttribute('aria-hidden', 'true');
-                document.body.style.overflow = ''; // Restaure scroll
+                document.body.style.overflow = ''; 
             }
         }
     </script>
