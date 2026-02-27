@@ -512,7 +512,7 @@
             "les-serveurs": "🥂", "le-clerge": "⛪", "la-dame-de-cour": "🪭", "la-femme-de-chambre": "🧹",
             "le-medecin": "🩺", "le-ministre": "💼", "le-notre": "🌳", "mansart": "🏰", "turenne": "🐎",
             "conde": "🛡️", "bossuet": "📖", "luxembourg": "⚔️", "vauban": "🧱", "philippe-anjou": "👑",
-            "marlborough": "💂", "lex-etiquette": "📜", "lex-favorite": "💍", "lex-prince": "🩸",
+            "marlborough": "💂", "lully": "🎼", "lex-etiquette": "📜", "lex-favorite": "💍", "lex-prince": "🩸",
             "lex-droit": "🕊️", "lex-libertinage": "🍷", "lex-lettre": "✉️", "lex-mousquetaire": "🤺",
             "lex-bourbon": "⚜️", "lex-absolutisme": "👑", "lex-siecle": "✨"
         };
@@ -1006,6 +1006,16 @@
                     ultime: { nom: "Coalition Fatale", desc: "Freine l'hégémonie de la France par des victoires décisives" },
                     relations: { allies: ["Prince Eugène", "Angleterre"], rivaux: ["Louis XIV", "Armée Française"], amours: ["Sarah Churchill"] }
                 }
+            },
+            "lully": {
+                name: "Lully", dates: "1632-1687", icon: "music", mainList: false, isFictional: false, subtitle: "Le Surintendant de la Musique",
+                quote: "Toute la musique de France est à mon commandement.", intro: "Compositeur d'origine florentine, il devient le maître absolu de la musique sous Louis XIV.", facts: ["Collabore avec Molière pour inventer la comédie-ballet.", "Achète le monopole de l'opéra en France.", "Meurt d'une blessure au pied causée par son lourd bâton de direction."], role: "Créer la bande-son officielle et majestueuse du règne de Louis XIV.", heritage: "Créateur de l'opéra français (la tragédie lyrique).",
+                rpg: {
+                    classe: "Maître de Musique", faction: "Artisans Royaux",
+                    competences: [ { nom: "Composition", desc: "Mélodies royales", icon: "🎼" }, { nom: "Monopole", desc: "Détruit les rivaux", icon: "📜" }, { nom: "Tempo", desc: "Bâton de direction", icon: "🦯" }, { nom: "Danse", desc: "Ballets de cour", icon: "🩰" } ],
+                    ultime: { nom: "Marche pour la cérémonie des Turcs", desc: "Orchestre un chef-d'œuvre qui fait trembler l'Europe" },
+                    relations: { allies: ["Louis XIV", "Molière (début)"], rivaux: ["Molière (fin)", "Autres musiciens"], amours: ["L'Opéra"] }
+                }
             }
         };
 
@@ -1032,7 +1042,7 @@
                 title: "Les Plaisirs de l'Île enchantée", dates: "1664", cat: "ART & CULTURE", icon: "masks",
                 desc: "Une fête grandiose de plusieurs jours organisée à Versailles mêlant théâtre, ballets, feux d'artifice et festins. Molière et Lully y présentent leurs œuvres.",
                 impact: "Rayonnement culturel de la France dans toute l'Europe", cons: ["Domestication de la noblesse par le divertissement", "Naissance de la comédie-ballet"],
-                chars: [{id: "louis-xiv", name: "Louis XIV"}, {id: "moliere", name: "Molière"}, {id: "les-danseurs", name: "Les Danseurs"}, {id: "les-serveurs", name: "Les Serveurs"}]
+                chars: [{id: "louis-xiv", name: "Louis XIV"}, {id: "moliere", name: "Molière"}, {id: "lully", name: "Lully"}, {id: "les-danseurs", name: "Les Danseurs"}, {id: "les-serveurs", name: "Les Serveurs"}]
             },
             {
                 title: "Guerre de Hollande", dates: "1672-1678", cat: "CONFLIT MILITAIRE", icon: "sword",
