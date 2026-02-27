@@ -244,7 +244,6 @@
         .modal-icon .emoji-icon { font-size: 32px; margin-bottom: 0; }
         .modal-title { font-size: 1.6rem; margin: 0 0 2px 0; }
         .modal-subtitle { font-size: 0.95rem; opacity: 0.9; margin-bottom: 5px; }
-        .modal-actor { font-size: 0.85rem; font-style: italic; color: rgba(255,255,255,0.85); margin-bottom: 8px; }
         .modal-dates { background: rgba(255,255,255,0.2); padding: 3px 12px; border-radius: 20px; font-size: 0.8rem; display: inline-block; font-weight: bold; }
         .modal-dates.fictif { background: transparent; border: 1px dashed rgba(255, 255, 255, 0.7); color: #FFF; }
         
@@ -512,7 +511,6 @@
                 <div class="modal-icon" aria-hidden="true" id="modalIcon"></div>
                 <h2 class="modal-title" id="modalTitle">Nom</h2>
                 <div class="modal-subtitle" id="modalSubtitle">Sous-titre</div>
-                <div class="modal-actor" id="modalActor"></div>
                 <div class="modal-dates" id="modalDates">Dates</div>
                 <div class="modal-quote" id="modalQuote">"Citation"</div>
             </div>
@@ -735,7 +733,7 @@
 
             // RÔLES DE L'ENSEMBLE
             "les-courtisanes": {
-                name: "Les Courtisanes", subtitle: "L'art de paraître", dates: "17e Siècle", icon: "fleur", mainList: true, isFictional: false, actor: "Ensemble",
+                name: "Les Courtisanes", subtitle: "L'art de paraître", dates: "17e Siècle", icon: "fleur", mainList: true, isFictional: false, actor: "Charlotte Lespets, Colette Disney, Justine Douady, Madeline Quantin, Manon Alliaume, Santina Grech",
                 quote: "L'apparence est notre première noblesse, et la médisance notre épée.", intro: "Évoluant dans les salons de Versailles, elles utilisent la mode, les bijoux et l'esprit pour se démarquer dans la foule de nobles au plus près du pouvoir.",
                 facts: ["Suivent à la lettre les changements constants et capricieux de l'Étiquette.", "Dépensent des fortunes colossales pour paraître dans les bonnes grâces du Roi.", "Cachent leurs véritables émotions derrière un masque permanent de politesse."],
                 role: "Incarner la compétition féroce, les rumeurs et le luxe ostentatoire qui ruinaient la noblesse française.", heritage: "Illustre le piège doré qu'était Versailles pour les nobles, tenus en laisse par le paraître.",
@@ -747,7 +745,7 @@
                 }
             },
             "les-danseurs": {
-                name: "Les Danseurs", subtitle: "L'art du mouvement", dates: "17e Siècle", icon: "sparkles", mainList: true, isFictional: false, actor: "Ensemble",
+                name: "Les Danseurs", subtitle: "L'art du mouvement", dates: "17e Siècle", icon: "sparkles", mainList: true, isFictional: false, actor: "Arthur Devaux, Charlotte Lespets, Chloé Roumanus, Chloé Woringer, Colette Disney, Élise Devaux, Eyleen Douat, Inga Lee Yeskova, Juliette Pedron, Justine Douady, Leyton Guillot, Madeline Quantin, Manon Alliaume, Santina Grech",
                 quote: "Tant que la musique joue, la cour oublie la misère du monde.", intro: "La danse est au cœur de la vie de cour et des divertissements de Versailles. Le Roi lui-même, grand passionné, excelle dans cet art et se produit sur scène.",
                 facts: ["Participent aux fastueux ballets de cour et comédies-ballets (de Lully et Molière).", "S'entraînent quotidiennement pour atteindre la grâce absolue exigée par le souverain.", "Rythment les fêtes grandioses qui durent parfois plusieurs jours sans interruption."],
                 role: "Symboliser l'exigence artistique et la perfection esthétique imposées par Louis XIV à sa cour.", heritage: "Ont posé les bases de la danse classique mondiale (les cinq positions ont été codifiées sous Louis XIV).",
@@ -759,7 +757,7 @@
                 }
             },
             "le-peuple": {
-                name: "Le Peuple de Paris", subtitle: "La voix de la rue", dates: "17e Siècle", icon: "users", mainList: true, isFictional: false, actor: "Ensemble",
+                name: "Le Peuple de Paris", subtitle: "La voix de la rue", dates: "17e Siècle", icon: "users", mainList: true, isFictional: false, actor: "Arthur Devaux, Charlotte Lespets, Chloé Roumanus, Chloé Woringer, Colette Disney, Élise Devaux, Eyleen Douat, Juliette Pedron, Madeline Quantin, Manon Alliaume, Santina Grech",
                 quote: "Ceux qui bâtissent les palais dorment dans la boue.", intro: "Loin des fastes éblouissants de Versailles, la majorité des Français (paysans, artisans, bourgeois) subit le poids écrasant de la monarchie absolue.",
                 facts: ["Subit directement les conséquences des guerres interminables, des impôts et des famines.", "Soutient activement les frondeurs contre Mazarin dans l'espoir de jours meilleurs.", "Incarne la réalité brutale et souvent oubliée derrière les dorures de l'Histoire."],
                 role: "Rappeler le contraste saisissant et tragique entre la misère populaire et le luxe inouï de la cour.", heritage: "Le moteur silencieux de l'Histoire de France, annonciateur lointain des futures révolutions.",
@@ -771,7 +769,7 @@
                 }
             },
             "les-operateurs": {
-                name: "Les Opérateurs Rideaux", subtitle: "La magie de la scène", dates: "Intemporel", icon: "masks", mainList: true, isFictional: false, actor: "Ensemble",
+                name: "Les Opérateurs Rideaux", subtitle: "La magie de la scène", dates: "Intemporel", icon: "masks", mainList: true, isFictional: false, actor: "Juliette Pedron, Leyton Guillot, Louise Oziès Fournier, Valentine Delassus",
                 quote: "L'illusion est notre métier, l'ombre est notre domaine.", intro: "Acteurs de l'ombre indispensables au théâtre, ils rythment les actes et les transitions de la pièce. Sans eux, l'illusion théâtrale ne pourrait exister.",
                 facts: ["Contrôlent les apparitions et disparitions des décors et des comédiens.", "Garantissent la fluidité et le rythme implacable du spectacle musical.", "Sont les maîtres invisibles du temps et de l'espace sur scène."],
                 role: "Assurer la magie, la perfection technique et la beauté de la représentation en direct.", heritage: "Les véritables artisans de la machinerie théâtrale.",
@@ -783,7 +781,7 @@
                 }
             },
             "les-soldats": {
-                name: "Les Soldats", subtitle: "Le bras armé du Roi", dates: "17e Siècle", icon: "sword", mainList: true, isFictional: false, actor: "Ensemble",
+                name: "Les Soldats", subtitle: "Le bras armé du Roi", dates: "17e Siècle", icon: "sword", mainList: true, isFictional: false, actor: "Chloé Roumanus, Eyleen Douat",
                 quote: "La force de l'État repose sur le fer de nos épées.", intro: "Gardiens de l'ordre et exécutants fidèles des volontés royales, ils maintiennent l'autorité absolue du Roi-Soleil sur l'ensemble du territoire et aux frontières.",
                 facts: ["Mènent les innombrables guerres de Louis XIV pour agrandir la France.", "Maintiennent la paix intérieure et matent les révoltes populaires.", "Imposent le respect absolu et la crainte de la Couronne."],
                 role: "Incarner la force militaire, la rigueur et l'autorité implacable de l'État.", heritage: "L'outil principal de l'hégémonie de la puissance française en Europe.",
@@ -795,7 +793,7 @@
                 }
             },
             "les-serveurs": {
-                name: "Les Serveurs", subtitle: "L'art de recevoir", dates: "17e Siècle", icon: "wineglass", mainList: true, isFictional: false, actor: "Ensemble",
+                name: "Les Serveurs", subtitle: "L'art de recevoir", dates: "17e Siècle", icon: "wineglass", mainList: true, isFictional: false, actor: "Arthur Devaux, Chloé Roumanus",
                 quote: "Chaque plat servi est une démonstration de puissance.", intro: "Indispensables au bon déroulement des immenses banquets de la cour (le 'Grand Couvert'), ils orchestrent les repas avec une précision chorégraphiée millimétrée.",
                 facts: ["Gèrent les festins royaux qui comptent parfois des dizaines de plats somptueux.", "Évoluent silencieusement et avec une grande discrétion parmi les plus puissants du royaume.", "Participent à l'étalage de la richesse de la France devant les ambassadeurs étrangers."],
                 role: "Incarner le faste, l'organisation et la démesure de l'hospitalité versaillaise.", heritage: "Ont codifié l'excellence de la gastronomie et du service 'à la française'.",
@@ -807,7 +805,7 @@
                 }
             },
             "le-clerge": {
-                name: "Le Clergé", subtitle: "L'influence de l'Église", dates: "17e Siècle", icon: "church", mainList: true, isFictional: false, actor: "Ensemble",
+                name: "Le Clergé", subtitle: "L'influence de l'Église", dates: "17e Siècle", icon: "church", mainList: true, isFictional: false, actor: "Arthur Devaux, Leyton Guillot",
                 quote: "Dieu établit les rois comme ses ministres, et règne par eux sur les peuples.", intro: "Gardiens de la foi catholique, l'Évêque et son assistant rappellent la nature divine du pouvoir royal et orientent les décisions morales du royaume.",
                 facts: ["Légitiment le pouvoir absolu de droit divin du Roi (comme le fait Bossuet).", "Influencent fortement les politiques de tolérance religieuse (révocation de l'Édit de Nantes).", "Veillent à la piété de la famille royale, particulièrement sous l'influence de Madame de Maintenon."],
                 role: "La caution théologique, morale et spirituelle incontestable de la monarchie.", heritage: "Le maintien strict de la religion d'État au cœur de la politique française.",
@@ -819,7 +817,7 @@
                 }
             },
             "la-dame-de-cour": {
-                name: "La Dame de cour", subtitle: "Confidente et alliée", dates: "17e Siècle", icon: "crown", mainList: true, isFictional: false, actor: "Ensemble",
+                name: "La Dame de cour", subtitle: "Confidente et alliée", dates: "17e Siècle", icon: "crown", mainList: true, isFictional: false, actor: "Juliette Pedron",
                 quote: "La loyauté a un prix que seule la cour connaît.", intro: "Femme de la très haute noblesse attachée au service direct de la Reine ou des princesses, elle est à la fois servante de haut rang, chaperon et confidente.",
                 facts: ["Accompagne la famille royale dans l'absolu de tous ses déplacements quotidiens.", "Joue un rôle discret mais clé dans les négociations, les rumeurs et les alliances.", "Doit manœuvrer avec une extrême prudence pour ne pas s'attirer les foudres des favorites du Roi."],
                 role: "Montrer la grande complexité des relations féminines et des hiérarchies internes à la cour.", heritage: "Met en lumière le rôle diplomatique discret, mais souvent crucial, des femmes nobles.",
@@ -831,7 +829,7 @@
                 }
             },
             "la-femme-de-chambre": {
-                name: "La Femme de chambre", subtitle: "Dans l'ombre des puissants", dates: "17e Siècle", icon: "feather", mainList: true, isFictional: false, actor: "Ensemble",
+                name: "La Femme de chambre", subtitle: "Dans l'ombre des puissants", dates: "17e Siècle", icon: "feather", mainList: true, isFictional: false, actor: "Élise Devaux",
                 quote: "Nous voyons tout, nous entendons tout, mais nous ne disons rien.", intro: "Le fonctionnement quotidien de la gigantesque machine qu'est Versailles repose sur une armée de serviteurs. Elle est au plus près de la stricte intimité des nobles.",
                 facts: ["Assiste aux levers, couchers, habillages et préparatifs complexes des grandes courtisanes.", "Détient souvent des secrets (lettres, rendez-vous) capables de faire basculer des destins.", "Assure le lien invisible entre le faste éblouissant des salons et la réalité rustique des coulisses."],
                 role: "Représenter le peuple travailleur, dévoué et silencieux qui maintient l'illusion de perfection du palais.", heritage: "Donne une voix à la population que la grande Histoire a souvent oubliée derrière les figures royales.",
@@ -843,7 +841,7 @@
                 }
             },
             "le-medecin": {
-                name: "Le Médecin", subtitle: "La science balbutiante", dates: "17e Siècle", icon: "flask", mainList: true, isFictional: false, actor: "Ensemble",
+                name: "Le Médecin", subtitle: "La science balbutiante", dates: "17e Siècle", icon: "flask", mainList: true, isFictional: false, actor: "Louise Oziès Fournier",
                 quote: "La nature guérit la maladie, le médecin ne fait qu'amuser le malade.", intro: "À une époque où la médecine se limite encore trop souvent aux saignées et aux purges brutales, le médecin de cour tente par tous les moyens de préserver la santé des puissants.",
                 facts: ["Applique des remèdes souvent incertains, parfois plus dangereux que le mal lui-même.", "Assiste impuissant aux ravages des épidémies (variole) qui déciment même la famille royale.", "Est très fréquemment la cible des moqueries et satires mordantes (notamment dans les pièces de Molière)."],
                 role: "Montrer l'extrême vulnérabilité des corps, même royaux, face à la maladie et à la mort.", heritage: "Rappelle l'évolution difficile et les balbutiements de la science médicale du Grand Siècle.",
@@ -855,7 +853,7 @@
                 }
             },
             "le-ministre": {
-                name: "Un Ministre", subtitle: "L'État en action", dates: "17e Siècle", icon: "book", mainList: true, isFictional: false, actor: "Ensemble",
+                name: "Un Ministre", subtitle: "L'État en action", dates: "17e Siècle", icon: "book", mainList: true, isFictional: false, actor: "Santina Grech",
                 quote: "Le pouvoir ne se donne pas, il s'administre avec rigueur.", intro: "Haute figure d'autorité au sein de la cour et du Conseil d'En-Haut, il incarne les rouages politiques et administratifs qui dirigent véritablement la France au nom du Roi.",
                 facts: ["Observe la société et conseille le souverain sur la gestion des affaires du royaume.", "Exécute fidèlement les ordres royaux pour asseoir le pouvoir absolu à travers le pays.", "Gère des portefeuilles écrasants : les impôts, les armées, le commerce ou la justice."],
                 role: "Incarner l'implacable machine étatique qui structure et unifie le pays d'une main de fer.", heritage: "L'administration centralisée moderne, l'un des plus grands héritages du règne de Louis XIV.",
@@ -866,7 +864,6 @@
                     relations: { allies: ["Colbert", "Louis XIV"], rivaux: ["Noblesse rebelle", "Contribuables"], amours: ["Le Pouvoir"] }
                 }
             },
-
 
             // HISTORIQUES (Cartes historiques uniquement - onglet 2)
             "le-notre": {
@@ -1022,12 +1019,23 @@
             
             let starHtml = char.isFictional ? `<span class="fictional-star" aria-hidden="true" title="Personnage créé pour la comédie musicale">✦</span>` : '';
             
+            let actorTagHtml = '';
+            if (char.actor) {
+                let actorsArr = char.actor.split(',').map(s => s.trim());
+                actorsArr.sort((a, b) => a.localeCompare(b, 'fr'));
+                actorTagHtml = `
+                <div class="actor-tag">
+                    <span class="actor-name">${actorsArr.join(', ')}</span>
+                </div>`;
+            }
+
             let html = `
             <div class="char-card glass-card fade-in-up" style="animation-delay: ${charDelay}s" onclick="openCharModal('${id}')" role="button" tabindex="0">
                 <div class="char-card-icon" aria-hidden="true">${charIcon}</div>
                 <div class="char-card-info">
                     <h3>${char.name}${starHtml}</h3>
                     <p class="char-subtitle">${char.subtitle}</p>
+                    ${actorTagHtml}
                 </div>
             </div>`;
             charsContainer.insertAdjacentHTML('beforeend', html);
@@ -1150,19 +1158,6 @@
             document.getElementById('modalTitle').innerText = char.name;
             document.getElementById('modalSubtitle').innerText = char.subtitle;
             
-            // Actor setup & sorting
-            let actorText = "";
-            if (char.actor && char.actor !== "Ensemble") {
-                let actorsArr = char.actor.split(',').map(s => s.trim());
-                actorsArr.sort((a, b) => a.localeCompare(b));
-                actorText = `Interprété par : ${actorsArr.join(', ')}`;
-            } else if (char.actor === "Ensemble") {
-                actorText = `Rôle d'Ensemble`;
-            }
-            const actorEl = document.getElementById('modalActor');
-            actorEl.innerText = actorText;
-            actorEl.style.display = actorText ? "block" : "none";
-
             const quoteEl = document.getElementById('modalQuote');
             if(char.quote) { quoteEl.innerText = `« ${char.quote} »`; quoteEl.style.display = "block"; } 
             else { quoteEl.style.display = "none"; }
