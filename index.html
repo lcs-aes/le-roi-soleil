@@ -20,7 +20,7 @@
             --gold-light: #F4D38B;
             --primary-gradient: linear-gradient(135deg, #5C65CD 0%, #764BA4 100%);
             --card-bg: rgba(255, 255, 255, 0.93);
-            --parchment-bg: #F4E8D1;
+            --parchment-bg: #FDF8EF;
         }
 
         body {
@@ -224,11 +224,11 @@
         /* --- CARTES LEXIQUE (STYLE PARCHEMIN) --- */
         .lexicon-grid { display: flex; flex-direction: column; gap: 15px; }
         .lexicon-card { 
-            background: var(--parchment-bg); border-radius: 6px; padding: 20px; color: #3b2f21; 
+            background: var(--parchment-bg); border-radius: 6px; padding: 20px; color: #1a140b; 
             box-shadow: inset 0 0 30px rgba(139, 101, 8, 0.1), 0 5px 15px rgba(0,0,0,0.15); 
             border: 1px solid rgba(139, 101, 8, 0.2); border-left: 5px solid var(--accent-color); 
         }
-        .lexicon-title { color: #5c4018; font-size: 1.4rem; margin: 0 0 10px 0; display: flex; align-items: center; gap: 10px; }
+        .lexicon-title { color: #3b250e; font-size: 1.4rem; margin: 0 0 10px 0; display: flex; align-items: center; gap: 10px; }
         .lexicon-title .emoji-icon { font-size: 24px; }
         .lexicon-desc { font-size: 0.95rem; margin: 0; opacity: 0.95; text-align: justify; line-height: 1.6; }
 
@@ -317,7 +317,7 @@
             border: 1px solid rgba(139, 101, 8, 0.2);
             border-radius: 8px;
             padding: 20px;
-            color: #3b2f21;
+            color: #1a140b;
             font-family: 'Playfair Display', serif;
             box-shadow: inset 0 0 30px rgba(139, 101, 8, 0.05), 0 4px 15px rgba(0,0,0,0.1);
             margin-top: -5px;
@@ -333,7 +333,7 @@
         }
         .rpg-section-title span {
             background: var(--parchment-bg);
-            color: #5c4018;
+            color: #3b250e;
             padding: 0 15px;
             font-size: 0.95rem;
             font-weight: bold;
@@ -342,30 +342,30 @@
         }
         .rpg-skills { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
         .rpg-skill-box, .rpg-ult-box {
-            background: rgba(255,255,255,0.6); color: #3b2f21;
+            background: rgba(255,255,255,0.6); color: #1a140b;
             border: 1px solid rgba(139, 101, 8, 0.2); border-radius: 6px;
             padding: 12px 8px; text-align: center; box-shadow: none;
         }
         .rpg-skill-name { font-size: 0.8rem; font-weight: bold; text-transform: uppercase; margin-bottom: 5px; letter-spacing: 0.5px; }
         .rpg-skill-icon { font-size: 28px; margin: 8px 0; }
         .rpg-skill-desc { font-size: 0.75rem; font-family: sans-serif; line-height: 1.3; opacity: 0.9; }
-        .rpg-ult-name { font-size: 1rem; font-weight: bold; color: #5c4018; text-transform: uppercase; letter-spacing: 1px; }
+        .rpg-ult-name { font-size: 1rem; font-weight: bold; color: #3b250e; text-transform: uppercase; letter-spacing: 1px; }
         
         .rpg-relations { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; }
         .rpg-rel-col {
-            background: rgba(255,255,255,0.6); color: #3b2f21;
+            background: rgba(255,255,255,0.6); color: #1a140b;
             border: 1px solid rgba(139, 101, 8, 0.2); border-radius: 4px;
             padding: 8px 5px; text-align: center; display: flex; flex-direction: column;
         }
         .rpg-rel-title {
             font-size: 0.8rem; font-weight: bold; margin-bottom: 6px;
-            border-bottom: 1px solid rgba(139, 101, 8, 0.2); padding-bottom: 4px; color: #5c4018;
+            border-bottom: 1px solid rgba(139, 101, 8, 0.2); padding-bottom: 4px; color: #3b250e;
         }
         .rpg-rel-list { list-style: none; padding: 0; margin: 0; font-size: 0.7rem; font-family: sans-serif; font-weight: 500; }
         .rpg-rel-list li { margin-bottom: 3px; }
         
         .rpg-footer {
-            text-align: center; font-size: 0.75rem; color: #5c4018; font-family: sans-serif;
+            text-align: center; font-size: 0.75rem; color: #3b250e; font-family: sans-serif;
             letter-spacing: 1px; margin-top: 15px; border-top: 1px dashed rgba(139, 101, 8, 0.3);
             padding-top: 12px; font-weight: bold;
         }
@@ -474,7 +474,7 @@
         <div class="modal-card" onclick="event.stopPropagation()" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
             <div class="modal-header-bg">
                 <div class="modal-controls">
-                    <button class="modal-flip-btn" id="flipBtn" aria-label="Retourner la carte" onclick="toggleCardFlip()">🔀</button>
+                    <button class="modal-flip-btn" id="flipBtn" aria-label="Retourner la carte" onclick="toggleCardFlip()">🔄</button>
                     <button class="modal-close" aria-label="Fermer la fiche" onclick="closeModal(event)">✕</button>
                 </div>
                 <div class="modal-icon" aria-hidden="true" id="modalIcon"></div>
@@ -501,7 +501,7 @@
             "les-serveurs": "🥂", "le-clerge": "⛪", "la-dame-de-cour": "🪭", "la-femme-de-chambre": "🧹",
             "le-medecin": "🩺", "le-ministre": "💼", "le-notre": "🌳", "mansart": "🏰", "turenne": "🐎",
             "conde": "🛡️", "bossuet": "📖", "luxembourg": "⚔️", "vauban": "🧱", "philippe-anjou": "👑",
-            "marlborough": "💂", "lex-etiquette": "📜", "lex-fronde": "💥", "lex-prince": "🩸",
+            "marlborough": "💂", "lex-etiquette": "📜", "lex-favorite": "💍", "lex-prince": "🩸",
             "lex-droit": "🕊️", "lex-libertinage": "🍷", "lex-lettre": "✉️", "lex-mousquetaire": "🤺",
             "lex-bourbon": "⚜️", "lex-absolutisme": "👑", "lex-siecle": "✨"
         };
@@ -673,7 +673,7 @@
 
             // --- 5. L'OMBRE, LE PEUPLE ET LA FICTION ---
             "voisin": {
-                name: "La Voisin", subtitle: "La devineresse des poisons", dates: "1640-1680", icon: "flask", mainList: true, isFictional: true, actor: "Louise Oziès Fournier",
+                name: "La Voisin", subtitle: "La devineresse des poisons", dates: "1640-1680", icon: "flask", mainList: true, isFictional: false, actor: "Louise Oziès Fournier",
                 quote: "La mort est un commerce comme un autre.", intro: "Figure de l'ombre redoutable et mystérieuse. Elle gravite dans les bas-fonds de Paris en vendant philtres d'amour, prédictions et poisons aux nobles prêts à tout.",
                 facts: ["Fournit à Madame de Montespan les remèdes occultes pour retenir le cœur du Roi.", "Incarne la part sombre, immorale et dangereuse de la haute société du Grand Siècle.", "Déclenche le scandale terrifiant de l'Affaire des Poisons qui secouera toute la cour."],
                 role: "Représenter la folie des grandeurs, l'avidité et la noirceur cachée derrière les dorures de Versailles.", heritage: "Incarne la transgression ultime et la chute morale inévitable des courtisans aveuglés par l'ambition.",
@@ -976,16 +976,16 @@
         ];
 
         const lexiconTerms = [
-            { id: "lex-etiquette", title: "L'Étiquette", icon: "crown", desc: "Ensemble complexe et rigide des règles de comportement à la cour de Versailles. Louis XIV l'utilisait comme un instrument de pouvoir absolu pour domestiquer la noblesse." },
-            { id: "lex-fronde", title: "La Fronde", icon: "sword", desc: "Période de graves révoltes (1648-1653) de la haute noblesse, du Parlement et du peuple contre l'autorité royale incarnée par Mazarin." },
-            { id: "lex-prince", title: "Prince du Sang", icon: "fleur", desc: "Titre donné exclusivement aux princes légitimes descendant de la maison royale de France (comme le Grand Condé)." },
-            { id: "lex-droit", title: "Droit Divin", icon: "church", desc: "Doctrine politique stipulant que le pouvoir absolu du Roi lui est directement confié par Dieu. Il n'a de comptes à rendre à personne d'autre." },
-            { id: "lex-libertinage", title: "Libertinage", icon: "feather", desc: "Au XVIIe siècle, c'est avant tout une très grande liberté de pensée philosophique et un affranchissement des dogmes religieux et des conventions (ex: Ninon de l'Enclos)." },
-            { id: "lex-lettre", title: "Lettre de cachet", icon: "book", desc: "Lettre fermée par le sceau personnel du Roi contenant un ordre direct et incontestable, souvent utilisée pour emprisonner sans jugement." },
-            { id: "lex-mousquetaire", title: "Mousquetaire", icon: "sword", desc: "Soldat d'élite de la maison militaire du Roi, armé d'un mousquet et d'une épée. Ils forment la garde personnelle du souverain." },
-            { id: "lex-bourbon", title: "Maison de Bourbon", icon: "fleur", desc: "Importante dynastie royale européenne dont est issu Louis XIV. Ses descendants règnent encore en Espagne aujourd'hui." },
             { id: "lex-absolutisme", title: "Absolutisme", icon: "crown", desc: "Régime politique dans lequel le roi concentre tous les pouvoirs (législatif, exécutif, judiciaire) sans aucun contrôle externe." },
-            { id: "lex-siecle", title: "Grand Siècle", icon: "sparkles", desc: "Période de l'histoire de France (XVIIe siècle) marquée par le règne de Louis XIV, et par un rayonnement culturel, militaire et artistique exceptionnel." }
+            { id: "lex-droit", title: "Droit Divin", icon: "church", desc: "Doctrine politique stipulant que le pouvoir absolu du Roi lui est directement confié par Dieu. Il n'a de comptes à rendre à personne d'autre." },
+            { id: "lex-etiquette", title: "L'Étiquette", icon: "crown", desc: "Ensemble complexe et rigide des règles de comportement à la cour de Versailles. Louis XIV l'utilisait comme un instrument de pouvoir absolu pour domestiquer la noblesse." },
+            { id: "lex-favorite", title: "Favorite", icon: "sparkles", desc: "Titre semi-officiel accordé à la maîtresse principale du Roi (comme Mme de Montespan). Elle dispose d'une énorme influence politique et culturelle à la cour." },
+            { id: "lex-siecle", title: "Grand Siècle", icon: "sparkles", desc: "Période de l'histoire de France (XVIIe siècle) marquée par le règne de Louis XIV, et par un rayonnement culturel, militaire et artistique exceptionnel." },
+            { id: "lex-lettre", title: "Lettre de cachet", icon: "book", desc: "Lettre fermée par le sceau personnel du Roi contenant un ordre direct et incontestable, souvent utilisée pour emprisonner sans jugement." },
+            { id: "lex-libertinage", title: "Libertinage", icon: "feather", desc: "Au XVIIe siècle, c'est avant tout une très grande liberté de pensée philosophique et un affranchissement des dogmes religieux et des conventions (ex: Ninon de l'Enclos)." },
+            { id: "lex-bourbon", title: "Maison de Bourbon", icon: "fleur", desc: "Importante dynastie royale européenne dont est issu Louis XIV. Ses descendants règnent encore en Espagne aujourd'hui." },
+            { id: "lex-mousquetaire", title: "Mousquetaire", icon: "sword", desc: "Soldat d'élite de la maison militaire du Roi, armé d'un mousquet et d'une épée. Ils forment la garde personnelle du souverain." },
+            { id: "lex-prince", title: "Prince du Sang", icon: "fleur", desc: "Titre donné exclusivement aux princes légitimes descendant de la maison royale de France (comme le Grand Condé)." }
         ];
 
         // --- GÉNÉRATION HTML ---
@@ -1154,6 +1154,30 @@
                     // Swipe droit -> onglet précédent
                     if (currentTabIndex > 0) switchTab(mainTabs[currentTabIndex - 1]);
                 }
+            }
+        }, {passive: true});
+
+        // Logique de SWIPE vers le bas pour fermer la Modale
+        let modalTouchStartY = 0;
+        let modalTouchEndY = 0;
+        const modalCardWrapper = document.querySelector('.modal-card');
+
+        modalCardWrapper.addEventListener('touchstart', e => {
+            // Ne capter le swipe que si on est tout en haut de la modale
+            if (modalCardWrapper.scrollTop === 0) {
+                modalTouchStartY = e.changedTouches[0].screenY;
+            } else {
+                modalTouchStartY = -1;
+            }
+        }, {passive: true});
+
+        modalCardWrapper.addEventListener('touchend', e => {
+            if (modalTouchStartY === -1) return;
+            modalTouchEndY = e.changedTouches[0].screenY;
+            
+            // Si on a glissé vers le bas de plus de 80px
+            if (modalTouchEndY - modalTouchStartY > 80) {
+                closeModal({ target: document.querySelector('.modal-overlay') });
             }
         }, {passive: true});
 
