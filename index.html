@@ -244,9 +244,6 @@
         footer { margin-top: 40px; padding-top: 25px; border-top: 1px solid rgba(197, 160, 89, 0.3); text-align: center; }
         .school-name { font-family: 'Playfair Display', serif; color: var(--accent-color); font-size: 1.25rem; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 3px; }
         .show-dates { font-size: 0.9rem; color: #FFF; opacity: 0.8; margin-bottom: 25px; font-weight: bold; letter-spacing: 1px; }
-        .footer-title { font-family: 'Playfair Display', serif; color: var(--accent-color); font-size: 1.4rem; margin-bottom: 15px; text-transform: uppercase; }
-        .footer-credits { font-size: 0.85rem; line-height: 1.8; color: rgba(253, 251, 247, 0.8); padding-bottom: 20px;}
-        .footer-credits strong { color: #FFF; font-weight: normal; }
 
         /* --- POPUP / MODALE --- */
         .modal-overlay {
@@ -470,14 +467,8 @@
         <footer>
             <div class="school-name">Lycée Condorcet de Sydney</div>
             <div class="show-dates">14, 19 et 21 Mars 2026</div>
-            
-            <h3 class="footer-title">L'Équipe Artistique</h3>
-            <div class="footer-credits">
-                Mise en scène : <strong>Natacha Muller</strong><br>
-                Chant : <strong>Gabriel Gitman</strong><br>
-                Chant (chœur) : <strong>Frédérique Bouwer</strong><br>
-                Costumes & décors : <strong>Nadia Guérin</strong><br>
-                Chorégraphie & stage manager : <strong>Élise Devaux</strong>
+            <div class="footer-credits" style="padding-bottom: 20px; opacity: 0.7;">
+                Merci à tous pour votre soutien et bon spectacle !
             </div>
         </footer>
     </div>
@@ -512,6 +503,7 @@
         const icons = {
             crown: "👑", sword: "⚔️", book: "📖", feather: "🪶", masks: "🎭", sparkles: "✨",
             fleur: "⚜️", tree: "🌳", castle: "🏰", flask: "🧪", church: "⛪", users: "👥", wineglass: "🍷",
+            hat: "🎩", music: "🎼", mic: "🎤", thread: "🧵", stopwatch: "⏱️",
             "louis-xiv": "☀️", "marie-mancini": "✨", "mazarin": "📜", "anne-autriche": "👑",
             "montespan": "🔥", "maintenon": "📿", "monsieur": "🪞", "colbert": "🪙",
             "beaufort": "🤺", "moliere": "🎭", "scarron": "🪶", "ninon": "🍷", "voisin": "🧪",
@@ -862,6 +854,68 @@
                 }
             },
 
+            // --- L'ÉQUIPE ARTISTIQUE ---
+            "natacha-muller": {
+                name: "Natacha Muller", subtitle: "La Maîtresse des Illusions", dates: "L'Équipe", icon: "hat", mainList: true, isFictional: false,
+                quote: "Le monde entier est un théâtre.", intro: "Véritable chef d'orchestre de cette aventure, elle guide les élèves pour donner vie à cette grande fresque historique et musicale.",
+                facts: ["A imaginé la transposition de la pièce pour les élèves du Lycée Condorcet.", "Dirige les répétitions d'une main de maître et avec passion.", "Insuffle l'énergie créative à toute la troupe."],
+                role: "Créer l'illusion parfaite, harmoniser les talents et emporter le public.", heritage: "Une expérience théâtrale inoubliable pour toute la troupe.",
+                rpg: {
+                    classe: "Metteuse en Scène", faction: "Créateurs",
+                    competences: [ { nom: "Vision", desc: "Voit le tableau final", icon: "👁️" }, { nom: "Direction", desc: "Guide les âmes", icon: "🧭" }, { nom: "Patience", desc: "Résiste au chaos", icon: "🧘‍♀️" }, { nom: "Créativité", desc: "Génie pur", icon: "✨" } ],
+                    ultime: { nom: "Le Lever de Rideau", desc: "Déclenche la magie du spectacle complet d'un seul mot" },
+                    relations: { allies: ["Toute la troupe"], rivaux: ["Le trac", "Les imprévus"], amours: ["Le Théâtre"] }
+                }
+            },
+            "gabriel-gitman": {
+                name: "Gabriel Gitman", subtitle: "La Voix d'Or", dates: "L'Équipe", icon: "mic", mainList: true, isFictional: false,
+                quote: "La musique est la langue des émotions.", intro: "Coach vocal dévoué, il accompagne les solistes pour sublimer chaque note et transmettre l'émotion pure de la comédie musicale.",
+                facts: ["Entraîne les voix des comédiens pour atteindre la perfection.", "Gère l'harmonie complexe des numéros musicaux du spectacle.", "Donne confiance aux chanteurs pour briller sur scène."],
+                role: "Sublimer les talents vocaux et faire vibrer la salle.", heritage: "Des mélodies qui resteront dans les têtes bien après le spectacle.",
+                rpg: {
+                    classe: "Maître de Chœur", faction: "Créateurs",
+                    competences: [ { nom: "Ténor", desc: "Puissance vocale", icon: "🗣️" }, { nom: "Justesse", desc: "Oreille absolue", icon: "🎶" }, { nom: "Souffle", desc: "Endurance", icon: "🌬️" }, { nom: "Émotion", desc: "Touche les cœurs", icon: "❤️" } ],
+                    ultime: { nom: "La Note Parfaite", desc: "Fait frissonner le public avec une harmonie magistrale" },
+                    relations: { allies: ["Solistes", "Frédérique"], rivaux: ["Les fausses notes"], amours: ["La Musique"] }
+                }
+            },
+            "frederique-bouwer": {
+                name: "Frédérique Bouwer", subtitle: "L'Harmonie Céleste", dates: "L'Équipe", icon: "music", mainList: true, isFictional: false,
+                quote: "Une voix seule est belle, un chœur est invincible.", intro: "En charge de la puissance collective, elle dirige le chœur pour donner l'ampleur et la dimension épique nécessaires aux grands tableaux.",
+                facts: ["Transforme un groupe d'élèves en un chœur uni et puissant.", "Supervise les polyphonies et les harmonies de groupe.", "Apporte le souffle épique indispensable à la cour du Roi Soleil."],
+                role: "Créer la force du collectif et la grandeur musicale.", heritage: "L'esprit de cohésion et d'harmonie transmis aux élèves.",
+                rpg: {
+                    classe: "Cheffe des Chœurs", faction: "Créateurs",
+                    competences: [ { nom: "Polyphonie", desc: "Voix multiples", icon: "👥" }, { nom: "Cohésion", desc: "Unit le groupe", icon: "🤝" }, { nom: "Rythme", desc: "Tempo de fer", icon: "🥁" }, { nom: "Ampleur", desc: "Son épique", icon: "🌊" } ],
+                    ultime: { nom: "Le Chœur Royal", desc: "Invoque la puissance du groupe pour un final retentissant" },
+                    relations: { allies: ["L'Ensemble", "Gabriel"], rivaux: ["La cacophonie"], amours: ["Le Collectif"] }
+                }
+            },
+            "nadia-guerin": {
+                name: "Nadia Guérin", subtitle: "L'Architecte des Rêves", dates: "L'Équipe", icon: "thread", mainList: true, isFictional: false,
+                quote: "L'habit fait le noble, et le décor fait le palais.", intro: "Magicienne de l'ombre, elle conçoit les décors somptueux et les costumes flamboyants qui transportent instantanément le public au XVIIe siècle.",
+                facts: ["Habille toute la cour de Versailles avec une minutie impressionnante.", "Conçoit des décors immersifs pour recréer la splendeur de l'époque.", "Gère les transformations et changements rapides en coulisses."],
+                role: "Rendre le rêve tangible à travers l'esthétique visuelle.", heritage: "La beauté éblouissante des tableaux qui marque les rétines.",
+                rpg: {
+                    classe: "Créatrice d'Illusions", faction: "Créateurs",
+                    competences: [ { nom: "Couture", desc: "Fil d'or", icon: "🧵" }, { nom: "Architecture", desc: "Bâtisseuse", icon: "🏰" }, { nom: "Couleurs", desc: "Palette royale", icon: "🎨" }, { nom: "Système D", desc: "Trouve des solutions", icon: "💡" } ],
+                    ultime: { nom: "L'Éclat Visuel", desc: "Éblouit la salle entière dès l'ouverture du rideau" },
+                    relations: { allies: ["Acteurs", "Opérateurs"], rivaux: ["Les déchirures"], amours: ["L'Esthétisme"] }
+                }
+            },
+            "elise-devaux": {
+                name: "Élise Devaux", subtitle: "La Maîtresse du Temps", dates: "L'Équipe", icon: "stopwatch", mainList: true, isFictional: false,
+                quote: "La grâce dans le mouvement, la rigueur dans l'ombre.", intro: "À la fois créatrice des mouvements sur scène en tant que chorégraphe, et gardienne absolue du bon déroulement en coulisses en tant que Stage Manager.",
+                facts: ["Règle les ballets de cour et les chorégraphies modernes du spectacle.", "Orchestre les entrées, les sorties et les transitions avec une précision militaire.", "Assure la sécurité et le rythme implacable de la représentation."],
+                role: "Donner vie à l'espace scénique tout en maîtrisant les rouages cachés.", heritage: "La fluidité parfaite du spectacle et l'élégance de la troupe.",
+                rpg: {
+                    classe: "Chorégraphe Royale", faction: "Créateurs",
+                    competences: [ { nom: "Chorégraphie", desc: "Maître de danse", icon: "🩰" }, { nom: "Rigueur", desc: "Organisation", icon: "📋" }, { nom: "Top Départ", desc: "Donne le signal", icon: "🏁" }, { nom: "Agilité", desc: "Partout à la fois", icon: "⚡" } ],
+                    ultime: { nom: "La Maîtrise du Plateau", desc: "Synchronise parfaitement 30 personnes dans l'ombre et la lumière" },
+                    relations: { allies: ["Danseurs", "Mise en scène"], rivaux: ["Le retard"], amours: ["Le Mouvement"] }
+                }
+            },
+
             // --- 7. HISTORIQUES (Cartes historiques uniquement - onglet 2) ---
             "le-notre": {
                 name: "André Le Nôtre", dates: "1613-1700", icon: "tree", mainList: false, isFictional: false, subtitle: "L'Architecte des Jardins",
@@ -1019,7 +1073,8 @@
             { id: "amours", title: "Les amours du roi", chars: ["marie-mancini", "montespan", "maintenon"] },
             { id: "frondeurs", title: "Les frondeurs et artistes", chars: ["beaufort", "moliere", "scarron", "ninon"] },
             { id: "ombre", title: "L'ombre, le peuple et la fiction", chars: ["voisin", "lisieux", "isabelle"] },
-            { id: "troupe", title: "La troupe et les rôles de cour", chars: ["les-courtisanes", "les-danseurs", "le-peuple", "les-operateurs", "les-soldats", "les-serveurs", "le-clerge", "la-dame-de-cour", "la-femme-de-chambre", "le-medecin", "le-ministre"] }
+            { id: "troupe", title: "La troupe et les rôles de cour", chars: ["les-courtisanes", "les-danseurs", "le-peuple", "les-operateurs", "les-soldats", "les-serveurs", "le-clerge", "la-dame-de-cour", "la-femme-de-chambre", "le-medecin", "le-ministre"] },
+            { id: "equipe", title: "L'Équipe Artistique", chars: ["natacha-muller", "gabriel-gitman", "frederique-bouwer", "nadia-guerin", "elise-devaux"] }
         ];
 
         categoriesPersonnages.forEach(cat => {
@@ -1064,7 +1119,7 @@
         const rolesContainer = document.getElementById('roles-container');
         const actorsMap = {};
 
-        // Regrouper les rôles par acteur
+        // Regrouper les rôles par acteur (exclut l'équipe créative car ils n'ont pas l'attribut "actor")
         Object.keys(characters).forEach(charId => {
             const char = characters[charId];
             if (char.actor && char.mainList) {
