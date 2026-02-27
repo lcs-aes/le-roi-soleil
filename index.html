@@ -219,30 +219,171 @@
         .modal-overlay.active { display: flex; animation: fadeIn 0.3s ease; }
         .modal-card {
             background: rgba(255, 255, 255, 0.98); width: 100%; max-width: 500px;
-            max-height: 90vh; border-radius: 16px; overflow-y: auto;
+            max-height: 90vh; border-radius: 16px; overflow-y: auto; overflow-x: hidden;
             position: relative; box-shadow: 0 15px 40px rgba(0,0,0,0.4); border: 1px solid rgba(255,255,255,0.4);
+            display: flex; flex-direction: column;
         }
         @media (max-width: 600px) {
             .modal-overlay { padding: 0; align-items: flex-start; }
-            .modal-card { max-width: 100%; height: 100%; height: 100dvh; max-height: none; border-radius: 0; display: flex; flex-direction: column; border: none; }
+            .modal-card { max-width: 100%; height: 100%; height: 100dvh; max-height: none; border-radius: 0; border: none; }
             .modal-header-bg { padding-top: max(35px, env(safe-area-inset-top, 35px)); }
-            .modal-close { top: max(15px, env(safe-area-inset-top, 15px)); }
-            .modal-body { flex: 1; overflow-y: auto; -webkit-overflow-scrolling: touch; }
+            .modal-close, .modal-flip-btn { top: max(15px, env(safe-area-inset-top, 15px)); }
         }
-        .modal-header-bg { background: var(--primary-gradient); padding: 35px 20px 25px 20px; text-align: center; color: #FFF; position: relative; }
-        .modal-close {
-            position: absolute; top: 15px; right: 15px; background: rgba(255,255,255,0.2);
-            border: none; width: 36px; height: 36px; border-radius: 50%; color: #FFF;
-            font-size: 1.4rem; cursor: pointer; display: flex; justify-content: center; align-items: center;
+        .modal-header-bg { background: var(--primary-gradient); padding: 35px 20px 25px 20px; text-align: center; color: #FFF; position: relative; flex-shrink: 0;}
+        
+        .modal-controls { position: absolute; top: 15px; right: 15px; display: flex; gap: 8px;}
+        .modal-close, .modal-flip-btn {
+            background: rgba(255,255,255,0.2); border: none; width: 36px; height: 36px; border-radius: 50%; color: #FFF;
+            font-size: 1.2rem; cursor: pointer; display: flex; justify-content: center; align-items: center;
             touch-action: manipulation; -webkit-tap-highlight-color: transparent; transition: background 0.2s;
         }
-        .modal-close:active { background: rgba(255,255,255,0.4); transform: scale(0.9); }
+        .modal-close:active, .modal-flip-btn:active { background: rgba(255,255,255,0.4); transform: scale(0.9); }
+        
         .modal-icon { display: flex; justify-content: center; }
         .modal-title { font-size: 2rem; margin: 0 0 5px 0; }
         .modal-subtitle { font-size: 1rem; opacity: 0.9; margin-bottom: 12px; }
         .modal-dates { background: rgba(255,255,255,0.2); padding: 4px 14px; border-radius: 20px; font-size: 0.85rem; display: inline-block; font-weight: bold; }
         .modal-dates.fictif { background: transparent; border: 1px dashed rgba(255, 255, 255, 0.7); color: #FFF; }
-        .modal-body { padding: 25px 20px; }
+        
+        .modal-body { padding: 25px 20px; flex-grow: 1;}
+
+        /* --- FLIP ANIMATION --- */
+        .flip-container {
+            display: grid;
+            perspective: 1200px;
+            width: 100%;
+        }
+        .flip-inner {
+            grid-area: 1 / 1;
+            display: grid;
+            transition: transform 0.6s cubic-bezier(0.4, 0.2, 0.2, 1);
+            transform-style: preserve-3d;
+            width: 100%;
+        }
+        .flip-front, .flip-back {
+            grid-area: 1 / 1;
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
+            width: 100%;
+        }
+        .flip-back {
+            transform: rotateY(180deg);
+        }
+        .flip-inner.is-flipped {
+            transform: rotateY(180deg);
+        }
+
+        /* --- RPG CARD STYLING --- */
+        .rpg-card {
+            background: #1A2238; 
+            border: 3px solid var(--accent-color);
+            border-radius: 12px;
+            padding: 15px;
+            color: #fdfbf7;
+            font-family: 'Playfair Display', serif;
+            box-shadow: inset 0 0 20px rgba(0,0,0,0.5);
+            margin-bottom: 10px;
+        }
+        .rpg-section-title {
+            text-align: center;
+            position: relative;
+            margin: 15px 0 10px 0;
+            z-index: 1;
+        }
+        .rpg-section-title::before {
+            content: ''; position: absolute; top: 50%; left: 0; right: 0;
+            border-top: 1px solid rgba(226, 184, 106, 0.4); z-index: -1;
+        }
+        .rpg-section-title span {
+            background: #1A2238;
+            color: var(--accent-color);
+            padding: 0 15px;
+            font-size: 0.85rem;
+            font-weight: bold;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+        }
+        .rpg-skills {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+        .rpg-skill-box, .rpg-ult-box {
+            background: #fdfbf7;
+            color: #2c3550;
+            border: 2px solid var(--accent-color);
+            border-radius: 6px;
+            padding: 12px 8px;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+        }
+        .rpg-skill-name {
+            font-size: 0.75rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            margin-bottom: 5px;
+            letter-spacing: 0.5px;
+        }
+        .rpg-skill-icon {
+            font-size: 28px;
+            margin: 8px 0;
+        }
+        .rpg-skill-desc {
+            font-size: 0.75rem;
+            font-family: sans-serif;
+            line-height: 1.3;
+            opacity: 0.9;
+        }
+        .rpg-ult-name {
+            font-size: 1rem;
+            font-weight: bold;
+            color: #3B4387;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .rpg-relations {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 8px;
+        }
+        .rpg-rel-col {
+            background: #fdfbf7;
+            color: #2c3550;
+            border: 2px solid var(--accent-color);
+            border-radius: 4px;
+            padding: 8px 5px;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+        }
+        .rpg-rel-title {
+            font-size: 0.65rem;
+            font-weight: bold;
+            margin-bottom: 6px;
+            border-bottom: 1px solid rgba(226, 184, 106, 0.5);
+            padding-bottom: 4px;
+            color: #3B4387;
+        }
+        .rpg-rel-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            font-size: 0.7rem;
+            font-family: sans-serif;
+            font-weight: 500;
+        }
+        .rpg-rel-list li { margin-bottom: 3px; }
+        .rpg-footer {
+            text-align: center;
+            font-size: 0.75rem;
+            color: var(--accent-color);
+            font-family: sans-serif;
+            letter-spacing: 1px;
+            margin-top: 15px;
+            border-top: 1px solid rgba(226, 184, 106, 0.3);
+            padding-top: 12px;
+            font-weight: bold;
+        }
 
         .back-to-top {
             position: fixed; bottom: 20px; right: 20px; background: var(--primary-gradient);
@@ -275,14 +416,8 @@
             visibility: visible;
             animation: fadein 0.5s, fadeout 0.5s 2.5s;
         }
-        @keyframes fadein {
-            from {bottom: 0; opacity: 0;}
-            to {bottom: 30px; opacity: 1;}
-        }
-        @keyframes fadeout {
-            from {bottom: 30px; opacity: 1;}
-            to {bottom: 0; opacity: 0;}
-        }
+        @keyframes fadein { from {bottom: 0; opacity: 0;} to {bottom: 30px; opacity: 1;} }
+        @keyframes fadeout { from {bottom: 30px; opacity: 1;} to {bottom: 0; opacity: 0;} }
     </style>
 </head>
 <body>
@@ -367,7 +502,10 @@
     <div class="modal-overlay" id="charModal" onclick="closeModal(event)">
         <div class="modal-card" onclick="event.stopPropagation()" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
             <div class="modal-header-bg">
-                <button class="modal-close" aria-label="Fermer la fiche" onclick="closeModal(event)">✕</button>
+                <div class="modal-controls">
+                    <button class="modal-flip-btn" id="flipBtn" aria-label="Retourner la carte" onclick="toggleCardFlip()">🔀</button>
+                    <button class="modal-close" aria-label="Fermer la fiche" onclick="closeModal(event)">✕</button>
+                </div>
                 <div class="modal-icon" aria-hidden="true" id="modalIcon"></div>
                 <h2 class="modal-title" id="modalTitle">Nom</h2>
                 <div class="modal-subtitle" id="modalSubtitle">Sous-titre</div>
@@ -381,68 +519,19 @@
     </div>
 
     <script>
-        // Remplacement de tous les SVG par des Emojis très légers
         const icons = {
-            crown: "👑",
-            sword: "⚔️",
-            book: "📖",
-            feather: "🪶",
-            masks: "🎭",
-            sparkles: "✨",
-            fleur: "⚜️",
-            tree: "🌳",
-            castle: "🏰",
-            flask: "🧪",
-            church: "⛪",
-            users: "👥",
-            wineglass: "🍷",
-
-            // Icônes spécifiques
-            "louis-xiv": "☀️",
-            "marie-mancini": "✨",
-            "mazarin": "📜",
-            "anne-autriche": "👑",
-            "montespan": "🔥",
-            "maintenon": "📿",
-            "monsieur": "🪞",
-            "colbert": "🪙",
-            "beaufort": "🤺",
-            "moliere": "🎭",
-            "scarron": "🪶",
-            "ninon": "🍷",
-            "voisin": "🧪",
-            "lisieux": "🌸",
-            "isabelle": "🥖",
-            "enfant-roi": "🧒",
-            
-            "les-courtisanes": "👗",
-            "les-danseurs": "🩰",
-            "le-peuple": "🌾",
-            "les-operateurs": "🎪",
-            "les-soldats": "⚔️",
-            "les-serveurs": "🥂",
-            "le-clerge": "⛪",
-            "la-dame-de-cour": "🪭",
-            "la-femme-de-chambre": "🧹",
-            "le-medecin": "🩺",
-            "le-ministre": "💼",
-
-            "le-notre": "🌳",
-            "mansart": "🏰",
-            "turenne": "🐎",
-            "conde": "🛡️",
-            "bossuet": "📖",
-            "luxembourg": "⚔️",
-            "vauban": "🧱",
-            "philippe-anjou": "👑",
-            "marlborough": "💂",
-
-            "lex-etiquette": "📜",
-            "lex-fronde": "💥",
-            "lex-prince": "🩸",
-            "lex-droit": "🕊️",
-            "lex-libertinage": "🍷",
-            "lex-lettre": "✉️"
+            crown: "👑", sword: "⚔️", book: "📖", feather: "🪶", masks: "🎭", sparkles: "✨",
+            fleur: "⚜️", tree: "🌳", castle: "🏰", flask: "🧪", church: "⛪", users: "👥", wineglass: "🍷",
+            "louis-xiv": "☀️", "marie-mancini": "✨", "mazarin": "📜", "anne-autriche": "👑",
+            "montespan": "🔥", "maintenon": "📿", "monsieur": "🪞", "colbert": "🪙",
+            "beaufort": "🤺", "moliere": "🎭", "scarron": "🪶", "ninon": "🍷", "voisin": "🧪",
+            "lisieux": "🌸", "isabelle": "🥖", "enfant-roi": "🧒", "les-courtisanes": "👗",
+            "les-danseurs": "🩰", "le-peuple": "🌾", "les-operateurs": "🎪", "les-soldats": "⚔️",
+            "les-serveurs": "🥂", "le-clerge": "⛪", "la-dame-de-cour": "🪭", "la-femme-de-chambre": "🧹",
+            "le-medecin": "🩺", "le-ministre": "💼", "le-notre": "🌳", "mansart": "🏰", "turenne": "🐎",
+            "conde": "🛡️", "bossuet": "📖", "luxembourg": "⚔️", "vauban": "🧱", "philippe-anjou": "👑",
+            "marlborough": "💂", "lex-etiquette": "📜", "lex-fronde": "💥", "lex-prince": "🩸",
+            "lex-droit": "🕊️", "lex-libertinage": "🍷", "lex-lettre": "✉️"
         };
 
         const characters = {
@@ -451,204 +540,420 @@
                 name: "Louis XIV", subtitle: "Le Roi-Soleil", dates: "1638-1715", icon: "crown", mainList: true, isFictional: false, actor: "Matthieu Desrosiers",
                 quote: "Je m'en vais, mais l'État demeurera toujours.", intro: "Roi de France de 1643 à 1715, Louis XIV incarne l'absolutisme royal français. Surnommé le Roi-Soleil, il fait de la France la première puissance européenne.",
                 facts: ["Règne de 72 ans, le plus long de l'histoire de France.", "Créateur du fastueux château de Versailles.", "Instaure l'étiquette de cour la plus raffinée d'Europe.", "Mène de nombreuses guerres pour étendre le territoire français."],
-                role: "Monarque absolu qui centralise le pouvoir royal et fait rayonner la culture française en Europe.", heritage: "Modèle de l'absolutisme royal, créateur de Versailles, symbole intemporel de la grandeur française."
+                role: "Monarque absolu qui centralise le pouvoir royal et fait rayonner la culture française en Europe.", heritage: "Modèle de l'absolutisme royal, créateur de Versailles, symbole intemporel de la grandeur française.",
+                rpg: {
+                    classe: "Roi Légendaire", faction: "Royauté",
+                    competences: [ { nom: "Règne Absolu", desc: "Impose sa volonté royale", icon: "⚔️" }, { nom: "Éclat Royal", desc: "Éblouit par sa magnificence", icon: "✨" }, { nom: "Majesté Divine", desc: "Incarne le pouvoir divin", icon: "🌟" }, { nom: "Vision d'Empire", desc: "Bâtit la grandeur française", icon: "🏰" } ],
+                    ultime: { nom: "ÉCLAT DU SOLEIL", desc: "Éblouit tous ses adversaires par sa magnificence royale" },
+                    relations: { allies: ["Anne d'Autriche", "Mazarin", "Colbert", "Mme de Maintenon"], rivaux: ["Duc de Beaufort", "La Voisin"], amours: ["Marie Mancini", "Mme de Montespan"] }
+                }
             },
             "marie-mancini": {
                 name: "Marie Mancini", subtitle: "Le premier amour", dates: "1639-1715", icon: "sparkles", mainList: true, isFictional: false, actor: "Valentine Delassus",
                 quote: "Vous êtes roi, vous pleurez, et je pars.", intro: "Nièce du puissant cardinal Mazarin, Marie Mancini est une intellectuelle brillante qui fut le premier grand amour passionné du jeune Louis XIV.",
                 facts: ["Initie le jeune roi à la littérature, à l'art et à la beauté.", "Sa liaison avec le roi manque de faire échouer la paix avec l'Espagne.", "Est exilée de la cour par son propre oncle pour forcer le mariage royal."],
-                role: "Catalyseur de l'éveil culturel et sentimental du jeune souverain avant qu'il n'assume son rôle d'État.", heritage: "L'image tragique du sacrifice de l'amour personnel sur l'autel impitoyable de la raison d'État."
+                role: "Catalyseur de l'éveil culturel et sentimental du jeune souverain avant qu'il n'assume son rôle d'État.", heritage: "L'image tragique du sacrifice de l'amour personnel sur l'autel impitoyable de la raison d'État.",
+                rpg: {
+                    classe: "Dame de Cœur", faction: "Courtisane",
+                    competences: [ { nom: "Charme Italien", desc: "Séduction naturelle", icon: "🇮🇹" }, { nom: "Poésie", desc: "Touche les cœurs", icon: "📝" }, { nom: "Mélancolie", desc: "Émotion profonde", icon: "😢" }, { nom: "Passion", desc: "Amour impossible", icon: "💔" } ],
+                    ultime: { nom: "CŒUR BRISÉ", desc: "Son amour interdit touche l'âme de tous ceux qui l'entendent" },
+                    relations: { allies: ["Mazarin", "Ninon", "Molière"], rivaux: ["Anne d'Autriche", "Mme de Montespan"], amours: ["Louis XIV"] }
+                }
             },
             "mazarin": {
                 name: "Cardinal Mazarin", subtitle: "Le principal ministre", dates: "1602-1661", icon: "book", mainList: true, isFictional: false, actor: "Baptiste Desrosiers",
                 quote: "Le temps et moi, nous sommes deux.", intro: "Parrain de Louis XIV et habile diplomate, il gouverne la France avec Anne d'Autriche durant la minorité du roi.",
                 facts: ["Triomphe des révoltes nobles et parlementaires de la Fronde.", "Signe des traités de paix majeurs qui étendent les frontières.", "Forme politiquement Louis XIV à l'exercice implacable du pouvoir absolu."],
-                role: "Artisan de la pacification du royaume et maître à penser politique du jeune Roi-Soleil.", heritage: "A légué à Louis XIV un royaume puissant, uni, et une autorité royale totalement restaurée."
+                role: "Artisan de la pacification du royaume et maître à penser politique du jeune Roi-Soleil.", heritage: "A légué à Louis XIV un royaume puissant, uni, et une autorité royale restaurée.",
+                rpg: {
+                    classe: "Stratège Politique", faction: "Cour Royale",
+                    competences: [ { nom: "Stratégie", desc: "Maître du jeu", icon: "🧩" }, { nom: "Diplomatie", desc: "Négociateur né", icon: "🤝" }, { nom: "Vision d'État", desc: "Pense la grandeur", icon: "🏛️" }, { nom: "Mentor", desc: "Éducateur royal", icon: "👨‍🏫" } ],
+                    ultime: { nom: "MAÎTRE DU JEU", desc: "Manipule les événements pour servir la grandeur de la France" },
+                    relations: { allies: ["Anne d'Autriche", "Louis XIV", "Mancini"], rivaux: ["Frondeurs", "Duc de Beaufort"], amours: ["Anne d'Autriche"] }
+                }
             },
             "anne-autriche": {
                 name: "Anne d'Autriche", subtitle: "La Reine Mère", dates: "1601-1666", icon: "crown", mainList: true, isFictional: false, actor: "Léa Douady",
                 quote: "Mon fils, soyez le maître.", intro: "Reine de France, mère de Louis XIV, elle assure la régence du royaume d'une main de fer aux côtés de Mazarin.",
                 facts: ["Défend farouchement l'autorité de son fils face aux frondeurs.", "Soutient indéfectiblement Mazarin malgré la haine du peuple.", "Transmet à Louis XIV une profonde piété catholique."],
-                role: "Régente inflexible et garante de la transmission intacte du pouvoir absolu à son fils.", heritage: "L'incarnation de la mère protectrice de la couronne et d'une souveraine inébranlable dans la tempête."
+                role: "Régente inflexible et garante de la transmission intacte du pouvoir absolu à son fils.", heritage: "L'incarnation de la mère protectrice de la couronne et d'une souveraine inébranlable dans la tempête.",
+                rpg: {
+                    classe: "Régente Sage", faction: "Royauté",
+                    competences: [ { nom: "Amour Maternel", desc: "Dévouement absolu", icon: "💝" }, { nom: "Sagesse", desc: "Expérience du pouvoir", icon: "👑" }, { nom: "Force Intérieure", desc: "Résiste aux épreuves", icon: "💪" }, { nom: "Dévotion", desc: "Foi profonde", icon: "🙏" } ],
+                    ultime: { nom: "PROTECTION MATERNELLE", desc: "Protège et guide par l'amour inconditionnel d'une mère" },
+                    relations: { allies: ["Mazarin", "Louis XIV", "Clergé"], rivaux: ["Frondeurs", "Ennemis du roi"], amours: ["Louis XIII", "Mazarin"] }
+                }
             },
             "montespan": {
                 name: "Madame de Montespan", subtitle: "La favorite flamboyante", dates: "1640-1707", icon: "sparkles", mainList: true, isFictional: false, actor: "Chloé Woringer",
                 quote: "Je veux être la maîtresse du maître.", intro: "Favorite incontestée de Louis XIV pendant plus d'une décennie, elle domine la cour par sa beauté, son luxe et son ambition redoutable.",
                 facts: ["Donne sept enfants au roi, légitimés par la suite.", "Grande protectrice des arts et du luxe à Versailles.", "Chute dramatiquement lors de la sombre affaire des Poisons."],
-                role: "Incarne le faste, l'esprit piquant et la démesure des premières décennies triomphales du règne.", heritage: "Symbole intemporel de l'influence féminine absolue mais éphémère à la cour."
+                role: "Incarne le faste, l'esprit piquant et la démesure des premières décennies triomphales du règne.", heritage: "Symbole intemporel de l'influence féminine absolue mais éphémère à la cour.",
+                rpg: {
+                    classe: "Enchanteresse", faction: "Courtisane",
+                    competences: [ { nom: "Séduction", desc: "Charme irrésistible", icon: "💋" }, { nom: "Intrigue", desc: "Maîtrise des complots", icon: "🎭" }, { nom: "Mystères", desc: "Pratiques occultes", icon: "🔮" }, { nom: "Fascination", desc: "Beauté envoûtante", icon: "✨" } ],
+                    ultime: { nom: "SORTILÈGE D'AMOUR", desc: "Ensorcelle par sa beauté et ses mystères occultes" },
+                    relations: { allies: ["La Voisin", "Molière"], rivaux: ["Mme de Maintenon", "Marie Mancini"], amours: ["Louis XIV"] }
+                }
             },
             "maintenon": {
                 name: "Madame de Maintenon", subtitle: "L'épouse secrète", dates: "1635-1719", icon: "feather", mainList: true, isFictional: false, actor: "Mila Le Nestour",
                 quote: "Il n'y a rien de plus habile qu'une conduite irréprochable.", intro: "D'abord discrète gouvernante des enfants illégitimes du roi, Françoise d'Aubigné devient sa dernière favorite puis son épouse secrète.",
                 facts: ["Épouse secrètement Louis XIV à la mort de la reine.", "Exerce une influence moralisatrice et profondément religieuse sur la cour.", "Fonde la Maison royale d'éducation de Saint-Cyr pour les jeunes filles nobles."],
-                role: "Confidente suprême et influence stabilisatrice (et austère) de la seconde moitié du règne de Louis XIV.", heritage: "La création de Saint-Cyr, qui représente un modèle pionnier pour l'éducation des femmes en France."
+                role: "Confidente suprême et influence stabilisatrice (et austère) de la seconde moitié du règne de Louis XIV.", heritage: "La création de Saint-Cyr, qui représente un modèle pionnier pour l'éducation des femmes en France.",
+                rpg: {
+                    classe: "Conseillère Sage", faction: "Dame de cour",
+                    competences: [ { nom: "Sagesse Politique", desc: "Conseil avisé", icon: "🧠" }, { nom: "Éducation Noble", desc: "Pédagogie", icon: "🎓" }, { nom: "Discrétion", desc: "Pouvoir dans l'ombre", icon: "👤" }, { nom: "Piété", desc: "Foi sincère", icon: "🙏" } ],
+                    ultime: { nom: "CONSEIL ÉCLAIRÉ", desc: "Guide les décisions par sa sagesse et sa discrétion" },
+                    relations: { allies: ["Louis XIV", "Éducateurs"], rivaux: ["Mme de Montespan", "Libertins"], amours: ["Louis XIV", "Paul Scarron"] }
+                }
             },
             "monsieur": {
                 name: "Monsieur", subtitle: "Le frère du Roi", dates: "1640-1701", icon: "fleur", mainList: true, isFictional: false, actor: "Lucas Liaubet Correa",
                 quote: "Je suis né pour briller à l'ombre du Soleil.", intro: "Philippe d'Orléans, frère cadet de Louis XIV. Brillant stratège, il est souvent écarté du pouvoir politique par un roi redoutant son envergure.",
                 facts: ["Remporte de grandes victoires militaires pour la France.", "Connu pour son excentricité, son goût du faste, ses mœurs libérées et ses favoris.", "Mène une vie de cour brillante et mondaine au Palais-Royal."],
-                role: "Soutien indéfectible de la couronne tout en incarnant une cour alternative, intellectuelle et festive.", heritage: "Fondateur de la maison d'Orléans, ancêtre de presque toutes les familles royales catholiques actuelles."
+                role: "Soutien indéfectible de la couronne tout en incarnant une cour alternative, intellectuelle et festive.", heritage: "Fondateur de la maison d'Orléans, ancêtre de presque toutes les familles royales catholiques actuelles.",
+                rpg: {
+                    classe: "Prince Rebelle", faction: "Royauté",
+                    competences: [ { nom: "Élégance", desc: "Style sophistiqué", icon: "💅" }, { nom: "Bravoure", desc: "Héros de guerre", icon: "⚔️" }, { nom: "Esprit Libre", desc: "Rejette les conventions", icon: "🦋" }, { nom: "Loyauté", desc: "Fidélité au Roi", icon: "👑" } ],
+                    ultime: { nom: "AUTHENTICITÉ ROYALE", desc: "Inspire par son courage à être soi-même malgré les conventions" },
+                    relations: { allies: ["Louis XIV", "Artistes"], rivaux: ["Courtisans"], amours: ["Épouses", "Favoris"] }
+                }
             },
             "colbert": {
                 name: "Jean-Baptiste Colbert", subtitle: "Le grand intendant", dates: "1619-1683", icon: "book", mainList: true, isFictional: false, actor: "Arthur Devaux",
                 quote: "Il faut jeter des millions quand il s'agit de votre gloire.", intro: "Contrôleur général des finances et ministre infatigable, il est l'homme de l'ombre et l'architecte de la puissance économique française.",
                 facts: ["Redresse spectaculairement les finances du royaume de France.", "Fonde les grandes manufactures royales (Gobelins, Saint-Gobain).", "Développe massivement le commerce et la puissante marine de guerre."],
-                role: "Bâtisseur de la puissance matérielle, industrielle, navale et administrative de la France sous Louis XIV.", heritage: "Le 'colbertisme' (doctrine politico-économique) et des institutions administratives toujours existantes."
+                role: "Bâtisseur de la puissance matérielle, industrielle, navale et administrative de la France sous Louis XIV.", heritage: "Le 'colbertisme' (doctrine politico-économique) et des institutions administratives toujours existantes.",
+                rpg: {
+                    classe: "Génie Économique", faction: "État",
+                    competences: [ { nom: "Finances", desc: "Maîtrise de l'argent", icon: "💎" }, { nom: "Industrie", desc: "Vision économique", icon: "🏭" }, { nom: "Réformes", desc: "Transformation", icon: "⚖️" }, { nom: "Rigueur", desc: "Organisation", icon: "📊" } ],
+                    ultime: { nom: "PROSPÉRITÉ ROYALE", desc: "Transforme les finances du royaume par son génie économique" },
+                    relations: { allies: ["Louis XIV", "Industriels"], rivaux: ["Louvois", "Noblesse frondeuse"], amours: ["La France", "Épouse"] }
+                }
             },
             "beaufort": {
                 name: "Duc de Beaufort", subtitle: "Le Roi des Halles", dates: "1616-1669", icon: "sword", mainList: true, isFictional: false, actor: "Alice Augereau",
                 quote: "Je suis le roi des Halles, et vous n'êtes que le ministre du roi.", intro: "Petit-fils d'Henri IV, ce prince charismatique et impétueux gagne la ferveur du peuple parisien lors des révoltes de la Fronde.",
                 facts: ["S'évade de manière rocambolesque du donjon de Vincennes en 1648.", "Devient la figure de proue populaire de la rébellion contre Mazarin.", "Se réconcilie avec le roi et devient un valeureux amiral de la flotte française."],
-                role: "Symbole de l'insoumission nobiliaire domptée, puis de la bravoure militaire au service strict de la couronne.", heritage: "Une figure romantique et populaire ayant inspiré la littérature de cape et d'épée (dont Alexandre Dumas)."
+                role: "Symbole de l'insoumission nobiliaire domptée, puis de la bravoure militaire au service strict de la couronne.", heritage: "Une figure romantique et populaire ayant inspiré la littérature de cape et d'épée (dont Alexandre Dumas).",
+                rpg: {
+                    classe: "Héros Populaire", faction: "Peuple",
+                    competences: [ { nom: "Bravoure", desc: "Courage légendaire", icon: "🛡️" }, { nom: "Charisme", desc: "Adoré du peuple", icon: "👥" }, { nom: "Fronde", desc: "Rébellion", icon: "🏴‍☠️" }, { nom: "Honneur", desc: "Code martial", icon: "🎖️" } ],
+                    ultime: { nom: "CRI DE GUERRE", desc: "Galvanise les troupes par son courage exemplaire" },
+                    relations: { allies: ["Peuple de Paris", "Frondeurs"], rivaux: ["Mazarin", "Louis XIV (Fronde)"], amours: ["Dames de la Cour"] }
+                }
             },
             "moliere": {
                 name: "Molière", subtitle: "Le génie de la comédie", dates: "1622-1673", icon: "masks", mainList: true, isFictional: false, actor: "Baptiste Desrosiers",
                 quote: "Le devoir de la comédie est de corriger les hommes en les divertissant.", intro: "Jean-Baptiste Poquelin, immense homme de théâtre et comédien, est le protégé de Louis XIV et l'organisateur de ses grands divertissements.",
                 facts: ["Révolutionne le théâtre comique et invente la comédie-ballet avec Lully.", "Dresse une satire féroce et brillante des travers de la société.", "Meurt de maladie à l'issue d'une représentation du Malade imaginaire."],
-                role: "Peintre implacable des mœurs de son temps et pilier indispensable du rayonnement culturel versaillais.", heritage: "Le répertoire le plus joué en France ; la langue française est couramment appelée la 'langue de Molière'."
+                role: "Peintre implacable des mœurs de son temps et pilier indispensable du rayonnement culturel versaillais.", heritage: "Le répertoire le plus joué en France ; la langue française est couramment appelée la 'langue de Molière'.",
+                rpg: {
+                    classe: "Maître des Arts", faction: "Peuple",
+                    competences: [ { nom: "Dramaturgie", desc: "Génie créatif", icon: "🎭" }, { nom: "Satire", desc: "Critique acérée", icon: "😂" }, { nom: "Observation", desc: "Peintre des mœurs", icon: "👁️" }, { nom: "Esprit Critique", desc: "Brise les dogmes", icon: "🧠" } ],
+                    ultime: { nom: "MIROIR DE LA SOCIÉTÉ", desc: "Révèle les vérités cachées par l'art de la comédie" },
+                    relations: { allies: ["Louis XIV", "Troupe"], rivaux: ["Dévots", "Critiques"], amours: ["Armande Béjart"] }
+                }
             },
             "scarron": {
                 name: "Scarron", subtitle: "Le maître du burlesque", dates: "1610-1660", icon: "feather", mainList: true, isFictional: false, actor: "Chloé Roumanus",
                 quote: "Je ne suis pas fait comme les autres hommes.", intro: "Auteur majeur, pionnier du burlesque, lourdement handicapé par la maladie. Il fut le premier époux de Françoise d'Aubigné (Madame de Maintenon).",
                 facts: ["Tient un salon littéraire parisien brillant, anti-conformiste et libre.", "Épouse la jeune et pauvre Françoise d'Aubigné pour la sauver de la misère.", "Offre un regard ironique et décalé, loin des fastes rigides de la cour royale."],
-                role: "Animateur d'une vie intellectuelle parisienne alternative, frondeuse et décomplexée.", heritage: "L'un des fondateurs du genre comique et parodique dans la littérature classique française du XVIIe siècle."
+                role: "Animateur d'une vie intellectuelle parisienne alternative, frondeuse et décomplexée.", heritage: "L'un des fondateurs du genre comique et parodique dans la littérature classique française du XVIIe siècle.",
+                rpg: {
+                    classe: "Poète Courageux", faction: "Peuple",
+                    competences: [ { nom: "Burlesque", desc: "Humour décalé", icon: "😂" }, { nom: "Courage", desc: "Face à l'adversité", icon: "💪" }, { nom: "Littérature", desc: "Plume de génie", icon: "✍️" }, { nom: "Humour", desc: "Rire salvateur", icon: "😄" } ],
+                    ultime: { nom: "RIRE THÉRAPEUTIQUE", desc: "Guérit les âmes par l'humour et la littérature" },
+                    relations: { allies: ["F. d'Aubigné", "Poètes"], rivaux: ["Auteurs classiques"], amours: ["F. d'Aubigné"] }
+                }
             },
             "ninon": {
                 name: "Ninon de l'Enclos", subtitle: "La femme libre", dates: "1620-1705", icon: "sparkles", mainList: true, isFictional: false, actor: "Inga Lee Yeskova",
                 quote: "La joie de l'esprit en marque la force.", intro: "Célèbre courtisane, femme de lettres et amie des grands esprits de son temps, elle est la figure de proue de l'épicurisme à Paris.",
                 facts: ["Tient le célèbre salon 'Le Marais', point de ralliement des élites intellectuelles.", "Revendique ouvertement l'indépendance financière, morale et amoureuse des femmes.", "Fascine et est respectée par la haute société malgré ses mœurs libres."],
-                role: "Incarnation éclatante de la liberté d'esprit et du libertinage philosophique au sein du Grand Siècle.", heritage: "Symbole intemporel de la femme affranchie des conventions morales strictes de son époque."
+                role: "Incarnation éclatante de la liberté d'esprit et du libertinage philosophique au sein du Grand Siècle.", heritage: "Symbole intemporel de la femme affranchie des conventions morales strictes de son époque.",
+                rpg: {
+                    classe: "Philosophe Libertine", faction: "Courtisane",
+                    competences: [ { nom: "Esprit Libre", desc: "Sans dogmes", icon: "🕊️" }, { nom: "Philosophie", desc: "Pensée moderne", icon: "💭" }, { nom: "Indépendance", desc: "Refus de soumission", icon: "🚫" }, { nom: "Charme", desc: "Séduction intellectuelle", icon: "🧠" } ],
+                    ultime: { nom: "LIBERTÉ D'ESPRIT", desc: "Inspire la liberté de pensée et l'émancipation" },
+                    relations: { allies: ["Philosophes", "Artistes"], rivaux: ["Dévots"], amours: ["Nombreux amants"] }
+                }
             },
             "voisin": {
                 name: "La Voisin", subtitle: "La devineresse des poisons", dates: "1640-1680", icon: "flask", mainList: true, isFictional: true, actor: "Louise Oziès Fournier",
                 quote: "La mort est un commerce comme un autre.", intro: "Figure de l'ombre redoutable et mystérieuse. Elle gravite dans les bas-fonds de Paris en vendant philtres d'amour, prédictions et poisons aux nobles prêts à tout.",
                 facts: ["Fournit à Madame de Montespan les remèdes occultes pour retenir le cœur du Roi.", "Incarne la part sombre, immorale et dangereuse de la haute société du Grand Siècle.", "Déclenche le scandale terrifiant de l'Affaire des Poisons qui secouera toute la cour."],
-                role: "Représenter la folie des grandeurs, l'avidité et la noirceur cachée derrière les dorures de Versailles.", heritage: "Incarne la transgression ultime et la chute morale inévitable des courtisans aveuglés par l'ambition."
+                role: "Représenter la folie des grandeurs, l'avidité et la noirceur cachée derrière les dorures de Versailles.", heritage: "Incarne la transgression ultime et la chute morale inévitable des courtisans aveuglés par l'ambition.",
+                rpg: {
+                    classe: "Empoisonneuse", faction: "Bas-fonds",
+                    competences: [ { nom: "Arts Occultes", desc: "Magie et rituels", icon: "🌙" }, { nom: "Poisons", desc: "Breuvages létaux", icon: "☠️" }, { nom: "Messes Noires", desc: "Cérémonies", icon: "⚫" }, { nom: "Manipulation", desc: "Contrôle mental", icon: "🧠" } ],
+                    ultime: { nom: "MALÉFICE FATAL", desc: "Maîtrise les forces obscures et les poisons les plus redoutables" },
+                    relations: { allies: ["Sorcières", "Clients"], rivaux: ["Police", "La Reynie"], amours: ["Intérêts vénaux"] }
+                }
             },
             "lisieux": {
                 name: "Mademoiselle de Lisieux", subtitle: "L'ingénue à la cour", dates: "1645-1690", icon: "fleur", mainList: true, isFictional: true, actor: "Eyleen Douat",
                 quote: "La lumière du Soleil brûle ceux qui s'en approchent de trop près.", intro: "Issue de la petite noblesse provinciale, elle monte à la cour avec des rêves de grandeur et de succès, gravitant innocemment autour des plus puissants.",
                 facts: ["Cherche désespérément à exister et à se faire remarquer dans la lumière du Roi-Soleil.", "Se confronte très rapidement aux rivalités impitoyables et aux manipulations cruelles des courtisans.", "Représente l'ambition d'élévation sociale absolue et parfois naïve propre à l'époque."],
-                role: "Illustrer la très grande fragilité des courtisans et le miroir aux alouettes que représentait l'entourage direct du Roi.", heritage: "Dévoile les coulisses souvent terribles, froides et impitoyables cachées derrière l'étiquette royale."
+                role: "Illustrer la très grande fragilité des courtisans et le miroir aux alouettes que représentait l'entourage direct du Roi.", heritage: "Dévoile les coulisses souvent terribles, froides et impitoyables cachées derrière l'étiquette royale.",
+                rpg: {
+                    classe: "Dame de Compagnie", faction: "Dame de cour",
+                    competences: [ { nom: "Discrétion", desc: "Silence absolu", icon: "🤫" }, { nom: "Loyauté", desc: "Fidélité sans faille", icon: "💯" }, { nom: "Observation", desc: "Perception fine", icon: "👁️" }, { nom: "Service", desc: "Dévouement total", icon: "🤝" } ],
+                    ultime: { nom: "OMBRE FIDÈLE", desc: "Sert avec une loyauté et une discrétion exemplaires" },
+                    relations: { allies: ["Noblesse provinciale"], rivaux: ["Intrigants"], amours: ["Rêves romantiques"] }
+                }
             },
             "isabelle": {
                 name: "Isabelle", subtitle: "La fille du peuple", dates: "1630-1685", icon: "sparkles", mainList: true, isFictional: true, actor: "Inès Berger",
                 quote: "Même les ombres ont le droit d'aimer.", intro: "Jeune roturière rebelle et passionnée au destin romanesque. Elle se dresse contre les injustices et vit une romance impossible avec le noble Duc de Beaufort.",
                 facts: ["Incarne avec force la voix de la rue, la misère et les aspirations brisées des roturiers.", "Met en lumière la rigidité absolue des barrières sociales de l'époque à travers ses tourments amoureux.", "Soutient activement la Fronde et la rébellion populaire contre Mazarin."],
-                role: "Représenter le peuple de France, dramatiquement oublié de la grande Histoire, qui subit seul les guerres et les impôts.", heritage: "Apporte l'indispensable dimension populaire, pure, humaine et intimement tragique à l'œuvre musicale."
+                role: "Représenter le peuple de France, dramatiquement oublié de la grande Histoire, qui subit seul les guerres et les impôts.", heritage: "Apporte l'indispensable dimension populaire, pure, humaine et intimement tragique à l'œuvre musicale.",
+                rpg: {
+                    classe: "Âme Pure", faction: "Peuple",
+                    competences: [ { nom: "Pureté", desc: "Innocence touchante", icon: "😇" }, { nom: "Nature", desc: "Beauté authentique", icon: "🌿" }, { nom: "Simplicité", desc: "Émotions vraies", icon: "💫" }, { nom: "Amour", desc: "Sentiments sincères", icon: "💖" } ],
+                    ultime: { nom: "GRÂCE INNOCENTE", desc: "Touche les cœurs par sa pureté et sa sincérité absolue" },
+                    relations: { allies: ["Artisans", "Paysans"], rivaux: ["Dames hautaines"], amours: ["Duc de Beaufort"] }
+                }
             },
             "enfant-roi": {
                 name: "L'enfant roi", subtitle: "Le Grand Dauphin", dates: "1661-1711", icon: "crown", mainList: true, isFictional: false, actor: "Leyton Guillot",
                 quote: "Je serai roi un jour... si Dieu le veut.", intro: "Louis de France, fils aîné et héritier légitime de Louis XIV. Il est élevé dans l'exigence implacable de son futur rôle de monarque.",
                 facts: ["Reçoit l'éducation la plus stricte de son temps, supervisée par le théoricien Bossuet.", "S'illustre comme un excellent commandant lors des grandes campagnes militaires.", "Décède tragiquement avant son père, sans jamais avoir accédé au trône."],
-                role: "Héritier loyal, compétent, mais vivant perpétuellement écrasé sous l'ombre de son père.", heritage: "A assuré la pérennité de la dynastie (il est le grand-père du futur Louis XV et du roi d'Espagne)."
+                role: "Héritier loyal, compétent, mais vivant perpétuellement écrasé sous l'ombre de son père.", heritage: "A assuré la pérennité de la dynastie (il est le grand-père du futur Louis XV et du roi d'Espagne).",
+                rpg: {
+                    classe: "Roi en Devenir", faction: "Royauté",
+                    competences: [ { nom: "Innocence", desc: "Pureté enfantine", icon: "😇" }, { nom: "Apprentissage", desc: "Soif de grandir", icon: "📚" }, { nom: "Détermination", desc: "Volonté d'acier", icon: "💪" }, { nom: "Charme", desc: "Attendrissement", icon: "✨" } ],
+                    ultime: { nom: "PROMESSE D'AVENIR", desc: "Porte en lui la promesse de la grandeur future de la France" },
+                    relations: { allies: ["Anne d'Autriche", "Précepteurs"], rivaux: ["La Fronde"], amours: ["Amour filial"] }
+                }
             },
 
             // RÔLES DE L'ENSEMBLE
             "les-courtisanes": {
-                name: "Les Courtisanes", subtitle: "L'art de paraître", dates: "17e Siècle", icon: "fleur", mainList: true, isFictional: false, actor: "Charlotte Lespets, Colette Disney, Justine Douady, Madeline Quantin, Manon Alliaume, Santina Grech",
+                name: "Les Courtisanes", subtitle: "L'art de paraître", dates: "17e Siècle", icon: "fleur", mainList: true, isFictional: false, actor: "Ensemble",
                 quote: "L'apparence est notre première noblesse, et la médisance notre épée.", intro: "Évoluant dans les salons de Versailles, elles utilisent la mode, les bijoux et l'esprit pour se démarquer dans la foule de nobles au plus près du pouvoir.",
                 facts: ["Suivent à la lettre les changements constants et capricieux de l'Étiquette.", "Dépensent des fortunes colossales pour paraître dans les bonnes grâces du Roi.", "Cachent leurs véritables émotions derrière un masque permanent de politesse."],
-                role: "Incarner la compétition féroce, les rumeurs et le luxe ostentatoire qui ruinaient la noblesse française.", heritage: "Illustre le piège doré qu'était Versailles pour les nobles, tenus en laisse par le paraître."
+                role: "Incarner la compétition féroce, les rumeurs et le luxe ostentatoire qui ruinaient la noblesse française.", heritage: "Illustre le piège doré qu'était Versailles pour les nobles, tenus en laisse par le paraître.",
+                rpg: {
+                    classe: "Illusionniste", faction: "Cour Royale",
+                    competences: [ { nom: "Mode", desc: "Dicte les tendances", icon: "👗" }, { nom: "Médisance", desc: "Brisent des vies", icon: "🗣️" }, { nom: "Danse", desc: "Brille au bal", icon: "💃" }, { nom: "Masque", desc: "Cache les émotions", icon: "🎭" } ],
+                    ultime: { nom: "ILLUSION DORÉE", desc: "Éblouit et dupe par le luxe et l'artifice" },
+                    relations: { allies: ["Modistes", "Joailliers"], rivaux: ["Dévots", "Rivales"], amours: ["Pouvoir"] }
+                }
             },
             "les-danseurs": {
-                name: "Les Danseurs", subtitle: "L'art du mouvement", dates: "17e Siècle", icon: "sparkles", mainList: true, isFictional: false, actor: "Arthur Devaux, Charlotte Lespets, Chloé Roumanus, Chloé Woringer, Colette Disney, Eyleen Douat, Inga Lee Yeskova, Juliette Pedron, Justine Douady, Leyton Guillot, Madeline Quantin, Manon Alliaume, Santina Grech, Élise Devaux",
+                name: "Les Danseurs", subtitle: "L'art du mouvement", dates: "17e Siècle", icon: "sparkles", mainList: true, isFictional: false, actor: "Ensemble",
                 quote: "Tant que la musique joue, la cour oublie la misère du monde.", intro: "La danse est au cœur de la vie de cour et des divertissements de Versailles. Le Roi lui-même, grand passionné, excelle dans cet art et se produit sur scène.",
                 facts: ["Participent aux fastueux ballets de cour et comédies-ballets (de Lully et Molière).", "S'entraînent quotidiennement pour atteindre la grâce absolue exigée par le souverain.", "Rythment les fêtes grandioses qui durent parfois plusieurs jours sans interruption."],
-                role: "Symboliser l'exigence artistique et la perfection esthétique imposées par Louis XIV à sa cour.", heritage: "Ont posé les bases de la danse classique mondiale (les cinq positions ont été codifiées sous Louis XIV)."
+                role: "Symboliser l'exigence artistique et la perfection esthétique imposées par Louis XIV à sa cour.", heritage: "Ont posé les bases de la danse classique mondiale (les cinq positions ont été codifiées sous Louis XIV).",
+                rpg: {
+                    classe: "Artistes", faction: "Troupe",
+                    competences: [ { nom: "Grâce", desc: "Élégance naturelle", icon: "🌟" }, { nom: "Rythme", desc: "Harmonie musicale", icon: "🎵" }, { nom: "Esthétique", desc: "Beauté visuelle", icon: "✨" }, { nom: "Expression", desc: "Langage corporel", icon: "💫" } ],
+                    ultime: { nom: "DANSE ENVOÛTANTE", desc: "Hypnotise l'assemblée par la beauté de son art" },
+                    relations: { allies: ["Musiciens", "Lully"], rivaux: ["Critiques", "Dévots"], amours: ["L'Art"] }
+                }
             },
             "le-peuple": {
-                name: "Le Peuple de Paris", subtitle: "La voix de la rue", dates: "17e Siècle", icon: "users", mainList: true, isFictional: false, actor: "Arthur Devaux, Charlotte Lespets, Chloé Roumanus, Chloé Woringer, Colette Disney, Eyleen Douat, Juliette Pedron, Madeline Quantin, Manon Alliaume, Santina Grech, Élise Devaux",
+                name: "Le Peuple de Paris", subtitle: "La voix de la rue", dates: "17e Siècle", icon: "users", mainList: true, isFictional: false, actor: "Ensemble",
                 quote: "Ceux qui bâtissent les palais dorment dans la boue.", intro: "Loin des fastes éblouissants de Versailles, la majorité des Français (paysans, artisans, bourgeois) subit le poids écrasant de la monarchie absolue.",
                 facts: ["Subit directement les conséquences des guerres interminables, des impôts et des famines.", "Soutient activement les frondeurs contre Mazarin dans l'espoir de jours meilleurs.", "Incarne la réalité brutale et souvent oubliée derrière les dorures de l'Histoire."],
-                role: "Rappeler le contraste saisissant et tragique entre la misère populaire et le luxe inouï de la cour.", heritage: "Le moteur silencieux de l'Histoire de France, annonciateur lointain des futures révolutions."
+                role: "Rappeler le contraste saisissant et tragique entre la misère populaire et le luxe inouï de la cour.", heritage: "Le moteur silencieux de l'Histoire de France, annonciateur lointain des futures révolutions.",
+                rpg: {
+                    classe: "Représentants", faction: "Tiers État",
+                    competences: [ { nom: "Gronde", desc: "Voix du peuple", icon: "🗣️" }, { nom: "Force", desc: "Puissance de l'union", icon: "💪" }, { nom: "Sagesse", desc: "Bon sens rural", icon: "🌾" }, { nom: "Solidarité", desc: "Entraide", icon: "❤️" } ],
+                    ultime: { nom: "ÂME DE LA FRANCE", desc: "Incarne l'esprit et les valeurs profondes de la nation" },
+                    relations: { allies: ["Artisans", "Paysans"], rivaux: ["Noblesse arrogante", "Collecteurs d'impôts"], amours: ["La France"] }
+                }
             },
             "les-operateurs": {
-                name: "Les Opérateurs Rideaux", subtitle: "La magie de la scène", dates: "Intemporel", icon: "masks", mainList: true, isFictional: false, actor: "Juliette Pedron, Leyton Guillot, Louise Oziès Fournier, Valentine Delassus",
+                name: "Les Opérateurs Rideaux", subtitle: "La magie de la scène", dates: "Intemporel", icon: "masks", mainList: true, isFictional: false, actor: "Ensemble",
                 quote: "L'illusion est notre métier, l'ombre est notre domaine.", intro: "Acteurs de l'ombre indispensables au théâtre, ils rythment les actes et les transitions de la pièce. Sans eux, l'illusion théâtrale ne pourrait exister.",
                 facts: ["Contrôlent les apparitions et disparitions des décors et des comédiens.", "Garantissent la fluidité et le rythme implacable du spectacle musical.", "Sont les maîtres invisibles du temps et de l'espace sur scène."],
-                role: "Assurer la magie, la perfection technique et la beauté de la représentation en direct.", heritage: "Les véritables artisans de la machinerie théâtrale."
+                role: "Assurer la magie, la perfection technique et la beauté de la représentation en direct.", heritage: "Les véritables artisans de la machinerie théâtrale.",
+                rpg: {
+                    classe: "Maîtres de l'Ombre", faction: "Troupe",
+                    competences: [ { nom: "Mécanique", desc: "Gestion des décors", icon: "⚙️" }, { nom: "Illusion", desc: "Magie scénique", icon: "🎭" }, { nom: "Chronomètre", desc: "Maîtrise du temps", icon: "⏱️" }, { nom: "Ombre", desc: "Invisibilité", icon: "🤫" } ],
+                    ultime: { nom: "L'ILLUSION PARFAITE", desc: "Permet l'immersion totale du public sans accroc" },
+                    relations: { allies: ["Molière", "Comédiens"], rivaux: ["Contretemps", "Pannes techniques"], amours: ["La Scène"] }
+                }
             },
             "les-soldats": {
-                name: "Les Soldats", subtitle: "Le bras armé du Roi", dates: "17e Siècle", icon: "sword", mainList: true, isFictional: false, actor: "Chloé Roumanus, Eyleen Douat",
+                name: "Les Soldats", subtitle: "Le bras armé du Roi", dates: "17e Siècle", icon: "sword", mainList: true, isFictional: false, actor: "Ensemble",
                 quote: "La force de l'État repose sur le fer de nos épées.", intro: "Gardiens de l'ordre et exécutants fidèles des volontés royales, ils maintiennent l'autorité absolue du Roi-Soleil sur l'ensemble du territoire et aux frontières.",
                 facts: ["Mènent les innombrables guerres de Louis XIV pour agrandir la France.", "Maintiennent la paix intérieure et matent les révoltes populaires.", "Imposent le respect absolu et la crainte de la Couronne."],
-                role: "Incarner la force militaire, la rigueur et l'autorité implacable de l'État.", heritage: "L'outil principal de l'hégémonie de la puissance française en Europe."
+                role: "Incarner la force militaire, la rigueur et l'autorité implacable de l'État.", heritage: "L'outil principal de l'hégémonie de la puissance française en Europe.",
+                rpg: {
+                    classe: "Guerriers Loyaux", faction: "Armée Royale",
+                    competences: [ { nom: "Bravoure", desc: "Courage au combat", icon: "🛡️" }, { nom: "Armes", desc: "Maîtrise de l'épée", icon: "⚔️" }, { nom: "Patrie", desc: "Amour du pays", icon: "🇫🇷" }, { nom: "Bataillon", desc: "Esprit de corps", icon: "🤝" } ],
+                    ultime: { nom: "POUR LA FRANCE", desc: "Se bat avec un courage héroïque jusqu'à la mort" },
+                    relations: { allies: ["Louvois", "Officiers"], rivaux: ["Ennemis de l'État", "Déserteurs"], amours: ["Fiancées au village"] }
+                }
             },
             "les-serveurs": {
-                name: "Les Serveurs", subtitle: "L'art de recevoir", dates: "17e Siècle", icon: "wineglass", mainList: true, isFictional: false, actor: "Arthur Devaux, Chloé Roumanus",
+                name: "Les Serveurs", subtitle: "L'art de recevoir", dates: "17e Siècle", icon: "wineglass", mainList: true, isFictional: false, actor: "Ensemble",
                 quote: "Chaque plat servi est une démonstration de puissance.", intro: "Indispensables au bon déroulement des immenses banquets de la cour (le 'Grand Couvert'), ils orchestrent les repas avec une précision chorégraphiée millimétrée.",
                 facts: ["Gèrent les festins royaux qui comptent parfois des dizaines de plats somptueux.", "Évoluent silencieusement et avec une grande discrétion parmi les plus puissants du royaume.", "Participent à l'étalage de la richesse de la France devant les ambassadeurs étrangers."],
-                role: "Incarner le faste, l'organisation et la démesure de l'hospitalité versaillaise.", heritage: "Ont codifié l'excellence de la gastronomie et du service 'à la française'."
+                role: "Incarner le faste, l'organisation et la démesure de l'hospitalité versaillaise.", heritage: "Ont codifié l'excellence de la gastronomie et du service 'à la française'.",
+                rpg: {
+                    classe: "Maîtres d'Hôtel", faction: "Service",
+                    competences: [ { nom: "Précision", desc: "Service millimétré", icon: "🍽️" }, { nom: "Œnologie", desc: "Savoir des vins", icon: "🍷" }, { nom: "Agilité", desc: "Rapidité discrète", icon: "🏃" }, { nom: "Écoute", desc: "Oreille attentive", icon: "👂" } ],
+                    ultime: { nom: "LE GRAND COUVERT", desc: "Orchestre le banquet le plus fastueux du siècle" },
+                    relations: { allies: ["Cuisiniers", "Intendants"], rivaux: ["Convives capricieux", "Chiens de cour"], amours: ["Gastronomie"] }
+                }
             },
             "le-clerge": {
-                name: "Le Clergé", subtitle: "L'influence de l'Église", dates: "17e Siècle", icon: "church", mainList: true, isFictional: false, actor: "Arthur Devaux, Leyton Guillot",
+                name: "Le Clergé", subtitle: "L'influence de l'Église", dates: "17e Siècle", icon: "church", mainList: true, isFictional: false, actor: "Ensemble",
                 quote: "Dieu établit les rois comme ses ministres, et règne par eux sur les peuples.", intro: "Gardiens de la foi catholique, l'Évêque et son assistant rappellent la nature divine du pouvoir royal et orientent les décisions morales du royaume.",
                 facts: ["Légitiment le pouvoir absolu de droit divin du Roi (comme le fait Bossuet).", "Influencent fortement les politiques de tolérance religieuse (révocation de l'Édit de Nantes).", "Veillent à la piété de la famille royale, particulièrement sous l'influence de Madame de Maintenon."],
-                role: "La caution théologique, morale et spirituelle incontestable de la monarchie.", heritage: "Le maintien strict de la religion d'État au cœur de la politique française."
+                role: "La caution théologique, morale et spirituelle incontestable de la monarchie.", heritage: "Le maintien strict de la religion d'État au cœur de la politique française.",
+                rpg: {
+                    classe: "Guides Spirituels", faction: "Clergé",
+                    competences: [ { nom: "Éloquence", desc: "Prêches enflammés", icon: "📖" }, { nom: "Autorité", desc: "Pression morale", icon: "⚖️" }, { nom: "Pardon", desc: "Absolution des péchés", icon: "🕊️" }, { nom: "Ferveur", desc: "Prière sincère", icon: "🙏" } ],
+                    ultime: { nom: "COURROUX DIVIN", desc: "Abat la foudre morale sur les pécheurs" },
+                    relations: { allies: ["Dévots", "Mme de Maintenon"], rivaux: ["Libertins", "Comédiens"], amours: ["L'Église"] }
+                }
             },
             "la-dame-de-cour": {
-                name: "La Dame de cour", subtitle: "Confidente et alliée", dates: "17e Siècle", icon: "crown", mainList: true, isFictional: false, actor: "Juliette Pedron",
+                name: "La Dame de cour", subtitle: "Confidente et alliée", dates: "17e Siècle", icon: "crown", mainList: true, isFictional: false, actor: "Ensemble",
                 quote: "La loyauté a un prix que seule la cour connaît.", intro: "Femme de la très haute noblesse attachée au service direct de la Reine ou des princesses, elle est à la fois servante de haut rang, chaperon et confidente.",
                 facts: ["Accompagne la famille royale dans l'absolu de tous ses déplacements quotidiens.", "Joue un rôle discret mais clé dans les négociations, les rumeurs et les alliances.", "Doit manœuvrer avec une extrême prudence pour ne pas s'attirer les foudres des favorites du Roi."],
-                role: "Montrer la grande complexité des relations féminines et des hiérarchies internes à la cour.", heritage: "Met en lumière le rôle diplomatique discret, mais souvent crucial, des femmes nobles."
+                role: "Montrer la grande complexité des relations féminines et des hiérarchies internes à la cour.", heritage: "Met en lumière le rôle diplomatique discret, mais souvent crucial, des femmes nobles.",
+                rpg: {
+                    classe: "Confidente Noble", faction: "Cour Royale",
+                    competences: [ { nom: "Étiquette", desc: "Maintien strict", icon: "🪭" }, { nom: "Secrets", desc: "Écoute les murmures", icon: "👂" }, { nom: "Alliances", desc: "Liens discrets", icon: "🤝" }, { nom: "Paraître", desc: "Garde la face", icon: "👗" } ],
+                    ultime: { nom: "GRÂCE VERSAILLAISE", desc: "Navigue dans les pires scandales sans une égratignure" },
+                    relations: { allies: ["La Reine", "Princesses"], rivaux: ["Intrigantes", "Parvenus"], amours: ["Alliances de raison"] }
+                }
             },
             "la-femme-de-chambre": {
-                name: "La Femme de chambre", subtitle: "Dans l'ombre des puissants", dates: "17e Siècle", icon: "feather", mainList: true, isFictional: false, actor: "Élise Devaux",
+                name: "La Femme de chambre", subtitle: "Dans l'ombre des puissants", dates: "17e Siècle", icon: "feather", mainList: true, isFictional: false, actor: "Ensemble",
                 quote: "Nous voyons tout, nous entendons tout, mais nous ne disons rien.", intro: "Le fonctionnement quotidien de la gigantesque machine qu'est Versailles repose sur une armée de serviteurs. Elle est au plus près de la stricte intimité des nobles.",
                 facts: ["Assiste aux levers, couchers, habillages et préparatifs complexes des grandes courtisanes.", "Détient souvent des secrets (lettres, rendez-vous) capables de faire basculer des destins.", "Assure le lien invisible entre le faste éblouissant des salons et la réalité rustique des coulisses."],
-                role: "Représenter le peuple travailleur, dévoué et silencieux qui maintient l'illusion de perfection du palais.", heritage: "Donne une voix à la population que la grande Histoire a souvent oubliée derrière les figures royales."
+                role: "Représenter le peuple travailleur, dévoué et silencieux qui maintient l'illusion de perfection du palais.", heritage: "Donne une voix à la population que la grande Histoire a souvent oubliée derrière les figures royales.",
+                rpg: {
+                    classe: "Serviteur Loyal", faction: "Service",
+                    competences: [ { nom: "Efficacité", desc: "Service impeccable", icon: "🏠" }, { nom: "Silence", desc: "Discrétion totale", icon: "🤐" }, { nom: "Dévouement", desc: "Loyauté absolue", icon: "💝" }, { nom: "Intimité", desc: "Connaît les secrets", icon: "🔍" } ],
+                    ultime: { nom: "INVISIBLE PRÉSENCE", desc: "Observe et agit sans jamais être remarquée" },
+                    relations: { allies: ["Autres serviteurs", "Le Peuple"], rivaux: ["Courtisans tyranniques"], amours: ["Fiancé roturier"] }
+                }
             },
             "le-medecin": {
-                name: "Le Médecin", subtitle: "La science balbutiante", dates: "17e Siècle", icon: "flask", mainList: true, isFictional: false, actor: "Louise Oziès Fournier",
+                name: "Le Médecin", subtitle: "La science balbutiante", dates: "17e Siècle", icon: "flask", mainList: true, isFictional: false, actor: "Ensemble",
                 quote: "La nature guérit la maladie, le médecin ne fait qu'amuser le malade.", intro: "À une époque où la médecine se limite encore trop souvent aux saignées et aux purges brutales, le médecin de cour tente par tous les moyens de préserver la santé des puissants.",
                 facts: ["Applique des remèdes souvent incertains, parfois plus dangereux que le mal lui-même.", "Assiste impuissant aux ravages des épidémies (variole) qui déciment même la famille royale.", "Est très fréquemment la cible des moqueries et satires mordantes (notamment dans les pièces de Molière)."],
-                role: "Montrer l'extrême vulnérabilité des corps, même royaux, face à la maladie et à la mort.", heritage: "Rappelle l'évolution difficile et les balbutiements de la science médicale du Grand Siècle."
+                role: "Montrer l'extrême vulnérabilité des corps, même royaux, face à la maladie et à la mort.", heritage: "Rappelle l'évolution difficile et les balbutiements de la science médicale du Grand Siècle.",
+                rpg: {
+                    classe: "Savant Guérisseur", faction: "Science",
+                    competences: [ { nom: "Saignée", desc: "Médecine brutale", icon: "🩸" }, { nom: "Botanique", desc: "Remèdes naturels", icon: "🌿" }, { nom: "Alchimie", desc: "Préparations savantes", icon: "💊" }, { nom: "Soin", desc: "Compassion médicale", icon: "❤️" } ],
+                    ultime: { nom: "GUÉRISON MIRACULEUSE", desc: "Tente le tout pour le tout et sauve la mise... parfois." },
+                    relations: { allies: ["Apothicaires", "Chirurgiens"], rivaux: ["Charlatans", "Molière"], amours: ["La Science"] }
+                }
             },
             "le-ministre": {
-                name: "Un Ministre", subtitle: "L'État en action", dates: "17e Siècle", icon: "book", mainList: true, isFictional: false, actor: "Santina Grech",
+                name: "Un Ministre", subtitle: "L'État en action", dates: "17e Siècle", icon: "book", mainList: true, isFictional: false, actor: "Ensemble",
                 quote: "Le pouvoir ne se donne pas, il s'administre avec rigueur.", intro: "Haute figure d'autorité au sein de la cour et du Conseil d'En-Haut, il incarne les rouages politiques et administratifs qui dirigent véritablement la France au nom du Roi.",
                 facts: ["Observe la société et conseille le souverain sur la gestion des affaires du royaume.", "Exécute fidèlement les ordres royaux pour asseoir le pouvoir absolu à travers le pays.", "Gère des portefeuilles écrasants : les impôts, les armées, le commerce ou la justice."],
-                role: "Incarner l'implacable machine étatique qui structure et unifie le pays d'une main de fer.", heritage: "L'administration centralisée moderne, l'un des plus grands héritages du règne de Louis XIV."
+                role: "Incarner l'implacable machine étatique qui structure et unifie le pays d'une main de fer.", heritage: "L'administration centralisée moderne, l'un des plus grands héritages du règne de Louis XIV.",
+                rpg: {
+                    classe: "Commis de l'État", faction: "Administration",
+                    competences: [ { nom: "Gestion", desc: "Organisation rigide", icon: "📜" }, { nom: "Justice", desc: "Loi du Roi", icon: "⚖️" }, { nom: "Décrets", desc: "Plume d'acier", icon: "✍️" }, { nom: "Raison", desc: "Logique d'État", icon: "💼" } ],
+                    ultime: { nom: "ORDRE ABSOLU", desc: "Fait taire toute contestation par la force de la loi" },
+                    relations: { allies: ["Colbert", "Louis XIV"], rivaux: ["Noblesse rebelle", "Contribuables"], amours: ["Le Pouvoir"] }
+                }
             },
 
 
             // HISTORIQUES (Cartes historiques uniquement - onglet 2)
             "le-notre": {
                 name: "André Le Nôtre", dates: "1613-1700", icon: "tree", mainList: false, isFictional: false, subtitle: "L'Architecte des Jardins",
-                quote: "La nature est mon seul guide.", intro: "Architecte paysagiste, créateur des jardins de Versailles.", facts: ["Créateur des jardins de Versailles.", "Invente le style à la française."], role: "Donne à Versailles sa splendeur paysagère.", heritage: "Maître incontesté de l'art paysager."
+                quote: "La nature est mon seul guide.", intro: "Architecte paysagiste, créateur des jardins de Versailles.", facts: ["Créateur des jardins de Versailles.", "Invente le style à la française."], role: "Donne à Versailles sa splendeur paysagère.", heritage: "Maître incontesté de l'art paysager.",
+                rpg: {
+                    classe: "Maître Jardinier", faction: "Artisans Royaux",
+                    competences: [ { nom: "Géométrie", desc: "Symétrie parfaite", icon: "📐" }, { nom: "Hydraulique", desc: "Jeux d'eau", icon: "⛲" }, { nom: "Botanique", desc: "Plantes rares", icon: "🌺" }, { nom: "Perspective", desc: "Optique infinie", icon: "👁️" } ],
+                    ultime: { nom: "JARDINS DE LÉGENDE", desc: "Dompte la nature pour la gloire du Roi" },
+                    relations: { allies: ["Louis XIV", "Mansart"], rivaux: ["Nature Sauvage"], amours: ["La Beauté Végétale"] }
+                }
             },
             "mansart": {
                 name: "Hardouin-Mansart", dates: "1646-1708", icon: "castle", mainList: false, isFictional: false, subtitle: "Le Premier Architecte",
-                quote: "L'architecture est la musique de l'espace.", intro: "Architecte prodige, il donne au classicisme sa grandeur.", facts: ["Achève Versailles.", "Construit les Invalides."], role: "Traducteur architectural de la grandeur absolue.", heritage: "L'esthétique classique française."
+                quote: "L'architecture est la musique de l'espace.", intro: "Architecte prodige, il donne au classicisme sa grandeur.", facts: ["Achève Versailles.", "Construit les Invalides."], role: "Traducteur architectural de la grandeur absolue.", heritage: "L'esthétique classique française.",
+                rpg: {
+                    classe: "Premier Architecte", faction: "Artisans Royaux",
+                    competences: [ { nom: "Classicisme", desc: "Style parfait", icon: "🏛️" }, { nom: "Démesure", desc: "Projets immenses", icon: "🏰" }, { nom: "Ingéniosité", desc: "Techniques neuves", icon: "⚙️" }, { nom: "Esthétique", desc: "Toits mansardés", icon: "🏠" } ],
+                    ultime: { nom: "GALERIE DES GLACES", desc: "Érige le couloir le plus resplendissant du monde" },
+                    relations: { allies: ["Le Brun", "Le Nôtre"], rivaux: ["Financiers stricts"], amours: ["La Pierre et l'Or"] }
+                }
             },
             "turenne": {
                 name: "Turenne", dates: "1611-1675", icon: "sword", mainList: false, isFictional: false, subtitle: "Le Maréchal de France",
-                quote: "La victoire appartient au plus persévérant.", intro: "L'un des plus grands tacticiens de l'histoire de France.", facts: ["Brille pendant la Fronde.", "Inhumé à Saint-Denis avec les rois."], role: "Le bras armé du début du règne.", heritage: "L'un des plus grands capitaines de l'Histoire."
+                quote: "La victoire appartient au plus persévérant.", intro: "L'un des plus grands tacticiens de l'histoire de France.", facts: ["Brille pendant la Fronde.", "Inhumé à Saint-Denis avec les rois."], role: "Le bras armé du début du règne.", heritage: "L'un des plus grands capitaines de l'Histoire.",
+                rpg: {
+                    classe: "Maréchal de Génie", faction: "Armée Royale",
+                    competences: [ { nom: "Tactique", desc: "Esprit vif", icon: "🧠" }, { nom: "Mouvement", desc: "Troupes rapides", icon: "🐎" }, { nom: "Loyauté", desc: "Bras du Roi", icon: "⚔️" }, { nom: "Stratégie", desc: "Anticipation", icon: "🗺️" } ],
+                    ultime: { nom: "GLOIRE MILITAIRE", desc: "Remporte la victoire par des manœuvres imprévisibles" },
+                    relations: { allies: ["Louis XIV", "Soldats"], rivaux: ["Condé (pendant Fronde)"], amours: ["La Patrie"] }
+                }
             },
             "conde": {
                 name: "Le Grand Condé", dates: "1621-1686", icon: "fleur", mainList: false, isFictional: false, subtitle: "Le Prince rebelle",
-                quote: "Je vaincrai ou je mourrai.", intro: "Prince du sang, général de génie, héros puis rebelle.", facts: ["Remporte Rocroi à 22 ans.", "Mène la Fronde des princes."], role: "Haute noblesse frondeuse soumise.", heritage: "Le mythe du prince chevaleresque."
+                quote: "Je vaincrai ou je mourrai.", intro: "Prince du sang, général de génie, héros puis rebelle.", facts: ["Remporte Rocroi à 22 ans.", "Mène la Fronde des princes."], role: "Haute noblesse frondeuse soumise.", heritage: "Le mythe du prince chevaleresque.",
+                rpg: {
+                    classe: "Prince Combattant", faction: "Haute Noblesse",
+                    competences: [ { nom: "Charge", desc: "Attaque frontale", icon: "🐎" }, { nom: "Fierté", desc: "Orgueil de sang", icon: "👑" }, { nom: "Rebellion", desc: "Esprit frondeur", icon: "💥" }, { nom: "Bravoure", desc: "Témérité", icon: "🛡️" } ],
+                    ultime: { nom: "FOUDRE DE ROCROI", desc: "Écrase les lignes ennemies avec une charge fulgurante" },
+                    relations: { allies: ["Frondeurs (jadis)", "L'Armée"], rivaux: ["Mazarin", "Turenne"], amours: ["La Gloire"] }
+                }
             },
             "bossuet": {
                 name: "Bossuet", dates: "1627-1704", icon: "church", mainList: false, isFictional: false, subtitle: "L'Aigle de Meaux",
-                quote: "Dieu établit les rois comme ses ministres.", intro: "Évêque, théoricien de la monarchie absolue.", facts: ["Justifie le pouvoir absolu de droit divin."], role: "La caution morale de l'absolutisme.", heritage: "L'un des plus grands maîtres de l'éloquence."
+                quote: "Dieu établit les rois comme ses ministres.", intro: "Évêque, théoricien de la monarchie absolue.", facts: ["Justifie le pouvoir absolu de droit divin."], role: "La caution morale de l'absolutisme.", heritage: "L'un des plus grands maîtres de l'éloquence.",
+                rpg: {
+                    classe: "Théologien Royal", faction: "Clergé",
+                    competences: [ { nom: "Éloquence", desc: "Orateur né", icon: "📖" }, { nom: "Doctrine", desc: "Droit divin", icon: "👑" }, { nom: "Pédagogie", desc: "Éduque le Dauphin", icon: "👨‍🏫" }, { nom: "Morale", desc: "Rigueur religieuse", icon: "⚖️" } ],
+                    ultime: { nom: "ORAISON FUNÈBRE", desc: "Marque les esprits par des discours éternels" },
+                    relations: { allies: ["Mme de Maintenon", "Louis XIV"], rivaux: ["Protestants", "Libertins"], amours: ["Dieu"] }
+                }
             },
             "luxembourg": {
                 name: "Duc de Luxembourg", dates: "1628-1695", icon: "sword", mainList: false, isFictional: false, subtitle: "Le Tapissier de Notre-Dame",
-                quote: "La guerre est mon élément.", intro: "Brillant maréchal de France, reste invaincu en Flandre.", facts: ["Général en chef victorieux."], role: "Le bouclier de la France.", heritage: "Réputation militaire intacte."
+                quote: "La guerre est mon élément.", intro: "Brillant maréchal de France, reste invaincu en Flandre.", facts: ["Général en chef victorieux."], role: "Le bouclier de la France.", heritage: "Réputation militaire intacte.",
+                rpg: {
+                    classe: "Maréchal Invaincu", faction: "Armée Royale",
+                    competences: [ { nom: "Surprise", desc: "Attaque éclair", icon: "⚡" }, { nom: "Victoire", desc: "Jamais défait", icon: "🏆" }, { nom: "Bravoure", desc: "Férocité", icon: "⚔️" }, { nom: "Trophées", desc: "Prend les drapeaux", icon: "🚩" } ],
+                    ultime: { nom: "BOUCLIER DES FLANDRES", desc: "Défend la frontière avec une efficacité redoutable" },
+                    relations: { allies: ["Louis XIV", "Louvois"], rivaux: ["Coalition européenne"], amours: ["La Guerre"] }
+                }
             },
             "vauban": {
                 name: "Vauban", dates: "1633-1707", icon: "castle", mainList: false, isFictional: false, subtitle: "L'ingénieur du Roi",
-                quote: "La sueur épargne le sang.", intro: "Ingénieur militaire, révolutionne la fortification.", facts: ["Construit la Ceinture de fer.", "Ne perd aucun siège."], role: "Sécurise les frontières du royaume.", heritage: "Un réseau de fortifications classé à l'UNESCO."
+                quote: "La sueur épargne le sang.", intro: "Ingénieur militaire, révolutionne la fortification.", facts: ["Construit la Ceinture de fer.", "Ne perd aucun siège."], role: "Sécurise les frontières du royaume.", heritage: "Un réseau de fortifications classé à l'UNESCO.",
+                rpg: {
+                    classe: "Génie Fortificateur", faction: "Armée Royale",
+                    competences: [ { nom: "Citadelles", desc: "Bâtisseur inouï", icon: "🏰" }, { nom: "Sièges", desc: "Fait tomber les murs", icon: "💥" }, { nom: "Calculs", desc: "Précision mortelle", icon: "📐" }, { nom: "Protection", desc: "Épargne ses hommes", icon: "🛡️" } ],
+                    ultime: { nom: "CEINTURE DE FER", desc: "Rend les frontières de la France totalement imprenables" },
+                    relations: { allies: ["Louis XIV", "L'Armée"], rivaux: ["Ennemis d'Europe"], amours: ["L'Ingénierie"] }
+                }
             },
             "philippe-anjou": {
                 name: "Philippe d'Anjou", dates: "1683-1746", icon: "crown", mainList: false, isFictional: false, subtitle: "Le roi d'Espagne",
-                quote: "Il n'y a plus de Pyrénées.", intro: "Petit-fils de Louis XIV, héritier de l'Empire espagnol.", facts: ["Devient roi d'Espagne en 1700."], role: "Instrument de la politique dynastique.", heritage: "La dynastie des Bourbons d'Espagne."
+                quote: "Il n'y a plus de Pyrénées.", intro: "Petit-fils de Louis XIV, héritier de l'Empire espagnol.", facts: ["Devient roi d'Espagne en 1700."], role: "Instrument de la politique dynastique.", heritage: "La dynastie des Bourbons d'Espagne.",
+                rpg: {
+                    classe: "Héritier Dynastique", faction: "Bourbons",
+                    competences: [ { nom: "Sang Bleu", desc: "Héritier légitime", icon: "🩸" }, { nom: "Adaptation", desc: "Culture espagnole", icon: "🇪🇸" }, { nom: "Couronne", desc: "Prend le pouvoir", icon: "👑" }, { nom: "Alliances", desc: "Union des royaumes", icon: "🤝" } ],
+                    ultime: { nom: "SOLEIL SUR L'ESPAGNE", desc: "Installe la famille Bourbon sur un nouveau trône" },
+                    relations: { allies: ["Louis XIV (grand-père)"], rivaux: ["Habsbourg", "Coalition"], amours: ["Marie-Louise de Savoie"] }
+                }
             },
             "marlborough": {
                 name: "Marlborough", dates: "1650-1722", icon: "sword", mainList: false, isFictional: false, subtitle: "Le stratège anglais",
-                quote: "Je crains plus les mots que les balles.", intro: "Général britannique, grand adversaire de Louis XIV.", facts: ["Inflige de lourdes défaites aux Français."], role: "Le frein à l'expansionnisme français.", heritage: "Une légende militaire britannique."
+                quote: "Je crains plus les mots que les balles.", intro: "Général britannique, grand adversaire de Louis XIV.", facts: ["Inflige de lourdes défaites aux Français."], role: "Le frein à l'expansionnisme français.", heritage: "Une légende militaire britannique.",
+                rpg: {
+                    classe: "Général Ennemi", faction: "Coalition Anglaise",
+                    competences: [ { nom: "Discipline", desc: "Troupes de fer", icon: "💂" }, { nom: "Alliance", desc: "Unit l'Europe", icon: "🤝" }, { nom: "Ténacité", desc: "Acharnement", icon: "💪" }, { nom: "Stratégie", desc: "Contre le Roi", icon: "🗺️" } ],
+                    ultime: { nom: "COALITION FATALE", desc: "Freine l'hégémonie de la France par des victoires décisives" },
+                    relations: { allies: ["Prince Eugène", "Angleterre"], rivaux: ["Louis XIV", "Armée Française"], amours: ["Sarah Churchill"] }
+                }
             }
         };
 
@@ -684,7 +989,7 @@
                 chars: [{id: "louis-xiv", name: "Louis XIV"}, {id: "luxembourg", name: "Luxembourg"}, {id: "vauban", name: "Vauban"}]
             },
             {
-                title: "Guerre de Succession d'Espagne", dates: "1701-1714", cat: "CONFLIT DYNASTIQUE", icon: "fleur",
+                title: "Guerre de Succession d'Espagne", dates: "1701-1714", cat: "CONFLIT DYNASTIQUE", icon: "sword",
                 desc: "Dernière grande guerre du règne pour placer le petit-fils du roi sur le trône d'Espagne.",
                 impact: "Épuisement du royaume mais victoire dynastique", cons: ["Philippe V devient roi d'Espagne", "Traité d'Utrecht"],
                 chars: [{id: "louis-xiv", name: "Louis XIV"}, {id: "philippe-anjou", name: "Philippe d'Anjou"}, {id: "marlborough", name: "Marlborough"}]
@@ -774,14 +1079,13 @@
 
         // --- LOGIQUE INTERACTIVE ---
 
-        // Masquer le bandeau Savoir-Vivre au scroll
         window.addEventListener('scroll', () => {
-            if(window.scrollY > 50) {
-                document.getElementById('savoirVivre').classList.add('hidden');
-            }
+            if(window.scrollY > 50) document.getElementById('savoirVivre').classList.add('hidden');
+            const btn = document.getElementById('bttBtn');
+            if (window.scrollY > 300) btn.classList.add('visible');
+            else btn.classList.remove('visible');
         });
 
-        // Support du Web Share API
         window.addEventListener('DOMContentLoaded', () => {
             document.getElementById('shareBtn').style.display = 'flex';
         });
@@ -816,59 +1120,45 @@
             }
         }
 
-        // Onglets avec mise à jour ARIA
         function switchTab(tabId) {
             document.querySelectorAll('.tab-content, .tab-btn').forEach(el => el.classList.remove('active'));
             document.getElementById('tab-' + tabId).classList.add('active');
             document.getElementById('btn-' + tabId).classList.add('active');
-            
             document.querySelectorAll('.tab-btn').forEach(el => el.setAttribute('aria-selected', 'false'));
             document.querySelectorAll('.tab-content').forEach(el => el.setAttribute('aria-hidden', 'true'));
-            
             document.getElementById('btn-' + tabId).setAttribute('aria-selected', 'true');
             document.getElementById('tab-' + tabId).setAttribute('aria-hidden', 'false');
-
             window.scrollTo({top: 0, behavior: 'smooth'});
         }
 
-        // Scroll Retour en haut
-        window.addEventListener('scroll', () => {
-            const btn = document.getElementById('bttBtn');
-            if (window.scrollY > 300) btn.classList.add('visible');
-            else btn.classList.remove('visible');
-        });
+        function toggleCardFlip() {
+            const inner = document.getElementById('modalFlipInner');
+            if(inner) inner.classList.toggle('is-flipped');
+        }
 
-        // Modale Personnage
         function openCharModal(charId) {
             const char = characters[charId];
             if (!char) return;
 
+            // Header Elements
             let emojiStrChar = icons[charId] || icons[char.icon] || icons.crown;
             document.getElementById('modalIcon').innerHTML = `<span class="emoji-icon">${emojiStrChar}</span>`;
-            
             document.getElementById('modalTitle').innerText = char.name;
             document.getElementById('modalSubtitle').innerText = char.subtitle;
             
             const quoteEl = document.getElementById('modalQuote');
-            if(char.quote) {
-                quoteEl.innerText = `« ${char.quote} »`;
-                quoteEl.style.display = "block";
-            } else {
-                quoteEl.style.display = "none";
-            }
+            if(char.quote) { quoteEl.innerText = `« ${char.quote} »`; quoteEl.style.display = "block"; } 
+            else { quoteEl.style.display = "none"; }
             
             const datesEl = document.getElementById('modalDates');
             datesEl.innerText = char.dates;
-            if (char.isFictional) datesEl.classList.add('fictif');
-            else datesEl.classList.remove('fictif');
+            if (char.isFictional) datesEl.classList.add('fictif'); else datesEl.classList.remove('fictif');
 
+            // --- FRONT CARD HTML ---
             let factsHtml = char.facts.map(f => `<li><span class="emoji-icon">${icons.crown}</span> <span>${f}</span></li>`).join('');
-            
             const roleTitle = char.isFictional ? "RÔLE SYMBOLIQUE :" : "RÔLE HISTORIQUE :";
             const heritageTitle = char.isFictional ? "SIGNIFICATION :" : "HÉRITAGE :";
-
-            // Injection dans le corps de la modale
-            document.getElementById('modalBody').innerHTML = `
+            let frontHtml = `
                 <div class="intro-text">${char.intro}</div>
                 <div class="ornament-divider"><span>♦</span></div>
                 <div class="section-title">✨ FAITS MARQUANTS</div>
@@ -882,6 +1172,66 @@
                     <div class="box-content">${char.heritage}</div>
                 </div>
             `;
+
+            // --- BACK CARD (RPG) HTML ---
+            const rpg = char.rpg;
+            let backHtml = '';
+            if(rpg) {
+                document.getElementById('flipBtn').style.display = 'flex';
+                let skillsHtml = rpg.competences.map(c => `
+                    <div class="rpg-skill-box">
+                        <div class="rpg-skill-name">${c.nom}</div>
+                        <div class="rpg-skill-icon">${c.icon}</div>
+                        <div class="rpg-skill-desc">${c.desc}</div>
+                    </div>
+                `).join('');
+                
+                let alliesHtml = rpg.relations.allies.map(a => `<li>${a}</li>`).join('');
+                let rivauxHtml = rpg.relations.rivaux.map(r => `<li>${r}</li>`).join('');
+                let amoursHtml = rpg.relations.amours.map(a => `<li>${a}</li>`).join('');
+
+                backHtml = `
+                    <div class="rpg-card">
+                        <div class="rpg-section-title"><span>COMPÉTENCES</span></div>
+                        <div class="rpg-skills">${skillsHtml}</div>
+                        
+                        <div class="rpg-section-title"><span>POUVOIR ULTIME</span></div>
+                        <div class="rpg-ult-box">
+                            <div class="rpg-ult-name">✦ ${rpg.ultime.nom} ✦</div>
+                            <div class="rpg-skill-desc" style="margin-top: 5px;">"${rpg.ultime.desc}"</div>
+                        </div>
+
+                        <div class="rpg-section-title"><span>✦ RELATIONS ✦</span></div>
+                        <div class="rpg-relations">
+                            <div class="rpg-rel-col">
+                                <div class="rpg-rel-title">✦ ALLIÉS ✦</div>
+                                <ul class="rpg-rel-list">${alliesHtml}</ul>
+                            </div>
+                            <div class="rpg-rel-col">
+                                <div class="rpg-rel-title">✠ RIVAUX ✠</div>
+                                <ul class="rpg-rel-list">${rivauxHtml}</ul>
+                            </div>
+                            <div class="rpg-rel-col">
+                                <div class="rpg-rel-title">♥ AMOURS ♥</div>
+                                <ul class="rpg-rel-list">${amoursHtml}</ul>
+                            </div>
+                        </div>
+                        <div class="rpg-footer">CLASSE : ${rpg.classe.toUpperCase()} / FACTION : ${rpg.faction.toUpperCase()}</div>
+                    </div>
+                `;
+            } else {
+                document.getElementById('flipBtn').style.display = 'none';
+            }
+
+            // --- INJECTION ---
+            document.getElementById('modalBody').innerHTML = `
+                <div class="flip-container" id="modalFlipContainer">
+                    <div class="flip-inner" id="modalFlipInner">
+                        <div class="flip-front">${frontHtml}</div>
+                        <div class="flip-back">${backHtml}</div>
+                    </div>
+                </div>
+            `;
             
             const modal = document.getElementById('charModal');
             modal.classList.add('active');
@@ -891,6 +1241,9 @@
 
         function closeModal(e) {
             if (e.target.classList.contains('modal-overlay') || e.target.classList.contains('modal-close')) {
+                const inner = document.getElementById('modalFlipInner');
+                if(inner) inner.classList.remove('is-flipped'); // Remet la carte à l'endroit en quittant
+                
                 const modal = document.getElementById('charModal');
                 modal.classList.remove('active');
                 modal.setAttribute('aria-hidden', 'true');
