@@ -226,23 +226,26 @@
         @media (max-width: 600px) {
             .modal-overlay { padding: 0; align-items: flex-start; }
             .modal-card { max-width: 100%; height: 100%; height: 100dvh; max-height: none; border-radius: 0; border: none; }
-            .modal-header-bg { padding-top: max(35px, env(safe-area-inset-top, 35px)); }
-            .modal-close, .modal-flip-btn { top: max(15px, env(safe-area-inset-top, 15px)); }
+            .modal-header-bg { padding-top: max(20px, env(safe-area-inset-top, 20px)); }
+            .modal-close, .modal-flip-btn { top: max(10px, env(safe-area-inset-top, 10px)); }
+            .modal-body { flex: 1; overflow-y: auto; -webkit-overflow-scrolling: touch; }
         }
-        .modal-header-bg { background: var(--primary-gradient); padding: 35px 20px 25px 20px; text-align: center; color: #FFF; position: relative; flex-shrink: 0;}
+        .modal-header-bg { background: var(--primary-gradient); padding: 20px 20px 15px 20px; text-align: center; color: #FFF; position: relative; flex-shrink: 0;}
         
-        .modal-controls { position: absolute; top: 15px; right: 15px; display: flex; gap: 8px;}
+        .modal-controls { position: absolute; top: 10px; right: 10px; display: flex; gap: 8px;}
         .modal-close, .modal-flip-btn {
-            background: rgba(255,255,255,0.2); border: none; width: 36px; height: 36px; border-radius: 50%; color: #FFF;
-            font-size: 1.2rem; cursor: pointer; display: flex; justify-content: center; align-items: center;
+            background: rgba(255,255,255,0.2); border: none; width: 32px; height: 32px; border-radius: 50%; color: #FFF;
+            font-size: 1.1rem; cursor: pointer; display: flex; justify-content: center; align-items: center;
             touch-action: manipulation; -webkit-tap-highlight-color: transparent; transition: background 0.2s;
         }
         .modal-close:active, .modal-flip-btn:active { background: rgba(255,255,255,0.4); transform: scale(0.9); }
         
-        .modal-icon { display: flex; justify-content: center; }
-        .modal-title { font-size: 2rem; margin: 0 0 5px 0; }
-        .modal-subtitle { font-size: 1rem; opacity: 0.9; margin-bottom: 12px; }
-        .modal-dates { background: rgba(255,255,255,0.2); padding: 4px 14px; border-radius: 20px; font-size: 0.85rem; display: inline-block; font-weight: bold; }
+        .modal-icon { display: flex; justify-content: center; margin-bottom: 5px; }
+        .modal-icon .emoji-icon { font-size: 32px; margin-bottom: 0; }
+        .modal-title { font-size: 1.6rem; margin: 0 0 2px 0; }
+        .modal-subtitle { font-size: 0.95rem; opacity: 0.9; margin-bottom: 5px; }
+        .modal-actor { font-size: 0.85rem; font-style: italic; color: rgba(255,255,255,0.85); margin-bottom: 8px; }
+        .modal-dates { background: rgba(255,255,255,0.2); padding: 3px 12px; border-radius: 20px; font-size: 0.8rem; display: inline-block; font-weight: bold; }
         .modal-dates.fictif { background: transparent; border: 1px dashed rgba(255, 255, 255, 0.7); color: #FFF; }
         
         .modal-body { padding: 25px 20px; flex-grow: 1;}
@@ -275,13 +278,13 @@
 
         /* --- RPG CARD STYLING --- */
         .rpg-card {
-            background: #1A2238; 
-            border: 3px solid var(--accent-color);
-            border-radius: 12px;
-            padding: 15px;
-            color: #fdfbf7;
+            background: transparent; 
+            border: none;
+            border-radius: 0;
+            padding: 0;
+            color: var(--dark-text);
             font-family: 'Playfair Display', serif;
-            box-shadow: inset 0 0 20px rgba(0,0,0,0.5);
+            box-shadow: none;
             margin-bottom: 10px;
         }
         .rpg-section-title {
@@ -292,11 +295,11 @@
         }
         .rpg-section-title::before {
             content: ''; position: absolute; top: 50%; left: 0; right: 0;
-            border-top: 1px solid rgba(226, 184, 106, 0.4); z-index: -1;
+            border-top: 1px solid rgba(92, 101, 205, 0.3); z-index: -1;
         }
         .rpg-section-title span {
-            background: #1A2238;
-            color: var(--accent-color);
+            background: #fff;
+            color: #5C65CD;
             padding: 0 15px;
             font-size: 0.85rem;
             font-weight: bold;
@@ -309,13 +312,13 @@
             gap: 10px;
         }
         .rpg-skill-box, .rpg-ult-box {
-            background: #fdfbf7;
-            color: #2c3550;
-            border: 2px solid var(--accent-color);
+            background: rgba(92, 101, 205, 0.05);
+            color: var(--dark-text);
+            border: 1px solid rgba(92, 101, 205, 0.2);
             border-radius: 6px;
             padding: 12px 8px;
             text-align: center;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+            box-shadow: none;
         }
         .rpg-skill-name {
             font-size: 0.75rem;
@@ -337,7 +340,7 @@
         .rpg-ult-name {
             font-size: 1rem;
             font-weight: bold;
-            color: #3B4387;
+            color: #5C65CD;
             text-transform: uppercase;
             letter-spacing: 1px;
         }
@@ -347,9 +350,9 @@
             gap: 8px;
         }
         .rpg-rel-col {
-            background: #fdfbf7;
-            color: #2c3550;
-            border: 2px solid var(--accent-color);
+            background: rgba(92, 101, 205, 0.05);
+            color: var(--dark-text);
+            border: 1px solid rgba(92, 101, 205, 0.2);
             border-radius: 4px;
             padding: 8px 5px;
             text-align: center;
@@ -360,9 +363,9 @@
             font-size: 0.65rem;
             font-weight: bold;
             margin-bottom: 6px;
-            border-bottom: 1px solid rgba(226, 184, 106, 0.5);
+            border-bottom: 1px solid rgba(92, 101, 205, 0.2);
             padding-bottom: 4px;
-            color: #3B4387;
+            color: #5C65CD;
         }
         .rpg-rel-list {
             list-style: none;
@@ -376,11 +379,11 @@
         .rpg-footer {
             text-align: center;
             font-size: 0.75rem;
-            color: var(--accent-color);
+            color: #5C65CD;
             font-family: sans-serif;
             letter-spacing: 1px;
             margin-top: 15px;
-            border-top: 1px solid rgba(226, 184, 106, 0.3);
+            border-top: 1px dashed rgba(92, 101, 205, 0.3);
             padding-top: 12px;
             font-weight: bold;
         }
@@ -509,6 +512,7 @@
                 <div class="modal-icon" aria-hidden="true" id="modalIcon"></div>
                 <h2 class="modal-title" id="modalTitle">Nom</h2>
                 <div class="modal-subtitle" id="modalSubtitle">Sous-titre</div>
+                <div class="modal-actor" id="modalActor"></div>
                 <div class="modal-dates" id="modalDates">Dates</div>
                 <div class="modal-quote" id="modalQuote">"Citation"</div>
             </div>
@@ -1146,6 +1150,19 @@
             document.getElementById('modalTitle').innerText = char.name;
             document.getElementById('modalSubtitle').innerText = char.subtitle;
             
+            // Actor setup & sorting
+            let actorText = "";
+            if (char.actor && char.actor !== "Ensemble") {
+                let actorsArr = char.actor.split(',').map(s => s.trim());
+                actorsArr.sort((a, b) => a.localeCompare(b));
+                actorText = `Interprété par : ${actorsArr.join(', ')}`;
+            } else if (char.actor === "Ensemble") {
+                actorText = `Rôle d'Ensemble`;
+            }
+            const actorEl = document.getElementById('modalActor');
+            actorEl.innerText = actorText;
+            actorEl.style.display = actorText ? "block" : "none";
+
             const quoteEl = document.getElementById('modalQuote');
             if(char.quote) { quoteEl.innerText = `« ${char.quote} »`; quoteEl.style.display = "block"; } 
             else { quoteEl.style.display = "none"; }
