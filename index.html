@@ -124,7 +124,7 @@
         }
         .tab-menu::-webkit-scrollbar { display: none; }
         .tab-btn {
-            flex: 1; min-width: 100px; padding: 12px 5px; border: none; background: transparent;
+            flex: 1; min-width: 90px; padding: 12px 5px; border: none; background: transparent;
             color: rgba(253, 251, 247, 0.7); border-radius: 8px; font-size: 0.85rem; font-weight: bold;
             text-transform: uppercase; letter-spacing: 0.5px; cursor: pointer; transition: all 0.3s ease;
             white-space: nowrap; -webkit-tap-highlight-color: transparent;
@@ -170,6 +170,14 @@
 
         .fictional-star { color: var(--accent-color); font-size: 1.1rem; margin-left: 6px; }
         .fictional-legend { text-align: center; font-size: 0.85rem; color: var(--accent-color); opacity: 0.8; margin-top: 25px; margin-bottom: 25px; font-style: italic; }
+
+        /* --- ONGLET RÔLES (COMÉDIENS) --- */
+        .actor-card { border-radius: 12px; padding: 15px 20px; color: var(--dark-text); border-left: 4px solid var(--accent-color); position: relative; }
+        .actor-header { font-family: 'Playfair Display', serif; color: #3B4387; font-size: 1.35rem; margin-bottom: 12px; display: flex; align-items: center; gap: 8px; border-bottom: 1px dashed rgba(92, 101, 205, 0.2); padding-bottom: 8px; }
+        .actor-roles-list { list-style: none; padding: 0; margin: 0; }
+        .actor-roles-list li { margin-bottom: 8px; font-size: 0.95rem; color: var(--dark-text); opacity: 0.9; display: flex; align-items: center; gap: 10px; cursor: pointer; transition: transform 0.2s, color 0.2s; -webkit-tap-highlight-color: transparent;}
+        .actor-roles-list li:active { transform: scale(0.98); color: #5C65CD; }
+        .actor-roles-list li .emoji-icon { font-size: 22px; }
 
         /* --- TIMELINE HISTORIQUE (FRISE) --- */
         .timeline {
@@ -413,7 +421,7 @@
 
         <h1>Le Roi Soleil<span class="h1-subtitle">LA COMÉDIE MUSICALE</span></h1>
         
-        <div class="welcome-banner">
+        <div class="welcome-banner" style="margin-bottom: 20px;">
             Les comédiens vous remercient de votre présence.<br>
             En attendant le lever de rideau, découvrez la véritable Histoire qui a inspiré notre spectacle...
         </div>
@@ -421,6 +429,7 @@
         <!-- TABS MENU -->
         <div class="tab-menu" role="tablist" aria-label="Menu principal">
             <button class="tab-btn active" id="btn-personnages" role="tab" aria-selected="true" aria-controls="tab-personnages" onclick="switchTab('personnages')">Personnages</button>
+            <button class="tab-btn" id="btn-roles" role="tab" aria-selected="false" aria-controls="tab-roles" onclick="switchTab('roles')">Rôles</button>
             <button class="tab-btn" id="btn-faits" role="tab" aria-selected="false" aria-controls="tab-faits" onclick="switchTab('faits')">Histoire</button>
             <button class="tab-btn" id="btn-lexique" role="tab" aria-selected="false" aria-controls="tab-lexique" onclick="switchTab('lexique')">Lexique</button>
         </div>
@@ -433,14 +442,24 @@
             <div class="fictional-legend">✦ Personnage créé pour la comédie musicale</div>
         </div>
 
-        <!-- ONGLET 2 : FAITS HISTORIQUES (TIMELINE) -->
+        <!-- ONGLET 2 : RÔLES (COMÉDIENS) -->
+        <div id="tab-roles" class="tab-content" role="tabpanel" aria-labelledby="btn-roles" aria-hidden="true">
+            <div class="welcome-banner" style="margin-top:0; font-size: 0.9rem; opacity: 0.8;">
+                Découvrez la distribution complète. Cliquez sur un rôle pour voir la fiche du personnage.
+            </div>
+            <div id="roles-container" class="chars-grid">
+                <!-- Généré par JS -->
+            </div>
+        </div>
+
+        <!-- ONGLET 3 : FAITS HISTORIQUES (TIMELINE) -->
         <div id="tab-faits" class="tab-content" role="tabpanel" aria-labelledby="btn-faits" aria-hidden="true">
             <div class="timeline" id="facts-container">
                 <!-- Généré par JS -->
             </div>
         </div>
 
-        <!-- ONGLET 3 : LEXIQUE -->
+        <!-- ONGLET 4 : LEXIQUE -->
         <div id="tab-lexique" class="tab-content" role="tabpanel" aria-labelledby="btn-lexique" aria-hidden="true">
             <div class="lexicon-grid" id="lexicon-container">
                 <!-- Généré par JS -->
@@ -1041,7 +1060,45 @@
             charsContainer.insertAdjacentHTML('beforeend', catHtml);
         });
 
-        // 2. Faits Historiques (Timeline)
+        // 2. Rôles (Mapping inversé)
+        const rolesContainer = document.getElementById('roles-container');
+        const actorsMap = {};
+
+        // Regrouper les rôles par acteur
+        Object.keys(characters).forEach(charId => {
+            const char = characters[charId];
+            if (char.actor && char.mainList) {
+                let actorsArr = char.actor.split(',').map(s => s.trim());
+                actorsArr.forEach(actorName => {
+                    if (!actorsMap[actorName]) actorsMap[actorName] = [];
+                    let starHtml = char.isFictional ? `<span class="fictional-star" aria-hidden="true" style="font-size: 0.9rem;">✦</span>` : '';
+                    let emojiStr = icons[charId] || icons[char.icon] || icons.crown;
+                    actorsMap[actorName].push({ id: charId, name: char.name + starHtml, icon: emojiStr });
+                });
+            }
+        });
+
+        // Trier les acteurs par ordre alphabétique
+        const sortedActors = Object.keys(actorsMap).sort((a, b) => a.localeCompare(b, 'fr'));
+        let rolesDelay = 0;
+        
+        sortedActors.forEach(actor => {
+            let rolesListHtml = actorsMap[actor].map(r => 
+                `<li onclick="openCharModal('${r.id}')"><span class="emoji-icon">${r.icon}</span> ${r.name}</li>`
+            ).join('');
+
+            let html = `
+            <div class="actor-card glass-card fade-in-up" style="animation-delay: ${rolesDelay}s">
+                <div class="actor-header">🎭 ${actor}</div>
+                <ul class="actor-roles-list">
+                    ${rolesListHtml}
+                </ul>
+            </div>`;
+            rolesContainer.insertAdjacentHTML('beforeend', html);
+            rolesDelay += 0.05;
+        });
+
+        // 3. Faits Historiques (Timeline)
         const factsContainer = document.getElementById('facts-container');
         let factDelay = 0;
         historicalFacts.forEach((fact, index) => {
@@ -1074,7 +1131,7 @@
             factDelay += 0.1;
         });
 
-        // 3. Lexique (Style Parchemin)
+        // 4. Lexique (Style Parchemin)
         const lexiconContainer = document.getElementById('lexicon-container');
         let lexDelay = 0;
         lexiconTerms.forEach(term => {
@@ -1129,7 +1186,7 @@
         let touchendX = 0;
         let touchstartY = 0;
         let touchendY = 0;
-        const mainTabs = ['personnages', 'faits', 'lexique'];
+        const mainTabs = ['personnages', 'roles', 'faits', 'lexique'];
 
         document.addEventListener('touchstart', e => {
             touchstartX = e.changedTouches[0].screenX;
