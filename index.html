@@ -263,18 +263,35 @@
             .modal-overlay { padding: 0; align-items: flex-start; }
             .modal-card { max-width: 100%; height: 100%; height: 100dvh; max-height: none; border-radius: 0; border: none; }
             .modal-header-bg { padding-top: max(20px, env(safe-area-inset-top, 20px)); }
-            .modal-close, .modal-flip-btn { top: max(10px, env(safe-area-inset-top, 10px)); }
+            .modal-close, .modal-flip-btn { top: max(12px, env(safe-area-inset-top, 12px)); }
             .modal-body { flex: 1; overflow-y: auto; -webkit-overflow-scrolling: touch; }
         }
         .modal-header-bg { background: var(--primary-gradient); padding: 20px 20px 15px 20px; text-align: center; color: #FFF; position: relative; flex-shrink: 0;}
         
-        .modal-controls { position: absolute; top: 10px; right: 10px; display: flex; gap: 8px;}
-        .modal-close, .modal-flip-btn {
-            background: rgba(255,255,255,0.2); border: none; width: 32px; height: 32px; border-radius: 50%; color: #FFF;
-            font-size: 1.1rem; cursor: pointer; display: flex; justify-content: center; align-items: center;
+        .modal-controls { position: absolute; top: 15px; right: 15px; display: flex; gap: 12px; align-items: center; z-index: 10;}
+        
+        /* Animation Pulse pour le bouton de retournement */
+        @keyframes pulseFlip {
+            0% { box-shadow: 0 0 0 0 rgba(226, 184, 106, 0.8); }
+            70% { box-shadow: 0 0 0 12px rgba(226, 184, 106, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(226, 184, 106, 0); }
+        }
+
+        .modal-flip-btn {
+            background: var(--accent-color); border: none; width: 42px; height: 42px; border-radius: 50%; color: var(--bg-color);
+            cursor: pointer; display: flex; justify-content: center; align-items: center;
+            touch-action: manipulation; -webkit-tap-highlight-color: transparent; transition: background 0.2s, transform 0.2s;
+            animation: pulseFlip 2s infinite;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+        }
+        .modal-flip-btn:active { transform: scale(0.9); background: var(--gold-light); }
+        
+        .modal-close {
+            background: rgba(255,255,255,0.2); border: none; width: 36px; height: 36px; border-radius: 50%; color: #FFF;
+            font-size: 1.2rem; cursor: pointer; display: flex; justify-content: center; align-items: center;
             touch-action: manipulation; -webkit-tap-highlight-color: transparent; transition: background 0.2s;
         }
-        .modal-close:active, .modal-flip-btn:active { background: rgba(255,255,255,0.4); transform: scale(0.9); }
+        .modal-close:active { background: rgba(255,255,255,0.4); transform: scale(0.9); }
         
         .modal-icon { display: flex; justify-content: center; margin-bottom: 5px; }
         .modal-icon .emoji-icon { font-size: 32px; margin-bottom: 0; }
@@ -484,7 +501,9 @@
         <div class="modal-card" onclick="event.stopPropagation()" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
             <div class="modal-header-bg">
                 <div class="modal-controls">
-                    <button class="modal-flip-btn" id="flipBtn" aria-label="Retourner la carte" onclick="toggleCardFlip()">🔄</button>
+                    <button class="modal-flip-btn" id="flipBtn" aria-label="Retourner la carte" onclick="toggleCardFlip()">
+                        <svg viewBox="0 0 24 24" width="22" height="22" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M21.5 2v6h-6M2.5 22v-6h6M2 11.5a10 10 0 0 1 18.8-4.3M22 12.5a10 10 0 0 1-18.8 4.3"/></svg>
+                    </button>
                     <button class="modal-close" aria-label="Fermer la fiche" onclick="closeModal(event)">✕</button>
                 </div>
                 <div class="modal-icon" aria-hidden="true" id="modalIcon"></div>
@@ -509,7 +528,7 @@
             "beaufort": "🤺", "moliere": "🎭", "scarron": "🪶", "ninon": "🍷", "voisin": "🧪",
             "lisieux": "🌸", "isabelle": "🥖", "enfant-roi": "🧒", "les-courtisanes": "👗",
             "les-danseurs": "🩰", "le-peuple": "🌾", "les-operateurs": "🎪", "les-soldats": "⚔️",
-            "les-serveurs": "🥂", "le-clerge": "⛪", "la-dame-de-cour": "🪭", "la-femme-de-chambre": "🧹",
+            "le-clerge": "⛪", "la-dame-de-cour": "🪭", "la-femme-de-chambre": "🧹",
             "le-medecin": "🩺", "le-ministre": "💼", "le-notre": "🌳", "mansart": "🏰", "turenne": "🐎",
             "conde": "🛡️", "bossuet": "📖", "luxembourg": "⚔️", "vauban": "🧱", "philippe-anjou": "👑",
             "marlborough": "💂", "lully": "🎼", "lex-etiquette": "📜", "lex-favorite": "💍", "lex-prince": "🩸",
@@ -781,18 +800,6 @@
                     relations: { allies: ["Louvois", "Officiers"], rivaux: ["Ennemis de l'État", "Déserteurs"], amours: ["Fiancées au village"] }
                 }
             },
-            "les-serveurs": {
-                name: "Les Serveurs", subtitle: "L'art de recevoir", dates: "17e Siècle", icon: "wineglass", mainList: true, isFictional: false, actor: "Arthur Devaux, Chloé Roumanus",
-                quote: "Chaque plat servi est une démonstration de puissance.", intro: "Indispensables au bon déroulement des immenses banquets de la cour (le 'Grand Couvert'), ils orchestrent les repas avec une précision chorégraphiée millimétrée.",
-                facts: ["Gèrent les festins royaux qui comptent parfois des dizaines de plats somptueux.", "Évoluent silencieusement et avec une grande discrétion parmi les plus puissants du royaume.", "Participent à l'étalage de la richesse de la France devant les ambassadeurs étrangers."],
-                role: "Incarner le faste, l'organisation et la démesure de l'hospitalité versaillaise.", heritage: "Ont codifié l'excellence de la gastronomie et du service 'à la française'.",
-                rpg: {
-                    classe: "Maîtres d'Hôtel", faction: "Service",
-                    competences: [ { nom: "Précision", desc: "Service millimétré", icon: "🍽️" }, { nom: "Œnologie", desc: "Savoir des vins", icon: "🍷" }, { nom: "Agilité", desc: "Rapidité discrète", icon: "🏃" }, { nom: "Écoute", desc: "Oreille attentive", icon: "👂" } ],
-                    ultime: { nom: "Le Grand Couvert", desc: "Orchestre le banquet le plus fastueux du siècle" },
-                    relations: { allies: ["Cuisiniers", "Intendants"], rivaux: ["Convives capricieux", "Chiens de cour"], amours: ["Gastronomie"] }
-                }
-            },
             "le-clerge": {
                 name: "Le Clergé", subtitle: "L'influence de l'Église", dates: "17e Siècle", icon: "church", mainList: true, isFictional: false, actor: "Arthur Devaux, Leyton Guillot",
                 quote: "Dieu établit les rois comme ses ministres, et règne par eux sur les peuples.", intro: "Gardiens de la foi catholique, l'Évêque et son assistant rappellent la nature divine du pouvoir royal et orientent les décisions morales du royaume.",
@@ -1042,7 +1049,7 @@
                 title: "Les Plaisirs de l'Île enchantée", dates: "1664", cat: "ART & CULTURE", icon: "masks",
                 desc: "Une fête grandiose de plusieurs jours organisée à Versailles mêlant théâtre, ballets, feux d'artifice et festins. Molière et Lully y présentent leurs œuvres.",
                 impact: "Rayonnement culturel de la France dans toute l'Europe", cons: ["Domestication de la noblesse par le divertissement", "Naissance de la comédie-ballet"],
-                chars: [{id: "louis-xiv", name: "Louis XIV"}, {id: "moliere", name: "Molière"}, {id: "lully", name: "Lully"}, {id: "les-danseurs", name: "Les Danseurs"}, {id: "les-serveurs", name: "Les Serveurs"}]
+                chars: [{id: "louis-xiv", name: "Louis XIV"}, {id: "moliere", name: "Molière"}, {id: "lully", name: "Lully"}, {id: "les-danseurs", name: "Les Danseurs"}]
             },
             {
                 title: "Guerre de Hollande", dates: "1672-1678", cat: "CONFLIT MILITAIRE", icon: "sword",
@@ -1107,7 +1114,7 @@
             { id: "amours", title: "Les amours du roi", chars: ["marie-mancini", "montespan", "maintenon"] },
             { id: "frondeurs", title: "Les frondeurs et artistes", chars: ["beaufort", "moliere", "scarron", "ninon"] },
             { id: "ombre", title: "L'ombre, le peuple et la fiction", chars: ["voisin", "lisieux", "isabelle"] },
-            { id: "troupe", title: "La troupe et les rôles de cour", chars: ["les-courtisanes", "les-danseurs", "le-peuple", "les-operateurs", "les-soldats", "les-serveurs", "le-clerge", "la-dame-de-cour", "la-femme-de-chambre", "le-medecin", "le-ministre"] },
+            { id: "troupe", title: "La troupe et les rôles de cour", chars: ["les-courtisanes", "les-danseurs", "le-peuple", "les-operateurs", "les-soldats", "le-clerge", "la-dame-de-cour", "la-femme-de-chambre", "le-medecin", "le-ministre"] },
             { id: "equipe", title: "L'Équipe Artistique", chars: ["natacha-muller", "gabriel-gitman", "frederique-bouwer", "nadia-guerin", "elise-devaux"] }
         ];
 
