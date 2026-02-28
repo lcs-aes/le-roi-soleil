@@ -283,6 +283,7 @@
             background: rgba(0,0,0,0.85); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
             z-index: 10000; display: none; justify-content: center; align-items: center;
             padding: 20px; box-sizing: border-box; overflow: hidden;
+            font-family: 'Cormorant Garamond', serif;
         }
         .modal-overlay.active { display: flex; animation: fadeIn 0.3s ease forwards; }
 
@@ -387,27 +388,28 @@
             font-size: 13px; padding: 4px 16px; border-radius: 20px; position: relative; letter-spacing: 1px;
         }
 
-        /* Card Body (Sans-serif pour lisibilité) */
+        /* Card Body (Sans-serif pour lisibilité, Scroll Fix) */
         .card-body { 
-            flex: 1; padding: 12px 16px 8px; display: flex; flex-direction: column; gap: 12px; 
+            flex: 1; padding: 12px 16px 20px; display: flex; flex-direction: column; gap: 14px; 
             overflow-y: auto; -webkit-overflow-scrolling: touch; color: #000;
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            min-height: 0;
         }
         .card-body::-webkit-scrollbar { width: 4px; }
         .card-body::-webkit-scrollbar-track { background: transparent; }
         .card-body::-webkit-scrollbar-thumb { background: var(--gold); border-radius: 2px; }
 
-        /* Titres de Section Design */
+        /* Titres de Section Design (Centrés avec traits) */
         .rpg-section-title {
             font-family: 'Cinzel', serif; font-size: 14px; font-weight: 700;
             text-transform: uppercase; letter-spacing: 2.5px; color: var(--gold-dark);
-            text-align: center; display: flex; align-items: center; gap: 10px; margin: 15px 0 5px 0;
+            text-align: center; display: flex; align-items: center; gap: 10px; margin: 10px 0 0 0;
         }
         .rpg-section-title::before, .rpg-section-title::after { content: ''; flex: 1; height: 1px; background: linear-gradient(90deg, transparent, var(--gold), transparent); }
 
         .quote-line {
             font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 18px;
-            color: var(--text-dark); text-align: center; padding: 0 10px; line-height: 1.3; margin-bottom: 5px; opacity: 0.85;
+            color: var(--text-dark); text-align: center; padding: 0 10px; line-height: 1.3; opacity: 0.85;
         }
 
         /* Stats (Front) - One Line */
@@ -642,60 +644,660 @@
                     relations: { allies: ["Anne d'Autriche", "Mazarin", "Colbert", "Mme de Maintenon"], rivaux: ["Duc de Beaufort", "La Voisin", "Guillaume III", "Frondeurs"], amours: ["Marie Mancini", "Mme de Montespan", "Louise de La Vallière"] } 
                 } 
             },
-            "enfant-roi": { name: "L'enfant roi", subtitle: "Le Grand Dauphin", dates: "1661-1711", icon: "crown", mainList: true, isFictional: false, actor: "Leyton Guillot", quote: "Je serai roi un jour... si Dieu le veut.", intro: "Louis de France, fils aîné et héritier légitime de Louis XIV. Il est élevé dans l'exigence implacable de son futur rôle de monarque.", facts: ["Reçoit l'éducation la plus stricte de son temps, supervisée par le théoricien Bossuet.", "S'illustre comme un excellent commandant lors des grandes campagnes militaires.", "Décède tragiquement avant son père, sans jamais avoir accédé au trône."], role: "Héritier loyal, compétent, mais vivant perpétuellement écrasé sous l'ombre de son père.", heritage: "A assuré la pérennité de la dynastie (il est le grand-père du futur Louis XV et du roi d'Espagne).", rpg: { classe: "Roi en Devenir", faction: "Royauté", competences: [ { nom: "Innocence", desc: "Pureté enfantine", icon: "😇" }, { nom: "Apprentissage", desc: "Soif de grandir", icon: "📚" }, { nom: "Détermination", desc: "Volonté d'acier", icon: "💪" }, { nom: "Charme", desc: "Attendrissement", icon: "✨" } ], ultime: { nom: "Promesse d'avenir", desc: "Porte en lui la promesse de la grandeur future de la France" }, relations: { allies: ["Anne d'Autriche", "Précepteurs"], rivaux: ["La Fronde"], amours: ["Amour filial"] } } },
-            "anne-autriche": { name: "Anne d'Autriche", subtitle: "La Reine Mère", dates: "1601-1666", icon: "crown", mainList: true, isFictional: false, actor: "Léa Douady", quote: "Mon fils, soyez le maître.", intro: "Reine de France, mère de Louis XIV, elle assure la régence du royaume d'une main de fer aux côtés de Mazarin.", facts: ["Défend farouchement l'autorité de son fils face aux frondeurs.", "Soutient indéfectiblement Mazarin malgré la haine du peuple.", "Transmet à Louis XIV une profonde piété catholique."], role: "Régente inflexible et garante de la transmission intacte du pouvoir absolu à son fils.", heritage: "L'incarnation de la mère protectrice de la couronne et d'une souveraine inébranlable dans la tempête.", rpg: { classe: "Régente Sage", faction: "Royauté", competences: [ { nom: "Amour Maternel", desc: "Dévouement absolu", icon: "💝" }, { nom: "Sagesse", desc: "Expérience du pouvoir", icon: "👑" }, { nom: "Force Intérieure", desc: "Résiste aux épreuves", icon: "💪" }, { nom: "Dévotion", desc: "Foi profonde", icon: "🙏" } ], ultime: { nom: "Protection maternelle", desc: "Protège et guide par l'amour inconditionnel d'une mère" }, relations: { allies: ["Mazarin", "Louis XIV", "Clergé"], rivaux: ["Frondeurs", "Ennemis du roi"], amours: ["Louis XIII", "Mazarin"] } } },
-            "monsieur": { name: "Monsieur", subtitle: "Le frère du Roi", dates: "1640-1701", icon: "fleur", mainList: true, isFictional: false, actor: "Lucas Liaubet Correa", quote: "Je suis né pour briller à l'ombre du Soleil.", intro: "Philippe d'Orléans, frère cadet de Louis XIV. Brillant stratège, il est souvent écarté du pouvoir politique par un roi redoutant son envergure.", facts: ["Remporte de grandes victoires militaires pour la France.", "Connu pour son excentricité, son goût du faste, ses mœurs libérées et ses favoris.", "Mène une vie de cour brillante et mondaine au Palais-Royal."], role: "Soutien indéfectible de la couronne tout en incarnant une cour alternative, intellectuelle et festive.", heritage: "Fondateur de la maison d'Orléans, ancêtre de presque toutes les familles royales catholiques actuelles.", rpg: { classe: "Prince Rebelle", faction: "Royauté", competences: [ { nom: "Élégance", desc: "Style sophistiqué", icon: "💅" }, { nom: "Bravoure", desc: "Héros de guerre", icon: "⚔️" }, { nom: "Esprit Libre", desc: "Rejette les conventions", icon: "🦋" }, { nom: "Loyauté", desc: "Fidélité au Roi", icon: "👑" } ], ultime: { nom: "Authenticité royale", desc: "Inspire par son courage à être soi-même malgré les conventions" }, relations: { allies: ["Louis XIV", "Artistes"], rivaux: ["Courtisans"], amours: ["Épouses", "Favoris"] } } },
+            "enfant-roi": { 
+                name: "L'enfant roi", subtitle: "Le Grand Dauphin", backSubtitle: "L'éternel héritier", dates: "1661 – 1711", icon: "crown", mainList: true, isFictional: false, actor: "Leyton Guillot", 
+                quote: "Je serai roi un jour... si Dieu le veut.", 
+                intro: "Louis de France, fils aîné et héritier légitime de Louis XIV. Il est élevé dans l'exigence implacable de son futur rôle de monarque mais décédera tragiquement avant son père.", 
+                stats: [ { icon: '⚔️', val: '65' }, { icon: '🛡️', val: '75' }, { icon: '✨', val: '80' }, { icon: '🧠', val: '85' } ],
+                traits: [ { icon: '👑', name: 'Héritier' }, { icon: '⛪', name: 'Pieux' }, { icon: '🤫', name: 'Obéissant' } ],
+                achievements: [ { icon: '⚔️', name: 'Commandant', val: '1688' }, { icon: '📚', name: 'Élève de Bossuet', val: '1670' }, { icon: '🖼️', name: 'Mécène', val: 'Versailles' } ],
+                titles: [ { icon: '👑', text: 'Monseigneur', sub: 'Le Grand Dauphin' }, { icon: '⚜️', text: 'Héritier de France', sub: 'Fils de Louis XIV' } ],
+                rpg: { 
+                    classe: "Roi en Devenir", faction: "Royauté", collection: "⚜️ Collection « Le Grand Siècle » ⚜️",
+                    attributs: [ { label: 'Autorité', class: 'authority', val: 60 }, { label: 'Charisme', class: 'charisma', val: 80 }, { label: 'Stratégie', class: 'strategy', val: 70 }, { label: 'Culture', class: 'culture', val: 85 }, { label: 'Diplomatie', class: 'diplomacy', val: 75 }, { label: 'Art de guerre', class: 'warfare', val: 85 } ],
+                    competences: [ { nom: "Innocence", desc: "Pureté enfantine", icon: "😇" }, { nom: "Apprentissage", desc: "Soif de grandir", icon: "📚" }, { nom: "Détermination", desc: "Volonté d'acier", icon: "💪" }, { nom: "Charme", desc: "Attendrissement de la cour", icon: "✨" } ], 
+                    ultime: { nom: "Promesse d'avenir", desc: "Porte en lui la promesse de la grandeur future de la France" }, 
+                    relations: { allies: ["Anne d'Autriche", "Bossuet", "Louis XIV"], rivaux: ["La maladie"], amours: ["La Couronne"] } 
+                } 
+            },
+            "anne-autriche": { 
+                name: "Anne d'Autriche", subtitle: "La Reine Mère", backSubtitle: "Régente de France", dates: "1601 – 1666", icon: "crown", mainList: true, isFictional: false, actor: "Léa Douady", 
+                quote: "Mon fils, soyez le maître.", 
+                intro: "Reine de France et mère de Louis XIV. À la mort de Louis XIII, elle assure la régence du royaume d'une main de fer aux côtés du Cardinal Mazarin, surmontant la Fronde.", 
+                stats: [ { icon: '⚔️', val: '50' }, { icon: '🛡️', val: '95' }, { icon: '✨', val: '85' }, { icon: '🧠', val: '88' } ],
+                traits: [ { icon: '👑', name: 'Régente' }, { icon: '🤱', name: 'Protectrice' }, { icon: '⛪', name: 'Pieuse' }, { icon: '🇪🇸', name: 'Espagnole' } ],
+                achievements: [ { icon: '🛡️', name: 'Régence', val: '1643–1651' }, { icon: '⛪', name: 'Val-de-Grâce', val: '1645' }, { icon: '🤝', name: 'Paix des Pyrénées', val: '1659' } ],
+                titles: [ { icon: '👑', text: 'Reine Mère', sub: 'Mère du Roi-Soleil' }, { icon: '🇪🇸', text: 'Infante', sub: 'd\'Espagne et de Portugal' } ],
+                rpg: { 
+                    classe: "Régente Inflexible", faction: "Royauté", collection: "⚜️ Collection « Le Grand Siècle » ⚜️",
+                    attributs: [ { label: 'Autorité', class: 'authority', val: 90 }, { label: 'Charisme', class: 'charisma', val: 85 }, { label: 'Stratégie', class: 'strategy', val: 88 }, { label: 'Culture', class: 'culture', val: 90 }, { label: 'Diplomatie', class: 'diplomacy', val: 95 }, { label: 'Art de guerre', class: 'warfare', val: 40 } ],
+                    competences: [ { nom: "Amour Maternel", desc: "Dévouement absolu", icon: "💝" }, { nom: "Sagesse", desc: "Expérience du pouvoir", icon: "👑" }, { nom: "Force Intérieure", desc: "Résiste aux épreuves", icon: "💪" }, { nom: "Dévotion", desc: "Foi inébranlable", icon: "🙏" } ], 
+                    ultime: { nom: "Protection Royale", desc: "Protège l'héritier du trône contre toute rébellion" }, 
+                    relations: { allies: ["Mazarin", "Louis XIV", "Le Clergé"], rivaux: ["Les Frondeurs", "Gaston d'Orléans"], amours: ["Louis XIII", "Mazarin (rumeurs)"] } 
+                } 
+            },
+            "monsieur": { 
+                name: "Monsieur", subtitle: "Le frère du Roi", backSubtitle: "Duc d'Orléans", dates: "1640 – 1701", icon: "fleur", mainList: true, isFictional: false, actor: "Lucas Liaubet Correa", 
+                quote: "Je suis né pour briller à l'ombre du Soleil.", 
+                intro: "Philippe d'Orléans, frère cadet de Louis XIV. Connu pour son excentricité, ses mœurs libérées et son immense bravoure militaire, il anime une cour brillante au Palais-Royal.", 
+                stats: [ { icon: '⚔️', val: '85' }, { icon: '🛡️', val: '70' }, { icon: '✨', val: '95' }, { icon: '🧠', val: '80' } ],
+                traits: [ { icon: '🦋', name: 'Excentrique' }, { icon: '⚔️', name: 'Brave' }, { icon: '🎭', name: 'Mécène' }, { icon: '💅', name: 'Raffiné' } ],
+                achievements: [ { icon: '⚔️', name: 'Bataille de Cassel', val: '1677' }, { icon: '🏰', name: 'Domaine de Saint-Cloud', val: 'Créateur' }, { icon: '🎭', name: 'Palais-Royal', val: 'Protecteur' } ],
+                titles: [ { icon: '👑', text: 'Monsieur', sub: 'Frère unique du Roi' }, { icon: '⚜️', text: 'Duc d\'Orléans', sub: 'Fondateur de la Maison' } ],
+                rpg: { 
+                    classe: "Prince Rebelle", faction: "Royauté", collection: "⚜️ Collection « Le Grand Siècle » ⚜️",
+                    attributs: [ { label: 'Autorité', class: 'authority', val: 75 }, { label: 'Charisme', class: 'charisma', val: 95 }, { label: 'Stratégie', class: 'strategy', val: 85 }, { label: 'Culture', class: 'culture', val: 98 }, { label: 'Diplomatie', class: 'diplomacy', val: 80 }, { label: 'Art de guerre', class: 'warfare', val: 90 } ],
+                    competences: [ { nom: "Élégance", desc: "Style et provocation", icon: "💅" }, { nom: "Héroïsme", desc: "Génie militaire inattendu", icon: "⚔️" }, { nom: "Esprit Libre", desc: "Rejette les conventions", icon: "🦋" }, { nom: "Loyauté", desc: "Soumission au Roi", icon: "👑" } ], 
+                    ultime: { nom: "L'Ombre Brillante", desc: "Éblouit par son excentricité tout en restant fidèle" }, 
+                    relations: { allies: ["Louis XIV", "Molière", "Artistes"], rivaux: ["La Cour rigide", "Favorites du Roi"], amours: ["Chevalier de Lorraine", "Henriette d'Angleterre"] } 
+                } 
+            },
 
             // --- 2. LES PILIERS DE L'ÉTAT ---
-            "mazarin": { name: "Cardinal Mazarin", subtitle: "Le principal ministre", dates: "1602-1661", icon: "book", mainList: true, isFictional: false, actor: "Baptiste Desrosiers", quote: "Le temps et moi, nous sommes deux.", intro: "Parrain de Louis XIV et habile diplomate, il gouverne la France avec Anne d'Autriche durant la minorité du roi.", facts: ["Triomphe des révoltes nobles et parlementaires de la Fronde.", "Signe des traités de paix majeurs qui étendent les frontières.", "Forme politiquement Louis XIV à l'exercice implacable du pouvoir absolu."], role: "Artisan de la pacification du royaume et maître à penser politique du jeune Roi-Soleil.", heritage: "A légué à Louis XIV un royaume puissant, uni, et une autorité royale restaurée.", rpg: { classe: "Stratège Politique", faction: "Cour Royale", competences: [ { nom: "Stratégie", desc: "Maître du jeu", icon: "🧩" }, { nom: "Diplomatie", desc: "Négociateur né", icon: "🤝" }, { nom: "Vision d'État", desc: "Pense la grandeur", icon: "🏛️" }, { nom: "Mentor", desc: "Éducateur royal", icon: "👨‍🏫" } ], ultime: { nom: "Maître du jeu", desc: "Manipule les événements pour servir la grandeur de la France" }, relations: { allies: ["Anne d'Autriche", "Louis XIV", "Mancini"], rivaux: ["Frondeurs", "Duc de Beaufort"], amours: ["Anne d'Autriche"] } } },
-            "colbert": { name: "Jean-Baptiste Colbert", subtitle: "Le grand intendant", dates: "1619-1683", icon: "book", mainList: true, isFictional: false, actor: "Arthur Devaux", quote: "Il faut jeter des millions quand il s'agit de votre gloire.", intro: "Contrôleur général des finances et ministre infatigable, il est l'homme de l'ombre et l'architecte de la puissance économique française.", facts: ["Redresse spectaculairement les finances du royaume de France.", "Fonde les grandes manufactures royales (Gobelins, Saint-Gobain).", "Développe massivement le commerce et la puissante marine de guerre."], role: "Bâtisseur de la puissance matérielle, industrielle, navale et administrative de la France sous Louis XIV.", heritage: "Le 'colbertisme' (doctrine politico-économique) et des institutions administratives toujours existantes.", rpg: { classe: "Génie Économique", faction: "État", competences: [ { nom: "Finances", desc: "Maîtrise de l'argent", icon: "💎" }, { nom: "Industrie", desc: "Vision économique", icon: "🏭" }, { nom: "Réformes", desc: "Transformation", icon: "⚖️" }, { nom: "Rigueur", desc: "Organisation", icon: "📊" } ], ultime: { nom: "Prospérité royale", desc: "Transforme les finances du royaume par son génie économique" }, relations: { allies: ["Louis XIV", "Industriels"], rivaux: ["Louvois", "Noblesse frondeuse"], amours: ["La France", "Épouse"] } } },
+            "mazarin": { 
+                name: "Mazarin", subtitle: "Le principal ministre", backSubtitle: "Le fin stratège", dates: "1602 – 1661", icon: "book", mainList: true, isFictional: false, actor: "Baptiste Desrosiers", 
+                quote: "Le temps et moi, nous sommes deux.", 
+                intro: "Cardinal et diplomate italien, parrain de Louis XIV. Il gouverne la France avec Anne d'Autriche durant la minorité du roi et triomphe habilement de la Fronde.", 
+                stats: [ { icon: '⚔️', val: '30' }, { icon: '🛡️', val: '90' }, { icon: '✨', val: '85' }, { icon: '🧠', val: '99' } ],
+                traits: [ { icon: '📜', name: 'Diplomate' }, { icon: '🦊', name: 'Rusé' }, { icon: '💎', name: 'Collectionneur' }, { icon: '🇮🇹', name: 'Italien' } ],
+                achievements: [ { icon: '🕊️', name: 'Paix de Westphalie', val: '1648' }, { icon: '🤝', name: 'Fin de la Fronde', val: '1653' }, { icon: '📚', name: 'Bibliothèque', val: 'Mazarine' } ],
+                titles: [ { icon: '💼', text: 'Principal Ministre', sub: 'Ministre d\'État' }, { icon: '⛪', text: 'Cardinal', sub: 'Sans avoir été prêtre' } ],
+                rpg: { 
+                    classe: "Stratège Politique", faction: "Cour Royale", collection: "⚜️ Collection « Le Grand Siècle » ⚜️",
+                    attributs: [ { label: 'Autorité', class: 'authority', val: 85 }, { label: 'Charisme', class: 'charisma', val: 80 }, { label: 'Stratégie', class: 'strategy', val: 99 }, { label: 'Culture', class: 'culture', val: 95 }, { label: 'Diplomatie', class: 'diplomacy', val: 99 }, { label: 'Art de guerre', class: 'warfare', val: 60 } ],
+                    competences: [ { nom: "Stratégie", desc: "Coup d'avance", icon: "🧩" }, { nom: "Diplomatie", desc: "Négociateur né", icon: "🤝" }, { nom: "Patience", desc: "Laisse passer l'orage", icon: "⏳" }, { nom: "Mentor", desc: "Éducateur du Roi", icon: "👨‍🏫" } ], 
+                    ultime: { nom: "Échec et Mat", desc: "Manipule les royaumes d'Europe avec un sourire" }, 
+                    relations: { allies: ["Anne d'Autriche", "Louis XIV", "Marie Mancini"], rivaux: ["Frondeurs", "Duc de Beaufort", "Le Peuple"], amours: ["Anne d'Autriche (rumeurs)"] } 
+                } 
+            },
+            "colbert": { 
+                name: "Colbert", subtitle: "Le grand intendant", backSubtitle: "Le contrôleur général", dates: "1619 – 1683", icon: "book", mainList: true, isFictional: false, actor: "Arthur Devaux", 
+                quote: "Il faut jeter des millions quand il s'agit de votre gloire.", 
+                intro: "Ministre infatigable, il redresse les finances de la France, fonde les manufactures royales et crée une puissante marine. Il est l'architecte de la puissance matérielle de Louis XIV.", 
+                stats: [ { icon: '⚔️', val: '40' }, { icon: '🛡️', val: '95' }, { icon: '✨', val: '70' }, { icon: '🧠', val: '98' } ],
+                traits: [ { icon: '⚙️', name: 'Travailleur' }, { icon: '🧊', name: 'Froid' }, { icon: '📐', name: 'Rigoureux' }, { icon: '🚢', name: 'Bâtisseur' } ],
+                achievements: [ { icon: '🏭', name: 'Les Gobelins', val: '1662' }, { icon: '🔬', name: 'Académie des Sciences', val: '1666' }, { icon: '⛵', name: 'Marine Royale', val: '1669' } ],
+                titles: [ { icon: '🪙', text: 'Contrôleur Général', sub: 'des Finances' }, { icon: '💼', text: 'Secrétaire d\'État', sub: 'à la Maison du Roi' } ],
+                rpg: { 
+                    classe: "Génie Économique", faction: "État", collection: "⚜️ Collection « Le Grand Siècle » ⚜️",
+                    attributs: [ { label: 'Autorité', class: 'authority', val: 90 }, { label: 'Charisme', class: 'charisma', val: 65 }, { label: 'Stratégie', class: 'strategy', val: 95 }, { label: 'Culture', class: 'culture', val: 85 }, { label: 'Diplomatie', class: 'diplomacy', val: 80 }, { label: 'Art de guerre', class: 'warfare', val: 70 } ],
+                    competences: [ { nom: "Finances", desc: "Redresse le Trésor", icon: "💎" }, { nom: "Industrie", desc: "Fonde les Manufactures", icon: "🏭" }, { nom: "Ordonnances", desc: "Unifie le droit", icon: "⚖️" }, { nom: "Marine", desc: "Crée une flotte", icon: "⚓" } ], 
+                    ultime: { nom: "Le Mercantilisme", desc: "Enrichit la France et ruine ses voisins" }, 
+                    relations: { allies: ["Louis XIV", "Charles Le Brun", "La Bourgeoisie"], rivaux: ["Louvois", "Fouquet", "La Noblesse"], amours: ["Le Travail"] } 
+                } 
+            },
 
             // --- 3. LES AMOURS DU ROI ---
-            "marie-mancini": { name: "Marie Mancini", subtitle: "Le premier amour", dates: "1639-1715", icon: "sparkles", mainList: true, isFictional: false, actor: "Valentine Delassus", quote: "Vous êtes roi, vous pleurez, et je pars.", intro: "Nièce du puissant cardinal Mazarin, Marie Mancini est une intellectuelle brillante qui fut le premier grand amour passionné du jeune Louis XIV.", facts: ["Initie le jeune roi à la littérature, à l'art et à la beauté.", "Sa liaison avec le roi manque de faire échouer la paix avec l'Espagne.", "Est exilée de la cour par son propre oncle pour forcer le mariage royal."], role: "Catalyseur de l'éveil culturel et sentimental du jeune souverain avant qu'il n'assume son rôle d'État.", heritage: "L'image tragique du sacrifice de l'amour personnel sur l'autel impitoyable de la raison d'État.", rpg: { classe: "Dame de Cœur", faction: "Courtisane", competences: [ { nom: "Charme Italien", desc: "Séduction naturelle", icon: "🇮🇹" }, { nom: "Poésie", desc: "Touche les cœurs", icon: "📝" }, { nom: "Mélancolie", desc: "Émotion profonde", icon: "😢" }, { nom: "Passion", desc: "Amour impossible", icon: "💔" } ], ultime: { nom: "Cœur brisé", desc: "Son amour interdit touche l'âme de tous ceux qui l'entendent" }, relations: { allies: ["Mazarin", "Ninon", "Molière"], rivaux: ["Anne d'Autriche", "Mme de Montespan"], amours: ["Louis XIV"] } } },
-            "montespan": { name: "Madame de Montespan", subtitle: "La favorite flamboyante", dates: "1640-1707", icon: "sparkles", mainList: true, isFictional: false, actor: "Chloé Woringer", quote: "Je veux être la maîtresse du maître.", intro: "Favorite incontestée de Louis XIV pendant plus d'une décennie, elle domine la cour par sa beauté, son luxe et son ambition redoutable.", facts: ["Donne sept enfants au roi, légitimés par la suite.", "Grande protectrice des arts et du luxe à Versailles.", "Chute dramatiquement lors de la sombre affaire des Poisons."], role: "Incarne le faste, l'esprit piquant et la démesure des premières décennies triomphales du règne.", heritage: "Symbole intemporel de l'influence féminine absolue mais éphémère à la cour.", rpg: { classe: "Enchanteresse", faction: "Courtisane", competences: [ { nom: "Séduction", desc: "Charme irrésistible", icon: "💋" }, { nom: "Intrigue", desc: "Maîtrise des complots", icon: "🎭" }, { nom: "Mystères", desc: "Pratiques occultes", icon: "🔮" }, { nom: "Fascination", desc: "Beauté envoûtante", icon: "✨" } ], ultime: { nom: "Sortilège d'amour", desc: "Ensorcelle par sa beauté et ses mystères occultes" }, relations: { allies: ["La Voisin", "Molière"], rivaux: ["Mme de Maintenon", "Marie Mancini"], amours: ["Louis XIV"] } } },
-            "maintenon": { name: "Madame de Maintenon", subtitle: "L'épouse secrète", dates: "1635-1719", icon: "feather", mainList: true, isFictional: false, actor: "Mila Le Nestour", quote: "Il n'y a rien de plus habile qu'une conduite irréprochable.", intro: "D'abord discrète gouvernante des enfants illégitimes du roi, Françoise d'Aubigné devient sa dernière favorite puis son épouse secrète.", facts: ["Épouse secrètement Louis XIV à la mort de la reine.", "Exerce une influence moralisatrice et profondément religieuse sur la cour.", "Fonde la Maison royale d'éducation de Saint-Cyr pour les jeunes filles nobles."], role: "Confidente suprême et influence stabilisatrice (et austère) de la seconde moitié du règne de Louis XIV.", heritage: "La création de Saint-Cyr, qui représente un modèle pionnier pour l'éducation des femmes en France.", rpg: { classe: "Conseillère Sage", faction: "Dame de cour", competences: [ { nom: "Sagesse Politique", desc: "Conseil avisé", icon: "🧠" }, { nom: "Éducation Noble", desc: "Pédagogie", icon: "🎓" }, { nom: "Discrétion", desc: "Pouvoir dans l'ombre", icon: "👤" }, { nom: "Piété", desc: "Foi sincère", icon: "🙏" } ], ultime: { nom: "Conseil éclairé", desc: "Guide les décisions par sa sagesse et sa discrétion" }, relations: { allies: ["Louis XIV", "Éducateurs"], rivaux: ["Mme de Montespan", "Libertins"], amours: ["Louis XIV", "Paul Scarron"] } } },
+            "marie-mancini": { 
+                name: "Marie Mancini", subtitle: "Le premier amour", backSubtitle: "L'amour sacrifié", dates: "1639 – 1715", icon: "sparkles", mainList: true, isFictional: false, actor: "Valentine Delassus", 
+                quote: "Vous êtes roi, vous pleurez, et je pars.", 
+                intro: "Nièce du Cardinal Mazarin, elle est une jeune femme passionnée et cultivée qui éveille l'esprit du jeune Louis XIV. Leur amour devra plier face aux exigences de l'État.", 
+                stats: [ { icon: '⚔️', val: '20' }, { icon: '🛡️', val: '50' }, { icon: '✨', val: '95' }, { icon: '🧠', val: '90' } ],
+                traits: [ { icon: '🔥', name: 'Passionnée' }, { icon: '📚', name: 'Cultivée' }, { icon: '🇮🇹', name: 'Italienne' }, { icon: '💔', name: 'Sacrifiée' } ],
+                achievements: [ { icon: '💘', name: 'Premier Amour', val: '1658' }, { icon: '🎭', name: 'Mécénat Culturel', val: 'Italie' }, { icon: '✍️', name: 'Mémoires', val: '1677' } ],
+                titles: [ { icon: '✨', text: 'Nièce de Mazarin', sub: 'Les "Mazarinettes"' }, { icon: '👑', text: 'Princesse Colonna', sub: 'Après son exil' } ],
+                rpg: { 
+                    classe: "Dame de Cœur", faction: "Courtisane", collection: "⚜️ Collection « Le Grand Siècle » ⚜️",
+                    attributs: [ { label: 'Autorité', class: 'authority', val: 40 }, { label: 'Charisme', class: 'charisma', val: 95 }, { label: 'Stratégie', class: 'strategy', val: 60 }, { label: 'Culture', class: 'culture', val: 92 }, { label: 'Diplomatie', class: 'diplomacy', val: 70 }, { label: 'Art de guerre', class: 'warfare', val: 10 } ],
+                    competences: [ { nom: "Poésie", desc: "Touche l'âme du Roi", icon: "📝" }, { nom: "Charme", desc: "Séduction intellectuelle", icon: "🇮🇹" }, { nom: "Mélancolie", desc: "Émotion pure", icon: "😢" }, { nom: "Indépendance", desc: "Esprit libre", icon: "🕊️" } ], 
+                    ultime: { nom: "Le Sacrifice Royal", desc: "S'efface pour laisser la France forger son destin" }, 
+                    relations: { allies: ["Mazarin", "Molière", "Artistes"], rivaux: ["Anne d'Autriche", "L'Étiquette"], amours: ["Louis XIV"] } 
+                } 
+            },
+            "montespan": { 
+                name: "Mme de Montespan", subtitle: "La favorite flamboyante", backSubtitle: "La maîtresse absolue", dates: "1640 – 1707", icon: "sparkles", mainList: true, isFictional: false, actor: "Chloé Woringer", 
+                quote: "Je veux être la maîtresse du maître.", 
+                intro: "D'une beauté piquante et d'un esprit redoutable, Françoise de Rochechouart de Mortemart domine la cour pendant quinze ans. Son nom restera lié à l'Affaire des Poisons.", 
+                stats: [ { icon: '⚔️', val: '60' }, { icon: '🛡️', val: '40' }, { icon: '✨', val: '99' }, { icon: '🧠', val: '85' } ],
+                traits: [ { icon: '👑', name: 'Ambitieuse' }, { icon: '✨', name: 'Éblouissante' }, { icon: '🎭', name: 'Esprit Mortemart' }, { icon: '☠️', name: 'Sulfureuse' } ],
+                achievements: [ { icon: '👶', name: 'Enfants Royaux', val: '7 enfants' }, { icon: '🏰', name: 'Château de Clagny', val: 'Protectrice' }, { icon: '🎭', name: 'Protectrice des Arts', val: 'Mécénat' } ],
+                titles: [ { icon: '💍', text: 'Favorite en titre', sub: 'Du Roi-Soleil' }, { icon: '⚜️', text: 'Marquise', sub: 'de Montespan' } ],
+                rpg: { 
+                    classe: "Enchanteresse", faction: "Courtisane", collection: "⚜️ Collection « Le Grand Siècle » ⚜️",
+                    attributs: [ { label: 'Autorité', class: 'authority', val: 85 }, { label: 'Charisme', class: 'charisma', val: 99 }, { label: 'Stratégie', class: 'strategy', val: 88 }, { label: 'Culture', class: 'culture', val: 90 }, { label: 'Diplomatie', class: 'diplomacy', val: 60 }, { label: 'Art de guerre', class: 'warfare', val: 50 } ],
+                    competences: [ { nom: "Séduction", desc: "Charme irrésistible", icon: "💋" }, { nom: "Intrigue", desc: "Maîtrise la cour", icon: "🎭" }, { nom: "Esprit", desc: "Réparties cinglantes", icon: "🗣️" }, { nom: "Sombre Pacte", desc: "Flirte avec l'occulte", icon: "🔮" } ], 
+                    ultime: { nom: "Fascination Solaire", desc: "Éclipse toutes ses rivales d'un simple regard" }, 
+                    relations: { allies: ["La Voisin", "Lully", "Quinault"], rivaux: ["Mme de Maintenon", "Bossuet", "Marie Mancini"], amours: ["Louis XIV"] } 
+                } 
+            },
+            "maintenon": { 
+                name: "Mme de Maintenon", subtitle: "L'épouse secrète", backSubtitle: "L'influence de l'ombre", dates: "1635 – 1719", icon: "feather", mainList: true, isFictional: false, actor: "Mila Le Nestour", 
+                quote: "Il n'y a rien de plus habile qu'une conduite irréprochable.", 
+                intro: "D'abord discrète gouvernante des enfants illégitimes du Roi, Françoise d'Aubigné impose progressivement sa rigueur morale jusqu'à devenir l'épouse secrète de Louis XIV.", 
+                stats: [ { icon: '⚔️', val: '40' }, { icon: '🛡️', val: '90' }, { icon: '✨', val: '85' }, { icon: '🧠', val: '95' } ],
+                traits: [ { icon: '⛪', name: 'Pieuse' }, { icon: '👤', name: 'Secrète' }, { icon: '🎓', name: 'Éducatrice' }, { icon: '🧊', name: 'Austère' } ],
+                achievements: [ { icon: '💍', name: 'Mariage Royal', val: '1683 (Secret)' }, { icon: '🏫', name: 'Maison de Saint-Cyr', val: '1686' }, { icon: '👑', name: 'Influence Politique', val: 'Max' } ],
+                titles: [ { icon: '👑', text: 'Épouse du Roi', sub: 'Non officialisée' }, { icon: '⚜️', text: 'Marquise', sub: 'de Maintenon' } ],
+                rpg: { 
+                    classe: "Conseillère de l'Ombre", faction: "Dame de cour", collection: "⚜️ Collection « Le Grand Siècle » ⚜️",
+                    attributs: [ { label: 'Autorité', class: 'authority', val: 90 }, { label: 'Charisme', class: 'charisma', val: 85 }, { label: 'Stratégie', class: 'strategy', val: 98 }, { label: 'Culture', class: 'culture', val: 90 }, { label: 'Diplomatie', class: 'diplomacy', val: 95 }, { label: 'Art de guerre', class: 'warfare', val: 30 } ],
+                    competences: [ { nom: "Sagesse", desc: "Conseil murmuré", icon: "🧠" }, { nom: "Piété", desc: "Impose la vertu", icon: "🙏" }, { nom: "Éducation", desc: "Forge les esprits", icon: "🎓" }, { nom: "Discrétion", desc: "Agit sans être vue", icon: "👤" } ], 
+                    ultime: { nom: "L'Ordre Moral", desc: "Fait taire les scandales et impose la dévotion à la Cour" }, 
+                    relations: { allies: ["Louis XIV", "Bossuet", "Le Clergé"], rivaux: ["Mme de Montespan", "Les Libertins", "Monsieur"], amours: ["Paul Scarron", "Louis XIV"] } 
+                } 
+            },
 
             // --- 4. LES FRONDEURS ET ARTISTES ---
-            "beaufort": { name: "Duc de Beaufort", subtitle: "Le Roi des Halles", dates: "1616-1669", icon: "sword", mainList: true, isFictional: false, actor: "Alice Augereau", quote: "Je suis le roi des Halles, et vous n'êtes que le ministre du roi.", intro: "Petit-fils d'Henri IV, ce prince charismatique et impétueux gagne la ferveur du peuple parisien lors des révoltes de la Fronde.", facts: ["S'évade de manière rocambolesque du donjon de Vincennes en 1648.", "Devient la figure de proue populaire de la rébellion contre Mazarin.", "Se réconcilie avec le roi et devient un valeureux amiral de la flotte française."], role: "Symbole de l'insoumission nobiliaire domptée, puis de la bravoure militaire au service strict de la couronne.", heritage: "Une figure romantique et populaire ayant inspiré la littérature de cape et d'épée (dont Alexandre Dumas).", rpg: { classe: "Héros Populaire", faction: "Peuple", competences: [ { nom: "Bravoure", desc: "Courage légendaire", icon: "🛡️" }, { nom: "Charisme", desc: "Adoré du peuple", icon: "👥" }, { nom: "Fronde", desc: "Rébellion", icon: "🏴‍☠️" }, { nom: "Honneur", desc: "Code martial", icon: "🎖️" } ], ultime: { nom: "Cri de guerre", desc: "Galvanise les troupes par son courage exemplaire" }, relations: { allies: ["Peuple de Paris", "Frondeurs"], rivaux: ["Mazarin", "Louis XIV (Fronde)"], amours: ["Dames de la Cour"] } } },
-            "moliere": { name: "Molière", subtitle: "Le génie de la comédie", dates: "1622-1673", icon: "masks", mainList: true, isFictional: false, actor: "Baptiste Desrosiers", quote: "Le devoir de la comédie est de corriger les hommes en les divertissant.", intro: "Jean-Baptiste Poquelin, immense homme de théâtre et comédien, est le protégé de Louis XIV et l'organisateur de ses grands divertissements.", facts: ["Révolutionne le théâtre comique et invente la comédie-ballet avec Lully.", "Dresse une satire féroce et brillante des travers de la société.", "Meurt de maladie à l'issue d'une représentation du Malade imaginaire."], role: "Peintre implacable des mœurs de son temps et pilier indispensable du rayonnement culturel versaillais.", heritage: "Le répertoire le plus joué en France ; la langue française est couramment appelée la 'langue de Molière'.", rpg: { classe: "Maître des Arts", faction: "Peuple", competences: [ { nom: "Dramaturgie", desc: "Génie créatif", icon: "🎭" }, { nom: "Satire", desc: "Critique acérée", icon: "😂" }, { nom: "Observation", desc: "Peintre des mœurs", icon: "👁️" }, { nom: "Esprit Critique", desc: "Brise les dogmes", icon: "🧠" } ], ultime: { nom: "Miroir de la société", desc: "Révèle les vérités cachées par l'art de la comédie" }, relations: { allies: ["Louis XIV", "Troupe"], rivaux: ["Dévots", "Critiques"], amours: ["Armande Béjart"] } } },
-            "scarron": { name: "Scarron", subtitle: "Le maître du burlesque", dates: "1610-1660", icon: "feather", mainList: true, isFictional: false, actor: "Chloé Roumanus", quote: "Je ne suis pas fait comme les autres hommes.", intro: "Auteur majeur, pionnier du burlesque, lourdement handicapé par la maladie. Il fut le premier époux de Françoise d'Aubigné (Madame de Maintenon).", facts: ["Tient un salon littéraire parisien brillant, anti-conformiste et libre.", "Épouse la jeune et pauvre Françoise d'Aubigné pour la sauver de la misère.", "Offre un regard ironique et décalé, loin des fastes rigides de la cour royale."], role: "Animateur d'une vie intellectuelle parisienne alternative, frondeuse et décomplexée.", heritage: "L'un des fondateurs du genre comique et parodique dans la littérature classique française du XVIIe siècle.", rpg: { classe: "Poète Courageux", faction: "Peuple", competences: [ { nom: "Burlesque", desc: "Humour décalé", icon: "😂" }, { nom: "Courage", desc: "Face à l'adversité", icon: "💪" }, { nom: "Littérature", desc: "Plume de génie", icon: "✍️" }, { nom: "Humour", desc: "Rire salvateur", icon: "😄" } ], ultime: { nom: "Rire thérapeutique", desc: "Guérit les âmes par l'humour et la littérature" }, relations: { allies: ["F. d'Aubigné", "Poètes"], rivaux: ["Auteurs classiques"], amours: ["F. d'Aubigné"] } } },
-            "ninon": { name: "Ninon de l'Enclos", subtitle: "La femme libre", dates: "1620-1705", icon: "sparkles", mainList: true, isFictional: false, actor: "Inga Lee Yeskova", quote: "La joie de l'esprit en marque la force.", intro: "Célèbre courtisane, femme de lettres et amie des grands esprits de son temps, elle est la figure de proue de l'épicurisme à Paris.", facts: ["Tient le célèbre salon 'Le Marais', point de ralliement des élites intellectuelles.", "Revendique ouvertement l'indépendance financière, morale et amoureuse des femmes.", "Fascine et est respectée par la haute société malgré ses mœurs libres."], role: "Incarnation éclatante de la liberté d'esprit et du libertinage philosophique au sein du Grand Siècle.", heritage: "Symbole intemporel de la femme affranchie des conventions morales strictes de son époque.", rpg: { classe: "Philosophe Libertine", faction: "Courtisane", competences: [ { nom: "Esprit Libre", desc: "Sans dogmes", icon: "🕊️" }, { nom: "Philosophie", desc: "Pensée moderne", icon: "💭" }, { nom: "Indépendance", desc: "Refus de soumission", icon: "🚫" }, { nom: "Charme", desc: "Séduction intellectuelle", icon: "🧠" } ], ultime: { nom: "Liberté d'esprit", desc: "Inspire la liberté de pensée et l'émancipation" }, relations: { allies: ["Philosophes", "Artistes"], rivaux: ["Dévots"], amours: ["Nombreux amants"] } } },
+            "beaufort": { 
+                name: "Duc de Beaufort", subtitle: "Le Roi des Halles", backSubtitle: "L'impétueux rebelle", dates: "1616 – 1669", icon: "sword", mainList: true, isFictional: false, actor: "Alice Augereau", 
+                quote: "Je suis le roi des Halles, et vous n'êtes que le ministre du roi.", 
+                intro: "Petit-fils d'Henri IV, ce prince charismatique et tête brûlée gagne la ferveur du peuple de Paris lors de la Fronde, avant de se racheter sur les mers.", 
+                stats: [ { icon: '⚔️', val: '95' }, { icon: '🛡️', val: '75' }, { icon: '✨', val: '90' }, { icon: '🧠', val: '50' } ],
+                traits: [ { icon: '🔥', name: 'Impétueux' }, { icon: '⚔️', name: 'Brave' }, { icon: '🗣️', name: 'Populaire' }, { icon: '🏴‍☠️', name: 'Frondeur' } ],
+                achievements: [ { icon: '🏃', name: 'Évasion de Vincennes', val: '1648' }, { icon: '⚔️', name: 'Siège de Paris', val: '1649' }, { icon: '⚓', name: 'Expédition de Candie', val: '1669' } ],
+                titles: [ { icon: '👑', text: 'Roi des Halles', sub: 'Surnom populaire' }, { icon: '⚓', text: 'Grand Maître', sub: 'de la Navigation' } ],
+                rpg: { 
+                    classe: "Héros Populaire", faction: "Frondeurs", collection: "⚜️ Collection « Le Grand Siècle » ⚜️",
+                    attributs: [ { label: 'Autorité', class: 'authority', val: 80 }, { label: 'Charisme', class: 'charisma', val: 95 }, { label: 'Stratégie', class: 'strategy', val: 40 }, { label: 'Culture', class: 'culture', val: 50 }, { label: 'Diplomatie', class: 'diplomacy', val: 30 }, { label: 'Art de guerre', class: 'warfare', val: 90 } ],
+                    competences: [ { nom: "Charge", desc: "Bravoure aveugle", icon: "🐎" }, { nom: "Ferveur", desc: "Soulève les foules", icon: "🗣️" }, { nom: "Duel", desc: "Maître de l'épée", icon: "🤺" }, { nom: "Navire", desc: "Amiral des mers", icon: "⛵" } ], 
+                    ultime: { nom: "Le Cri de Paris", desc: "Déclenche une barricade populaire impénétrable" }, 
+                    relations: { allies: ["Le Peuple de Paris", "Isabelle (Fiction)"], rivaux: ["Mazarin", "Anne d'Autriche"], amours: ["Mme de Montbazon", "Isabelle"] } 
+                } 
+            },
+            "moliere": { 
+                name: "Molière", subtitle: "Le génie de la comédie", backSubtitle: "L'observateur des mœurs", dates: "1622 – 1673", icon: "masks", mainList: true, isFictional: false, actor: "Baptiste Desrosiers", 
+                quote: "Le devoir de la comédie est de corriger les hommes en les divertissant.", 
+                intro: "Jean-Baptiste Poquelin est le protégé de Louis XIV. Par son génie comique, il dresse une satire féroce et brillante des travers de la société de son temps.", 
+                stats: [ { icon: '⚔️', val: '20' }, { icon: '🛡️', val: '60' }, { icon: '✨', val: '95' }, { icon: '🧠', val: '99' } ],
+                traits: [ { icon: '🎭', name: 'Dramaturge' }, { icon: '😂', name: 'Satirique' }, { icon: '👁️', name: 'Observateur' }, { icon: '🏃', name: 'Infatigable' } ],
+                achievements: [ { icon: '🎭', name: 'Le Tartuffe', val: '1664' }, { icon: '💃', name: 'Création Comédie-Ballet', val: '1661' }, { icon: '👑', name: 'Troupe du Roi', val: '1665' } ],
+                titles: [ { icon: '🎭', text: 'Chef de Troupe', sub: 'L\'Illustre Théâtre' }, { icon: '🪶', text: 'Tapissier du Roi', sub: 'Charge honorifique' } ],
+                rpg: { 
+                    classe: "Maître des Arts", faction: "Artistes", collection: "⚜️ Collection « Le Grand Siècle » ⚜️",
+                    attributs: [ { label: 'Autorité', class: 'authority', val: 70 }, { label: 'Charisme', class: 'charisma', val: 95 }, { label: 'Stratégie', class: 'strategy', val: 85 }, { label: 'Culture', class: 'culture', val: 99 }, { label: 'Diplomatie', class: 'diplomacy', val: 80 }, { label: 'Art de guerre', class: 'warfare', val: 10 } ],
+                    competences: [ { nom: "Plume", desc: "Écrit des chefs-d'œuvre", icon: "✍️" }, { nom: "Satire", desc: "Dénonce les hypocrites", icon: "😂" }, { nom: "Jeu", desc: "Prestance scénique", icon: "🎭" }, { nom: "Direction", desc: "Mène sa troupe", icon: "🎬" } ], 
+                    ultime: { nom: "Le Malade Imaginaire", desc: "Fait s'esclaffer la Cour et enrage les dévots" }, 
+                    relations: { allies: ["Louis XIV", "Lully (au début)", "La Troupe"], rivaux: ["Lully (à la fin)", "Le Parti Dévot"], amours: ["Armande Béjart", "Madeleine Béjart"] } 
+                } 
+            },
+            "scarron": { 
+                name: "Scarron", subtitle: "Le maître du burlesque", backSubtitle: "L'esprit libre", dates: "1610 – 1660", icon: "feather", mainList: true, isFictional: false, actor: "Chloé Roumanus", 
+                quote: "Je ne suis pas fait comme les autres hommes.", 
+                intro: "Auteur majeur, pionnier du registre burlesque. Lourdement handicapé par la maladie, il tient un salon brillant et épouse la jeune Françoise d'Aubigné pour la sauver.", 
+                stats: [ { icon: '⚔️', val: '10' }, { icon: '🛡️', val: '80' }, { icon: '✨', val: '85' }, { icon: '🧠', val: '95' } ],
+                traits: [ { icon: '😂', name: 'Burlesque' }, { icon: '💪', name: 'Résilient' }, { icon: '🕊️', name: 'Esprit Libre' }, { icon: '🍷', name: 'Épicurien' } ],
+                achievements: [ { icon: '📚', name: 'Le Roman Comique', val: '1651' }, { icon: '🏠', name: 'Salon du Marais', val: 'Animateur' }, { icon: '💍', name: 'Mariage', val: 'avec F. d\'Aubigné' } ],
+                titles: [ { icon: '🪶', text: 'Poète Burlesque', sub: 'Anti-classique' }, { icon: '📜', text: 'Abbé', sub: 'Titre de jeunesse' } ],
+                rpg: { 
+                    classe: "Plume Satirique", faction: "Artistes", collection: "⚜️ Collection « Le Grand Siècle » ⚜️",
+                    attributs: [ { label: 'Autorité', class: 'authority', val: 50 }, { label: 'Charisme', class: 'charisma', val: 85 }, { label: 'Stratégie', class: 'strategy', val: 75 }, { label: 'Culture', class: 'culture', val: 95 }, { label: 'Diplomatie', class: 'diplomacy', val: 85 }, { label: 'Art de guerre', class: 'warfare', val: 5 } ],
+                    competences: [ { nom: "Parodie", desc: "Détourne les mythes", icon: "🎭" }, { nom: "Rire", desc: "Humour salvateur", icon: "😂" }, { nom: "Salon", desc: "Rassemble les esprits", icon: "☕" }, { nom: "Courage", desc: "Défie la douleur", icon: "🛡️" } ], 
+                    ultime: { nom: "Vers Burlesques", desc: "Désarme n'importe quel noble par l'autodérision" }, 
+                    relations: { allies: ["Françoise d'Aubigné", "Ninon de l'Enclos", "Frondeurs"], rivaux: ["L'Académie Française", "Mazarin (parfois)"], amours: ["Françoise d'Aubigné"] } 
+                } 
+            },
+            "ninon": { 
+                name: "Ninon de l'Enclos", subtitle: "La femme libre", backSubtitle: "L'épicurienne", dates: "1620 – 1705", icon: "sparkles", mainList: true, isFictional: false, actor: "Inga Lee Yeskova", 
+                quote: "La joie de l'esprit en marque la force.", 
+                intro: "Célèbre courtisane et femme de lettres, elle est la figure de proue du libertinage (philosophique) à Paris. Elle revendique l'indépendance totale des femmes.", 
+                stats: [ { icon: '⚔️', val: '20' }, { icon: '🛡️', val: '75' }, { icon: '✨', val: '98' }, { icon: '🧠', val: '95' } ],
+                traits: [ { icon: '🦋', name: 'Indépendante' }, { icon: '🧠', name: 'Philosophe' }, { icon: '💋', name: 'Séductrice' }, { icon: '🍷', name: 'Épicurienne' } ],
+                achievements: [ { icon: '🏠', name: 'Le Marais', val: 'Salon Littéraire' }, { icon: '✍️', name: 'Mécène', val: 'du jeune Voltaire' }, { icon: '🕊️', name: 'Émancipation', val: 'Revendiquée' } ],
+                titles: [ { icon: '✨', text: 'Femme de Lettres', sub: 'Libertine' }, { icon: '👑', text: 'Reine des Esprits', sub: 'Paris du XVIIe' } ],
+                rpg: { 
+                    classe: "Esprit Libertin", faction: "Cour Alternative", collection: "⚜️ Collection « Le Grand Siècle » ⚜️",
+                    attributs: [ { label: 'Autorité', class: 'authority', val: 70 }, { label: 'Charisme', class: 'charisma', val: 98 }, { label: 'Stratégie', class: 'strategy', val: 85 }, { label: 'Culture', class: 'culture', val: 95 }, { label: 'Diplomatie', class: 'diplomacy', val: 90 }, { label: 'Art de guerre', class: 'warfare', val: 10 } ],
+                    competences: [ { nom: "Liberté", desc: "Refuse les dogmes", icon: "🕊️" }, { nom: "Philosophie", desc: "Pensée avant-gardiste", icon: "💭" }, { nom: "Charme", desc: "Envoûte les savants", icon: "✨" }, { nom: "Mécénat", desc: "Soutient les talents", icon: "💰" } ], 
+                    ultime: { nom: "Le Choix des Amants", desc: "Aime qui elle veut, quand elle veut, librement" }, 
+                    relations: { allies: ["Scarron", "Molière", "La Fontaine"], rivaux: ["Le Parti Dévot", "Anne d'Autriche"], amours: ["Le Grand Condé", "Sévigné", "(Nombreux)"] } 
+                } 
+            },
 
             // --- 5. L'OMBRE, LE PEUPLE ET LA FICTION ---
-            "voisin": { name: "La Voisin", subtitle: "La devineresse des poisons", dates: "1640-1680", icon: "flask", mainList: true, isFictional: false, actor: "Louise Oziès Fournier", quote: "La mort est un commerce comme un autre.", intro: "Figure de l'ombre redoutable et mystérieuse. Elle gravite dans les bas-fonds de Paris en vendant philtres d'amour, prédictions et poisons aux nobles prêts à tout.", facts: ["Fournit à Madame de Montespan les remèdes occultes pour retenir le cœur du Roi.", "Incarne la part sombre, immorale et dangereuse de la haute société du Grand Siècle.", "Déclenche le scandale terrifiant de l'Affaire des Poisons qui secouera toute la cour."], role: "Représenter la folie des grandeurs, l'avidité et la noirceur cachée derrière les dorures de Versailles.", heritage: "Incarne la transgression ultime et la chute morale inévitable des courtisans aveuglés par l'ambition.", rpg: { classe: "Empoisonneuse", faction: "Bas-fonds", competences: [ { nom: "Arts Occultes", desc: "Magie et rituels", icon: "🌙" }, { nom: "Poisons", desc: "Breuvages létaux", icon: "☠️" }, { nom: "Messes Noires", desc: "Cérémonies", icon: "⚫" }, { nom: "Manipulation", desc: "Contrôle mental", icon: "🧠" } ], ultime: { nom: "Maléfice fatal", desc: "Maîtrise les forces obscures et les poisons les plus redoutables" }, relations: { allies: ["Sorcières", "Clients"], rivaux: ["Police", "La Reynie"], amours: ["Intérêts vénaux"] } } },
-            "lisieux": { name: "Mademoiselle de Lisieux", subtitle: "L'ingénue à la cour", dates: "1645-1690", icon: "fleur", mainList: true, isFictional: true, actor: "Eyleen Douat", quote: "La lumière du Soleil brûle ceux qui s'en approchent de trop près.", intro: "Issue de la petite noblesse provinciale, elle monte à la cour avec des rêves de grandeur et de succès, gravitant innocemment autour des plus puissants.", facts: ["Cherche désespérément à exister et à se faire remarquer dans la lumière du Roi-Soleil.", "Se confronte très rapidement aux rivalités impitoyables et aux manipulations cruelles des courtisans.", "Représente l'ambition d'élévation sociale absolue et parfois naïve propre à l'époque."], role: "Illustrer la très grande fragilité des courtisans et le miroir aux alouettes que représentait l'entourage direct du Roi.", heritage: "Dévoile les coulisses souvent terribles, froides et impitoyables cachées derrière l'étiquette royale.", rpg: { classe: "Dame de Compagnie", faction: "Dame de cour", competences: [ { nom: "Discrétion", desc: "Silence absolu", icon: "🤫" }, { nom: "Loyauté", desc: "Fidélité sans faille", icon: "💯" }, { nom: "Observation", desc: "Perception fine", icon: "👁️" }, { nom: "Service", desc: "Dévouement total", icon: "🤝" } ], ultime: { nom: "Ombre fidèle", desc: "Sert avec une loyauté et une discrétion exemplaires" }, relations: { allies: ["Noblesse provinciale"], rivaux: ["Intrigants"], amours: ["Rêves romantiques"] } } },
-            "isabelle": { name: "Isabelle", subtitle: "La fille du peuple", dates: "1630-1685", icon: "sparkles", mainList: true, isFictional: true, actor: "Inès Berger", quote: "Même les ombres ont le droit d'aimer.", intro: "Jeune roturière rebelle et passionnée au destin romanesque. Elle se dresse contre les injustices et vit une romance impossible avec le noble Duc de Beaufort.", facts: ["Incarne avec force la voix de la rue, la misère et les aspirations brisées des roturiers.", "Met en lumière la rigidité absolue des barrières sociales de l'époque à travers ses tourments amoureux.", "Soutient activement la Fronde et la rébellion populaire contre Mazarin."], role: "Représenter le peuple de France, dramatiquement oublié de la grande Histoire, qui subit seul les guerres et les impôts.", heritage: "Apporte l'indispensable dimension populaire, pure, humaine et intimement tragique à l'œuvre musicale.", rpg: { classe: "Âme Pure", faction: "Peuple", competences: [ { nom: "Pureté", desc: "Innocence touchante", icon: "😇" }, { nom: "Nature", desc: "Beauté authentique", icon: "🌿" }, { nom: "Simplicité", desc: "Émotions vraies", icon: "💫" }, { nom: "Amour", desc: "Sentiments sincères", icon: "💖" } ], ultime: { nom: "Grâce innocente", desc: "Touche les cœurs par sa pureté et sa sincérité absolue" }, relations: { allies: ["Artisans", "Paysans"], rivaux: ["Dames hautaines"], amours: ["Duc de Beaufort"] } } },
+            "voisin": { 
+                name: "La Voisin", subtitle: "La devineresse", backSubtitle: "Maîtresse des poisons", dates: "1640 – 1680", icon: "flask", mainList: true, isFictional: false, actor: "Louise Oziès Fournier", 
+                quote: "La mort est un commerce comme un autre.", 
+                intro: "Catherine Deshayes, dite La Voisin. Elle gravite dans les bas-fonds de Paris, vendant philtres, horoscopes et poisons aux nobles les plus puissants de Versailles.", 
+                stats: [ { icon: '⚔️', val: '85' }, { icon: '🛡️', val: '30' }, { icon: '✨', val: '75' }, { icon: '🧠', val: '90' } ],
+                traits: [ { icon: '☠️', name: 'Empoisonneuse' }, { icon: '🔮', name: 'Occultiste' }, { icon: '💰', name: 'Cupide' }, { icon: '🤫', name: 'Secrète' } ],
+                achievements: [ { icon: '☠️', name: 'Affaire des Poisons', val: '1679' }, { icon: '📜', name: 'Clientèle Royale', val: 'Mme de Montespan' }, { icon: '🔥', name: 'Bûcher en Grève', val: '1680' } ],
+                titles: [ { icon: '🧪', text: 'Devineresse', sub: 'et Avorteuse' }, { icon: '🌑', text: 'Reine des Bas-Fonds', sub: 'Paris' } ],
+                rpg: { 
+                    classe: "Sorcière", faction: "Bas-Fonds", collection: "⚜️ Collection « Le Grand Siècle » ⚜️",
+                    attributs: [ { label: 'Autorité', class: 'authority', val: 80 }, { label: 'Charisme', class: 'charisma', val: 75 }, { label: 'Stratégie', class: 'strategy', val: 90 }, { label: 'Culture', class: 'culture', val: 40 }, { label: 'Diplomatie', class: 'diplomacy', val: 85 }, { label: 'Art de guerre', class: 'warfare', val: 60 } ],
+                    competences: [ { nom: "Poudre de Succession", desc: "Poison indétectable", icon: "🧪" }, { nom: "Messe Noire", desc: "Rituel obscur", icon: "🐐" }, { nom: "Chantage", desc: "Détient les secrets", icon: "📜" }, { nom: "Prédiction", desc: "Lit l'avenir", icon: "🔮" } ], 
+                    ultime: { nom: "L'Ombre sur Versailles", desc: "Fait trembler la plus haute noblesse par la peur" }, 
+                    relations: { allies: ["Nobles ambitieux", "Mages"], rivaux: ["La Reynie", "La Justice", "Louis XIV"], amours: ["L'Argent", "Lesage"] } 
+                } 
+            },
+            "lisieux": { 
+                name: "Mlle de Lisieux", subtitle: "L'ingénue à la cour", backSubtitle: "L'ambition provinciale", dates: "1645 – 1690", icon: "fleur", mainList: true, isFictional: true, actor: "Eyleen Douat", 
+                quote: "La lumière du Soleil brûle ceux qui s'en approchent de trop près.", 
+                intro: "Personnage symbolique de la comédie musicale. Issue de la noblesse de province, elle monte à Versailles pleine de rêves et découvre la cruauté du pouvoir.", 
+                stats: [ { icon: '⚔️', val: '15' }, { icon: '🛡️', val: '40' }, { icon: '✨', val: '80' }, { icon: '🧠', val: '65' } ],
+                traits: [ { icon: '🌸', name: 'Ingénue' }, { icon: '✨', name: 'Rêveuse' }, { icon: '👑', name: 'Ambitieuse' }, { icon: '💔', name: 'Vulnérable' } ],
+                achievements: [ { icon: '🏰', name: 'Arrivée à la Cour', val: 'Illusion' }, { icon: '👗', name: 'Le Grand Bal', val: 'Paraître' }, { icon: '😢', name: 'Désillusion', val: 'Cruauté' } ],
+                titles: [ { icon: '🪭', text: 'Dame de Compagnie', sub: 'Nouvelle venue' }, { icon: '🌸', text: 'La Fleur de Province', sub: 'Symbole' } ],
+                rpg: { 
+                    classe: "Courtisane Novice", faction: "Cour Royale", collection: "✨ Personnages Fictifs — Comédie Musicale ✨",
+                    attributs: [ { label: 'Autorité', class: 'authority', val: 20 }, { label: 'Charisme', class: 'charisma', val: 80 }, { label: 'Stratégie', class: 'strategy', val: 45 }, { label: 'Culture', class: 'culture', val: 65 }, { label: 'Diplomatie', class: 'diplomacy', val: 50 }, { label: 'Art de guerre', class: 'warfare', val: 5 } ],
+                    competences: [ { nom: "Émerveillement", desc: "Regard pur", icon: "✨" }, { nom: "Discrétion", desc: "Apprend le silence", icon: "🤫" }, { nom: "Adaptation", desc: "Imite les nobles", icon: "👗" }, { nom: "Naïveté", desc: "Cible facile", icon: "🎯" } ], 
+                    ultime: { nom: "Miroir aux Alouettes", desc: "Révèle la fausseté de la cour par sa chute" }, 
+                    relations: { allies: ["Autres novices"], rivaux: ["Favorites", "Courtisans aguerris"], amours: ["Un rêve impossible"] } 
+                } 
+            },
+            "isabelle": { 
+                name: "Isabelle", subtitle: "La fille du peuple", backSubtitle: "La voix des rues", dates: "1630 – 1685", icon: "sparkles", mainList: true, isFictional: true, actor: "Inès Berger", 
+                quote: "Même les ombres ont le droit d'aimer.", 
+                intro: "Personnage essentiel de la comédie musicale. Jeune roturière rebelle et passionnée, elle vit un amour impossible avec le Duc de Beaufort au cœur de la Fronde.", 
+                stats: [ { icon: '⚔️', val: '60' }, { icon: '🛡️', val: '70' }, { icon: '✨', val: '85' }, { icon: '🧠', val: '75' } ],
+                traits: [ { icon: '🔥', name: 'Rebelle' }, { icon: '❤️', name: 'Passionnée' }, { icon: '🌾', name: 'Authentique' }, { icon: '💪', name: 'Courageuse' } ],
+                achievements: [ { icon: '🛡️', name: 'Les Barricades', val: 'Paris 1648' }, { icon: '💔', name: 'Amour Interdit', val: 'Duc de Beaufort' }, { icon: '🗣️', name: 'Voix du Peuple', val: 'Symbole' } ],
+                titles: [ { icon: '🌾', text: 'Roturière', sub: 'Fille de Paris' }, { icon: '🕊️', text: 'L\'Âme Frondeuse', sub: 'Symbole' } ],
+                rpg: { 
+                    classe: "Cœur Rebelle", faction: "Le Peuple", collection: "✨ Personnages Fictifs — Comédie Musicale ✨",
+                    attributs: [ { label: 'Autorité', class: 'authority', val: 50 }, { label: 'Charisme', class: 'charisma', val: 85 }, { label: 'Stratégie', class: 'strategy', val: 60 }, { label: 'Culture', class: 'culture', val: 40 }, { label: 'Diplomatie', class: 'diplomacy', val: 65 }, { label: 'Art de guerre', class: 'warfare', val: 55 } ],
+                    competences: [ { nom: "Franchise", desc: "Parle avec le cœur", icon: "🗣️" }, { nom: "Soutien", desc: "Aide les opprimés", icon: "🤝" }, { nom: "Défi", desc: "Brave les nobles", icon: "⚔️" }, { nom: "Passion", desc: "Amour inconditionnel", icon: "🔥" } ], 
+                    ultime: { nom: "L'Amour Impossible", desc: "Brise les barrières de classe par la force des sentiments" }, 
+                    relations: { allies: ["Le Peuple de Paris", "Frondeurs"], rivaux: ["Gardes du Roi", "Noblesse distante"], amours: ["Duc de Beaufort"] } 
+                } 
+            },
 
-            // --- 6. RÔLES DE L'ENSEMBLE ---
-            "les-courtisanes": { name: "Les Courtisanes", subtitle: "L'art de paraître", dates: "17e Siècle", icon: "fleur", mainList: true, isFictional: false, actor: "Charlotte Lespets, Colette Disney, Justine Douady, Madeline Quantin, Manon Alliaume, Santina Grech", quote: "L'apparence est notre première noblesse, et la médisance notre épée.", intro: "Évoluant dans les salons de Versailles, elles utilisent la mode, les bijoux et l'esprit pour se démarquer dans la foule de nobles au plus près du pouvoir.", facts: ["Suivent à la lettre les changements constants et capricieux de l'Étiquette.", "Dépensent des fortunes colossales pour paraître dans les bonnes grâces du Roi.", "Cachent leurs véritables émotions derrière un masque permanent de politesse."], role: "Incarner la compétition féroce, les rumeurs et le luxe ostentatoire qui ruinaient la noblesse française.", heritage: "Illustre le piège doré qu'était Versailles pour les nobles, tenus en laisse par le paraître.", rpg: { classe: "Illusionniste", faction: "Cour Royale", competences: [ { nom: "Mode", desc: "Dicte les tendances", icon: "👗" }, { nom: "Médisance", desc: "Brisent des vies", icon: "🗣️" }, { nom: "Danse", desc: "Brille au bal", icon: "💃" }, { nom: "Masque", desc: "Cache les émotions", icon: "🎭" } ], ultime: { nom: "Illusion dorée", desc: "Éblouit et dupe par le luxe et l'artifice" }, relations: { allies: ["Modistes", "Joailliers"], rivaux: ["Dévots", "Rivales"], amours: ["Pouvoir"] } } },
-            "les-danseurs": { name: "Les Danseurs", subtitle: "L'art du mouvement", dates: "17e Siècle", icon: "sparkles", mainList: true, isFictional: false, actor: "Arthur Devaux, Charlotte Lespets, Chloé Roumanus, Chloé Woringer, Colette Disney, Élise Devaux, Eyleen Douat, Inga Lee Yeskova, Juliette Pedron, Justine Douady, Leyton Guillot, Madeline Quantin, Manon Alliaume, Santina Grech", quote: "Tant que la musique joue, la cour oublie la misère du monde.", intro: "La danse est au cœur de la vie de cour et des divertissements de Versailles. Le Roi lui-même, grand passionné, excelle dans cet art et se produit sur scène.", facts: ["Participent aux fastueux ballets de cour et comédies-ballets (de Lully et Molière).", "S'entraînent quotidiennement pour atteindre la grâce absolue exigée par le souverain.", "Rythment les fêtes grandioses qui durent parfois plusieurs jours sans interruption."], role: "Symboliser l'exigence artistique et la perfection esthétique imposées par Louis XIV à sa cour.", heritage: "Ont posé les bases de la danse classique mondiale (les cinq positions ont été codifiées sous Louis XIV).", rpg: { classe: "Artistes", faction: "Troupe", competences: [ { nom: "Grâce", desc: "Élégance naturelle", icon: "🌟" }, { nom: "Rythme", desc: "Harmonie musicale", icon: "🎵" }, { nom: "Esthétique", desc: "Beauté visuelle", icon: "✨" }, { nom: "Expression", desc: "Langage corporel", icon: "💫" } ], ultime: { nom: "Danse envoûtante", desc: "Hypnotise l'assemblée par la beauté de son art" }, relations: { allies: ["Musiciens", "Lully"], rivaux: ["Critiques", "Dévots"], amours: ["L'Art"] } } },
-            "le-peuple": { name: "Le Peuple de Paris", subtitle: "La voix de la rue", dates: "17e Siècle", icon: "users", mainList: true, isFictional: false, actor: "Arthur Devaux, Charlotte Lespets, Chloé Roumanus, Chloé Woringer, Colette Disney, Élise Devaux, Eyleen Douat, Juliette Pedron, Madeline Quantin, Manon Alliaume, Santina Grech", quote: "Ceux qui bâtissent les palais dorment dans la boue.", intro: "Loin des fastes éblouissants de Versailles, la majorité des Français (paysans, artisans, bourgeois) subit le poids écrasant de la monarchie absolue.", facts: ["Subit directement les conséquences des guerres interminables, des impôts et des famines.", "Soutient activement les frondeurs contre Mazarin dans l'espoir de jours meilleurs.", "Incarne la réalité brutale et souvent oubliée derrière les dorures de l'Histoire."], role: "Rappeler le contraste saisissant et tragique entre la misère populaire et le luxe inouï de la cour.", heritage: "Le moteur silencieux de l'Histoire de France, annonciateur lointain des futures révolutions.", rpg: { classe: "Représentants", faction: "Tiers État", competences: [ { nom: "Gronde", desc: "Voix du peuple", icon: "🗣️" }, { nom: "Force", desc: "Puissance de l'union", icon: "💪" }, { nom: "Sagesse", desc: "Bon sens rural", icon: "🌾" }, { nom: "Solidarité", desc: "Entraide", icon: "❤️" } ], ultime: { nom: "Âme de la France", desc: "Incarne l'esprit et les valeurs profondes de la nation" }, relations: { allies: ["Artisans", "Paysans"], rivaux: ["Noblesse arrogante", "Collecteurs d'impôts"], amours: ["La France"] } } },
-            "les-operateurs": { name: "Les Opérateurs Rideaux", subtitle: "La magie de la scène", dates: "Intemporel", icon: "masks", mainList: true, isFictional: false, actor: "Juliette Pedron, Leyton Guillot, Louise Oziès Fournier, Valentine Delassus", quote: "L'illusion est notre métier, l'ombre est notre domaine.", intro: "Acteurs de l'ombre indispensables au théâtre, ils rythment les actes et les transitions de la pièce. Sans eux, l'illusion théâtrale ne pourrait exister.", facts: ["Contrôlent les apparitions et disparitions des décors et des comédiens.", "Garantissent la fluidité et le rythme implacable du spectacle musical.", "Sont les maîtres invisibles du temps et de l'espace sur scène."], role: "Assurer la magie, la perfection technique et la beauté de la représentation en direct.", heritage: "Les véritables artisans de la machinerie théâtrale.", rpg: { classe: "Maîtres de l'Ombre", faction: "Troupe", competences: [ { nom: "Mécanique", desc: "Gestion des décors", icon: "⚙️" }, { nom: "Illusion", desc: "Magie scénique", icon: "🎭" }, { nom: "Chronomètre", desc: "Maîtrise du temps", icon: "⏱️" }, { nom: "Ombre", desc: "Invisibilité", icon: "🤫" } ], ultime: { nom: "L'illusion parfaite", desc: "Permet l'immersion totale du public sans accroc" }, relations: { allies: ["Molière", "Comédiens"], rivaux: ["Contretemps", "Pannes techniques"], amours: ["La Scène"] } } },
-            "les-soldats": { name: "Les Soldats", subtitle: "Le bras armé du Roi", dates: "17e Siècle", icon: "sword", mainList: true, isFictional: false, actor: "Chloé Roumanus, Eyleen Douat", quote: "La force de l'État repose sur le fer de nos épées.", intro: "Gardiens de l'ordre et exécutants fidèles des volontés royales, ils maintiennent l'autorité absolue du Roi-Soleil sur l'ensemble du territoire et aux frontières.", facts: ["Mènent les innombrables guerres de Louis XIV pour agrandir la France.", "Maintiennent la paix intérieure et matent les révoltes populaires.", "Imposent le respect absolu et la crainte de la Couronne."], role: "Incarner la force militaire, la rigueur et l'autorité implacable de l'État.", heritage: "L'outil principal de l'hégémonie de la puissance française en Europe.", rpg: { classe: "Guerriers Loyaux", faction: "Armée Royale", competences: [ { nom: "Bravoure", desc: "Courage au combat", icon: "🛡️" }, { nom: "Armes", desc: "Maîtrise de l'épée", icon: "⚔️" }, { nom: "Patrie", desc: "Amour du pays", icon: "🇫🇷" }, { nom: "Bataillon", desc: "Esprit de corps", icon: "🤝" } ], ultime: { nom: "Pour la France", desc: "Se bat avec un courage héroïque jusqu'à la mort" }, relations: { allies: ["Louvois", "Officiers"], rivaux: ["Ennemis de l'État", "Déserteurs"], amours: ["Fiancées au village"] } } },
-            "le-clerge": { name: "Le Clergé", subtitle: "L'influence de l'Église", dates: "17e Siècle", icon: "church", mainList: true, isFictional: false, actor: "Arthur Devaux, Leyton Guillot", quote: "Dieu établit les rois comme ses ministres, et règne par eux sur les peuples.", intro: "Gardiens de la foi catholique, l'Évêque et son assistant rappellent la nature divine du pouvoir royal et orientent les décisions morales du royaume.", facts: ["Légitiment le pouvoir absolu de droit divin du Roi (comme le fait Bossuet).", "Influencent fortement les politiques de tolérance religieuse (révocation de l'Édit de Nantes).", "Veillent à la piété de la famille royale, particulièrement sous l'influence de Madame de Maintenon."], role: "La caution théologique, morale et spirituelle incontestable de la monarchie.", heritage: "Le maintien strict de la religion d'État au cœur de la politique française.", rpg: { classe: "Guides Spirituels", faction: "Clergé", competences: [ { nom: "Éloquence", desc: "Prêches enflammés", icon: "📖" }, { nom: "Autorité", desc: "Pression morale", icon: "⚖️" }, { nom: "Pardon", desc: "Absolution des péchés", icon: "🕊️" }, { nom: "Ferveur", desc: "Prière sincère", icon: "🙏" } ], ultime: { nom: "Courroux Divin", desc: "Abat la foudre morale sur les pécheurs" }, relations: { allies: ["Dévots", "Mme de Maintenon"], rivaux: ["Libertins", "Comédiens"], amours: ["L'Église"] } } },
-            "la-dame-de-cour": { name: "La Dame de cour", subtitle: "Confidente et alliée", dates: "17e Siècle", icon: "crown", mainList: true, isFictional: false, actor: "Juliette Pedron", quote: "La loyauté a un prix que seule la cour connaît.", intro: "Femme de la très haute noblesse attachée au service direct de la Reine ou des princesses, elle est à la fois servante de haut rang, chaperon et confidente.", facts: ["Accompagne la famille royale dans l'absolu de tous ses déplacements quotidiens.", "Joue un rôle discret mais clé dans les négociations, les rumeurs et les alliances.", "Doit manœuvrer avec une extrême prudence pour ne pas s'attirer les foudres des favorites du Roi."], role: "Montrer la grande complexité des relations féminines et des hiérarchies internes à la cour.", heritage: "Met en lumière le rôle diplomatique discret, mais souvent crucial, des femmes nobles.", rpg: { classe: "Confidente Noble", faction: "Cour Royale", competences: [ { nom: "Étiquette", desc: "Maintien strict", icon: "🪭" }, { nom: "Secrets", desc: "Écoute les murmures", icon: "👂" }, { nom: "Alliances", desc: "Liens discrets", icon: "🤝" }, { nom: "Paraître", desc: "Garde la face", icon: "👗" } ], ultime: { nom: "Grâce Versaillaise", desc: "Navigue dans les pires scandales sans une égratignure" }, relations: { allies: ["La Reine", "Princesses"], rivaux: ["Intrigantes", "Parvenus"], amours: ["Alliances de raison"] } } },
-            "la-femme-de-chambre": { name: "La Femme de chambre", subtitle: "Dans l'ombre des puissants", dates: "17e Siècle", icon: "feather", mainList: true, isFictional: false, actor: "Élise Devaux", quote: "Nous voyons tout, nous entendons tout, mais nous ne disons rien.", intro: "Le fonctionnement quotidien de la gigantesque machine qu'est Versailles repose sur une armée de serviteurs. Elle est au plus près de la stricte intimité des nobles.", facts: ["Assiste aux levers, couchers, habillages et préparatifs complexes des grandes courtisanes.", "Détient souvent des secrets (lettres, rendez-vous) capables de faire basculer des destins.", "Assure le lien invisible entre le faste éblouissant des salons et la réalité rustique des coulisses."], role: "Représenter le peuple travailleur, dévoué et silencieux qui maintient l'illusion de perfection du palais.", heritage: "Donne une voix à la population que la grande Histoire a souvent oubliée derrière les figures royales.", rpg: { classe: "Serviteur Loyal", faction: "Service", competences: [ { nom: "Efficacité", desc: "Service impeccable", icon: "🏠" }, { nom: "Silence", desc: "Discrétion totale", icon: "🤐" }, { nom: "Dévouement", desc: "Loyauté absolue", icon: "💝" }, { nom: "Intimité", desc: "Connaît les secrets", icon: "🔍" } ], ultime: { nom: "Invisible présence", desc: "Observe et agit sans jamais être remarquée" }, relations: { allies: ["Autres serviteurs", "Le Peuple"], rivaux: ["Courtisans tyranniques"], amours: ["Fiancé roturier"] } } },
-            "le-medecin": { name: "Le Médecin", subtitle: "La science balbutiante", dates: "17e Siècle", icon: "flask", mainList: true, isFictional: false, actor: "Louise Oziès Fournier", quote: "La nature guérit la maladie, le médecin ne fait qu'amuser le malade.", intro: "À une époque où la médecine se limite encore trop souvent aux saignées et aux purges brutales, le médecin de cour tente par tous les moyens de préserver la santé des puissants.", facts: ["Applique des remèdes souvent incertains, parfois plus dangereux que le mal lui-même.", "Assiste impuissant aux ravages des épidémies (variole) qui déciment même la famille royale.", "Est très fréquemment la cible des moqueries et satires mordantes (notamment dans les pièces de Molière)."], role: "Montrer l'extrême vulnérabilité des corps, même royaux, face à la maladie et à la mort.", heritage: "Rappelle l'évolution difficile et les balbutiements de la science médicale du Grand Siècle.", rpg: { classe: "Savant Guérisseur", faction: "Science", competences: [ { nom: "Saignée", desc: "Médecine brutale", icon: "🩸" }, { nom: "Botanique", desc: "Remèdes naturels", icon: "🌿" }, { nom: "Alchimie", desc: "Préparations savantes", icon: "💊" }, { nom: "Soin", desc: "Compassion médicale", icon: "❤️" } ], ultime: { nom: "Guérison miraculeuse", desc: "Tente le tout pour le tout et sauve la mise... parfois." }, relations: { allies: ["Apothicaires", "Chirurgiens"], rivaux: ["Charlatans", "Molière"], amours: ["La Science"] } } },
-            "le-ministre": { name: "Un Ministre", subtitle: "L'État en action", dates: "17e Siècle", icon: "book", mainList: true, isFictional: false, actor: "Santina Grech", quote: "Le pouvoir ne se donne pas, il s'administre avec rigueur.", intro: "Haute figure d'autorité au sein de la cour et du Conseil d'En-Haut, il incarne les rouages politiques et administratifs qui dirigent véritablement la France au nom du Roi.", facts: ["Observe la société et conseille le souverain sur la gestion des affaires du royaume.", "Exécute fidèlement les ordres royaux pour asseoir le pouvoir absolu à travers le pays.", "Gère des portefeuilles écrasants : les impôts, les armées, le commerce ou la justice."], role: "Incarner l'implacable machine étatique qui structure et unifie le pays d'une main de fer.", heritage: "L'administration centralisée moderne, l'un des plus grands héritages du règne de Louis XIV.", rpg: { classe: "Commis de l'État", faction: "Administration", competences: [ { nom: "Gestion", desc: "Organisation rigide", icon: "📜" }, { nom: "Justice", desc: "Loi du Roi", icon: "⚖️" }, { nom: "Décrets", desc: "Plume d'acier", icon: "✍️" }, { nom: "Raison", desc: "Logique d'État", icon: "💼" } ], ultime: { nom: "Ordre absolu", desc: "Fait taire toute contestation par la force de la loi" }, relations: { allies: ["Colbert", "Louis XIV"], rivaux: ["Noblesse rebelle", "Contribuables"], amours: ["Le Pouvoir"] } } },
+            // --- 6. LA TROUPE ET LES RÔLES DE COUR ---
+            "les-courtisanes": { 
+                name: "Les Courtisanes", subtitle: "L'art de paraître", backSubtitle: "L'élite de Versailles", dates: "17e Siècle", icon: "fleur", mainList: true, isFictional: false, actor: "Charlotte Lespets, Colette Disney, Justine Douady, Madeline Quantin, Manon Alliaume, Santina Grech", 
+                quote: "L'apparence est notre première noblesse, et la médisance notre épée.", 
+                intro: "Elles forment le décor vivant de Versailles. Pliées à l'Étiquette et parées d'or, elles luttent férocement en coulisses pour obtenir un regard du Roi.", 
+                stats: [ { icon: '⚔️', val: '40' }, { icon: '🛡️', val: '80' }, { icon: '✨', val: '95' }, { icon: '🧠', val: '85' } ],
+                traits: [ { icon: '🪭', name: 'Superficielles' }, { icon: '🐍', name: 'Vipères' }, { icon: '👗', name: 'Élégantes' }, { icon: '🎭', name: 'Hypocrites' } ],
+                achievements: [ { icon: '💃', name: 'Bals Royaux', val: 'Présence' }, { icon: '📜', name: 'Règles de l\'Étiquette', val: 'Maîtrisées' }, { icon: '🗣️', name: 'Rumeurs', val: 'Lancées' } ],
+                titles: [ { icon: '👑', text: 'Haute Noblesse', sub: 'Dames de la Cour' }, { icon: '🎭', text: 'Actrices', sub: 'du Grand Théâtre' } ],
+                rpg: { 
+                    classe: "Illusionnistes Dorées", faction: "Cour Royale", collection: "🎭 Rôles de Cour 🎭",
+                    attributs: [ { label: 'Autorité', class: 'authority', val: 60 }, { label: 'Charisme', class: 'charisma', val: 95 }, { label: 'Stratégie', class: 'strategy', val: 85 }, { label: 'Culture', class: 'culture', val: 90 }, { label: 'Diplomatie', class: 'diplomacy', val: 80 }, { label: 'Art de guerre', class: 'warfare', val: 30 } ],
+                    competences: [ { nom: "Paraître", desc: "Beauté parfaite", icon: "👗" }, { nom: "Médisance", desc: "Tue par la rumeur", icon: "🐍" }, { nom: "Révérence", desc: "Pli pur de l'Étiquette", icon: "🪭" }, { nom: "Frivolité", desc: "Ruine son domaine", icon: "💸" } ], 
+                    ultime: { nom: "La Cour des Miracles", desc: "Noyade de l'adversaire dans les paillettes et les faux sourires" }, 
+                    relations: { allies: ["Joailliers", "Tailleurs", "Favorites"], rivaux: ["Les Nouvelles", "Le Parti Dévot"], amours: ["Le Pouvoir", "Le Roi"] } 
+                } 
+            },
+            "les-danseurs": { 
+                name: "Les Danseurs", subtitle: "L'art du mouvement", backSubtitle: "L'élite chorégraphique", dates: "17e Siècle", icon: "sparkles", mainList: true, isFictional: false, actor: "Arthur Devaux, Charlotte Lespets, Chloé Roumanus, Chloé Woringer, Colette Disney, Élise Devaux, Eyleen Douat, Inga Lee Yeskova, Juliette Pedron, Justine Douady, Leyton Guillot, Madeline Quantin, Manon Alliaume, Santina Grech", 
+                quote: "Tant que la musique joue, la cour oublie la misère du monde.", 
+                intro: "Au cœur de la vie versaillaise, la danse est un instrument de pouvoir. Les danseurs animent les somptueux ballets de cour que le Roi chérit tant.", 
+                stats: [ { icon: '⚔️', val: '50' }, { icon: '🛡️', val: '80' }, { icon: '✨', val: '98' }, { icon: '🧠', val: '60' } ],
+                traits: [ { icon: '🩰', name: 'Gracieux' }, { icon: '💪', name: 'Athlétiques' }, { icon: '⏱️', name: 'Précis' }, { icon: '🎭', name: 'Artistes' } ],
+                achievements: [ { icon: '🩰', name: 'Ballet de la Nuit', val: '1653' }, { icon: '🎭', name: 'Comédie-Ballet', val: 'Avec Molière' }, { icon: '👑', name: 'Académie Royale', val: '1661' } ],
+                titles: [ { icon: '🩰', text: 'Maîtres à Danser', sub: 'Académie de Danse' }, { icon: '🌟', text: 'Lumières de Scène', sub: 'Divertissement' } ],
+                rpg: { 
+                    classe: "Artistes en Mouvement", faction: "Troupe", collection: "🎭 Rôles de Cour 🎭",
+                    attributs: [ { label: 'Autorité', class: 'authority', val: 40 }, { label: 'Charisme', class: 'charisma', val: 98 }, { label: 'Stratégie', class: 'strategy', val: 50 }, { label: 'Culture', class: 'culture', val: 85 }, { label: 'Diplomatie', class: 'diplomacy', val: 60 }, { label: 'Art de guerre', class: 'warfare', val: 40 } ],
+                    competences: [ { nom: "Entrechat", desc: "Agilité absolue", icon: "🦵" }, { nom: "Rythme", desc: "Sur la musique de Lully", icon: "🎵" }, { nom: "Endurance", desc: "Ballets de 12 heures", icon: "🌬️" }, { nom: "Grâce", desc: "Éblouit l'audience", icon: "✨" } ], 
+                    ultime: { nom: "Le Grand Ballet", desc: "Hypnotise l'ensemble de la cour dans un mouvement parfait" }, 
+                    relations: { allies: ["Lully", "Louis XIV", "Molière"], rivaux: ["Les Faux-Pas", "Dévots"], amours: ["La Scène"] } 
+                } 
+            },
+            "le-peuple": { 
+                name: "Le Peuple de Paris", subtitle: "La voix de la rue", backSubtitle: "La force silencieuse", dates: "17e Siècle", icon: "users", mainList: true, isFictional: false, actor: "Arthur Devaux, Charlotte Lespets, Chloé Roumanus, Chloé Woringer, Colette Disney, Élise Devaux, Eyleen Douat, Juliette Pedron, Madeline Quantin, Manon Alliaume, Santina Grech", 
+                quote: "Ceux qui bâtissent les palais dorment dans la boue.", 
+                intro: "Loin des dorures de Versailles, le Tiers État supporte le poids de la monarchie par ses impôts, sa sueur et son sang dans les guerres interminables du Roi.", 
+                stats: [ { icon: '⚔️', val: '80' }, { icon: '🛡️', val: '99' }, { icon: '✨', val: '40' }, { icon: '🧠', val: '60' } ],
+                traits: [ { icon: '💪', name: 'Résilient' }, { icon: '🌾', name: 'Travailleur' }, { icon: '🍞', name: 'Affamé' }, { icon: '🔥', name: 'Colérique' } ],
+                achievements: [ { icon: '🏰', name: 'Construction', val: 'de Versailles' }, { icon: '⚔️', name: 'Soutien aux Frondeurs', val: '1648' }, { icon: '🌾', name: 'Survie aux Famines', val: '1693' } ],
+                titles: [ { icon: '👥', text: 'Tiers État', sub: '95% de la France' }, { icon: '🧱', text: 'Bâtisseurs', sub: 'du Grand Siècle' } ],
+                rpg: { 
+                    classe: "Force Brute", faction: "Tiers État", collection: "🎭 Rôles de Cour 🎭",
+                    attributs: [ { label: 'Autorité', class: 'authority', val: 20 }, { label: 'Charisme', class: 'charisma', val: 40 }, { label: 'Stratégie', class: 'strategy', val: 30 }, { label: 'Culture', class: 'culture', val: 20 }, { label: 'Diplomatie', class: 'diplomacy', val: 10 }, { label: 'Art de guerre', class: 'warfare', val: 80 } ],
+                    competences: [ { nom: "Labeur", desc: "Force de travail infinie", icon: "⛏️" }, { nom: "Gronde", desc: "Soulèvement de masse", icon: "🗣️" }, { nom: "Solidarité", desc: "Soutien mutuel", icon: "🤝" }, { nom: "Sacrifice", desc: "Paie l'impôt (Taille)", icon: "🪙" } ], 
+                    ultime: { nom: "La Révolte", desc: "Fait trembler les murs de la capitale par la force du nombre" }, 
+                    relations: { allies: ["Artisans", "Bourgeois (parfois)", "Isabelle"], rivaux: ["Fermiers Généraux", "Noblesse", "Gardes"], amours: ["La Patrie"] } 
+                } 
+            },
+            "les-operateurs": { 
+                name: "Les Opérateurs", subtitle: "La magie de la scène", backSubtitle: "L'ombre du théâtre", dates: "Intemporel", icon: "masks", mainList: true, isFictional: false, actor: "Juliette Pedron, Leyton Guillot, Louise Oziès Fournier, Valentine Delassus", 
+                quote: "L'illusion est notre métier, l'ombre est notre domaine.", 
+                intro: "Véritables maîtres du temps et de l'espace, ils manipulent les lourds décors de bois et de toile dans l'obscurité pour que la magie de la scène opère.", 
+                stats: [ { icon: '⚔️', val: '30' }, { icon: '🛡️', val: '90' }, { icon: '✨', val: '60' }, { icon: '🧠', val: '95' } ],
+                traits: [ { icon: '⚙️', name: 'Techniques' }, { icon: '🤫', name: 'Invisibles' }, { icon: '⏱️', name: 'Précis' }, { icon: '💪', name: 'Agiles' } ],
+                achievements: [ { icon: '🏰', name: 'Changements Décor', val: '< 10 sec' }, { icon: '🎭', name: 'Magie Scénique', val: 'Parfaite' }, { icon: '🌑', name: 'Maîtrise du Noir', val: '100%' } ],
+                titles: [ { icon: '⚙️', text: 'Machinistes', sub: 'Théâtre Molière' }, { icon: '🤫', text: 'L\'Équipe de l\'Ombre', sub: 'Indispensables' } ],
+                rpg: { 
+                    classe: "Créateurs d'Illusions", faction: "Troupe", collection: "🎭 Rôles de Cour 🎭",
+                    attributs: [ { label: 'Autorité', class: 'authority', val: 50 }, { label: 'Charisme', class: 'charisma', val: 60 }, { label: 'Stratégie', class: 'strategy', val: 90 }, { label: 'Culture', class: 'culture', val: 80 }, { label: 'Diplomatie', class: 'diplomacy', val: 70 }, { label: 'Art de guerre', class: 'warfare', val: 40 } ],
+                    competences: [ { nom: "Poulies", desc: "Tire les ficelles", icon: "🪢" }, { nom: "Silence", desc: "Mouvements muets", icon: "🔇" }, { nom: "Mécanique", desc: "Génie théâtral", icon: "⚙️" }, { nom: "Secours", desc: "Sauve le spectacle", icon: "🛠️" } ], 
+                    ultime: { nom: "Changement à Vue", desc: "Transforme un salon en forêt en un claquement de doigts" }, 
+                    relations: { allies: ["Molière", "Comédiens", "Mise en scène"], rivaux: ["Cordes coincées", "Pannes techniques"], amours: ["Le Théâtre"] } 
+                } 
+            },
+            "les-soldats": { 
+                name: "Les Soldats", subtitle: "Le bras armé du Roi", backSubtitle: "La force de l'État", dates: "17e Siècle", icon: "sword", mainList: true, isFictional: false, actor: "Chloé Roumanus, Eyleen Douat", 
+                quote: "La force de l'État repose sur le fer de nos épées.", 
+                intro: "Gardiens de l'ordre, mousquetaires ou régiments d'infanterie, ils exécutent les ordres du Roi sans broncher pour assurer son autorité absolue.", 
+                stats: [ { icon: '⚔️', val: '95' }, { icon: '🛡️', val: '85' }, { icon: '✨', val: '50' }, { icon: '🧠', val: '60' } ],
+                traits: [ { icon: '🛡️', name: 'Loyaux' }, { icon: '⚔️', name: 'Disciplinés' }, { icon: '🐎', name: 'Endurants' }, { icon: '🇫🇷', name: 'Patriotes' } ],
+                achievements: [ { icon: '🗺️', name: 'Guerres de Louis XIV', val: 'Combattants' }, { icon: '🏰', name: 'Garde du Palais', val: 'Versailles' }, { icon: '💥', name: 'Répression', val: 'De la Fronde' } ],
+                titles: [ { icon: '🤺', text: 'Mousquetaires', sub: 'Maison du Roi' }, { icon: '🛡️', text: 'Infanterie', sub: 'Armée Royale' } ],
+                rpg: { 
+                    classe: "Guerriers de l'État", faction: "Armée Royale", collection: "🎭 Rôles de Cour 🎭",
+                    attributs: [ { label: 'Autorité', class: 'authority', val: 70 }, { label: 'Charisme', class: 'charisma', val: 50 }, { label: 'Stratégie', class: 'strategy', val: 65 }, { label: 'Culture', class: 'culture', val: 30 }, { label: 'Diplomatie', class: 'diplomacy', val: 20 }, { label: 'Art de guerre', class: 'warfare', val: 95 } ],
+                    competences: [ { nom: "Hallebarde", desc: "Maintient l'ordre", icon: "🗡️" }, { nom: "Mousquet", desc: "Tir en ligne", icon: "🔫" }, { nom: "Garde", desc: "Immobilité absolue", icon: "🗿" }, { nom: "Charge", desc: "Assaut brutal", icon: "🐎" } ], 
+                    ultime: { nom: "Le Carré Pique", desc: "Formation militaire impénétrable protégeant le souverain" }, 
+                    relations: { allies: ["Louvois", "Turenne", "Louis XIV"], rivaux: ["Armées étrangères", "Frondeurs"], amours: ["La Gloire (et le vin)"] } 
+                } 
+            },
+            "le-clerge": { 
+                name: "Le Clergé", subtitle: "L'influence de l'Église", backSubtitle: "La voix de Dieu", dates: "17e Siècle", icon: "church", mainList: true, isFictional: false, actor: "Arthur Devaux, Leyton Guillot", 
+                quote: "Dieu établit les rois comme ses ministres, et règne par eux sur les peuples.", 
+                intro: "Garants de la foi, ils légitiment le pouvoir de droit divin du Roi. Leur influence morale sur la cour devient écrasante dans la seconde moitié du règne.", 
+                stats: [ { icon: '⚔️', val: '20' }, { icon: '🛡️', val: '80' }, { icon: '✨', val: '85' }, { icon: '🧠', val: '95' } ],
+                traits: [ { icon: '📖', name: 'Théologiens' }, { icon: '🙏', name: 'Dévots' }, { icon: '🗣️', name: 'Éloquents' }, { icon: '⚖️', name: 'Moraux' } ],
+                achievements: [ { icon: '📜', name: 'Édit de Nantes', val: 'Révocation (1685)' }, { icon: '👑', name: 'Sacre à Reims', val: '1654' }, { icon: '🏰', name: 'Chapelle Royale', val: 'Bâtie' } ],
+                titles: [ { icon: '⛪', text: 'Le Premier Ordre', sub: 'du Royaume' }, { icon: '📖', text: 'Prélats', sub: 'de l\'Église Catholique' } ],
+                rpg: { 
+                    classe: "Guides Spirituels", faction: "Clergé", collection: "🎭 Rôles de Cour 🎭",
+                    attributs: [ { label: 'Autorité', class: 'authority', val: 90 }, { label: 'Charisme', class: 'charisma', val: 85 }, { label: 'Stratégie', class: 'strategy', val: 88 }, { label: 'Culture', class: 'culture', val: 95 }, { label: 'Diplomatie', class: 'diplomacy', val: 90 }, { label: 'Art de guerre', class: 'warfare', val: 10 } ],
+                    competences: [ { nom: "Sermon", desc: "Culpabilise la cour", icon: "📖" }, { nom: "Droit Divin", desc: "Légitime le Roi", icon: "👑" }, { nom: "Confession", desc: "Obtient les secrets", icon: "🤫" }, { nom: "Excommunication", desc: "Bannit les âmes", icon: "⚡" } ], 
+                    ultime: { nom: "Le Courroux Céleste", desc: "Abat la foudre morale sur les mœurs libertines" }, 
+                    relations: { allies: ["Mme de Maintenon", "Bossuet", "Louis XIV (fin)"], rivaux: ["Protestants", "Libertins", "Molière"], amours: ["Dieu"] } 
+                } 
+            },
+            "la-dame-de-cour": { 
+                name: "La Dame de cour", subtitle: "Confidente et alliée", backSubtitle: "L'œil de Versailles", dates: "17e Siècle", icon: "crown", mainList: true, isFictional: false, actor: "Juliette Pedron", 
+                quote: "La loyauté a un prix que seule la cour connaît.", 
+                intro: "Noble de haut rang attachée au service direct de la Reine ou des princesses. Elle chaperonne, conseille et manœuvre prudemment au milieu des intrigues.", 
+                stats: [ { icon: '⚔️', val: '15' }, { icon: '🛡️', val: '75' }, { icon: '✨', val: '85' }, { icon: '🧠', val: '90' } ],
+                traits: [ { icon: '👗', name: 'Raffinée' }, { icon: '🤫', name: 'Discrète' }, { icon: '👁️', name: 'Observatrice' }, { icon: '🤝', name: 'Politique' } ],
+                achievements: [ { icon: '📜', name: 'Maîtrise de l\'Étiquette', val: '100%' }, { icon: '✉️', name: 'Réseau d\'Informateurs', val: 'Actif' }, { icon: '👑', name: 'Service de la Reine', val: 'Honneur' } ],
+                titles: [ { icon: '🪭', text: 'Dame de Palais', sub: 'Haute Noblesse' }, { icon: '👤', text: 'Confidente', sub: 'des Puissants' } ],
+                rpg: { 
+                    classe: "Diplomate de Salon", faction: "Cour Royale", collection: "🎭 Rôles de Cour 🎭",
+                    attributs: [ { label: 'Autorité', class: 'authority', val: 70 }, { label: 'Charisme', class: 'charisma', val: 85 }, { label: 'Stratégie', class: 'strategy', val: 90 }, { label: 'Culture', class: 'culture', val: 88 }, { label: 'Diplomatie', class: 'diplomacy', val: 95 }, { label: 'Art de guerre', class: 'warfare', val: 10 } ],
+                    competences: [ { nom: "Éventail", desc: "Langage secret", icon: "🪭" }, { nom: "Chuchotement", desc: "Répand le poison", icon: "🐍" }, { nom: "Révérence", desc: "Esquive les conflits", icon: "👗" }, { nom: "Alliance", desc: "Se place au mieux", icon: "🤝" } ], 
+                    ultime: { nom: "Le Réseau Invisible", desc: "Fait tomber un ministre sans jamais prononcer son nom" }, 
+                    relations: { allies: ["La Reine", "Princesses", "Ministres"], rivaux: ["Favorites", "Parvenus"], amours: ["Ambition"] } 
+                } 
+            },
+            "la-femme-de-chambre": { 
+                name: "La Femme de chambre", subtitle: "Dans l'ombre des puissants", backSubtitle: "Les yeux et les oreilles", dates: "17e Siècle", icon: "feather", mainList: true, isFictional: false, actor: "Élise Devaux", 
+                quote: "Nous voyons tout, nous entendons tout, mais nous ne disons rien.", 
+                intro: "Elle gère le quotidien intime des nobles. Indispensable au faste de la cour, elle détient souvent des secrets (lettres, rendez-vous) capables de briser des vies.", 
+                stats: [ { icon: '⚔️', val: '25' }, { icon: '🛡️', val: '85' }, { icon: '✨', val: '60' }, { icon: '🧠', val: '80' } ],
+                traits: [ { icon: '🧹', name: 'Travailleuse' }, { icon: '🤐', name: 'Muette' }, { icon: '👂', name: 'Attentive' }, { icon: '🏃', name: 'Rapide' } ],
+                achievements: [ { icon: '👗', name: 'Habillage de Cour', val: 'Quotidien' }, { icon: '✉️', name: 'Messagère Secrète', val: 'Intrigues' }, { icon: '🏰', name: 'Entretien', val: 'des Appartements' } ],
+                titles: [ { icon: '🧹', text: 'Servante', sub: 'Maison Civile' }, { icon: '🔑', text: 'Gardienne', sub: 'des Secrets' } ],
+                rpg: { 
+                    classe: "L'Ombre Efficace", faction: "Service", collection: "🎭 Rôles de Cour 🎭",
+                    attributs: [ { label: 'Autorité', class: 'authority', val: 15 }, { label: 'Charisme', class: 'charisma', val: 60 }, { label: 'Stratégie', class: 'strategy', val: 80 }, { label: 'Culture', class: 'culture', val: 40 }, { label: 'Diplomatie', class: 'diplomacy', val: 70 }, { label: 'Art de guerre', class: 'warfare', val: 20 } ],
+                    competences: [ { nom: "Corset", desc: "Serre l'étiquette", icon: "👗" }, { nom: "Écoute", desc: "Capte les murmures", icon: "👂" }, { nom: "Invisibilité", desc: "Se fond dans le mur", icon: "👻" }, { nom: "Dévouement", desc: "Loyauté (ou vénalité)", icon: "💰" } ], 
+                    ultime: { nom: "La Lettre Volée", desc: "Change le destin du royaume avec un bout de papier" }, 
+                    relations: { allies: ["Le Peuple", "Autres valets"], rivaux: ["Intendants cruels"], amours: ["Roturier"] } 
+                } 
+            },
+            "le-medecin": { 
+                name: "Le Médecin", subtitle: "La science balbutiante", backSubtitle: "Entre science et charlatanisme", dates: "17e Siècle", icon: "flask", mainList: true, isFictional: false, actor: "Louise Oziès Fournier", 
+                quote: "La nature guérit la maladie, le médecin ne fait qu'amuser le malade.", 
+                intro: "À une époque où la médecine se limite encore trop souvent aux saignées et aux purges, il tente de préserver la santé des puissants... souvent avec de lourdes conséquences.", 
+                stats: [ { icon: '⚔️', val: '10' }, { icon: '🛡️', val: '40' }, { icon: '✨', val: '70' }, { icon: '🧠', val: '85' } ],
+                traits: [ { icon: '📚', name: 'Savant' }, { icon: '🩸', name: 'Saigneur' }, { icon: 'Latin', name: 'Pédant' }, { icon: '⚖️', name: 'Autoritaire' } ],
+                achievements: [ { icon: '🔪', name: 'Fistule du Roi', val: 'Guérie (1686)' }, { icon: '💀', name: 'Épidémies', val: 'Combattues' }, { icon: '💊', name: 'Émétiques', val: 'Prescrits' } ],
+                titles: [ { icon: '🩺', text: 'Premier Médecin', sub: 'du Roi' }, { icon: '🎓', text: 'Docteur', sub: 'Faculté de Paris' } ],
+                rpg: { 
+                    classe: "Guérisseur Brutal", faction: "Science", collection: "🎭 Rôles de Cour 🎭",
+                    attributs: [ { label: 'Autorité', class: 'authority', val: 80 }, { label: 'Charisme', class: 'charisma', val: 65 }, { label: 'Stratégie', class: 'strategy', val: 75 }, { label: 'Culture', class: 'culture', val: 90 }, { label: 'Diplomatie', class: 'diplomacy', val: 50 }, { label: 'Art de guerre', class: 'warfare', val: 10 } ],
+                    competences: [ { nom: "Saignée", desc: "Affaiblit (tout le monde)", icon: "🩸" }, { nom: "Latin", desc: "Embrouille le patient", icon: "📜" }, { nom: "Purge", desc: "Remède radical", icon: "🧪" }, { nom: "Diagnostic", desc: "Au jugé", icon: "👁️" } ], 
+                    ultime: { nom: "La Grande Opération", desc: "Sauve la vie du monarque (contre toute attente)" }, 
+                    relations: { allies: ["Apothicaires", "Chirurgiens"], rivaux: ["Molière", "Les maladies"], amours: ["La théorie"] } 
+                } 
+            },
+            "le-ministre": { 
+                name: "Le Ministre", subtitle: "L'État en action", backSubtitle: "La machine royale", dates: "17e Siècle", icon: "book", mainList: true, isFictional: false, actor: "Santina Grech", 
+                quote: "Le pouvoir ne se donne pas, il s'administre avec rigueur.", 
+                intro: "Commis de l'État et membre du Conseil d'En-Haut, il exécute la volonté de Louis XIV, gère les impôts, la justice ou la guerre. Il est l'incarnation de la centralisation.", 
+                stats: [ { icon: '⚔️', val: '40' }, { icon: '🛡️', val: '85' }, { icon: '✨', val: '75' }, { icon: '🧠', val: '95' } ],
+                traits: [ { icon: '📜', name: 'Administrateur' }, { icon: '💼', name: 'Rigoureux' }, { icon: '👑', name: 'Fidèle' }, { icon: '🧊', name: 'Froid' } ],
+                achievements: [ { icon: '🏛️', name: 'Conseil d\'En-Haut', val: 'Membre' }, { icon: '💰', name: 'Levée des Impôts', val: 'Taille' }, { icon: '⚖️', name: 'Rédaction des Lois', val: 'Ordonnances' } ],
+                titles: [ { icon: '💼', text: 'Secrétaire d\'État', sub: 'Haute Administration' }, { icon: '⚜️', text: 'Conseiller', sub: 'du Roi' } ],
+                rpg: { 
+                    classe: "Bureaucrate Suprême", faction: "Administration", collection: "🎭 Rôles de Cour 🎭",
+                    attributs: [ { label: 'Autorité', class: 'authority', val: 88 }, { label: 'Charisme', class: 'charisma', val: 75 }, { label: 'Stratégie', class: 'strategy', val: 92 }, { label: 'Culture', class: 'culture', val: 85 }, { label: 'Diplomatie', class: 'diplomacy', val: 80 }, { label: 'Art de guerre', class: 'warfare', val: 60 } ],
+                    competences: [ { nom: "Décret", desc: "La loi s'applique", icon: "📜" }, { nom: "Taxation", desc: "Vide les caisses", icon: "🪙" }, { nom: "Censure", desc: "Fait taire la presse", icon: "🤫" }, { nom: "Organisation", desc: "Logistique d'État", icon: "📊" } ], 
+                    ultime: { nom: "La Raison d'État", desc: "Justifie toutes les actions au nom de la Couronne" }, 
+                    relations: { allies: ["Colbert", "Louvois", "Louis XIV"], rivaux: ["Noblesse frondeuse", "Le Peuple"], amours: ["L'Ordre"] } 
+                } 
+            },
 
             // --- L'ÉQUIPE ARTISTIQUE ---
-            "natacha-muller": { name: "Natacha Muller", subtitle: "La Maîtresse des Illusions", dates: "L'Équipe", icon: "hat", mainList: true, isFictional: false, quote: "Le monde entier est un théâtre.", intro: "Véritable chef d'orchestre de cette aventure, elle guide les élèves pour donner vie à cette grande fresque historique et musicale.", facts: ["A imaginé la transposition de la pièce pour les élèves du Lycée Condorcet.", "Dirige les répétitions d'une main de maître et avec passion.", "Insuffle l'énergie créative à toute la troupe."], role: "Créer l'illusion parfaite, harmoniser les talents et emporter le public.", heritage: "Une expérience théâtrale inoubliable pour toute la troupe.", rpg: { classe: "Metteuse en Scène", faction: "Créateurs", competences: [ { nom: "Vision", desc: "Voit le tableau final", icon: "👁️" }, { nom: "Direction", desc: "Guide les âmes", icon: "🧭" }, { nom: "Patience", desc: "Résiste au chaos", icon: "🧘‍♀️" }, { nom: "Créativité", desc: "Génie pur", icon: "✨" } ], ultime: { nom: "Le Lever de Rideau", desc: "Déclenche la magie du spectacle complet d'un seul mot" }, relations: { allies: ["Toute la troupe"], rivaux: ["Le trac", "Les imprévus"], amours: ["Le Théâtre"] } } },
-            "gabriel-gitman": { name: "Gabriel Gitman", subtitle: "La Voix d'Or", dates: "L'Équipe", icon: "mic", mainList: true, isFictional: false, quote: "La musique est la langue des émotions.", intro: "Coach vocal dévoué, il accompagne les solistes pour sublimer chaque note et transmettre l'émotion pure de la comédie musicale.", facts: ["Entraîne les voix des comédiens pour atteindre la perfection.", "Gère l'harmonie complexe des numéros musicaux du spectacle.", "Donne confiance aux chanteurs pour briller sur scène."], role: "Sublimer les talents vocaux et faire vibrer la salle.", heritage: "Des mélodies qui resteront dans les têtes bien après le spectacle.", rpg: { classe: "Maître de Chœur", faction: "Créateurs", competences: [ { nom: "Ténor", desc: "Puissance vocale", icon: "🗣️" }, { nom: "Justesse", desc: "Oreille absolue", icon: "🎶" }, { nom: "Souffle", desc: "Endurance", icon: "🌬️" }, { nom: "Émotion", desc: "Touche les cœurs", icon: "❤️" } ], ultime: { nom: "La Note Parfaite", desc: "Fait frissonner le public avec une harmonie magistrale" }, relations: { allies: ["Solistes", "Frédérique"], rivaux: ["Les fausses notes"], amours: ["La Musique"] } } },
-            "frederique-bouwer": { name: "Frédérique Bouwer", subtitle: "L'Harmonie Céleste", dates: "L'Équipe", icon: "music", mainList: true, isFictional: false, quote: "Une voix seule est belle, un chœur est invincible.", intro: "En charge de la puissance collective, elle dirige le chœur pour donner l'ampleur et la dimension épique nécessaires aux grands tableaux.", facts: ["Transforme un groupe d'élèves en un chœur uni et puissant.", "Supervise les polyphonies et les harmonies de groupe.", "Apporte le souffle épique indispensable à la cour du Roi Soleil."], role: "Créer la force du collectif et la grandeur musicale.", heritage: "L'esprit de cohésion et d'harmonie transmis aux élèves.", rpg: { classe: "Cheffe des Chœurs", faction: "Créateurs", competences: [ { nom: "Polyphonie", desc: "Voix multiples", icon: "👥" }, { nom: "Cohésion", desc: "Unit le groupe", icon: "🤝" }, { nom: "Rythme", desc: "Tempo de fer", icon: "🥁" }, { nom: "Ampleur", desc: "Son épique", icon: "🌊" } ], ultime: { nom: "Le Chœur Royal", desc: "Invoque la puissance du groupe pour un final retentissant" }, relations: { allies: ["L'Ensemble", "Gabriel"], rivaux: ["La cacophonie"], amours: ["Le Collectif"] } } },
-            "nadia-guerin": { name: "Nadia Guérin", subtitle: "L'Architecte des Rêves", dates: "L'Équipe", icon: "thread", mainList: true, isFictional: false, quote: "L'habit fait le noble, et le décor fait le palais.", intro: "Magicienne de l'ombre, elle conçoit les décors somptueux et les costumes flamboyants qui transportent instantanément le public au XVIIe siècle.", facts: ["Habille toute la cour de Versailles avec une minutie impressionnante.", "Conçoit des décors immersifs pour recréer la splendeur de l'époque.", "Gère les transformations et changements rapides en coulisses."], role: "Rendre le rêve tangible à travers l'esthétique visuelle.", heritage: "La beauté éblouissante des tableaux qui marque les rétines.", rpg: { classe: "Créatrice d'Illusions", faction: "Créateurs", competences: [ { nom: "Couture", desc: "Fil d'or", icon: "🧵" }, { nom: "Architecture", desc: "Bâtisseuse", icon: "🏰" }, { nom: "Couleurs", desc: "Palette royale", icon: "🎨" }, { nom: "Système D", desc: "Trouve des solutions", icon: "💡" } ], ultime: { nom: "L'Éclat Visuel", desc: "Éblouit la salle entière dès l'ouverture du rideau" }, relations: { allies: ["Acteurs", "Opérateurs"], rivaux: ["Les déchirures"], amours: ["L'Esthétisme"] } } },
-            "elise-devaux": { name: "Élise Devaux", subtitle: "La Maîtresse du Temps", dates: "L'Équipe", icon: "stopwatch", mainList: true, isFictional: false, quote: "La grace dans le mouvement, la rigueur dans l'ombre.", intro: "À la fois créatrice des mouvements sur scène en tant que chorégraphe, et gardienne absolue du bon déroulement en coulisses en tant que Stage Manager.", facts: ["Règle les ballets de cour et les chorégraphies modernes du spectacle.", "Orchestre les entrées, les sorties et les transitions avec une précision militaire.", "Assure la sécurité et le rythme implacable de la représentation."], role: "Donner vie à l'espace scénique tout en maîtrisant les rouages cachés.", heritage: "La fluidité parfaite du spectacle et l'élégance de la troupe.", rpg: { classe: "Chorégraphe Royale", faction: "Créateurs", competences: [ { nom: "Chorégraphie", desc: "Maître de danse", icon: "🩰" }, { nom: "Rigueur", desc: "Organisation", icon: "📋" }, { nom: "Top Départ", desc: "Donne le signal", icon: "🏁" }, { nom: "Agilité", desc: "Partout à la fois", icon: "⚡" } ], ultime: { nom: "La Maîtrise du Plateau", desc: "Synchronise parfaitement 30 personnes dans l'ombre et la lumière" }, relations: { allies: ["Danseurs", "Mise en scène"], rivaux: ["Le retard"], amours: ["Le Mouvement"] } } },
+            "natacha-muller": { 
+                name: "Natacha Muller", subtitle: "La Maîtresse des Illusions", backSubtitle: "La Metteuse en Scène", dates: "Condorcet 2026", icon: "hat", mainList: true, isFictional: false, 
+                quote: "Le monde entier est un théâtre.", 
+                intro: "Véritable chef d'orchestre de cette aventure, elle guide les élèves pour donner vie à cette grande fresque historique et musicale. Elle a imaginé l'univers du spectacle.", 
+                stats: [ { icon: '⚔️', val: '95' }, { icon: '🛡️', val: '90' }, { icon: '✨', val: '99' }, { icon: '🧠', val: '98' } ],
+                traits: [ { icon: '👁️', name: 'Visionnaire' }, { icon: '🧭', name: 'Leader' }, { icon: '🎨', name: 'Créative' }, { icon: '🔥', name: 'Passionnée' } ],
+                achievements: [ { icon: '🎭', name: 'Mise en Scène', val: 'Condorcet 2026' }, { icon: '🌟', name: 'Direction d\'Acteurs', val: 'Excellence' }, { icon: '🎬', name: 'Spectacle Total', val: 'Création' } ],
+                titles: [ { icon: '🎩', text: 'Metteuse en Scène', sub: 'Lycée Condorcet' }, { icon: '✨', text: 'Cheffe d\'Orchestre', sub: 'Projet Musical' } ],
+                rpg: { 
+                    classe: "Créatrice d'Univers", faction: "Créateurs", collection: "🎓 L'Équipe Artistique 🎓",
+                    attributs: [ { label: 'Autorité', class: 'authority', val: 98 }, { label: 'Charisme', class: 'charisma', val: 99 }, { label: 'Stratégie', class: 'strategy', val: 95 }, { label: 'Culture', class: 'culture', val: 99 }, { label: 'Diplomatie', class: 'diplomacy', val: 90 }, { label: 'Art de guerre', class: 'warfare', val: 60 } ],
+                    competences: [ { nom: "Vision", desc: "Voit le tableau final", icon: "👁️" }, { nom: "Direction", desc: "Guide les âmes", icon: "🧭" }, { nom: "Patience", desc: "Résiste au chaos", icon: "🧘‍♀️" }, { nom: "Motivation", desc: "Galvanise la troupe", icon: "🔥" } ], 
+                    ultime: { nom: "Le Lever de Rideau", desc: "Déclenche la magie du spectacle complet d'un seul mot" }, 
+                    relations: { allies: ["Toute la troupe", "L'Équipe"], rivaux: ["Le trac", "Le manque de temps"], amours: ["Le Théâtre"] } 
+                } 
+            },
+            "gabriel-gitman": { 
+                name: "Gabriel Gitman", subtitle: "La Voix d'Or", backSubtitle: "Coach Vocal", dates: "Condorcet 2026", icon: "mic", mainList: true, isFictional: false, 
+                quote: "La musique est la langue des émotions.", 
+                intro: "Coach vocal dévoué, il accompagne les solistes pour sublimer chaque note et transmettre l'émotion pure de la comédie musicale au public.", 
+                stats: [ { icon: '⚔️', val: '80' }, { icon: '🛡️', val: '85' }, { icon: '✨', val: '95' }, { icon: '🧠', val: '92' } ],
+                traits: [ { icon: '🎶', name: 'Mélodique' }, { icon: '👂', name: 'Oreille Absolue' }, { icon: '👨‍🏫', name: 'Pédagogue' }, { icon: '❤️', name: 'Émotif' } ],
+                achievements: [ { icon: '🎤', name: 'Direction Solistes', val: 'Chant' }, { icon: '🎼', name: 'Arrangements', val: 'Musicaux' }, { icon: '🌟', name: 'Dépassement de soi', val: 'Des élèves' } ],
+                titles: [ { icon: '🎤', text: 'Coach Vocal', sub: 'Lycée Condorcet' }, { icon: '🎼', text: 'Maître des Notes', sub: 'Projet Musical' } ],
+                rpg: { 
+                    classe: "Mage du Son", faction: "Créateurs", collection: "🎓 L'Équipe Artistique 🎓",
+                    attributs: [ { label: 'Autorité', class: 'authority', val: 85 }, { label: 'Charisme', class: 'charisma', val: 95 }, { label: 'Stratégie', class: 'strategy', val: 80 }, { label: 'Culture', class: 'culture', val: 98 }, { label: 'Diplomatie', class: 'diplomacy', val: 90 }, { label: 'Art de guerre', class: 'warfare', val: 40 } ],
+                    competences: [ { nom: "Vocalises", desc: "Échauffe les cordes", icon: "🗣️" }, { nom: "Justesse", desc: "Corrige la note", icon: "🎵" }, { nom: "Souffle", desc: "Donne de l'endurance", icon: "🌬️" }, { nom: "Harmonie", desc: "Touche les cœurs", icon: "❤️" } ], 
+                    ultime: { nom: "La Note Parfaite", desc: "Fait frissonner le public avec un aigu magistral" }, 
+                    relations: { allies: ["Solistes", "Frédérique Bouwer"], rivaux: ["Les fausses notes", "L'extinction de voix"], amours: ["La Musique"] } 
+                } 
+            },
+            "frederique-bouwer": { 
+                name: "Frédérique Bouwer", subtitle: "L'Harmonie Céleste", backSubtitle: "Cheffe de Chœur", dates: "Condorcet 2026", icon: "music", mainList: true, isFictional: false, 
+                quote: "Une voix seule est belle, un chœur est invincible.", 
+                intro: "En charge de la puissance collective, elle dirige le chœur pour donner l'ampleur et la dimension épique nécessaires aux grands tableaux de la pièce.", 
+                stats: [ { icon: '⚔️', val: '85' }, { icon: '🛡️', val: '90' }, { icon: '✨', val: '92' }, { icon: '🧠', val: '95' } ],
+                traits: [ { icon: '👥', name: 'Fédératrice' }, { icon: '🥁', name: 'Rythmique' }, { icon: '🌊', name: 'Épique' }, { icon: '💪', name: 'Puissante' } ],
+                achievements: [ { icon: '🎼', name: 'Direction de Chœur', val: 'Polyphonies' }, { icon: '🤝', name: 'Cohésion de Troupe', val: '100%' }, { icon: '🏰', name: 'Ampleur Sonore', val: 'Royale' } ],
+                titles: [ { icon: '🎶', text: 'Cheffe de Chœur', sub: 'Lycée Condorcet' }, { icon: '👑', text: 'Maîtresse des Voix', sub: 'Projet Musical' } ],
+                rpg: { 
+                    classe: "Cheffe d'Harmonie", faction: "Créateurs", collection: "🎓 L'Équipe Artistique 🎓",
+                    attributs: [ { label: 'Autorité', class: 'authority', val: 92 }, { label: 'Charisme', class: 'charisma', val: 90 }, { label: 'Stratégie', class: 'strategy', val: 85 }, { label: 'Culture', class: 'culture', val: 95 }, { label: 'Diplomatie', class: 'diplomacy', val: 88 }, { label: 'Art de guerre', class: 'warfare', val: 60 } ],
+                    competences: [ { nom: "Polyphonie", desc: "Gère 4 voix", icon: "🎼" }, { nom: "Cohésion", desc: "Unit le groupe", icon: "🤝" }, { nom: "Tempo", desc: "Garde le rythme", icon: "🥁" }, { nom: "Puissance", desc: "Son épique", icon: "🌊" } ], 
+                    ultime: { nom: "Le Chœur Royal", desc: "Invoque la puissance du collectif pour un final retentissant" }, 
+                    relations: { allies: ["L'Ensemble", "Gabriel Gitman"], rivaux: ["La cacophonie", "Le décalage"], amours: ["Le Collectif"] } 
+                } 
+            },
+            "nadia-guerin": { 
+                name: "Nadia Guérin", subtitle: "L'Architecte des Rêves", backSubtitle: "Costumes & Décors", dates: "Condorcet 2026", icon: "thread", mainList: true, isFictional: false, 
+                quote: "L'habit fait le noble, et le décor fait le palais.", 
+                intro: "Magicienne du visuel, elle conçoit les décors immersifs et les costumes flamboyants qui transportent instantanément le public au XVIIe siècle.", 
+                stats: [ { icon: '⚔️', val: '75' }, { icon: '🛡️', val: '95' }, { icon: '✨', val: '98' }, { icon: '🧠', val: '90' } ],
+                traits: [ { icon: '🎨', name: 'Esthète' }, { icon: '🧵', name: 'Minutieuse' }, { icon: '💡', name: 'Ingénieuse' }, { icon: '🏰', name: 'Bâtisseuse' } ],
+                achievements: [ { icon: '👗', name: 'Création Costumes', val: 'Époque Louis XIV' }, { icon: '🖼️', name: 'Scénographie', val: 'Versailles' }, { icon: '✂️', name: 'Changements Rapides', val: 'Coulisses' } ],
+                titles: [ { icon: '🧵', text: 'Costumière', sub: 'Lycée Condorcet' }, { icon: '🎨', text: 'Scénographe', sub: 'Projet Musical' } ],
+                rpg: { 
+                    classe: "Créatrice Visuelle", faction: "Créateurs", collection: "🎓 L'Équipe Artistique 🎓",
+                    attributs: [ { label: 'Autorité', class: 'authority', val: 80 }, { label: 'Charisme', class: 'charisma', val: 95 }, { label: 'Stratégie', class: 'strategy', val: 90 }, { label: 'Culture', class: 'culture', val: 98 }, { label: 'Diplomatie', class: 'diplomacy', val: 85 }, { label: 'Art de guerre', class: 'warfare', val: 70 } ],
+                    competences: [ { nom: "Aiguille d'Or", desc: "Coud l'impossible", icon: "🧵" }, { nom: "Perspective", desc: "Trompe-l'œil", icon: "🏰" }, { nom: "Palette", desc: "Mélange les couleurs", icon: "🎨" }, { nom: "Système D", desc: "Répare tout", icon: "💡" } ], 
+                    ultime: { nom: "L'Éclat de Versailles", desc: "Éblouit la salle entière dès l'ouverture du rideau" }, 
+                    relations: { allies: ["Acteurs", "Machinistes"], rivaux: ["Les déchirures", "Les taches"], amours: ["L'Esthétisme"] } 
+                } 
+            },
+            "elise-devaux": { 
+                name: "Élise Devaux", subtitle: "La Maîtresse du Temps", backSubtitle: "Chorégraphe & Stage Manager", dates: "Condorcet 2026", icon: "stopwatch", mainList: true, isFictional: false, 
+                quote: "La grâce dans le mouvement, la rigueur dans l'ombre.", 
+                intro: "À la fois créatrice des mouvements sur scène (chorégraphe) et gardienne absolue du bon déroulement en coulisses (Stage Manager).", 
+                stats: [ { icon: '⚔️', val: '90' }, { icon: '🛡️', val: '95' }, { icon: '✨', val: '90' }, { icon: '🧠', val: '98' } ],
+                traits: [ { icon: '🩰', name: 'Gracieuse' }, { icon: '📋', name: 'Organisée' }, { icon: '⚡', name: 'Vif-argent' }, { icon: '🦅', name: 'Œil de Faucon' } ],
+                achievements: [ { icon: '💃', name: 'Chorégraphies', val: 'Modernes & Classiques' }, { icon: '⏱️', name: 'Régie Plateau', val: 'Timing parfait' }, { icon: '🛡️', name: 'Gestion Coulisses', val: 'Zéro faille' } ],
+                titles: [ { icon: '🩰', text: 'Chorégraphe', sub: 'Lycée Condorcet' }, { icon: '📋', text: 'Stage Manager', sub: 'Régisseuse' } ],
+                rpg: { 
+                    classe: "Orchestratrice", faction: "Créateurs", collection: "🎓 L'Équipe Artistique 🎓",
+                    attributs: [ { label: 'Autorité', class: 'authority', val: 98 }, { label: 'Charisme', class: 'charisma', val: 90 }, { label: 'Stratégie', class: 'strategy', val: 99 }, { label: 'Culture', class: 'culture', val: 95 }, { label: 'Diplomatie', class: 'diplomacy', val: 85 }, { label: 'Art de guerre', class: 'warfare', val: 90 } ],
+                    competences: [ { nom: "Mouvement", desc: "Danse parfaite", icon: "🩰" }, { nom: "Planning", desc: "Rigueur absolue", icon: "📋" }, { nom: "Top Départ", desc: "Donne le signal", icon: "🏁" }, { nom: "Ubiquité", desc: "Partout à la fois", icon: "⚡" } ], 
+                    ultime: { nom: "La Maîtrise du Plateau", desc: "Synchronise 30 personnes dans l'ombre et la lumière" }, 
+                    relations: { allies: ["Danseurs", "Mise en scène", "Technique"], rivaux: ["Le retard", "Les faux-pas"], amours: ["Le Rythme"] } 
+                } 
+            },
 
             // --- 7. HISTORIQUES (Cartes historiques uniquement - onglet 2) ---
-            "le-notre": { name: "André Le Nôtre", dates: "1613-1700", icon: "tree", mainList: false, isFictional: false, subtitle: "L'Architecte des Jardins", quote: "La nature est mon seul guide.", intro: "Architecte paysagiste, créateur des jardins de Versailles.", facts: ["Créateur des jardins de Versailles.", "Invente le style à la française."], role: "Donne à Versailles sa splendeur paysagère.", heritage: "Maître incontesté de l'art paysager.", rpg: { classe: "Maître Jardinier", faction: "Artisans Royaux", competences: [ { nom: "Géométrie", desc: "Symétrie parfaite", icon: "📐" }, { nom: "Hydraulique", desc: "Jeux d'eau", icon: "⛲" }, { nom: "Botanique", desc: "Plantes rares", icon: "🌺" }, { nom: "Perspective", desc: "Optique infinie", icon: "👁️" } ], ultime: { nom: "Jardins de Légende", desc: "Dompte la nature pour la gloire du Roi" }, relations: { allies: ["Louis XIV", "Mansart"], rivaux: ["Nature Sauvage"], amours: ["La Beauté Végétale"] } } },
-            "mansart": { name: "Hardouin-Mansart", dates: "1646-1708", icon: "castle", mainList: false, isFictional: false, subtitle: "Le Premier Architecte", quote: "L'architecture est la musique de l'espace.", intro: "Architecte prodige, il donne au classicisme sa grandeur.", facts: ["Achève Versailles.", "Construit les Invalides."], role: "Traducteur architectural de la grandeur absolue.", heritage: "L'esthétique classique française.", rpg: { classe: "Premier Architecte", faction: "Artisans Royaux", competences: [ { nom: "Classicisme", desc: "Style parfait", icon: "🏛️" }, { nom: "Démesure", desc: "Projets immenses", icon: "🏰" }, { nom: "Ingéniosité", desc: "Techniques neuves", icon: "⚙️" }, { nom: "Esthétique", desc: "Toits mansardés", icon: "🏠" } ], ultime: { nom: "Galerie des Glaces", desc: "Érige le couloir le plus resplendissant du monde" }, relations: { allies: ["Le Brun", "Le Nôtre"], rivaux: ["Financiers stricts"], amours: ["La Pierre et l'Or"] } } },
-            "turenne": { name: "Turenne", dates: "1611-1675", icon: "sword", mainList: false, isFictional: false, subtitle: "Le Maréchal de France", quote: "La victoire appartient au plus persévérant.", intro: "L'un des plus grands tacticiens de l'histoire de France.", facts: ["Brille pendant la Fronde.", "Inhumé à Saint-Denis avec les rois."], role: "Le bras armé du début du règne.", heritage: "L'un des plus grands capitaines de l'Histoire.", rpg: { classe: "Maréchal de Génie", faction: "Armée Royale", competences: [ { nom: "Tactique", desc: "Esprit vif", icon: "🧠" }, { nom: "Mouvement", desc: "Troupes rapides", icon: "🐎" }, { nom: "Loyauté", desc: "Bras du Roi", icon: "⚔️" }, { nom: "Stratégie", desc: "Anticipation", icon: "🗺️" } ], ultime: { nom: "Gloire Militaire", desc: "Remporte la victoire par des manœuvres imprévisibles" }, relations: { allies: ["Louis XIV", "Soldats"], rivaux: ["Condé (pendant Fronde)"], amours: ["La Patrie"] } } },
-            "conde": { name: "Le Grand Condé", dates: "1621-1686", icon: "fleur", mainList: false, isFictional: false, subtitle: "Le Prince rebelle", quote: "Je vaincrai ou je mourrai.", intro: "Prince du sang, général de génie, héros puis rebelle.", facts: ["Remporte Rocroi à 22 ans.", "Mène la Fronde des princes."], role: "Haute noblesse frondeuse soumise.", heritage: "Le mythe du prince chevaleresque.", rpg: { classe: "Prince Combattant", faction: "Haute Noblesse", competences: [ { nom: "Charge", desc: "Attaque frontale", icon: "🐎" }, { nom: "Fierté", desc: "Orgueil de sang", icon: "👑" }, { nom: "Rebellion", desc: "Esprit frondeur", icon: "💥" }, { nom: "Bravoure", desc: "Témérité", icon: "🛡️" } ], ultime: { nom: "Foudre de Rocroi", desc: "Écrase les lignes ennemies avec une charge fulgurante" }, relations: { allies: ["Frondeurs (jadis)", "L'Armée"], rivaux: ["Mazarin", "Turenne"], amours: ["La Gloire"] } } },
-            "bossuet": { name: "Bossuet", dates: "1627-1704", icon: "church", mainList: false, isFictional: false, subtitle: "L'Aigle de Meaux", quote: "Dieu établit les rois comme ses ministres.", intro: "Évêque, théoricien de la monarchie absolue.", facts: ["Justifie le pouvoir absolu de droit divin."], role: "La caution morale de l'absolutisme.", heritage: "L'un des plus grands maîtres de l'éloquence.", rpg: { classe: "Théologien Royal", faction: "Clergé", competences: [ { nom: "Éloquence", desc: "Orateur né", icon: "📖" }, { nom: "Doctrine", desc: "Droit divin", icon: "👑" }, { nom: "Pédagogie", desc: "Éduque le Dauphin", icon: "👨‍🏫" }, { nom: "Morale", desc: "Rigueur religieuse", icon: "⚖️" } ], ultime: { nom: "Oraison Funèbre", desc: "Marque les esprits par des discours éternels" }, relations: { allies: ["Mme de Maintenon", "Louis XIV"], rivaux: ["Protestants", "Libertins"], amours: ["Dieu"] } } },
-            "luxembourg": { name: "Duc de Luxembourg", dates: "1628-1695", icon: "sword", mainList: false, isFictional: false, subtitle: "Le Tapissier de Notre-Dame", quote: "La guerre est mon élément.", intro: "Brillant maréchal de France, reste invaincu en Flandre.", facts: ["Général en chef victorieux."], role: "Le bouclier de la France.", heritage: "Réputation militaire intacte.", rpg: { classe: "Maréchal Invaincu", faction: "Armée Royale", competences: [ { nom: "Surprise", desc: "Attaque éclair", icon: "⚡" }, { nom: "Victoire", desc: "Jamais défait", icon: "🏆" }, { nom: "Bravoure", desc: "Férocité", icon: "⚔️" }, { nom: "Trophées", desc: "Prend les drapeaux", icon: "🚩" } ], ultime: { nom: "Bouclier des Flandres", desc: "Défend la frontière avec une efficacité redoutable" }, relations: { allies: ["Louis XIV", "Louvois"], rivaux: ["Coalition européenne"], amours: ["La Guerre"] } } },
-            "vauban": { name: "Vauban", dates: "1633-1707", icon: "castle", mainList: false, isFictional: false, subtitle: "L'ingénieur du Roi", quote: "La sueur épargne le sang.", intro: "Ingénieur militaire, révolutionne la fortification.", facts: ["Construit la Ceinture de fer.", "Ne perd aucun siège."], role: "Sécurise les frontières du royaume.", heritage: "Un réseau de fortifications classé à l'UNESCO.", rpg: { classe: "Génie Fortificateur", faction: "Armée Royale", competences: [ { nom: "Citadelles", desc: "Bâtisseur inouï", icon: "🏰" }, { nom: "Sièges", desc: "Fait tomber les murs", icon: "💥" }, { nom: "Calculs", desc: "Précision mortelle", icon: "📐" }, { nom: "Protection", desc: "Épargne ses hommes", icon: "🛡️" } ], ultime: { nom: "Ceinture de Fer", desc: "Rend les frontières de la France totalement imprenables" }, relations: { allies: ["Louis XIV", "L'Armée"], rivaux: ["Ennemis d'Europe"], amours: ["L'Ingénierie"] } } },
-            "philippe-anjou": { name: "Philippe d'Anjou", dates: "1683-1746", icon: "crown", mainList: false, isFictional: false, subtitle: "Le roi d'Espagne", quote: "Il n'y a plus de Pyrénées.", intro: "Petit-fils de Louis XIV, héritier de l'Empire espagnol.", facts: ["Devient roi d'Espagne en 1700."], role: "Instrument de la politique dynastique.", heritage: "La dynastie des Bourbons d'Espagne.", rpg: { classe: "Héritier Dynastique", faction: "Bourbons", competences: [ { nom: "Sang Bleu", desc: "Héritier légitime", icon: "🩸" }, { nom: "Adaptation", desc: "Culture espagnole", icon: "🇪🇸" }, { nom: "Couronne", desc: "Prend le pouvoir", icon: "👑" }, { nom: "Alliances", desc: "Union des royaumes", icon: "🤝" } ], ultime: { nom: "Soleil sur l'Espagne", desc: "Installe la famille Bourbon sur un nouveau trône" }, relations: { allies: ["Louis XIV (grand-père)"], rivaux: ["Habsbourg", "Coalition"], amours: ["Marie-Louise de Savoie"] } } },
-            "marlborough": { name: "Marlborough", dates: "1650-1722", icon: "sword", mainList: false, isFictional: false, subtitle: "Le stratège anglais", quote: "Je crains plus les mots que les balles.", intro: "Général britannique, grand adversaire de Louis XIV.", facts: ["Inflige de lourdes défaites aux Français."], role: "Le frein à l'expansionnisme français.", heritage: "Une légende militaire britannique.", rpg: { classe: "Général Ennemi", faction: "Coalition Anglaise", competences: [ { nom: "Discipline", desc: "Troupes de fer", icon: "💂" }, { nom: "Alliance", desc: "Unit l'Europe", icon: "🤝" }, { nom: "Ténacité", desc: "Acharnement", icon: "💪" }, { nom: "Stratégie", desc: "Contre le Roi", icon: "🗺️" } ], ultime: { nom: "Coalition Fatale", desc: "Freine l'hégémonie de la France par des victoires décisives" }, relations: { allies: ["Prince Eugène", "Angleterre"], rivaux: ["Louis XIV", "Armée Française"], amours: ["Sarah Churchill"] } } },
-            "lully": { name: "Lully", dates: "1632-1687", icon: "music", mainList: false, isFictional: false, subtitle: "Le Surintendant de la Musique", quote: "Toute la musique de France est à mon commandement.", intro: "Compositeur d'origine florentine, il devient le maître absolu de la musique sous Louis XIV.", facts: ["Collabore avec Molière pour inventer la comédie-ballet.", "Achète le monopole de l'opéra en France.", "Meurt d'une blessure au pied causée par son lourd bâton de direction."], role: "Créer la bande-son officielle et majestueuse du règne de Louis XIV.", heritage: "Créateur de l'opéra français (la tragédie lyrique).", rpg: { classe: "Maître de Musique", faction: "Artisans Royaux", competences: [ { nom: "Composition", desc: "Mélodies royales", icon: "🎼" }, { nom: "Monopole", desc: "Détruit les rivaux", icon: "📜" }, { nom: "Tempo", desc: "Bâton de direction", icon: "🦯" }, { nom: "Danse", desc: "Ballets de cour", icon: "🩰" } ], ultime: { nom: "Marche pour la cérémonie des Turcs", desc: "Orchestre un chef-d'œuvre qui fait trembler l'Europe" }, relations: { allies: ["Louis XIV", "Molière (début)"], rivaux: ["Molière (fin)", "Autres musiciens"], amours: ["L'Opéra"] } } }
+            "le-notre": { 
+                name: "André Le Nôtre", subtitle: "L'Architecte des Jardins", backSubtitle: "Maître du Paysage", dates: "1613 – 1700", icon: "tree", mainList: false, isFictional: false, 
+                quote: "La nature est mon seul guide, la géométrie mon outil.", 
+                intro: "Génial architecte paysagiste, créateur des jardins de Versailles. Il a littéralement dompté la nature pour refléter l'ordre et la grandeur du Roi-Soleil.", 
+                stats: [ { icon: '⚔️', val: '20' }, { icon: '🛡️', val: '60' }, { icon: '✨', val: '90' }, { icon: '🧠', val: '98' } ],
+                traits: [ { icon: '📐', name: 'Géomètre' }, { icon: '🌿', name: 'Botaniste' }, { icon: '👁️', name: 'Visionnaire' }, { icon: '👑', name: 'Fidèle' } ],
+                achievements: [ { icon: '🌳', name: 'Jardins de Versailles', val: 'Chef d\'œuvre' }, { icon: '🏰', name: 'Vaux-le-Vicomte', val: '1656' }, { icon: '⛲', name: 'Grand Canal', val: 'Versailles' } ],
+                titles: [ { icon: '🌳', text: 'Contrôleur Général', sub: 'des Bâtiments du Roi' }, { icon: '🎨', text: 'Jardinier', sub: 'Inventeur du style "à la française"' } ],
+                rpg: { 
+                    classe: "Maître Jardinier", faction: "Artisans Royaux", collection: "⚜️ Collection « Le Grand Siècle » ⚜️",
+                    attributs: [ { label: 'Autorité', class: 'authority', val: 60 }, { label: 'Charisme', class: 'charisma', val: 80 }, { label: 'Stratégie', class: 'strategy', val: 95 }, { label: 'Culture', class: 'culture', val: 98 }, { label: 'Diplomatie', class: 'diplomacy', val: 75 }, { label: 'Art de guerre', class: 'warfare', val: 10 } ],
+                    competences: [ { nom: "Symétrie", desc: "Ordre absolu", icon: "📐" }, { nom: "Hydraulique", desc: "Jeux d'eau", icon: "⛲" }, { nom: "Botanique", desc: "Plantes rares", icon: "🌺" }, { nom: "Perspective", desc: "Optique infinie", icon: "👁️" } ], 
+                    ultime: { nom: "Jardins de Légende", desc: "Dompte la nature sauvage pour la gloire du Roi" }, 
+                    relations: { allies: ["Louis XIV", "Mansart", "Le Brun"], rivaux: ["Nature Sauvage", "Sècheresse"], amours: ["La Beauté Végétale"] } 
+                } 
+            },
+            "mansart": { 
+                name: "Hardouin-Mansart", subtitle: "Le Premier Architecte", backSubtitle: "Bâtisseur du Soleil", dates: "1646 – 1708", icon: "castle", mainList: false, isFictional: false, 
+                quote: "L'architecture est la musique de l'espace.", 
+                intro: "Architecte prodige, il donne au classicisme français sa grandeur monumentale en achevant Versailles et en érigeant le dôme des Invalides.", 
+                stats: [ { icon: '⚔️', val: '25' }, { icon: '🛡️', val: '80' }, { icon: '✨', val: '88' }, { icon: '🧠', val: '99' } ],
+                traits: [ { icon: '🏛️', name: 'Classique' }, { icon: '📐', name: 'Bâtisseur' }, { icon: '👑', name: 'Ambitieux' }, { icon: '💎', name: 'Fastueux' } ],
+                achievements: [ { icon: '✨', name: 'Galerie des Glaces', val: '1684' }, { icon: '⛪', name: 'Dôme des Invalides', val: '1706' }, { icon: '🏰', name: 'Grand Trianon', val: '1687' } ],
+                titles: [ { icon: '🏛️', text: 'Premier Architecte', sub: 'du Roi (1681)' }, { icon: '⚜️', text: 'Surintendant', sub: 'des Bâtiments' } ],
+                rpg: { 
+                    classe: "Génie de Pierre", faction: "Artisans Royaux", collection: "⚜️ Collection « Le Grand Siècle » ⚜️",
+                    attributs: [ { label: 'Autorité', class: 'authority', val: 85 }, { label: 'Charisme', class: 'charisma', val: 85 }, { label: 'Stratégie', class: 'strategy', val: 90 }, { label: 'Culture', class: 'culture', val: 99 }, { label: 'Diplomatie', class: 'diplomacy', val: 80 }, { label: 'Art de guerre', class: 'warfare', val: 20 } ],
+                    competences: [ { nom: "Classicisme", desc: "Style parfait", icon: "🏛️" }, { nom: "Démesure", desc: "Projets colossaux", icon: "🏰" }, { nom: "Ingéniosité", desc: "Techniques neuves", icon: "⚙️" }, { nom: "Toits", desc: "Style mansardé", icon: "🏠" } ], 
+                    ultime: { nom: "La Galerie des Glaces", desc: "Érige le couloir le plus resplendissant du monde" }, 
+                    relations: { allies: ["Louis XIV", "Le Nôtre", "Le Brun"], rivaux: ["Colbert (budget)"], amours: ["La Pierre et l'Or"] } 
+                } 
+            },
+            "turenne": { 
+                name: "Turenne", subtitle: "Le Maréchal de France", backSubtitle: "L'épée du Roi", dates: "1611 – 1675", icon: "sword", mainList: false, isFictional: false, 
+                quote: "La victoire appartient au plus persévérant.", 
+                intro: "Henri de La Tour d'Auvergne, vicomte de Turenne. L'un des plus grands tacticiens militaires de l'histoire de France, tué par un boulet de canon à Sasbach.", 
+                stats: [ { icon: '⚔️', val: '98' }, { icon: '🛡️', val: '90' }, { icon: '✨', val: '85' }, { icon: '🧠', val: '95' } ],
+                traits: [ { icon: '🧠', name: 'Tacticien' }, { icon: '⚔️', name: 'Invaincu' }, { icon: '🤝', name: 'Loyal' }, { icon: '⛪', name: 'Converti' } ],
+                achievements: [ { icon: '🐎', name: 'Bataille des Dunes', val: '1658' }, { icon: '🛡️', name: 'Sauvetage de Paris', val: 'Fronde (1652)' }, { icon: '👑', name: 'Inhumé à Saint-Denis', val: 'Honneur Royal' } ],
+                titles: [ { icon: '⚔️', text: 'Maréchal Général', sub: 'Des camps et armées du Roi' }, { icon: '⚜️', text: 'Vicomte', sub: 'de Turenne' } ],
+                rpg: { 
+                    classe: "Maréchal de Génie", faction: "Armée Royale", collection: "⚜️ Collection « Le Grand Siècle » ⚜️",
+                    attributs: [ { label: 'Autorité', class: 'authority', val: 95 }, { label: 'Charisme', class: 'charisma', val: 90 }, { label: 'Stratégie', class: 'strategy', val: 99 }, { label: 'Culture', class: 'culture', val: 70 }, { label: 'Diplomatie', class: 'diplomacy', val: 75 }, { label: 'Art de guerre', class: 'warfare', val: 100 } ],
+                    competences: [ { nom: "Tactique", desc: "Esprit vif", icon: "🧠" }, { nom: "Mouvement", desc: "Marche forcée", icon: "🐎" }, { nom: "Loyauté", desc: "Bras armé du Roi", icon: "⚔️" }, { nom: "Anticipation", desc: "Prévoit l'ennemi", icon: "🗺️" } ], 
+                    ultime: { nom: "L'Ultime Manœuvre", desc: "Remporte la victoire même en infériorité numérique" }, 
+                    relations: { allies: ["Louis XIV", "L'Armée Française"], rivaux: ["Le Grand Condé (Fronde)", "Montecúccoli"], amours: ["La Patrie"] } 
+                } 
+            },
+            "conde": { 
+                name: "Le Grand Condé", subtitle: "Le Prince rebelle", backSubtitle: "L'aigle foudroyant", dates: "1621 – 1686", icon: "fleur", mainList: false, isFictional: false, 
+                quote: "Je vaincrai ou je mourrai.", 
+                intro: "Louis II de Bourbon, prince du sang et général de génie. Héros de Rocroi à 22 ans, il mène la Fronde contre le Roi avant d'être pardonné.", 
+                stats: [ { icon: '⚔️', val: '99' }, { icon: '🛡️', val: '75' }, { icon: '✨', val: '88' }, { icon: '🧠', val: '90' } ],
+                traits: [ { icon: '⚡', name: 'Foudroyant' }, { icon: '👑', name: 'Orgueilleux' }, { icon: '🏴‍☠️', name: 'Frondeur' }, { icon: '🐎', name: 'Audacieux' } ],
+                achievements: [ { icon: '⚔️', name: 'Victoire de Rocroi', val: '1643' }, { icon: '🔥', name: 'Chef de la Fronde', val: '1651–1653' }, { icon: '🤝', name: 'Pardon Royal', val: '1659' } ],
+                titles: [ { icon: '🩸', text: 'Premier Prince', sub: 'du Sang' }, { icon: '⚔️', text: 'Généralissime', sub: 'Des armées' } ],
+                rpg: { 
+                    classe: "Prince Combattant", faction: "Haute Noblesse", collection: "⚜️ Collection « Le Grand Siècle » ⚜️",
+                    attributs: [ { label: 'Autorité', class: 'authority', val: 95 }, { label: 'Charisme', class: 'charisma', val: 90 }, { label: 'Stratégie', class: 'strategy', val: 92 }, { label: 'Culture', class: 'culture', val: 85 }, { label: 'Diplomatie', class: 'diplomacy', val: 40 }, { label: 'Art de guerre', class: 'warfare', val: 99 } ],
+                    competences: [ { nom: "Charge", desc: "Attaque frontale", icon: "🐎" }, { nom: "Fierté", desc: "Orgueil invincible", icon: "👑" }, { nom: "Rébellion", desc: "Mène le soulèvement", icon: "💥" }, { nom: "Témérité", desc: "Prend tous les risques", icon: "🛡️" } ], 
+                    ultime: { nom: "Foudre de Rocroi", desc: "Écrase les lignes ennemies avec une charge fulgurante" }, 
+                    relations: { allies: ["Noblesse Frondeuse (jadis)", "L'Armée"], rivaux: ["Mazarin", "Turenne"], amours: ["La Gloire"] } 
+                } 
+            },
+            "bossuet": { 
+                name: "Bossuet", subtitle: "L'Aigle de Meaux", backSubtitle: "Théoricien de l'Absolu", dates: "1627 – 1704", icon: "church", mainList: false, isFictional: false, 
+                quote: "Dieu établit les rois comme ses ministres, et règne par eux sur les peuples.", 
+                intro: "Évêque, précepteur du Dauphin et immense orateur. Il est le grand théoricien de la monarchie absolue de droit divin sous Louis XIV.", 
+                stats: [ { icon: '⚔️', val: '15' }, { icon: '🛡️', val: '85' }, { icon: '✨', val: '95' }, { icon: '🧠', val: '99' } ],
+                traits: [ { icon: '🗣️', name: 'Éloquent' }, { icon: '👑', name: 'Monarchiste' }, { icon: '⛪', name: 'Intransigeant' }, { icon: '🎓', name: 'Érudit' } ],
+                achievements: [ { icon: '📖', name: 'Politique tirée de l\'Écriture sainte', val: '1679' }, { icon: '🗣️', name: 'Oraison d\'Henriette d\'Angleterre', val: '1670' }, { icon: '👑', name: 'Précepteur', val: 'du Dauphin' } ],
+                titles: [ { icon: '⛪', text: 'Évêque de Meaux', sub: 'L\'Aigle de Meaux' }, { icon: '📜', text: 'Théoricien', sub: 'du Droit Divin' } ],
+                rpg: { 
+                    classe: "Théologien Royal", faction: "Clergé", collection: "⚜️ Collection « Le Grand Siècle » ⚜️",
+                    attributs: [ { label: 'Autorité', class: 'authority', val: 95 }, { label: 'Charisme', class: 'charisma', val: 98 }, { label: 'Stratégie', class: 'strategy', val: 85 }, { label: 'Culture', class: 'culture', val: 100 }, { label: 'Diplomatie', class: 'diplomacy', val: 80 }, { label: 'Art de guerre', class: 'warfare', val: 10 } ],
+                    competences: [ { nom: "Éloquence", desc: "Orateur né", icon: "📖" }, { nom: "Doctrine", desc: "Justifie l'absolutisme", icon: "👑" }, { nom: "Pédagogie", desc: "Éduque l'Héritier", icon: "👨‍🏫" }, { nom: "Morale", desc: "Rigueur religieuse", icon: "⚖️" } ], 
+                    ultime: { nom: "L'Oraison Funèbre", desc: "Marque l'histoire et les esprits par un discours éternel" }, 
+                    relations: { allies: ["Mme de Maintenon", "Louis XIV", "Le Clergé"], rivaux: ["Protestants", "Libertins", "Fénelon"], amours: ["L'Église"] } 
+                } 
+            },
+            "luxembourg": { 
+                name: "Duc de Luxembourg", subtitle: "Le Tapissier de Notre-Dame", backSubtitle: "Maréchal invaincu", dates: "1628 – 1695", icon: "sword", mainList: false, isFictional: false, 
+                quote: "La guerre est mon élément naturel.", 
+                intro: "François Henri de Montmorency-Bouteville. Brillant maréchal de France, élève du Grand Condé. Il gagne son surnom en envoyant les drapeaux ennemis capturés décorer Notre-Dame.", 
+                stats: [ { icon: '⚔️', val: '96' }, { icon: '🛡️', val: '88' }, { icon: '✨', val: '80' }, { icon: '🧠', val: '92' } ],
+                traits: [ { icon: '🏆', name: 'Invaincu' }, { icon: '⚡', name: 'Fulgurant' }, { icon: '🏴‍☠️', name: 'Ancien Frondeur' }, { icon: '👁️', name: 'Tacticien' } ],
+                achievements: [ { icon: '⚔️', name: 'Bataille de Fleurus', val: '1690' }, { icon: '🚩', name: 'Bataille de Neerwinden', val: '1693' }, { icon: '⛪', name: 'Drapeaux Ennemis', val: 'à Notre-Dame' } ],
+                titles: [ { icon: '⚔️', text: 'Maréchal de France', sub: 'Invaincu en Flandre' }, { icon: '⚜️', text: 'Duc de Piney', sub: 'Maison Montmorency' } ],
+                rpg: { 
+                    classe: "Général Foudroyant", faction: "Armée Royale", collection: "⚜️ Collection « Le Grand Siècle » ⚜️",
+                    attributs: [ { label: 'Autorité', class: 'authority', val: 90 }, { label: 'Charisme', class: 'charisma', val: 85 }, { label: 'Stratégie', class: 'strategy', val: 95 }, { label: 'Culture', class: 'culture', val: 70 }, { label: 'Diplomatie', class: 'diplomacy', val: 50 }, { label: 'Art de guerre', class: 'warfare', val: 98 } ],
+                    competences: [ { nom: "Surprise", desc: "Attaque éclair", icon: "⚡" }, { nom: "Victoire", desc: "Jamais défait", icon: "🏆" }, { nom: "Férocité", desc: "Brise les lignes", icon: "⚔️" }, { nom: "Trophées", desc: "Vole l'honneur ennemi", icon: "🚩" } ], 
+                    ultime: { nom: "Le Bouclier des Flandres", desc: "Défend la frontière nord avec une efficacité terrifiante" }, 
+                    relations: { allies: ["Louis XIV", "Louvois", "Armée Française"], rivaux: ["Guillaume d'Orange", "Coalition européenne"], amours: ["La Guerre"] } 
+                } 
+            },
+            "vauban": { 
+                name: "Vauban", subtitle: "L'ingénieur du Roi", backSubtitle: "Le Bâtisseur de Fer", dates: "1633 – 1707", icon: "castle", mainList: false, isFictional: false, 
+                quote: "La sueur épargne le sang.", 
+                intro: "Sébastien Le Prestre de Vauban, ingénieur, architecte militaire et maréchal de France. Il a révolutionné la poliorcétique (l'art de défendre et d'attaquer les forteresses).", 
+                stats: [ { icon: '⚔️', val: '75' }, { icon: '🛡️', val: '100' }, { icon: '✨', val: '70' }, { icon: '🧠', val: '99' } ],
+                traits: [ { icon: '🏰', name: 'Fortificateur' }, { icon: '📐', name: 'Mathématicien' }, { icon: '❤️', name: 'Humain' }, { icon: '✍️', name: 'Réformateur' } ],
+                achievements: [ { icon: '🛡️', name: 'La Ceinture de Fer', val: 'Frontières' }, { icon: '💥', name: '130 Places Fortes', val: 'Construites' }, { icon: '📜', name: 'La Dîme Royale', val: 'Projet d\'impôt juste' } ],
+                titles: [ { icon: '🏰', text: 'Commissaire Général', sub: 'des Fortifications' }, { icon: '⚔️', text: 'Maréchal de France', sub: '1703' } ],
+                rpg: { 
+                    classe: "Génie Fortificateur", faction: "Armée Royale", collection: "⚜️ Collection « Le Grand Siècle » ⚜️",
+                    attributs: [ { label: 'Autorité', class: 'authority', val: 85 }, { label: 'Charisme', class: 'charisma', val: 75 }, { label: 'Stratégie', class: 'strategy', val: 99 }, { label: 'Culture', class: 'culture', val: 90 }, { label: 'Diplomatie', class: 'diplomacy', val: 60 }, { label: 'Art de guerre', class: 'warfare', val: 95 } ],
+                    competences: [ { nom: "Citadelles", desc: "Murs infranchissables", icon: "🏰" }, { nom: "Poliorcétique", desc: "Prend les villes", icon: "💥" }, { nom: "Calculs", desc: "Précision mathématique", icon: "📐" }, { nom: "Protection", desc: "Épargne ses hommes", icon: "🛡️" } ], 
+                    ultime: { nom: "La Ceinture de Fer", desc: "Rend les frontières du royaume totalement imprenables" }, 
+                    relations: { allies: ["Louis XIV", "L'Armée", "Les Ingénieurs"], rivaux: ["La bureaucratie (fin de vie)", "Ennemis d'Europe"], amours: ["La France", "L'Ingénierie"] } 
+                } 
+            },
+            "philippe-anjou": { 
+                name: "Philippe d'Anjou", subtitle: "Le roi d'Espagne", backSubtitle: "Philippe V", dates: "1683 – 1746", icon: "crown", mainList: false, isFictional: false, 
+                quote: "Il n'y a plus de Pyrénées.", 
+                intro: "Petit-fils de Louis XIV. Désigné héritier de l'Empire espagnol, son accession au trône déclenche la terrible Guerre de Succession d'Espagne qui embrase l'Europe.", 
+                stats: [ { icon: '⚔️', val: '65' }, { icon: '🛡️', val: '80' }, { icon: '✨', val: '85' }, { icon: '🧠', val: '75' } ],
+                traits: [ { icon: '🩸', name: 'Bourbon' }, { icon: '🇪🇸', name: 'Hispanisé' }, { icon: '👑', name: 'Héritier' }, { icon: '😢', name: 'Mélancolique' } ],
+                achievements: [ { icon: '👑', name: 'Couronne d\'Espagne', val: '1700' }, { icon: '⚔️', name: 'Guerre de Succession', val: '1701-1714' }, { icon: '🤝', name: 'Traité d\'Utrecht', val: '1713' } ],
+                titles: [ { icon: '👑', text: 'Roi d\'Espagne', sub: 'Philippe V' }, { icon: '⚜️', text: 'Duc d\'Anjou', sub: 'Petit-fils de France' } ],
+                rpg: { 
+                    classe: "Héritier Contesté", faction: "Bourbons", collection: "⚜️ Collection « Le Grand Siècle » ⚜️",
+                    attributs: [ { label: 'Autorité', class: 'authority', val: 85 }, { label: 'Charisme', class: 'charisma', val: 80 }, { label: 'Stratégie', class: 'strategy', val: 70 }, { label: 'Culture', class: 'culture', val: 85 }, { label: 'Diplomatie', class: 'diplomacy', val: 90 }, { label: 'Art de guerre', class: 'warfare', val: 65 } ],
+                    competences: [ { nom: "Sang Bleu", desc: "Légitimité dynastique", icon: "🩸" }, { nom: "Adaptation", desc: "Adopte la culture locale", icon: "🇪🇸" }, { nom: "Résilience", desc: "S'accroche au trône", icon: "🛡️" }, { nom: "Alliance", desc: "Soutien français", icon: "🤝" } ], 
+                    ultime: { nom: "Soleil sur l'Espagne", desc: "Installe définitivement la famille Bourbon sur un nouveau trône" }, 
+                    relations: { allies: ["Louis XIV (Grand-père)", "Castillans"], rivaux: ["Les Habsbourg", "Coalition européenne"], amours: ["Marie-Louise de Savoie", "Élisabeth Farnèse"] } 
+                } 
+            },
+            "marlborough": { 
+                name: "Marlborough", subtitle: "Le stratège anglais", backSubtitle: "John Churchill", dates: "1650 – 1722", icon: "sword", mainList: false, isFictional: false, 
+                quote: "Je crains plus les mots que les balles.", 
+                intro: "Général et diplomate britannique exceptionnel. Commandant en chef des forces alliées contre la France lors de la Guerre de Succession d'Espagne, il inflige de graves défaites à Louis XIV.", 
+                stats: [ { icon: '⚔️', val: '95' }, { icon: '🛡️', val: '92' }, { icon: '✨', val: '88' }, { icon: '🧠', val: '97' } ],
+                traits: [ { icon: '🧠', name: 'Génie Tactique' }, { icon: '💂', name: 'Britannique' }, { icon: '🤝', name: 'Diplomate' }, { icon: '💰', name: 'Ambitieux' } ],
+                achievements: [ { icon: '⚔️', name: 'Bataille de Blenheim', val: '1704' }, { icon: '⚔️', name: 'Bataille de Ramillies', val: '1706' }, { icon: '🏰', name: 'Palais de Blenheim', val: 'Construit en son honneur' } ],
+                titles: [ { icon: '👑', text: '1er Duc de Marlborough', sub: 'Pair d\'Angleterre' }, { icon: '⚔️', text: 'Capitaine Général', sub: 'des Armées Britanniques' } ],
+                rpg: { 
+                    classe: "Némésis de la France", faction: "Coalition", collection: "⚜️ Collection « Le Grand Siècle » ⚜️",
+                    attributs: [ { label: 'Autorité', class: 'authority', val: 95 }, { label: 'Charisme', class: 'charisma', val: 90 }, { label: 'Stratégie', class: 'strategy', val: 99 }, { label: 'Culture', class: 'culture', val: 80 }, { label: 'Diplomatie', class: 'diplomacy', val: 95 }, { label: 'Art de guerre', class: 'warfare', val: 98 } ],
+                    competences: [ { nom: "Discipline", desc: "Troupes de fer", icon: "💂" }, { nom: "Coalition", desc: "Unit l'Europe contre le Roi", icon: "🤝" }, { nom: "Mobilité", desc: "Marches fulgurantes", icon: "🏃" }, { nom: "Ténacité", desc: "Jamais vaincu", icon: "🛡️" } ], 
+                    ultime: { nom: "Le Coup d'Arrêt", desc: "Brise l'hégémonie militaire française par des victoires décisives" }, 
+                    relations: { allies: ["Prince Eugène de Savoie", "Reine Anne"], rivaux: ["Louis XIV", "Armée Française"], amours: ["Sarah Churchill"] } 
+                } 
+            },
+            "lully": { 
+                name: "Lully", subtitle: "Le Surintendant", backSubtitle: "Maître de la Musique", dates: "1632 – 1687", icon: "music", mainList: false, isFictional: false, 
+                quote: "Toute la musique de France est à mon commandement.", 
+                intro: "Compositeur d'origine florentine, il devient le maître absolu de la musique sous Louis XIV. Créateur de l'opéra français, il impose son monopole avec une poigne de fer.", 
+                stats: [ { icon: '⚔️', val: '30' }, { icon: '🛡️', val: '60' }, { icon: '✨', val: '95' }, { icon: '🧠', val: '90' } ],
+                traits: [ { icon: '🎼', name: 'Génie Musical' }, { icon: '👑', name: 'Tyran' }, { icon: '🇮🇹', name: 'Italien' }, { icon: '🕺', name: 'Danseur' } ],
+                achievements: [ { icon: '🎭', name: 'Création Tragédie Lyrique', val: 'Opéra' }, { icon: '📜', name: 'Monopole Royal', val: 'Sur la musique' }, { icon: '⚔️', name: 'Comédie-Ballet', val: 'Avec Molière' } ],
+                titles: [ { icon: '🎼', text: 'Surintendant', sub: 'de la Musique du Roi' }, { icon: '🎭', text: 'Directeur', sub: 'Académie Royale de Musique' } ],
+                rpg: { 
+                    classe: "Maître des Notes", faction: "Artisans Royaux", collection: "⚜️ Collection « Le Grand Siècle » ⚜️",
+                    attributs: [ { label: 'Autorité', class: 'authority', val: 95 }, { label: 'Charisme', class: 'charisma', val: 90 }, { label: 'Stratégie', class: 'strategy', val: 85 }, { label: 'Culture', class: 'culture', val: 100 }, { label: 'Diplomatie', class: 'diplomacy', val: 60 }, { label: 'Art de guerre', class: 'warfare', val: 10 } ],
+                    competences: [ { nom: "Composition", desc: "Mélodies royales grandioses", icon: "🎼" }, { nom: "Monopole", desc: "Écrase toute concurrence", icon: "📜" }, { nom: "Tempo", desc: "Frappe son lourd bâton", icon: "🦯" }, { nom: "Ballet", desc: "Fait danser la cour", icon: "🩰" } ], 
+                    ultime: { nom: "La Marche pour les Turcs", desc: "Orchestre un chef-d'œuvre qui fait trembler toute l'Europe" }, 
+                    relations: { allies: ["Louis XIV", "Philippe Quinault", "Molière (début)"], rivaux: ["Molière (fin)", "Marc-Antoine Charpentier"], amours: ["L'Opéra", "Le Pouvoir"] } 
+                } 
+            }
         };
 
         const historicalFacts = [
@@ -927,18 +1529,6 @@
                 // Supprime le rideau du DOM après l'animation pour libérer de la mémoire
                 setTimeout(() => { curtain.remove(); }, 3000); 
             }
-            
-            // Initialiser les particules
-            const c = document.getElementById('particles');
-            for(let i=0; i<20; i++){
-                const p = document.createElement('div');
-                p.className = 'particle';
-                p.style.left = Math.random() * 100 + '%';
-                p.style.animationDelay = Math.random() * 8 + 's';
-                p.style.animationDuration = (6 + Math.random() * 6) + 's';
-                p.style.width = p.style.height = (1.5 + Math.random() * 2.5) + 'px';
-                c.appendChild(p);
-            }
         });
 
         // Bandeau disparition optimisée (requestAnimationFrame)
@@ -1078,23 +1668,23 @@
             // Front Components
             let statsHtml = char.stats ? `<div class="stats-row">${char.stats.map(s => `<div class="stat-chip"><span class="stat-icon">${s.icon}</span><span class="stat-val">${s.val}</span></div>`).join('')}</div>` : '';
             
-            let traitsHtml = char.traits ? `<div class="rpg-section-title">Traits</div><div class="traits-row">${char.traits.map(t => `<span class="trait-tag"><span class="trait-icon">${t.icon}</span>${t.name}</span>`).join('')}</div>` : '';
+            let traitsHtml = char.traits ? `<div class="rpg-section-title"><span>Traits</span></div><div class="traits-row">${char.traits.map(t => `<span class="trait-tag"><span class="trait-icon">${t.icon}</span>${t.name}</span>`).join('')}</div>` : '';
             
             let achievementsHtml = '';
             if (char.achievements) {
-                achievementsHtml = `<div class="rpg-section-title">Hauts Faits</div><div class="achievements-grid">${char.achievements.map(a => `<div class="achieve-card"><span class="ach-icon">${a.icon}</span><div class="ach-name">${a.name}</div><div class="ach-val">${a.val}</div></div>`).join('')}</div>`;
+                achievementsHtml = `<div class="rpg-section-title"><span>Hauts Faits</span></div><div class="achievements-grid">${char.achievements.map(a => `<div class="achieve-card"><span class="ach-icon">${a.icon}</span><div class="ach-name">${a.name}</div><div class="ach-val">${a.val}</div></div>`).join('')}</div>`;
             } else if (char.facts) {
                 let factsList = char.facts.map(f => `<li><span class="bullet">♦</span> ${f}</li>`).join('');
-                achievementsHtml = `<div class="rpg-section-title">Faits Marquants</div><div class="lore-section"><ul class="lore-list">${factsList}</ul></div>`;
+                achievementsHtml = `<div class="rpg-section-title"><span>Faits Marquants</span></div><div class="lore-section"><ul class="lore-list">${factsList}</ul></div>`;
             }
 
             let titlesHtml = '';
             if (char.titles) {
-                titlesHtml = `<div class="rpg-section-title">Titres & Dignités</div><div class="titles-list">${char.titles.map(t => `<div class="title-item"><span class="title-icon">${t.icon}</span><div><span class="title-text">${t.text}</span><span class="title-sub">${t.sub}</span></div></div>`).join('')}</div>`;
+                titlesHtml = `<div class="rpg-section-title"><span>Titres & Dignités</span></div><div class="titles-list">${char.titles.map(t => `<div class="title-item"><span class="title-icon">${t.icon}</span><div><span class="title-text">${t.text}</span><span class="title-sub">${t.sub}</span></div></div>`).join('')}</div>`;
             } else if (char.role && char.heritage) {
                 const rTitle = char.isFictional ? "Rôle Symbolique" : "Rôle Historique";
                 const hTitle = char.isFictional ? "Signification" : "Héritage";
-                titlesHtml = `<div class="rpg-section-title">Héritage & Rôle</div><div class="titles-list"><div class="title-item"><span class="title-icon">📜</span><div><span class="title-text">${rTitle}</span><span class="title-sub">${char.role}</span></div></div><div class="title-item"><span class="title-icon">💎</span><div><span class="title-text">${hTitle}</span><span class="title-sub">${char.heritage}</span></div></div></div>`;
+                titlesHtml = `<div class="rpg-section-title"><span>Héritage & Rôle</span></div><div class="titles-list"><div class="title-item"><span class="title-icon">📜</span><div><span class="title-text">${rTitle}</span><span class="title-sub">${char.role}</span></div></div><div class="title-item"><span class="title-icon">💎</span><div><span class="title-text">${hTitle}</span><span class="title-sub">${char.heritage}</span></div></div></div>`;
             }
 
             let frontFooterHtml = char.rpg ? `<div class="card-footer"><span class="footer-tag"><span class="dot"></span> ${char.rpg.classe}</span><span class="footer-tag"><span class="dot"></span> Faction ${char.rpg.faction}</span></div>` : '';
@@ -1124,7 +1714,7 @@
                             ${quoteHtml}
                             ${statsHtml}
                             ${traitsHtml}
-                            <div class="rpg-section-title">Biographie</div>
+                            <div class="rpg-section-title"><span>Biographie</span></div>
                             <div class="lore-section"><p>${char.intro}</p></div>
                             ${achievementsHtml}
                             ${titlesHtml}
@@ -1139,7 +1729,7 @@
             if (char.rpg) {
                 let attributsHtml = '';
                 if (char.rpg && char.rpg.attributs) {
-                    attributsHtml = `<div class="rpg-section-title">Attributs</div><div class="stat-bars">${char.rpg.attributs.map(a => `<div class="stat-bar-row"><span class="stat-bar-label">${a.label}</span><div class="stat-bar-track"><div class="stat-bar-fill ${a.class}" style="width:${a.val}%"></div></div><span class="stat-bar-val">${a.val}</span></div>`).join('')}</div>`;
+                    attributsHtml = `<div class="rpg-section-title"><span>Attributs</span></div><div class="stat-bars">${char.rpg.attributs.map(a => `<div class="stat-bar-row"><span class="stat-bar-label">${a.label}</span><div class="stat-bar-track"><div class="stat-bar-fill ${a.class}" style="width:${a.val}%"></div></div><span class="stat-bar-val">${a.val}</span></div>`).join('')}</div>`;
                 }
 
                 let skillsHtml = char.rpg.competences.map(c => `
@@ -1178,18 +1768,18 @@
 
                             <div class="card-body">
                                 ${attributsHtml}
-                                <div class="rpg-section-title">Compétences</div>
+                                <div class="rpg-section-title"><span>Compétences</span></div>
                                 <div class="skills-grid">
                                     ${skillsHtml}
                                 </div>
 
-                                <div class="rpg-section-title">Pouvoir Ultime</div>
+                                <div class="rpg-section-title"><span>Pouvoir Ultime</span></div>
                                 <div class="ultimate-box">
                                     <div class="ult-name">${char.rpg.ultime.nom}</div>
                                     <div class="ult-desc">« ${char.rpg.ultime.desc} »</div>
                                 </div>
 
-                                <div class="rpg-section-title">Relations</div>
+                                <div class="rpg-section-title"><span>Relations</span></div>
                                 <div class="relations-grid">
                                     <div class="relation-group"><div class="rel-title allies">🛡️ Alliés</div><ul>${alliesHtml}</ul></div>
                                     <div class="relation-group"><div class="rel-title rivals">⚔️ Rivaux</div><ul>${rivauxHtml}</ul></div>
