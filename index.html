@@ -326,7 +326,7 @@
                 filter: none;
                 border-radius: 0;
             }
-            .card-face { border-radius: 0; }
+            .card-face { position: absolute; inset: 0; backface-visibility: hidden; -webkit-backface-visibility: hidden; border-radius: 18px; overflow: hidden; transform: translate3d(0,0,0); }
             .card-face-inner::before { border-radius: 0; inset: 4px; border-width: 1px; }
             .card-face-inner::after { display: none; }
             .card-header { padding: max(30px, env(safe-area-inset-top, 30px)) 20px 20px; }
@@ -406,11 +406,11 @@
             font-size: 14px; padding: 4px 16px; border-radius: 20px; position: relative; letter-spacing: 1px;
         }
 
-        /* Card Body (Fix Scroll Mobile + Flex) */
+        /* Card Body (Fix Scroll Mobile Robuste) */
         .card-body { 
             flex: 1 1 auto; padding: 15px 20px 25px; display: flex; flex-direction: column; gap: 16px; 
-            overflow-y: auto; -webkit-overflow-scrolling: touch; overscroll-behavior: auto;
-            transform: translateZ(0); /* Hack vital : force le navigateur à scroller sur mobile dans la 3D */
+            overflow-y: auto; -webkit-overflow-scrolling: touch; overscroll-behavior: contain;
+            touch-action: pan-y; /* Règle vitale pour forcer iOS à scroller */
             color: #000; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
             position: relative;
         }
@@ -536,8 +536,7 @@
 <body>
     
     <!-- Animation d'ouverture -->
-    <div id="roi-loader">
-        <div id="loader-container">
+   <div id="loader-container">
         <div id="halo"></div>
         <div id="dark-disk"></div>
         <canvas id="dust-canvas"></canvas>
