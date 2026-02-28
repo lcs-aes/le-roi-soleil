@@ -57,27 +57,71 @@
             overflow-x: hidden;
         }
 
-        /* --- ANIMATION LEVER DE RIDEAU --- */
-        .curtain-overlay {
+        /* --- LOADER ÉCLIPSE --- */
+        #loader-container {
             position: fixed;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background: var(--bg-color);
-            background-image: linear-gradient(180deg, #1A2238 0%, #0d1222 100%);
+            inset: 0;
             z-index: 9999;
+            background-color: #080604;
             display: flex;
-            flex-direction: column;
-            justify-content: center;
             align-items: center;
-            animation: fadeOut 1.2s ease-in-out 1.8s forwards;
-            pointer-events: none;
+            justify-content: center;
+            transition: opacity 1.5s ease-in-out;
         }
-        .curtain-icon { font-size: 80px; margin-bottom: 20px; animation: scaleUp 1.5s ease-out; }
-        .curtain-title { font-family: 'Playfair Display', serif; color: var(--accent-color); font-size: 2.5rem; text-transform: uppercase; letter-spacing: 2px; opacity: 0; animation: fadeInIntro 1s ease-out 0.3s forwards; text-align: center; padding: 0 20px;}
-        .curtain-subtitle { font-size: 1rem; color: #FDFBF7; opacity: 0; animation: fadeInIntro 1s ease-out 0.8s forwards; margin-top: 5px; letter-spacing: 3px; font-weight: 300;}
 
-        @keyframes fadeOut { to { opacity: 0; visibility: hidden; } }
-        @keyframes fadeInIntro { to { opacity: 1; transform: translateY(0); } from { opacity: 0; transform: translateY(15px); } }
-        @keyframes scaleUp { from { transform: scale(0.8); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+        #halo {
+            position: absolute;
+            width: 65vw;
+            height: 65vw;
+            max-width: 350px;
+            max-height: 350px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(255, 215, 0, 0.9) 0%, rgba(255, 140, 0, 0.5) 40%, rgba(0, 0, 0, 0) 75%);
+            filter: blur(8px);
+            opacity: 0;
+            animation: 
+                fadeInHalo 2s ease-in-out 0.5s forwards,
+                pulseHalo 3s ease-in-out 2.5s infinite alternate;
+        }
+
+        #dark-disk {
+            position: absolute;
+            width: 60vw;
+            height: 60vw;
+            max-width: 320px;
+            max-height: 320px;
+            border-radius: 50%;
+            background-color: #080604;
+            transform: translateX(100vw);
+            animation: slideEclipse 2.5s cubic-bezier(0.25, 1, 0.5, 1) 2s forwards;
+            transition: opacity 0.2s ease-out;
+        }
+
+        #dust-canvas {
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            z-index: 10;
+        }
+
+        #title {
+            position: absolute;
+            color: #ffd700;
+            font-family: 'Cinzel', 'Playfair Display', serif;
+            font-size: clamp(2rem, 8vw, 4rem);
+            letter-spacing: 0.25em;
+            text-align: center;
+            opacity: 0;
+            text-transform: uppercase;
+            text-shadow: 0 0 20px rgba(255, 215, 0, 0.6), 0 0 40px rgba(255, 140, 0, 0.4);
+            transform: scale(0.95);
+            animation: revealTitle 2s ease-out 5.5s forwards;
+        }
+
+        @keyframes fadeInHalo { from { opacity: 0; transform: scale(0.8); } to { opacity: 1; transform: scale(1); } }
+        @keyframes pulseHalo { from { filter: blur(8px) brightness(1); transform: scale(1); } to { filter: blur(12px) brightness(1.3); transform: scale(1.05); } }
+        @keyframes slideEclipse { 0% { transform: translateX(80vw) scale(0.9); } 100% { transform: translateX(0) scale(1); } }
+        @keyframes revealTitle { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
 
         /* --- BANDEAU SAVOIR-VIVRE --- */
         .savoir-vivre-banner {
@@ -394,17 +438,16 @@
         .card-body::-webkit-scrollbar { width: 4px; }
         .card-body::-webkit-scrollbar-track { background: transparent; }
         .card-body::-webkit-scrollbar-thumb { background: var(--gold); border-radius: 2px; }
-
-        /* Titres de Section Design (Centrés avec traits) */
+/* Titres de Section Design (Centrés avec traits) */
         .rpg-section-title {
-            font-family: 'Cinzel', serif; font-size: 15px; font-weight: 700;
+            font-family: 'Cinzel', serif; font-size: 13px; font-weight: 700;
             text-transform: uppercase; letter-spacing: 2.5px; color: var(--gold-dark);
             text-align: center; display: flex; align-items: center; gap: 12px; margin: 10px 0 0 0;
         }
         .rpg-section-title::before, .rpg-section-title::after { content: ''; flex: 1; height: 1.5px; background: linear-gradient(90deg, transparent, var(--gold), transparent); }
 
         .quote-line {
-            font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 19px;
+            font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 16px;
             color: var(--text-dark); text-align: center; padding: 0 10px; line-height: 1.3; opacity: 0.85; margin-bottom: 5px;
         }
 
@@ -416,29 +459,29 @@
             border: 1px solid rgba(201,168,76,0.25); border-radius: 8px; padding: 10px;
             flex: 1;
         }
-        .stat-chip .stat-icon { font-size: 24px; }
-        .stat-chip .stat-val { font-weight: 700; color: var(--burgundy); font-size: 22px; line-height: 1; font-family: 'Cinzel', serif; }
+        .stat-chip .stat-icon { font-size: 20px; }
+        .stat-chip .stat-val { font-weight: 700; color: var(--burgundy); font-size: 18px; line-height: 1; font-family: 'Cinzel', serif; }
 
         /* Traits */
         .traits-row { display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; }
         .trait-tag {
-            font-family: 'Cinzel', serif; font-size: 14px; font-weight: 600;
+            font-family: 'Cinzel', serif; font-size: 12px; font-weight: 600;
             text-transform: uppercase; letter-spacing: 0.8px;
             padding: 6px 14px; border-radius: 20px;
             border: 1px solid rgba(201,168,76,0.3); color: var(--text-dark);
             background: linear-gradient(135deg, rgba(201,168,76,0.08), rgba(201,168,76,0.02));
         }
-        .trait-tag .trait-icon { margin-right: 4px; font-size: 14px; }
+        .trait-tag .trait-icon { margin-right: 4px; font-size: 12px; }
 
         /* Lore / Facts Box */
         .lore-section {
             background: linear-gradient(135deg, rgba(42,18,69,0.04), rgba(201,168,76,0.04));
             border: 1px solid rgba(201,168,76,0.2); border-radius: 10px; padding: 14px 16px;
         }
-        .lore-section p { font-size: 16px; color: var(--text-dark); line-height: 1.5; text-align: justify; margin: 0;}
-        .lore-list { list-style: none; padding: 0; margin: 0; font-size: 16px; color: var(--text-dark); line-height: 1.5; display: flex; flex-direction: column; gap: 8px; }
+        .lore-section p { font-size: 14px; color: var(--text-dark); line-height: 1.5; text-align: justify; margin: 0;}
+        .lore-list { list-style: none; padding: 0; margin: 0; font-size: 14px; color: var(--text-dark); line-height: 1.5; display: flex; flex-direction: column; gap: 8px; }
         .lore-list li { display: flex; align-items: flex-start; gap: 8px; }
-        .lore-list li .bullet { color: var(--gold-dark); font-size: 16px; }
+        .lore-list li .bullet { color: var(--gold-dark); font-size: 14px; }
 
         /* Achievements Grid */
         .achievements-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; }
@@ -448,9 +491,9 @@
             padding: 12px 6px 10px; text-align: center; transition: transform 0.2s;
         }
         .achieve-card:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(201,168,76,0.12); }
-        .achieve-card .ach-icon { font-size: 28px; display: block; margin-bottom: 6px; }
-        .achieve-card .ach-name { font-family: 'Cinzel', serif; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; color: var(--text-dark); line-height: 1.2; margin-bottom: 4px;}
-        .achieve-card .ach-val { font-size: 16px; color: var(--burgundy); font-weight: 600; font-family: 'Cormorant Garamond', serif; }
+        .achieve-card .ach-icon { font-size: 24px; display: block; margin-bottom: 6px; }
+        .achieve-card .ach-name { font-family: 'Cinzel', serif; font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; color: var(--text-dark); line-height: 1.2; margin-bottom: 4px;}
+        .achieve-card .ach-val { font-size: 14px; color: var(--burgundy); font-weight: 600; font-family: 'Cormorant Garamond', serif; }
 
         /* Titles / Heritage Box */
         .titles-list { display: flex; flex-direction: column; gap: 10px; padding: 0 4px; }
@@ -459,9 +502,9 @@
             background: linear-gradient(145deg, #fff, var(--cream));
             border: 1px solid rgba(201,168,76,0.15); border-radius: 8px;
         }
-        .title-item .title-icon { font-size: 24px; flex-shrink: 0; }
-        .title-item .title-text { font-family: 'Cinzel', serif; font-size: 15px; font-weight: 700; color: var(--text-dark); letter-spacing: 0.3px; text-transform: uppercase; }
-        .title-item .title-sub { font-size: 15px; color: var(--text-dark); font-weight: 400; line-height: 1.3; display: block; margin-top: 2px;}
+        .title-item .title-icon { font-size: 20px; flex-shrink: 0; }
+        .title-item .title-text { font-family: 'Cinzel', serif; font-size: 13px; font-weight: 700; color: var(--text-dark); letter-spacing: 0.3px; text-transform: uppercase; }
+        .title-item .title-sub { font-size: 13px; color: var(--text-dark); font-weight: 400; line-height: 1.3; display: block; margin-top: 2px;}
 
         /* Skills */
         .skills-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
@@ -470,14 +513,14 @@
             border: 1px solid rgba(201,168,76,0.2); border-radius: 10px;
             padding: 14px 10px; text-align: center; transition: transform 0.2s, box-shadow 0.2s;
         }
-        .skill-card .skill-name { font-family: 'Cinzel', serif; font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.8px; color: var(--text-dark); margin-bottom: 6px; }
-        .skill-card .skill-icon { font-size: 30px; display: block; margin: 6px 0; }
-        .skill-card .skill-desc { font-size: 14px; color: var(--text-dark); line-height: 1.3; }
+        .skill-card .skill-name { font-family: 'Cinzel', serif; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.8px; color: var(--text-dark); margin-bottom: 6px; }
+        .skill-card .skill-icon { font-size: 24px; display: block; margin: 6px 0; }
+        .skill-card .skill-desc { font-size: 12px; color: var(--text-dark); line-height: 1.3; }
 
         /* Stat Bars (Back) */
         .stat-bars { display: flex; flex-direction: column; gap: 10px; }
         .stat-bar-row { display: flex; align-items: center; gap: 10px; }
-        .stat-bar-label { font-family: 'Cinzel', serif; font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; color: var(--text-dark); width: 100px; text-align: right; }
+        .stat-bar-label { font-family: 'Cinzel', serif; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; color: var(--text-dark); width: 100px; text-align: right; }
         .stat-bar-track { flex: 1; height: 14px; background: var(--cream-dark); border-radius: 7px; overflow: hidden; border: 1px solid rgba(201,168,76,0.2); }
         .stat-bar-fill { height: 100%; border-radius: 7px; transition: width 1.2s cubic-bezier(0.4,0,0.2,1); }
         .stat-bar-fill.authority { background: linear-gradient(90deg, var(--royal-purple-mid), var(--burgundy)); }
@@ -486,7 +529,7 @@
         .stat-bar-fill.culture { background: linear-gradient(90deg, #6b1d3a, #c0392b); }
         .stat-bar-fill.diplomacy { background: linear-gradient(90deg, #1a6e4a, #27ae60); }
         .stat-bar-fill.warfare { background: linear-gradient(90deg, #4a3728, #8b6914); }
-        .stat-bar-val { font-family: 'Cinzel', serif; font-size: 14px; font-weight: 700; color: var(--text-dark); width: 32px; text-align: center; }
+        .stat-bar-val { font-family: 'Cinzel', serif; font-size: 12px; font-weight: 700; color: var(--text-dark); width: 32px; text-align: center; }
 
         /* Ultimate */
         .ultimate-box {
@@ -494,30 +537,31 @@
             border: 1.5px solid var(--gold); border-radius: 12px; padding: 14px 16px;
             text-align: center;
         }
-        .ultimate-box .ult-name { font-family: 'Cinzel Decorative', serif; font-size: 18px; font-weight: 700; color: var(--burgundy); }
-        .ultimate-box .ult-desc { font-size: 16px; color: var(--text-dark); font-style: italic; line-height: 1.4; margin-top: 6px; }
+        .ultimate-box .ult-name { font-family: 'Cinzel Decorative', serif; font-size: 15px; font-weight: 700; color: var(--burgundy); }
+        .ultimate-box .ult-desc { font-size: 13px; color: var(--text-dark); font-style: italic; line-height: 1.4; margin-top: 6px; }
 
         /* Relations */
         .relations-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; }
         .relation-group { background: linear-gradient(145deg, #fff, var(--cream)); border: 1px solid rgba(201,168,76,0.2); border-radius: 10px; padding: 12px 6px 10px; text-align: center; }
-        .relation-group .rel-title { font-family: 'Cinzel', serif; font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px; display: flex; align-items: center; justify-content: center; gap: 6px; border-bottom: 1px solid rgba(201,168,76,0.15); padding-bottom: 6px; }
+        .relation-group .rel-title { font-family: 'Cinzel', serif; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px; display: flex; align-items: center; justify-content: center; gap: 6px; border-bottom: 1px solid rgba(201,168,76,0.15); padding-bottom: 6px; }
         .rel-title.allies { color: #2e7d32; } .rel-title.rivals { color: #b71c1c; } .rel-title.amours { color: #ad1457; }
-        .relation-group ul { list-style: none; font-size: 15px; color: var(--text-dark); line-height: 1.5; padding: 0; margin: 0; }
+        .relation-group ul { list-style: none; font-size: 13px; color: var(--text-dark); line-height: 1.5; padding: 0; margin: 0; }
         .relation-group ul li { margin-bottom: 3px;}
 
         /* Card Footer */
         .card-footer { padding: 10px 16px 16px; display: flex; justify-content: center; gap: 16px; border-top: 1px solid rgba(201,168,76,0.15); flex-shrink: 0; }
-        .footer-tag { font-family: 'Cinzel', serif; font-size: 12px; text-transform: uppercase; letter-spacing: 1.5px; color: var(--gold-dark); display: flex; align-items: center; gap: 4px; }
+        .footer-tag { font-family: 'Cinzel', serif; font-size: 10px; text-transform: uppercase; letter-spacing: 1.5px; color: var(--gold-dark); display: flex; align-items: center; gap: 4px; }
         .footer-tag .dot { width: 4px; height: 4px; border-radius: 50%; background: var(--gold); }
     </style>
 </head>
 <body>
     
     <!-- Animation d'ouverture -->
-    <div id="curtain" class="curtain-overlay">
-        <div class="curtain-icon">👑</div>
-        <div class="curtain-title">Le Roi Soleil</div>
-        <div class="curtain-subtitle">LA COMÉDIE MUSICALE</div>
+    <div id="loader-container">
+        <div id="halo"></div>
+        <div id="dark-disk"></div>
+        <canvas id="dust-canvas"></canvas>
+        <div id="title">Le Roi<br>Soleil</div>
     </div>
 
     <!-- Bandeau Savoir-Vivre -->
@@ -1353,27 +1397,110 @@
 
         // Démarrage et gestion de l'animation d'ouverture
         document.addEventListener('DOMContentLoaded', () => {
+            // --- BOUTON DE PARTAGE (Existant) ---
             document.getElementById('shareBtn').style.display = 'flex';
 
-            const curtain = document.getElementById('curtain');
-            if (sessionStorage.getItem('introPlayed')) {
-                curtain.style.display = 'none'; // Masque immédiatement si déjà jouée
-            } else {
-                sessionStorage.setItem('introPlayed', 'true');
-                // Supprime le rideau du DOM après l'animation pour libérer de la mémoire
-                setTimeout(() => { curtain.remove(); }, 3000); 
-            }
+            // --- NOUVEAU LOADER ÉCLIPSE ---
+            const loader = document.getElementById('loader-container');
+            const disk = document.getElementById('dark-disk');
+            const canvas = document.getElementById('dust-canvas');
             
-            // Initialiser les particules
+            if (loader && canvas) {
+                const ctx = canvas.getContext('2d');
+                
+                // Ne joue l'animation qu'une fois par session de navigation
+                if (sessionStorage.getItem('introPlayed') === 'true') {
+                    loader.style.display = 'none';
+                } else {
+                    sessionStorage.setItem('introPlayed', 'true');
+
+                    function resizeCanvas() {
+                        canvas.width = window.innerWidth;
+                        canvas.height = window.innerHeight;
+                    }
+                    window.addEventListener('resize', resizeCanvas);
+                    resizeCanvas();
+
+                    let particlesLoader = [];
+                    let isAnimatingLoader = false;
+
+                    function explodeDisk() {
+                        const centerX = window.innerWidth / 2;
+                        const centerY = window.innerHeight / 2;
+                        const radius = Math.min(window.innerWidth * 0.60, 320) / 2;
+
+                        for (let i = 0; i < 400; i++) {
+                            const angle = Math.random() * Math.PI * 2;
+                            const r = radius * Math.sqrt(Math.random()); 
+                            
+                            particlesLoader.push({
+                                x: centerX + Math.cos(angle) * r,
+                                y: centerY + Math.sin(angle) * r,
+                                vx: (Math.random() - 0.5) * 6 + Math.cos(angle) * 3,
+                                vy: (Math.random() - 0.5) * 6 + Math.sin(angle) * 3 - 1.5,
+                                life: 1,
+                                decay: Math.random() * 0.015 + 0.01,
+                                size: Math.random() * 2 + 0.5,
+                                hue: 40 + Math.random() * 15
+                            });
+                        }
+                    }
+
+                    function animateCanvas() {
+                        if (!isAnimatingLoader) return;
+                        ctx.clearRect(0, 0, canvas.width, canvas.height);
+                        let activeParticles = false;
+
+                        particlesLoader.forEach(p => {
+                            if (p.life > 0) {
+                                activeParticles = true;
+                                p.x += p.vx;
+                                p.y += p.vy;
+                                p.life -= p.decay;
+                                
+                                ctx.beginPath();
+                                ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+                                ctx.fillStyle = `hsla(${p.hue}, 100%, 60%, ${Math.max(0, p.life)})`;
+                                ctx.shadowBlur = 5;
+                                ctx.shadowColor = `hsla(${p.hue}, 100%, 50%, ${Math.max(0, p.life)})`;
+                                ctx.fill();
+                            }
+                        });
+
+                        if (activeParticles) {
+                            requestAnimationFrame(animateCanvas);
+                        }
+                    }
+
+                    setTimeout(() => {
+                        if (disk) disk.style.opacity = '0';
+                        isAnimatingLoader = true;
+                        explodeDisk();
+                        animateCanvas();
+                    }, 4800);
+
+                    setTimeout(() => {
+                        if (loader) loader.style.opacity = '0';
+                        setTimeout(() => {
+                            if (loader) loader.style.display = 'none';
+                            isAnimatingLoader = false;
+                        }, 1500); 
+                    }, 7500); 
+                }
+            }
+
+            // --- PARTICULES DE LA MODALE 3D (Existant) ---
             const c = document.getElementById('particles');
-            for(let i=0; i<20; i++){
-                const p = document.createElement('div');
-                p.className = 'particle';
-                p.style.left = Math.random() * 100 + '%';
-                p.style.animationDelay = Math.random() * 8 + 's';
-                p.style.animationDuration = (6 + Math.random() * 6) + 's';
-                p.style.width = p.style.height = (1.5 + Math.random() * 2.5) + 'px';
-                c.appendChild(p);
+            if (c) {
+                for(let i=0; i<20; i++){
+                    const p = document.createElement('div');
+                    p.className = 'particle';
+                    p.style.left = Math.random() * 100 + '%';
+                    p.style.animationDelay = Math.random() * 8 + 's';
+                    p.style.animationDuration = (6 + Math.random() * 6) + 's';
+                    p.style.width = p.style.height = (1.5 + Math.random() * 2.5) + 'px';
+                    c.appendChild(p);
+                }
             }
         });
 
