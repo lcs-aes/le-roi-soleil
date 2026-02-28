@@ -21,6 +21,7 @@
             --gold-light: #F4D38B;
             --primary-gradient: linear-gradient(135deg, #5C65CD 0%, #764BA4 100%);
             --card-bg: rgba(255, 255, 255, 0.93);
+            --parchment-bg: #F4E8D1; /* Couleur d'origine bien visible pour le lexique */
             
             /* Variables Cartes RPG 3D */
             --gold: #c9a84c; 
@@ -31,8 +32,8 @@
             --cream-dark: #e8dbb8; 
             --parchment: #f8f0dc;
             --burgundy: #6b1d3a;
-            --text-dark: #000000; /* Noir absolu */
-            --text-mid: #111111; /* Noir presque absolu pour la hiérarchie */
+            --text-dark: #000000; /* Noir absolu pour la lisibilité */
+            --text-mid: #111111;
             --shadow-gold: rgba(201,168,76,0.4);
         }
 
@@ -301,9 +302,9 @@
         
         /* ADAPTATION PLEIN ÉCRAN MOBILE */
         @media (max-width: 600px) {
-            .modal-overlay { padding: 0; }
+            .modal-overlay { padding: 0; align-items: center; }
             .scene { 
-                width: 100vw; height: 100dvh; 
+                width: 100%; height: 100%; 
                 transform: none !important; 
                 filter: none;
                 border-radius: 0;
@@ -324,11 +325,11 @@
         .card-back { transform: rotateY(180deg); }
 
         /* Inner Structure */
-        .card-face-inner { display: flex; flex-direction: column; height: 100%; background: var(--parchment); position: relative; color: #000; }
+        .card-face-inner { display: flex; flex-direction: column; height: 100%; background: var(--parchment); position: relative; color: #000; overflow: hidden; }
         .card-face-inner::before { content:''; position:absolute; inset:0; border-radius:18px; border:3px solid var(--gold); pointer-events:none; z-index:10; }
         .card-face-inner::after { content:''; position:absolute; inset:5px; border-radius:14px; border:1px solid rgba(201,168,76,0.3); pointer-events:none; z-index:10; }
 
-        /* Buttons */
+        /* Buttons (Positions Fixes Universelles) */
         .btn-circle {
             position: absolute; top: 14px; z-index: 100; width: 44px; height: 44px;
             border-radius: 50%; border: 2px solid var(--gold);
@@ -340,14 +341,10 @@
         .btn-circle svg { width: 22px; height: 22px; fill: var(--gold-light); }
         .btn-circle:active { transform: scale(0.9); }
         
-        .btn-flip { animation: pulse-glow 2s ease-in-out infinite; }
+        .btn-flip { animation: pulse-glow 2s ease-in-out infinite; left: 14px; }
+        .btn-close { right: 14px; }
         .btn-close svg { width: 18px; height: 18px; }
         .btn-close:active { background: radial-gradient(circle, rgba(180,40,40,0.4), rgba(42,18,69,0.8)); border-color: #c0392b; }
-
-        .card-front .btn-flip { left: 14px; }
-        .card-front .btn-close { right: 14px; }
-        .card-back .btn-flip { right: 14px; }
-        .card-back .btn-close { left: 14px; }
 
         @keyframes pulse-glow {
             0%, 100% { box-shadow: 0 0 10px var(--shadow-gold), 0 0 20px rgba(201,168,76,0.1); }
@@ -370,7 +367,7 @@
             background: url("data:image/svg+xml,%3Csvg width='80' height='80' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M40 10c4 7 11 11 18 11-7 0-14 4-18 11-4-7-11-11-18-11 7 0 14-4 18-11z' fill='rgba(201,168,76,0.05)'/%3E%3C/svg%3E");
         }
         .card-header .sun-emblem {
-            font-size: 32px; display: block; position: relative;
+            font-size: 38px; display: block; position: relative;
             animation: float-sun 4s ease-in-out infinite;
             filter: drop-shadow(0 0 12px rgba(201,168,76,0.5));
         }
@@ -380,20 +377,19 @@
             font-family: 'Cinzel Decorative', serif; font-size: 28px; font-weight: 700;
             color: var(--gold-light); position: relative; text-shadow: 0 2px 10px rgba(0,0,0,0.5); margin: 6px 0 0 0; line-height: 1.1;
         }
-        .card-header .subtitle { font-family: 'Cormorant Garamond', serif; font-size: 16px; color: rgba(232,212,139,0.8); font-style: italic; position: relative; display: block; margin-top: 2px;}
+        .card-header .subtitle { font-family: 'Cormorant Garamond', serif; font-size: 18px; color: rgba(232,212,139,0.8); font-style: italic; position: relative; display: block; margin-top: 4px;}
         .card-header .date-badge {
-            display: inline-block; margin-top: 8px;
+            display: inline-block; margin-top: 10px;
             background: linear-gradient(135deg, var(--gold-dark), var(--gold));
             color: var(--royal-purple); font-family: 'Cinzel', serif; font-weight: 700;
-            font-size: 13px; padding: 4px 16px; border-radius: 20px; position: relative; letter-spacing: 1px;
+            font-size: 14px; padding: 4px 16px; border-radius: 20px; position: relative; letter-spacing: 1px;
         }
 
-        /* Card Body (Sans-serif pour lisibilité, Scroll Fix) */
+        /* Card Body (Sans-serif pour lisibilité, Flex 1 1 0 pour activer le scroll absolu) */
         .card-body { 
-            flex: 1; padding: 12px 16px 20px; display: flex; flex-direction: column; gap: 14px; 
-            overflow-y: auto; -webkit-overflow-scrolling: touch; color: #000;
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            min-height: 0;
+            flex: 1 1 0; padding: 15px 20px 25px; display: flex; flex-direction: column; gap: 16px; 
+            overflow-y: auto; -webkit-overflow-scrolling: touch; overscroll-behavior: contain;
+            color: #000; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
         }
         .card-body::-webkit-scrollbar { width: 4px; }
         .card-body::-webkit-scrollbar-track { background: transparent; }
@@ -401,117 +397,117 @@
 
         /* Titres de Section Design (Centrés avec traits) */
         .rpg-section-title {
-            font-family: 'Cinzel', serif; font-size: 14px; font-weight: 700;
+            font-family: 'Cinzel', serif; font-size: 15px; font-weight: 700;
             text-transform: uppercase; letter-spacing: 2.5px; color: var(--gold-dark);
-            text-align: center; display: flex; align-items: center; gap: 10px; margin: 10px 0 0 0;
+            text-align: center; display: flex; align-items: center; gap: 12px; margin: 10px 0 0 0;
         }
-        .rpg-section-title::before, .rpg-section-title::after { content: ''; flex: 1; height: 1px; background: linear-gradient(90deg, transparent, var(--gold), transparent); }
+        .rpg-section-title::before, .rpg-section-title::after { content: ''; flex: 1; height: 1.5px; background: linear-gradient(90deg, transparent, var(--gold), transparent); }
 
         .quote-line {
-            font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 18px;
-            color: var(--text-dark); text-align: center; padding: 0 10px; line-height: 1.3; opacity: 0.85;
+            font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 19px;
+            color: var(--text-dark); text-align: center; padding: 0 10px; line-height: 1.3; opacity: 0.85; margin-bottom: 5px;
         }
 
         /* Stats (Front) - One Line */
-        .stats-row { display: flex; gap: 8px; justify-content: center; }
+        .stats-row { display: flex; gap: 10px; justify-content: center; }
         .stat-chip {
             display: flex; align-items: center; justify-content: center; gap: 8px;
             background: linear-gradient(135deg, rgba(42,18,69,0.08), rgba(107,29,58,0.06));
             border: 1px solid rgba(201,168,76,0.25); border-radius: 8px; padding: 10px;
             flex: 1;
         }
-        .stat-chip .stat-icon { font-size: 22px; }
-        .stat-chip .stat-val { font-weight: 700; color: var(--burgundy); font-size: 20px; line-height: 1; font-family: 'Cinzel', serif; }
+        .stat-chip .stat-icon { font-size: 24px; }
+        .stat-chip .stat-val { font-weight: 700; color: var(--burgundy); font-size: 22px; line-height: 1; font-family: 'Cinzel', serif; }
 
         /* Traits */
-        .traits-row { display: flex; gap: 6px; justify-content: center; flex-wrap: wrap; }
+        .traits-row { display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; }
         .trait-tag {
-            font-family: 'Cinzel', serif; font-size: 13px; font-weight: 600;
+            font-family: 'Cinzel', serif; font-size: 14px; font-weight: 600;
             text-transform: uppercase; letter-spacing: 0.8px;
-            padding: 5px 12px; border-radius: 20px;
+            padding: 6px 14px; border-radius: 20px;
             border: 1px solid rgba(201,168,76,0.3); color: var(--text-dark);
             background: linear-gradient(135deg, rgba(201,168,76,0.08), rgba(201,168,76,0.02));
         }
-        .trait-tag .trait-icon { margin-right: 4px; font-size: 13px; }
+        .trait-tag .trait-icon { margin-right: 4px; font-size: 14px; }
 
         /* Lore / Facts Box */
         .lore-section {
             background: linear-gradient(135deg, rgba(42,18,69,0.04), rgba(201,168,76,0.04));
-            border: 1px solid rgba(201,168,76,0.2); border-radius: 10px; padding: 12px 14px;
+            border: 1px solid rgba(201,168,76,0.2); border-radius: 10px; padding: 14px 16px;
         }
-        .lore-section p { font-size: 15px; color: var(--text-dark); line-height: 1.5; text-align: justify; margin: 0;}
-        .lore-list { list-style: none; padding: 0; margin: 0; font-size: 15px; color: var(--text-dark); line-height: 1.5; display: flex; flex-direction: column; gap: 8px; }
-        .lore-list li { display: flex; align-items: flex-start; gap: 6px; }
-        .lore-list li .bullet { color: var(--gold-dark); font-size: 15px; }
+        .lore-section p { font-size: 16px; color: var(--text-dark); line-height: 1.5; text-align: justify; margin: 0;}
+        .lore-list { list-style: none; padding: 0; margin: 0; font-size: 16px; color: var(--text-dark); line-height: 1.5; display: flex; flex-direction: column; gap: 8px; }
+        .lore-list li { display: flex; align-items: flex-start; gap: 8px; }
+        .lore-list li .bullet { color: var(--gold-dark); font-size: 16px; }
 
         /* Achievements Grid */
-        .achievements-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 6px; }
+        .achievements-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; }
         .achieve-card {
             background: linear-gradient(145deg, #fff, var(--cream));
             border: 1px solid rgba(201,168,76,0.2); border-radius: 10px;
-            padding: 10px 6px 8px; text-align: center; transition: transform 0.2s;
+            padding: 12px 6px 10px; text-align: center; transition: transform 0.2s;
         }
         .achieve-card:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(201,168,76,0.12); }
-        .achieve-card .ach-icon { font-size: 26px; display: block; margin-bottom: 4px; }
-        .achieve-card .ach-name { font-family: 'Cinzel', serif; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; color: var(--text-dark); line-height: 1.2; margin-bottom: 2px;}
-        .achieve-card .ach-val { font-size: 15px; color: var(--burgundy); font-weight: 600; }
+        .achieve-card .ach-icon { font-size: 28px; display: block; margin-bottom: 6px; }
+        .achieve-card .ach-name { font-family: 'Cinzel', serif; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; color: var(--text-dark); line-height: 1.2; margin-bottom: 4px;}
+        .achieve-card .ach-val { font-size: 16px; color: var(--burgundy); font-weight: 600; font-family: 'Cormorant Garamond', serif; }
 
         /* Titles / Heritage Box */
-        .titles-list { display: flex; flex-direction: column; gap: 8px; padding: 0 4px; }
+        .titles-list { display: flex; flex-direction: column; gap: 10px; padding: 0 4px; }
         .title-item {
-            display: flex; align-items: center; gap: 10px; padding: 8px 12px;
+            display: flex; align-items: center; gap: 12px; padding: 10px 14px;
             background: linear-gradient(145deg, #fff, var(--cream));
             border: 1px solid rgba(201,168,76,0.15); border-radius: 8px;
         }
-        .title-item .title-icon { font-size: 22px; flex-shrink: 0; }
-        .title-item .title-text { font-family: 'Cinzel', serif; font-size: 14px; font-weight: 700; color: var(--text-dark); letter-spacing: 0.3px; text-transform: uppercase; }
-        .title-item .title-sub { font-size: 14px; color: var(--text-dark); font-weight: 400; line-height: 1.3; display: block; margin-top: 2px;}
+        .title-item .title-icon { font-size: 24px; flex-shrink: 0; }
+        .title-item .title-text { font-family: 'Cinzel', serif; font-size: 15px; font-weight: 700; color: var(--text-dark); letter-spacing: 0.3px; text-transform: uppercase; }
+        .title-item .title-sub { font-size: 15px; color: var(--text-dark); font-weight: 400; line-height: 1.3; display: block; margin-top: 2px;}
 
         /* Skills */
-        .skills-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+        .skills-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
         .skill-card {
             background: linear-gradient(145deg, #fff, var(--cream));
             border: 1px solid rgba(201,168,76,0.2); border-radius: 10px;
-            padding: 12px 10px; text-align: center; transition: transform 0.2s, box-shadow 0.2s;
+            padding: 14px 10px; text-align: center; transition: transform 0.2s, box-shadow 0.2s;
         }
-        .skill-card .skill-name { font-family: 'Cinzel', serif; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.8px; color: var(--text-dark); margin-bottom: 4px; }
-        .skill-card .skill-icon { font-size: 28px; display: block; margin: 4px 0; }
-        .skill-card .skill-desc { font-size: 13px; color: var(--text-dark); line-height: 1.3; }
+        .skill-card .skill-name { font-family: 'Cinzel', serif; font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.8px; color: var(--text-dark); margin-bottom: 6px; }
+        .skill-card .skill-icon { font-size: 30px; display: block; margin: 6px 0; }
+        .skill-card .skill-desc { font-size: 14px; color: var(--text-dark); line-height: 1.3; }
 
         /* Stat Bars (Back) */
-        .stat-bars { display: flex; flex-direction: column; gap: 8px; }
-        .stat-bar-row { display: flex; align-items: center; gap: 8px; }
-        .stat-bar-label { font-family: 'Cinzel', serif; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; color: var(--text-dark); width: 95px; text-align: right; }
-        .stat-bar-track { flex: 1; height: 12px; background: var(--cream-dark); border-radius: 6px; overflow: hidden; border: 1px solid rgba(201,168,76,0.2); }
-        .stat-bar-fill { height: 100%; border-radius: 6px; transition: width 1.2s cubic-bezier(0.4,0,0.2,1); }
+        .stat-bars { display: flex; flex-direction: column; gap: 10px; }
+        .stat-bar-row { display: flex; align-items: center; gap: 10px; }
+        .stat-bar-label { font-family: 'Cinzel', serif; font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; color: var(--text-dark); width: 100px; text-align: right; }
+        .stat-bar-track { flex: 1; height: 14px; background: var(--cream-dark); border-radius: 7px; overflow: hidden; border: 1px solid rgba(201,168,76,0.2); }
+        .stat-bar-fill { height: 100%; border-radius: 7px; transition: width 1.2s cubic-bezier(0.4,0,0.2,1); }
         .stat-bar-fill.authority { background: linear-gradient(90deg, var(--royal-purple-mid), var(--burgundy)); }
         .stat-bar-fill.charisma { background: linear-gradient(90deg, var(--gold-dark), var(--gold)); }
         .stat-bar-fill.strategy { background: linear-gradient(90deg, #1a4a6e, #2980b9); }
         .stat-bar-fill.culture { background: linear-gradient(90deg, #6b1d3a, #c0392b); }
         .stat-bar-fill.diplomacy { background: linear-gradient(90deg, #1a6e4a, #27ae60); }
         .stat-bar-fill.warfare { background: linear-gradient(90deg, #4a3728, #8b6914); }
-        .stat-bar-val { font-family: 'Cinzel', serif; font-size: 13px; font-weight: 700; color: var(--text-dark); width: 30px; text-align: center; }
+        .stat-bar-val { font-family: 'Cinzel', serif; font-size: 14px; font-weight: 700; color: var(--text-dark); width: 32px; text-align: center; }
 
         /* Ultimate */
         .ultimate-box {
             background: linear-gradient(135deg, rgba(42,18,69,0.06), rgba(201,168,76,0.08));
-            border: 1.5px solid var(--gold); border-radius: 12px; padding: 12px 14px;
+            border: 1.5px solid var(--gold); border-radius: 12px; padding: 14px 16px;
             text-align: center;
         }
-        .ultimate-box .ult-name { font-family: 'Cinzel Decorative', serif; font-size: 17px; font-weight: 700; color: var(--burgundy); }
-        .ultimate-box .ult-desc { font-size: 15px; color: var(--text-dark); font-style: italic; line-height: 1.4; margin-top: 4px; }
+        .ultimate-box .ult-name { font-family: 'Cinzel Decorative', serif; font-size: 18px; font-weight: 700; color: var(--burgundy); }
+        .ultimate-box .ult-desc { font-size: 16px; color: var(--text-dark); font-style: italic; line-height: 1.4; margin-top: 6px; }
 
         /* Relations */
         .relations-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; }
-        .relation-group { background: linear-gradient(145deg, #fff, var(--cream)); border: 1px solid rgba(201,168,76,0.2); border-radius: 10px; padding: 10px 6px 8px; text-align: center; }
-        .relation-group .rel-title { font-family: 'Cinzel', serif; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 6px; display: flex; align-items: center; justify-content: center; gap: 4px; border-bottom: 1px solid rgba(201,168,76,0.15); padding-bottom: 4px; }
+        .relation-group { background: linear-gradient(145deg, #fff, var(--cream)); border: 1px solid rgba(201,168,76,0.2); border-radius: 10px; padding: 12px 6px 10px; text-align: center; }
+        .relation-group .rel-title { font-family: 'Cinzel', serif; font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px; display: flex; align-items: center; justify-content: center; gap: 6px; border-bottom: 1px solid rgba(201,168,76,0.15); padding-bottom: 6px; }
         .rel-title.allies { color: #2e7d32; } .rel-title.rivals { color: #b71c1c; } .rel-title.amours { color: #ad1457; }
-        .relation-group ul { list-style: none; font-size: 14px; color: var(--text-dark); line-height: 1.5; padding: 0; margin: 0; }
-        .relation-group ul li { margin-bottom: 2px;}
+        .relation-group ul { list-style: none; font-size: 15px; color: var(--text-dark); line-height: 1.5; padding: 0; margin: 0; }
+        .relation-group ul li { margin-bottom: 3px;}
 
         /* Card Footer */
-        .card-footer { padding: 8px 16px 14px; display: flex; justify-content: center; gap: 16px; border-top: 1px solid rgba(201,168,76,0.15); flex-shrink: 0; }
-        .footer-tag { font-family: 'Cinzel', serif; font-size: 11px; text-transform: uppercase; letter-spacing: 1.5px; color: var(--gold-dark); display: flex; align-items: center; gap: 4px; }
+        .card-footer { padding: 10px 16px 16px; display: flex; justify-content: center; gap: 16px; border-top: 1px solid rgba(201,168,76,0.15); flex-shrink: 0; }
+        .footer-tag { font-family: 'Cinzel', serif; font-size: 12px; text-transform: uppercase; letter-spacing: 1.5px; color: var(--gold-dark); display: flex; align-items: center; gap: 4px; }
         .footer-tag .dot { width: 4px; height: 4px; border-radius: 50%; background: var(--gold); }
     </style>
 </head>
@@ -655,7 +651,7 @@
                 rpg: { 
                     classe: "Roi en Devenir", faction: "Royauté", collection: "⚜️ Collection « Le Grand Siècle » ⚜️",
                     attributs: [ { label: 'Autorité', class: 'authority', val: 60 }, { label: 'Charisme', class: 'charisma', val: 80 }, { label: 'Stratégie', class: 'strategy', val: 70 }, { label: 'Culture', class: 'culture', val: 85 }, { label: 'Diplomatie', class: 'diplomacy', val: 75 }, { label: 'Art de guerre', class: 'warfare', val: 85 } ],
-                    competences: [ { nom: "Innocence", desc: "Pureté enfantine", icon: "😇" }, { nom: "Apprentissage", desc: "Soif de grandir", icon: "📚" }, { nom: "Détermination", desc: "Volonté d'acier", icon: "💪" }, { nom: "Charme", desc: "Attendrissement de la cour", icon: "✨" } ], 
+                    competences: [ { nom: "Innocence", desc: "Pureté enfantine", icon: "😇" }, { nom: "Apprentissage", desc: "Soif de grandir", icon: "📚" }, { nom: "Détermination", desc: "Volonté d'acier", icon: "💪" }, { nom: "Charme", desc: "Attendrissement", icon: "✨" } ], 
                     ultime: { nom: "Promesse d'avenir", desc: "Porte en lui la promesse de la grandeur future de la France" }, 
                     relations: { allies: ["Anne d'Autriche", "Bossuet", "Louis XIV"], rivaux: ["La maladie"], amours: ["La Couronne"] } 
                 } 
@@ -741,7 +737,7 @@
                     attributs: [ { label: 'Autorité', class: 'authority', val: 40 }, { label: 'Charisme', class: 'charisma', val: 95 }, { label: 'Stratégie', class: 'strategy', val: 60 }, { label: 'Culture', class: 'culture', val: 92 }, { label: 'Diplomatie', class: 'diplomacy', val: 70 }, { label: 'Art de guerre', class: 'warfare', val: 10 } ],
                     competences: [ { nom: "Poésie", desc: "Touche l'âme du Roi", icon: "📝" }, { nom: "Charme", desc: "Séduction intellectuelle", icon: "🇮🇹" }, { nom: "Mélancolie", desc: "Émotion pure", icon: "😢" }, { nom: "Indépendance", desc: "Esprit libre", icon: "🕊️" } ], 
                     ultime: { nom: "Le Sacrifice Royal", desc: "S'efface pour laisser la France forger son destin" }, 
-                    relations: { allies: ["Mazarin", "Molière", "Artistes"], rivaux: ["Anne d'Autriche", "L'Étiquette"], amours: ["Louis XIV"] } 
+                    relations: { allies: ["Mazarin", "Ninon", "Molière"], rivaux: ["Anne d'Autriche", "L'Étiquette"], amours: ["Louis XIV"] } 
                 } 
             },
             "montespan": { 
@@ -863,7 +859,7 @@
             "lisieux": { 
                 name: "Mlle de Lisieux", subtitle: "L'ingénue à la cour", backSubtitle: "L'ambition provinciale", dates: "1645 – 1690", icon: "fleur", mainList: true, isFictional: true, actor: "Eyleen Douat", 
                 quote: "La lumière du Soleil brûle ceux qui s'en approchent de trop près.", 
-                intro: "Personnage symbolique de la comédie musicale. Issue de la noblesse de province, elle monte à Versailles pleine de rêves et découvre la cruauté du pouvoir.", 
+                intro: "Personnage symbolique de la comédie musicale. Issue de la petite noblesse de province, elle monte à Versailles pleine de rêves et découvre la cruauté du pouvoir.", 
                 stats: [ { icon: '⚔️', val: '15' }, { icon: '🛡️', val: '40' }, { icon: '✨', val: '80' }, { icon: '🧠', val: '65' } ],
                 traits: [ { icon: '🌸', name: 'Ingénue' }, { icon: '✨', name: 'Rêveuse' }, { icon: '👑', name: 'Ambitieuse' }, { icon: '💔', name: 'Vulnérable' } ],
                 achievements: [ { icon: '🏰', name: 'Arrivée à la Cour', val: 'Illusion' }, { icon: '👗', name: 'Le Grand Bal', val: 'Paraître' }, { icon: '😢', name: 'Désillusion', val: 'Cruauté' } ],
@@ -939,7 +935,7 @@
                     attributs: [ { label: 'Autorité', class: 'authority', val: 20 }, { label: 'Charisme', class: 'charisma', val: 40 }, { label: 'Stratégie', class: 'strategy', val: 30 }, { label: 'Culture', class: 'culture', val: 20 }, { label: 'Diplomatie', class: 'diplomacy', val: 10 }, { label: 'Art de guerre', class: 'warfare', val: 80 } ],
                     competences: [ { nom: "Labeur", desc: "Force de travail infinie", icon: "⛏️" }, { nom: "Gronde", desc: "Soulèvement de masse", icon: "🗣️" }, { nom: "Solidarité", desc: "Soutien mutuel", icon: "🤝" }, { nom: "Sacrifice", desc: "Paie l'impôt (Taille)", icon: "🪙" } ], 
                     ultime: { nom: "La Révolte", desc: "Fait trembler les murs de la capitale par la force du nombre" }, 
-                    relations: { allies: ["Artisans", "Bourgeois (parfois)", "Isabelle"], rivaux: ["Fermiers Généraux", "Noblesse", "Gardes"], amours: ["La Patrie"] } 
+                    relations: { allies: ["Artisans", "Paysans", "Isabelle"], rivaux: ["Fermiers Généraux", "Noblesse", "Gardes"], amours: ["La Patrie"] } 
                 } 
             },
             "les-operateurs": { 
@@ -987,7 +983,7 @@
                     attributs: [ { label: 'Autorité', class: 'authority', val: 90 }, { label: 'Charisme', class: 'charisma', val: 85 }, { label: 'Stratégie', class: 'strategy', val: 88 }, { label: 'Culture', class: 'culture', val: 95 }, { label: 'Diplomatie', class: 'diplomacy', val: 90 }, { label: 'Art de guerre', class: 'warfare', val: 10 } ],
                     competences: [ { nom: "Sermon", desc: "Culpabilise la cour", icon: "📖" }, { nom: "Droit Divin", desc: "Légitime le Roi", icon: "👑" }, { nom: "Confession", desc: "Obtient les secrets", icon: "🤫" }, { nom: "Excommunication", desc: "Bannit les âmes", icon: "⚡" } ], 
                     ultime: { nom: "Le Courroux Céleste", desc: "Abat la foudre morale sur les mœurs libertines" }, 
-                    relations: { allies: ["Mme de Maintenon", "Bossuet", "Louis XIV (fin)"], rivaux: ["Protestants", "Libertins", "Molière"], amours: ["Dieu"] } 
+                    relations: { allies: ["Dévots", "Mme de Maintenon"], rivaux: ["Libertins", "Comédiens"], amours: ["L'Église"] } 
                 } 
             },
             "la-dame-de-cour": { 
@@ -1134,168 +1130,6 @@
                     competences: [ { nom: "Mouvement", desc: "Danse parfaite", icon: "🩰" }, { nom: "Planning", desc: "Rigueur absolue", icon: "📋" }, { nom: "Top Départ", desc: "Donne le signal", icon: "🏁" }, { nom: "Ubiquité", desc: "Partout à la fois", icon: "⚡" } ], 
                     ultime: { nom: "La Maîtrise du Plateau", desc: "Synchronise 30 personnes dans l'ombre et la lumière" }, 
                     relations: { allies: ["Danseurs", "Mise en scène", "Technique"], rivaux: ["Le retard", "Les faux-pas"], amours: ["Le Rythme"] } 
-                } 
-            },
-
-            // --- 7. HISTORIQUES (Cartes historiques uniquement - onglet 2) ---
-            "le-notre": { 
-                name: "André Le Nôtre", subtitle: "L'Architecte des Jardins", backSubtitle: "Maître du Paysage", dates: "1613 – 1700", icon: "tree", mainList: false, isFictional: false, 
-                quote: "La nature est mon seul guide, la géométrie mon outil.", 
-                intro: "Génial architecte paysagiste, créateur des jardins de Versailles. Il a littéralement dompté la nature pour refléter l'ordre et la grandeur du Roi-Soleil.", 
-                stats: [ { icon: '⚔️', val: '20' }, { icon: '🛡️', val: '60' }, { icon: '✨', val: '90' }, { icon: '🧠', val: '98' } ],
-                traits: [ { icon: '📐', name: 'Géomètre' }, { icon: '🌿', name: 'Botaniste' }, { icon: '👁️', name: 'Visionnaire' }, { icon: '👑', name: 'Fidèle' } ],
-                achievements: [ { icon: '🌳', name: 'Jardins de Versailles', val: 'Chef d\'œuvre' }, { icon: '🏰', name: 'Vaux-le-Vicomte', val: '1656' }, { icon: '⛲', name: 'Grand Canal', val: 'Versailles' } ],
-                titles: [ { icon: '🌳', text: 'Contrôleur Général', sub: 'des Bâtiments du Roi' }, { icon: '🎨', text: 'Jardinier', sub: 'Inventeur du style "à la française"' } ],
-                rpg: { 
-                    classe: "Maître Jardinier", faction: "Artisans Royaux", collection: "⚜️ Collection « Le Grand Siècle » ⚜️",
-                    attributs: [ { label: 'Autorité', class: 'authority', val: 60 }, { label: 'Charisme', class: 'charisma', val: 80 }, { label: 'Stratégie', class: 'strategy', val: 95 }, { label: 'Culture', class: 'culture', val: 98 }, { label: 'Diplomatie', class: 'diplomacy', val: 75 }, { label: 'Art de guerre', class: 'warfare', val: 10 } ],
-                    competences: [ { nom: "Symétrie", desc: "Ordre absolu", icon: "📐" }, { nom: "Hydraulique", desc: "Jeux d'eau", icon: "⛲" }, { nom: "Botanique", desc: "Plantes rares", icon: "🌺" }, { nom: "Perspective", desc: "Optique infinie", icon: "👁️" } ], 
-                    ultime: { nom: "Jardins de Légende", desc: "Dompte la nature sauvage pour la gloire du Roi" }, 
-                    relations: { allies: ["Louis XIV", "Mansart", "Le Brun"], rivaux: ["Nature Sauvage", "Sècheresse"], amours: ["La Beauté Végétale"] } 
-                } 
-            },
-            "mansart": { 
-                name: "Hardouin-Mansart", subtitle: "Le Premier Architecte", backSubtitle: "Bâtisseur du Soleil", dates: "1646 – 1708", icon: "castle", mainList: false, isFictional: false, 
-                quote: "L'architecture est la musique de l'espace.", 
-                intro: "Architecte prodige, il donne au classicisme français sa grandeur monumentale en achevant Versailles et en érigeant le dôme des Invalides.", 
-                stats: [ { icon: '⚔️', val: '25' }, { icon: '🛡️', val: '80' }, { icon: '✨', val: '88' }, { icon: '🧠', val: '99' } ],
-                traits: [ { icon: '🏛️', name: 'Classique' }, { icon: '📐', name: 'Bâtisseur' }, { icon: '👑', name: 'Ambitieux' }, { icon: '💎', name: 'Fastueux' } ],
-                achievements: [ { icon: '✨', name: 'Galerie des Glaces', val: '1684' }, { icon: '⛪', name: 'Dôme des Invalides', val: '1706' }, { icon: '🏰', name: 'Grand Trianon', val: '1687' } ],
-                titles: [ { icon: '🏛️', text: 'Premier Architecte', sub: 'du Roi (1681)' }, { icon: '⚜️', text: 'Surintendant', sub: 'des Bâtiments' } ],
-                rpg: { 
-                    classe: "Génie de Pierre", faction: "Artisans Royaux", collection: "⚜️ Collection « Le Grand Siècle » ⚜️",
-                    attributs: [ { label: 'Autorité', class: 'authority', val: 85 }, { label: 'Charisme', class: 'charisma', val: 85 }, { label: 'Stratégie', class: 'strategy', val: 90 }, { label: 'Culture', class: 'culture', val: 99 }, { label: 'Diplomatie', class: 'diplomacy', val: 80 }, { label: 'Art de guerre', class: 'warfare', val: 20 } ],
-                    competences: [ { nom: "Classicisme", desc: "Style parfait", icon: "🏛️" }, { nom: "Démesure", desc: "Projets colossaux", icon: "🏰" }, { nom: "Ingéniosité", desc: "Techniques neuves", icon: "⚙️" }, { nom: "Toits", desc: "Style mansardé", icon: "🏠" } ], 
-                    ultime: { nom: "La Galerie des Glaces", desc: "Érige le couloir le plus resplendissant du monde" }, 
-                    relations: { allies: ["Louis XIV", "Le Nôtre", "Le Brun"], rivaux: ["Colbert (budget)"], amours: ["La Pierre et l'Or"] } 
-                } 
-            },
-            "turenne": { 
-                name: "Turenne", subtitle: "Le Maréchal de France", backSubtitle: "L'épée du Roi", dates: "1611 – 1675", icon: "sword", mainList: false, isFictional: false, 
-                quote: "La victoire appartient au plus persévérant.", 
-                intro: "Henri de La Tour d'Auvergne, vicomte de Turenne. L'un des plus grands tacticiens militaires de l'histoire de France, tué par un boulet de canon à Sasbach.", 
-                stats: [ { icon: '⚔️', val: '98' }, { icon: '🛡️', val: '90' }, { icon: '✨', val: '85' }, { icon: '🧠', val: '95' } ],
-                traits: [ { icon: '🧠', name: 'Tacticien' }, { icon: '⚔️', name: 'Invaincu' }, { icon: '🤝', name: 'Loyal' }, { icon: '⛪', name: 'Converti' } ],
-                achievements: [ { icon: '🐎', name: 'Bataille des Dunes', val: '1658' }, { icon: '🛡️', name: 'Sauvetage de Paris', val: 'Fronde (1652)' }, { icon: '👑', name: 'Inhumé à Saint-Denis', val: 'Honneur Royal' } ],
-                titles: [ { icon: '⚔️', text: 'Maréchal Général', sub: 'Des camps et armées du Roi' }, { icon: '⚜️', text: 'Vicomte', sub: 'de Turenne' } ],
-                rpg: { 
-                    classe: "Maréchal de Génie", faction: "Armée Royale", collection: "⚜️ Collection « Le Grand Siècle » ⚜️",
-                    attributs: [ { label: 'Autorité', class: 'authority', val: 95 }, { label: 'Charisme', class: 'charisma', val: 90 }, { label: 'Stratégie', class: 'strategy', val: 99 }, { label: 'Culture', class: 'culture', val: 70 }, { label: 'Diplomatie', class: 'diplomacy', val: 75 }, { label: 'Art de guerre', class: 'warfare', val: 100 } ],
-                    competences: [ { nom: "Tactique", desc: "Esprit vif", icon: "🧠" }, { nom: "Mouvement", desc: "Marche forcée", icon: "🐎" }, { nom: "Loyauté", desc: "Bras armé du Roi", icon: "⚔️" }, { nom: "Anticipation", desc: "Prévoit l'ennemi", icon: "🗺️" } ], 
-                    ultime: { nom: "L'Ultime Manœuvre", desc: "Remporte la victoire même en infériorité numérique" }, 
-                    relations: { allies: ["Louis XIV", "L'Armée Française"], rivaux: ["Le Grand Condé (Fronde)", "Montecúccoli"], amours: ["La Patrie"] } 
-                } 
-            },
-            "conde": { 
-                name: "Le Grand Condé", subtitle: "Le Prince rebelle", backSubtitle: "L'aigle foudroyant", dates: "1621 – 1686", icon: "fleur", mainList: false, isFictional: false, 
-                quote: "Je vaincrai ou je mourrai.", 
-                intro: "Louis II de Bourbon, prince du sang et général de génie. Héros de Rocroi à 22 ans, il mène la Fronde contre le Roi avant d'être pardonné.", 
-                stats: [ { icon: '⚔️', val: '99' }, { icon: '🛡️', val: '75' }, { icon: '✨', val: '88' }, { icon: '🧠', val: '90' } ],
-                traits: [ { icon: '⚡', name: 'Foudroyant' }, { icon: '👑', name: 'Orgueilleux' }, { icon: '🏴‍☠️', name: 'Frondeur' }, { icon: '🐎', name: 'Audacieux' } ],
-                achievements: [ { icon: '⚔️', name: 'Victoire de Rocroi', val: '1643' }, { icon: '🔥', name: 'Chef de la Fronde', val: '1651–1653' }, { icon: '🤝', name: 'Pardon Royal', val: '1659' } ],
-                titles: [ { icon: '🩸', text: 'Premier Prince', sub: 'du Sang' }, { icon: '⚔️', text: 'Généralissime', sub: 'Des armées' } ],
-                rpg: { 
-                    classe: "Prince Combattant", faction: "Haute Noblesse", collection: "⚜️ Collection « Le Grand Siècle » ⚜️",
-                    attributs: [ { label: 'Autorité', class: 'authority', val: 95 }, { label: 'Charisme', class: 'charisma', val: 90 }, { label: 'Stratégie', class: 'strategy', val: 92 }, { label: 'Culture', class: 'culture', val: 85 }, { label: 'Diplomatie', class: 'diplomacy', val: 40 }, { label: 'Art de guerre', class: 'warfare', val: 99 } ],
-                    competences: [ { nom: "Charge", desc: "Attaque frontale", icon: "🐎" }, { nom: "Fierté", desc: "Orgueil invincible", icon: "👑" }, { nom: "Rébellion", desc: "Mène le soulèvement", icon: "💥" }, { nom: "Témérité", desc: "Prend tous les risques", icon: "🛡️" } ], 
-                    ultime: { nom: "Foudre de Rocroi", desc: "Écrase les lignes ennemies avec une charge fulgurante" }, 
-                    relations: { allies: ["Noblesse Frondeuse (jadis)", "L'Armée"], rivaux: ["Mazarin", "Turenne"], amours: ["La Gloire"] } 
-                } 
-            },
-            "bossuet": { 
-                name: "Bossuet", subtitle: "L'Aigle de Meaux", backSubtitle: "Théoricien de l'Absolu", dates: "1627 – 1704", icon: "church", mainList: false, isFictional: false, 
-                quote: "Dieu établit les rois comme ses ministres, et règne par eux sur les peuples.", 
-                intro: "Évêque, précepteur du Dauphin et immense orateur. Il est le grand théoricien de la monarchie absolue de droit divin sous Louis XIV.", 
-                stats: [ { icon: '⚔️', val: '15' }, { icon: '🛡️', val: '85' }, { icon: '✨', val: '95' }, { icon: '🧠', val: '99' } ],
-                traits: [ { icon: '🗣️', name: 'Éloquent' }, { icon: '👑', name: 'Monarchiste' }, { icon: '⛪', name: 'Intransigeant' }, { icon: '🎓', name: 'Érudit' } ],
-                achievements: [ { icon: '📖', name: 'Politique tirée de l\'Écriture sainte', val: '1679' }, { icon: '🗣️', name: 'Oraison d\'Henriette d\'Angleterre', val: '1670' }, { icon: '👑', name: 'Précepteur', val: 'du Dauphin' } ],
-                titles: [ { icon: '⛪', text: 'Évêque de Meaux', sub: 'L\'Aigle de Meaux' }, { icon: '📜', text: 'Théoricien', sub: 'du Droit Divin' } ],
-                rpg: { 
-                    classe: "Théologien Royal", faction: "Clergé", collection: "⚜️ Collection « Le Grand Siècle » ⚜️",
-                    attributs: [ { label: 'Autorité', class: 'authority', val: 95 }, { label: 'Charisme', class: 'charisma', val: 98 }, { label: 'Stratégie', class: 'strategy', val: 85 }, { label: 'Culture', class: 'culture', val: 100 }, { label: 'Diplomatie', class: 'diplomacy', val: 80 }, { label: 'Art de guerre', class: 'warfare', val: 10 } ],
-                    competences: [ { nom: "Éloquence", desc: "Orateur né", icon: "📖" }, { nom: "Doctrine", desc: "Justifie l'absolutisme", icon: "👑" }, { nom: "Pédagogie", desc: "Éduque l'Héritier", icon: "👨‍🏫" }, { nom: "Morale", desc: "Rigueur religieuse", icon: "⚖️" } ], 
-                    ultime: { nom: "L'Oraison Funèbre", desc: "Marque l'histoire et les esprits par un discours éternel" }, 
-                    relations: { allies: ["Mme de Maintenon", "Louis XIV", "Le Clergé"], rivaux: ["Protestants", "Libertins", "Fénelon"], amours: ["L'Église"] } 
-                } 
-            },
-            "luxembourg": { 
-                name: "Duc de Luxembourg", subtitle: "Le Tapissier de Notre-Dame", backSubtitle: "Maréchal invaincu", dates: "1628 – 1695", icon: "sword", mainList: false, isFictional: false, 
-                quote: "La guerre est mon élément naturel.", 
-                intro: "François Henri de Montmorency-Bouteville. Brillant maréchal de France, élève du Grand Condé. Il gagne son surnom en envoyant les drapeaux ennemis capturés décorer Notre-Dame.", 
-                stats: [ { icon: '⚔️', val: '96' }, { icon: '🛡️', val: '88' }, { icon: '✨', val: '80' }, { icon: '🧠', val: '92' } ],
-                traits: [ { icon: '🏆', name: 'Invaincu' }, { icon: '⚡', name: 'Fulgurant' }, { icon: '🏴‍☠️', name: 'Ancien Frondeur' }, { icon: '👁️', name: 'Tacticien' } ],
-                achievements: [ { icon: '⚔️', name: 'Bataille de Fleurus', val: '1690' }, { icon: '🚩', name: 'Bataille de Neerwinden', val: '1693' }, { icon: '⛪', name: 'Drapeaux Ennemis', val: 'à Notre-Dame' } ],
-                titles: [ { icon: '⚔️', text: 'Maréchal de France', sub: 'Invaincu en Flandre' }, { icon: '⚜️', text: 'Duc de Piney', sub: 'Maison Montmorency' } ],
-                rpg: { 
-                    classe: "Général Foudroyant", faction: "Armée Royale", collection: "⚜️ Collection « Le Grand Siècle » ⚜️",
-                    attributs: [ { label: 'Autorité', class: 'authority', val: 90 }, { label: 'Charisme', class: 'charisma', val: 85 }, { label: 'Stratégie', class: 'strategy', val: 95 }, { label: 'Culture', class: 'culture', val: 70 }, { label: 'Diplomatie', class: 'diplomacy', val: 50 }, { label: 'Art de guerre', class: 'warfare', val: 98 } ],
-                    competences: [ { nom: "Surprise", desc: "Attaque éclair", icon: "⚡" }, { nom: "Victoire", desc: "Jamais défait", icon: "🏆" }, { nom: "Férocité", desc: "Brise les lignes", icon: "⚔️" }, { nom: "Trophées", desc: "Vole l'honneur ennemi", icon: "🚩" } ], 
-                    ultime: { nom: "Le Bouclier des Flandres", desc: "Défend la frontière nord avec une efficacité terrifiante" }, 
-                    relations: { allies: ["Louis XIV", "Louvois", "Armée Française"], rivaux: ["Guillaume d'Orange", "Coalition européenne"], amours: ["La Guerre"] } 
-                } 
-            },
-            "vauban": { 
-                name: "Vauban", subtitle: "L'ingénieur du Roi", backSubtitle: "Le Bâtisseur de Fer", dates: "1633 – 1707", icon: "castle", mainList: false, isFictional: false, 
-                quote: "La sueur épargne le sang.", 
-                intro: "Sébastien Le Prestre de Vauban, ingénieur, architecte militaire et maréchal de France. Il a révolutionné la poliorcétique (l'art de défendre et d'attaquer les forteresses).", 
-                stats: [ { icon: '⚔️', val: '75' }, { icon: '🛡️', val: '100' }, { icon: '✨', val: '70' }, { icon: '🧠', val: '99' } ],
-                traits: [ { icon: '🏰', name: 'Fortificateur' }, { icon: '📐', name: 'Mathématicien' }, { icon: '❤️', name: 'Humain' }, { icon: '✍️', name: 'Réformateur' } ],
-                achievements: [ { icon: '🛡️', name: 'La Ceinture de Fer', val: 'Frontières' }, { icon: '💥', name: '130 Places Fortes', val: 'Construites' }, { icon: '📜', name: 'La Dîme Royale', val: 'Projet d\'impôt juste' } ],
-                titles: [ { icon: '🏰', text: 'Commissaire Général', sub: 'des Fortifications' }, { icon: '⚔️', text: 'Maréchal de France', sub: '1703' } ],
-                rpg: { 
-                    classe: "Génie Fortificateur", faction: "Armée Royale", collection: "⚜️ Collection « Le Grand Siècle » ⚜️",
-                    attributs: [ { label: 'Autorité', class: 'authority', val: 85 }, { label: 'Charisme', class: 'charisma', val: 75 }, { label: 'Stratégie', class: 'strategy', val: 99 }, { label: 'Culture', class: 'culture', val: 90 }, { label: 'Diplomatie', class: 'diplomacy', val: 60 }, { label: 'Art de guerre', class: 'warfare', val: 95 } ],
-                    competences: [ { nom: "Citadelles", desc: "Murs infranchissables", icon: "🏰" }, { nom: "Poliorcétique", desc: "Prend les villes", icon: "💥" }, { nom: "Calculs", desc: "Précision mathématique", icon: "📐" }, { nom: "Protection", desc: "Épargne ses hommes", icon: "🛡️" } ], 
-                    ultime: { nom: "La Ceinture de Fer", desc: "Rend les frontières du royaume totalement imprenables" }, 
-                    relations: { allies: ["Louis XIV", "L'Armée", "Les Ingénieurs"], rivaux: ["La bureaucratie (fin de vie)", "Ennemis d'Europe"], amours: ["La France", "L'Ingénierie"] } 
-                } 
-            },
-            "philippe-anjou": { 
-                name: "Philippe d'Anjou", subtitle: "Le roi d'Espagne", backSubtitle: "Philippe V", dates: "1683 – 1746", icon: "crown", mainList: false, isFictional: false, 
-                quote: "Il n'y a plus de Pyrénées.", 
-                intro: "Petit-fils de Louis XIV. Désigné héritier de l'Empire espagnol, son accession au trône déclenche la terrible Guerre de Succession d'Espagne qui embrase l'Europe.", 
-                stats: [ { icon: '⚔️', val: '65' }, { icon: '🛡️', val: '80' }, { icon: '✨', val: '85' }, { icon: '🧠', val: '75' } ],
-                traits: [ { icon: '🩸', name: 'Bourbon' }, { icon: '🇪🇸', name: 'Hispanisé' }, { icon: '👑', name: 'Héritier' }, { icon: '😢', name: 'Mélancolique' } ],
-                achievements: [ { icon: '👑', name: 'Couronne d\'Espagne', val: '1700' }, { icon: '⚔️', name: 'Guerre de Succession', val: '1701-1714' }, { icon: '🤝', name: 'Traité d\'Utrecht', val: '1713' } ],
-                titles: [ { icon: '👑', text: 'Roi d\'Espagne', sub: 'Philippe V' }, { icon: '⚜️', text: 'Duc d\'Anjou', sub: 'Petit-fils de France' } ],
-                rpg: { 
-                    classe: "Héritier Contesté", faction: "Bourbons", collection: "⚜️ Collection « Le Grand Siècle » ⚜️",
-                    attributs: [ { label: 'Autorité', class: 'authority', val: 85 }, { label: 'Charisme', class: 'charisma', val: 80 }, { label: 'Stratégie', class: 'strategy', val: 70 }, { label: 'Culture', class: 'culture', val: 85 }, { label: 'Diplomatie', class: 'diplomacy', val: 90 }, { label: 'Art de guerre', class: 'warfare', val: 65 } ],
-                    competences: [ { nom: "Sang Bleu", desc: "Légitimité dynastique", icon: "🩸" }, { nom: "Adaptation", desc: "Adopte la culture locale", icon: "🇪🇸" }, { nom: "Résilience", desc: "S'accroche au trône", icon: "🛡️" }, { nom: "Alliance", desc: "Soutien français", icon: "🤝" } ], 
-                    ultime: { nom: "Soleil sur l'Espagne", desc: "Installe définitivement la famille Bourbon sur un nouveau trône" }, 
-                    relations: { allies: ["Louis XIV (Grand-père)", "Castillans"], rivaux: ["Les Habsbourg", "Coalition européenne"], amours: ["Marie-Louise de Savoie", "Élisabeth Farnèse"] } 
-                } 
-            },
-            "marlborough": { 
-                name: "Marlborough", subtitle: "Le stratège anglais", backSubtitle: "John Churchill", dates: "1650 – 1722", icon: "sword", mainList: false, isFictional: false, 
-                quote: "Je crains plus les mots que les balles.", 
-                intro: "Général et diplomate britannique exceptionnel. Commandant en chef des forces alliées contre la France lors de la Guerre de Succession d'Espagne, il inflige de graves défaites à Louis XIV.", 
-                stats: [ { icon: '⚔️', val: '95' }, { icon: '🛡️', val: '92' }, { icon: '✨', val: '88' }, { icon: '🧠', val: '97' } ],
-                traits: [ { icon: '🧠', name: 'Génie Tactique' }, { icon: '💂', name: 'Britannique' }, { icon: '🤝', name: 'Diplomate' }, { icon: '💰', name: 'Ambitieux' } ],
-                achievements: [ { icon: '⚔️', name: 'Bataille de Blenheim', val: '1704' }, { icon: '⚔️', name: 'Bataille de Ramillies', val: '1706' }, { icon: '🏰', name: 'Palais de Blenheim', val: 'Construit en son honneur' } ],
-                titles: [ { icon: '👑', text: '1er Duc de Marlborough', sub: 'Pair d\'Angleterre' }, { icon: '⚔️', text: 'Capitaine Général', sub: 'des Armées Britanniques' } ],
-                rpg: { 
-                    classe: "Némésis de la France", faction: "Coalition", collection: "⚜️ Collection « Le Grand Siècle » ⚜️",
-                    attributs: [ { label: 'Autorité', class: 'authority', val: 95 }, { label: 'Charisme', class: 'charisma', val: 90 }, { label: 'Stratégie', class: 'strategy', val: 99 }, { label: 'Culture', class: 'culture', val: 80 }, { label: 'Diplomatie', class: 'diplomacy', val: 95 }, { label: 'Art de guerre', class: 'warfare', val: 98 } ],
-                    competences: [ { nom: "Discipline", desc: "Troupes de fer", icon: "💂" }, { nom: "Coalition", desc: "Unit l'Europe contre le Roi", icon: "🤝" }, { nom: "Mobilité", desc: "Marches fulgurantes", icon: "🏃" }, { nom: "Ténacité", desc: "Jamais vaincu", icon: "🛡️" } ], 
-                    ultime: { nom: "Le Coup d'Arrêt", desc: "Brise l'hégémonie militaire française par des victoires décisives" }, 
-                    relations: { allies: ["Prince Eugène de Savoie", "Reine Anne"], rivaux: ["Louis XIV", "Armée Française"], amours: ["Sarah Churchill"] } 
-                } 
-            },
-            "lully": { 
-                name: "Lully", subtitle: "Le Surintendant", backSubtitle: "Maître de la Musique", dates: "1632 – 1687", icon: "music", mainList: false, isFictional: false, 
-                quote: "Toute la musique de France est à mon commandement.", 
-                intro: "Compositeur d'origine florentine, il devient le maître absolu de la musique sous Louis XIV. Créateur de l'opéra français, il impose son monopole avec une poigne de fer.", 
-                stats: [ { icon: '⚔️', val: '30' }, { icon: '🛡️', val: '60' }, { icon: '✨', val: '95' }, { icon: '🧠', val: '90' } ],
-                traits: [ { icon: '🎼', name: 'Génie Musical' }, { icon: '👑', name: 'Tyran' }, { icon: '🇮🇹', name: 'Italien' }, { icon: '🕺', name: 'Danseur' } ],
-                achievements: [ { icon: '🎭', name: 'Création Tragédie Lyrique', val: 'Opéra' }, { icon: '📜', name: 'Monopole Royal', val: 'Sur la musique' }, { icon: '⚔️', name: 'Comédie-Ballet', val: 'Avec Molière' } ],
-                titles: [ { icon: '🎼', text: 'Surintendant', sub: 'de la Musique du Roi' }, { icon: '🎭', text: 'Directeur', sub: 'Académie Royale de Musique' } ],
-                rpg: { 
-                    classe: "Maître des Notes", faction: "Artisans Royaux", collection: "⚜️ Collection « Le Grand Siècle » ⚜️",
-                    attributs: [ { label: 'Autorité', class: 'authority', val: 95 }, { label: 'Charisme', class: 'charisma', val: 90 }, { label: 'Stratégie', class: 'strategy', val: 85 }, { label: 'Culture', class: 'culture', val: 100 }, { label: 'Diplomatie', class: 'diplomacy', val: 60 }, { label: 'Art de guerre', class: 'warfare', val: 10 } ],
-                    competences: [ { nom: "Composition", desc: "Mélodies royales grandioses", icon: "🎼" }, { nom: "Monopole", desc: "Écrase toute concurrence", icon: "📜" }, { nom: "Tempo", desc: "Frappe son lourd bâton", icon: "🦯" }, { nom: "Ballet", desc: "Fait danser la cour", icon: "🩰" } ], 
-                    ultime: { nom: "La Marche pour les Turcs", desc: "Orchestre un chef-d'œuvre qui fait trembler toute l'Europe" }, 
-                    relations: { allies: ["Louis XIV", "Philippe Quinault", "Molière (début)"], rivaux: ["Molière (fin)", "Marc-Antoine Charpentier"], amours: ["L'Opéra", "Le Pouvoir"] } 
                 } 
             }
         };
@@ -1528,6 +1362,18 @@
                 sessionStorage.setItem('introPlayed', 'true');
                 // Supprime le rideau du DOM après l'animation pour libérer de la mémoire
                 setTimeout(() => { curtain.remove(); }, 3000); 
+            }
+            
+            // Initialiser les particules
+            const c = document.getElementById('particles');
+            for(let i=0; i<20; i++){
+                const p = document.createElement('div');
+                p.className = 'particle';
+                p.style.left = Math.random() * 100 + '%';
+                p.style.animationDelay = Math.random() * 8 + 's';
+                p.style.animationDuration = (6 + Math.random() * 6) + 's';
+                p.style.width = p.style.height = (1.5 + Math.random() * 2.5) + 'px';
+                c.appendChild(p);
             }
         });
 
