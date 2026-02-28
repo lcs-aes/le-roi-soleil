@@ -275,15 +275,14 @@
         @keyframes fadeout { from {bottom: 30px; opacity: 1;} to {bottom: 0; opacity: 0;} }
 
         /* ========================================================================= */
-        /* --- NOUVELLE MODALE : CARTES RPG 3D NATIVES --- */
+        /* --- MODALE : CARTES RPG 3D NATIVES --- */
         /* ========================================================================= */
         
         .modal-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.75); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+            background: rgba(0,0,0,0.85); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
             z-index: 10000; display: none; justify-content: center; align-items: center;
             padding: 20px; box-sizing: border-box; overflow: hidden;
-            font-family: 'Cormorant Garamond', serif;
         }
         .modal-overlay.active { display: flex; animation: fadeIn 0.3s ease forwards; }
 
@@ -388,55 +387,60 @@
             font-size: 13px; padding: 4px 16px; border-radius: 20px; position: relative; letter-spacing: 1px;
         }
 
-        /* Card Body */
-        .card-body { flex: 1; padding: 12px 16px 8px; display: flex; flex-direction: column; gap: 10px; overflow-y: auto; -webkit-overflow-scrolling: touch; color: #000; }
+        /* Card Body (Sans-serif pour lisibilité) */
+        .card-body { 
+            flex: 1; padding: 12px 16px 8px; display: flex; flex-direction: column; gap: 12px; 
+            overflow-y: auto; -webkit-overflow-scrolling: touch; color: #000;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
         .card-body::-webkit-scrollbar { width: 4px; }
         .card-body::-webkit-scrollbar-track { background: transparent; }
         .card-body::-webkit-scrollbar-thumb { background: var(--gold); border-radius: 2px; }
 
+        /* Titres de Section Design */
         .rpg-section-title {
-            font-family: 'Cinzel', serif; font-size: 13px; font-weight: 700;
+            font-family: 'Cinzel', serif; font-size: 14px; font-weight: 700;
             text-transform: uppercase; letter-spacing: 2.5px; color: var(--gold-dark);
-            text-align: center; display: flex; align-items: center; gap: 10px; margin: 15px 0 10px 0;
+            text-align: center; display: flex; align-items: center; gap: 10px; margin: 15px 0 5px 0;
         }
         .rpg-section-title::before, .rpg-section-title::after { content: ''; flex: 1; height: 1px; background: linear-gradient(90deg, transparent, var(--gold), transparent); }
 
         .quote-line {
-            font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 16px;
+            font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 18px;
             color: var(--text-dark); text-align: center; padding: 0 10px; line-height: 1.3; margin-bottom: 5px; opacity: 0.85;
         }
 
         /* Stats (Front) - One Line */
         .stats-row { display: flex; gap: 8px; justify-content: center; }
         .stat-chip {
-            display: flex; align-items: center; justify-content: center; gap: 6px;
+            display: flex; align-items: center; justify-content: center; gap: 8px;
             background: linear-gradient(135deg, rgba(42,18,69,0.08), rgba(107,29,58,0.06));
-            border: 1px solid rgba(201,168,76,0.25); border-radius: 8px; padding: 6px 14px;
-            font-family: 'Cinzel', serif;
+            border: 1px solid rgba(201,168,76,0.25); border-radius: 8px; padding: 10px;
+            flex: 1;
         }
-        .stat-chip .stat-icon { font-size: 18px; }
-        .stat-chip .stat-val { font-weight: 700; color: var(--burgundy); font-size: 18px; line-height: 1; }
+        .stat-chip .stat-icon { font-size: 22px; }
+        .stat-chip .stat-val { font-weight: 700; color: var(--burgundy); font-size: 20px; line-height: 1; font-family: 'Cinzel', serif; }
 
         /* Traits */
         .traits-row { display: flex; gap: 6px; justify-content: center; flex-wrap: wrap; }
         .trait-tag {
-            font-family: 'Cinzel', serif; font-size: 12px; font-weight: 600;
+            font-family: 'Cinzel', serif; font-size: 13px; font-weight: 600;
             text-transform: uppercase; letter-spacing: 0.8px;
-            padding: 4px 12px; border-radius: 20px;
+            padding: 5px 12px; border-radius: 20px;
             border: 1px solid rgba(201,168,76,0.3); color: var(--text-dark);
             background: linear-gradient(135deg, rgba(201,168,76,0.08), rgba(201,168,76,0.02));
         }
-        .trait-tag .trait-icon { margin-right: 4px; font-size: 12px; }
+        .trait-tag .trait-icon { margin-right: 4px; font-size: 13px; }
 
         /* Lore / Facts Box */
         .lore-section {
             background: linear-gradient(135deg, rgba(42,18,69,0.04), rgba(201,168,76,0.04));
             border: 1px solid rgba(201,168,76,0.2); border-radius: 10px; padding: 12px 14px;
         }
-        .lore-section p { font-size: 14px; color: var(--text-dark); line-height: 1.5; text-align: justify; margin: 0;}
-        .lore-list { list-style: none; padding: 0; margin: 0; font-size: 14px; color: var(--text-dark); line-height: 1.5; display: flex; flex-direction: column; gap: 8px; }
+        .lore-section p { font-size: 15px; color: var(--text-dark); line-height: 1.5; text-align: justify; margin: 0;}
+        .lore-list { list-style: none; padding: 0; margin: 0; font-size: 15px; color: var(--text-dark); line-height: 1.5; display: flex; flex-direction: column; gap: 8px; }
         .lore-list li { display: flex; align-items: flex-start; gap: 6px; }
-        .lore-list li .bullet { color: var(--gold-dark); font-size: 14px; }
+        .lore-list li .bullet { color: var(--gold-dark); font-size: 15px; }
 
         /* Achievements Grid */
         .achievements-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 6px; }
@@ -447,8 +451,8 @@
         }
         .achieve-card:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(201,168,76,0.12); }
         .achieve-card .ach-icon { font-size: 26px; display: block; margin-bottom: 4px; }
-        .achieve-card .ach-name { font-family: 'Cinzel', serif; font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; color: var(--text-dark); line-height: 1.2; margin-bottom: 2px;}
-        .achieve-card .ach-val { font-size: 13px; color: var(--burgundy); font-weight: 600; font-family: 'Cormorant Garamond', serif; }
+        .achieve-card .ach-name { font-family: 'Cinzel', serif; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; color: var(--text-dark); line-height: 1.2; margin-bottom: 2px;}
+        .achieve-card .ach-val { font-size: 15px; color: var(--burgundy); font-weight: 600; }
 
         /* Titles / Heritage Box */
         .titles-list { display: flex; flex-direction: column; gap: 8px; padding: 0 4px; }
@@ -458,33 +462,33 @@
             border: 1px solid rgba(201,168,76,0.15); border-radius: 8px;
         }
         .title-item .title-icon { font-size: 22px; flex-shrink: 0; }
-        .title-item .title-text { font-family: 'Cinzel', serif; font-size: 13px; font-weight: 700; color: var(--text-dark); letter-spacing: 0.3px; text-transform: uppercase; }
-        .title-item .title-sub { font-size: 12px; color: var(--text-dark); font-style: italic; font-weight: 400; font-family: 'Cormorant Garamond', serif; line-height: 1.2; display: block; margin-top: 2px;}
+        .title-item .title-text { font-family: 'Cinzel', serif; font-size: 14px; font-weight: 700; color: var(--text-dark); letter-spacing: 0.3px; text-transform: uppercase; }
+        .title-item .title-sub { font-size: 14px; color: var(--text-dark); font-weight: 400; line-height: 1.3; display: block; margin-top: 2px;}
 
         /* Skills */
         .skills-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
         .skill-card {
             background: linear-gradient(145deg, #fff, var(--cream));
             border: 1px solid rgba(201,168,76,0.2); border-radius: 10px;
-            padding: 10px 10px 8px; text-align: center; transition: transform 0.2s, box-shadow 0.2s;
+            padding: 12px 10px; text-align: center; transition: transform 0.2s, box-shadow 0.2s;
         }
-        .skill-card .skill-name { font-family: 'Cinzel', serif; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.8px; color: var(--text-dark); margin-bottom: 4px; }
-        .skill-card .skill-icon { font-size: 26px; display: block; margin: 4px 0; }
-        .skill-card .skill-desc { font-size: 12px; color: var(--text-dark); line-height: 1.2; font-style: italic; }
+        .skill-card .skill-name { font-family: 'Cinzel', serif; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.8px; color: var(--text-dark); margin-bottom: 4px; }
+        .skill-card .skill-icon { font-size: 28px; display: block; margin: 4px 0; }
+        .skill-card .skill-desc { font-size: 13px; color: var(--text-dark); line-height: 1.3; }
 
         /* Stat Bars (Back) */
-        .stat-bars { display: flex; flex-direction: column; gap: 6px; }
+        .stat-bars { display: flex; flex-direction: column; gap: 8px; }
         .stat-bar-row { display: flex; align-items: center; gap: 8px; }
-        .stat-bar-label { font-family: 'Cinzel', serif; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; color: var(--text-dark); width: 85px; text-align: right; }
-        .stat-bar-track { flex: 1; height: 10px; background: var(--cream-dark); border-radius: 5px; overflow: hidden; border: 1px solid rgba(201,168,76,0.2); }
-        .stat-bar-fill { height: 100%; border-radius: 5px; transition: width 1.2s cubic-bezier(0.4,0,0.2,1); }
+        .stat-bar-label { font-family: 'Cinzel', serif; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; color: var(--text-dark); width: 95px; text-align: right; }
+        .stat-bar-track { flex: 1; height: 12px; background: var(--cream-dark); border-radius: 6px; overflow: hidden; border: 1px solid rgba(201,168,76,0.2); }
+        .stat-bar-fill { height: 100%; border-radius: 6px; transition: width 1.2s cubic-bezier(0.4,0,0.2,1); }
         .stat-bar-fill.authority { background: linear-gradient(90deg, var(--royal-purple-mid), var(--burgundy)); }
         .stat-bar-fill.charisma { background: linear-gradient(90deg, var(--gold-dark), var(--gold)); }
         .stat-bar-fill.strategy { background: linear-gradient(90deg, #1a4a6e, #2980b9); }
         .stat-bar-fill.culture { background: linear-gradient(90deg, #6b1d3a, #c0392b); }
         .stat-bar-fill.diplomacy { background: linear-gradient(90deg, #1a6e4a, #27ae60); }
         .stat-bar-fill.warfare { background: linear-gradient(90deg, #4a3728, #8b6914); }
-        .stat-bar-val { font-family: 'Cinzel', serif; font-size: 12px; font-weight: 700; color: var(--text-dark); width: 28px; text-align: center; }
+        .stat-bar-val { font-family: 'Cinzel', serif; font-size: 13px; font-weight: 700; color: var(--text-dark); width: 30px; text-align: center; }
 
         /* Ultimate */
         .ultimate-box {
@@ -492,19 +496,19 @@
             border: 1.5px solid var(--gold); border-radius: 12px; padding: 12px 14px;
             text-align: center;
         }
-        .ultimate-box .ult-name { font-family: 'Cinzel Decorative', serif; font-size: 16px; font-weight: 700; color: var(--burgundy); }
-        .ultimate-box .ult-desc { font-size: 14px; color: var(--text-dark); font-style: italic; line-height: 1.3; margin-top: 4px; }
+        .ultimate-box .ult-name { font-family: 'Cinzel Decorative', serif; font-size: 17px; font-weight: 700; color: var(--burgundy); }
+        .ultimate-box .ult-desc { font-size: 15px; color: var(--text-dark); font-style: italic; line-height: 1.4; margin-top: 4px; }
 
         /* Relations */
         .relations-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; }
         .relation-group { background: linear-gradient(145deg, #fff, var(--cream)); border: 1px solid rgba(201,168,76,0.2); border-radius: 10px; padding: 10px 6px 8px; text-align: center; }
-        .relation-group .rel-title { font-family: 'Cinzel', serif; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 6px; display: flex; align-items: center; justify-content: center; gap: 4px; border-bottom: 1px solid rgba(201,168,76,0.15); padding-bottom: 4px; }
+        .relation-group .rel-title { font-family: 'Cinzel', serif; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 6px; display: flex; align-items: center; justify-content: center; gap: 4px; border-bottom: 1px solid rgba(201,168,76,0.15); padding-bottom: 4px; }
         .rel-title.allies { color: #2e7d32; } .rel-title.rivals { color: #b71c1c; } .rel-title.amours { color: #ad1457; }
-        .relation-group ul { list-style: none; font-size: 12.5px; color: var(--text-dark); line-height: 1.5; padding: 0; margin: 0; }
+        .relation-group ul { list-style: none; font-size: 14px; color: var(--text-dark); line-height: 1.5; padding: 0; margin: 0; }
         .relation-group ul li { margin-bottom: 2px;}
 
         /* Card Footer */
-        .card-footer { padding: 8px 16px 12px; display: flex; justify-content: center; gap: 16px; border-top: 1px solid rgba(201,168,76,0.15); flex-shrink: 0; }
+        .card-footer { padding: 8px 16px 14px; display: flex; justify-content: center; gap: 16px; border-top: 1px solid rgba(201,168,76,0.15); flex-shrink: 0; }
         .footer-tag { font-family: 'Cinzel', serif; font-size: 11px; text-transform: uppercase; letter-spacing: 1.5px; color: var(--gold-dark); display: flex; align-items: center; gap: 4px; }
         .footer-tag .dot { width: 4px; height: 4px; border-radius: 50%; background: var(--gold); }
     </style>
@@ -1074,23 +1078,23 @@
             // Front Components
             let statsHtml = char.stats ? `<div class="stats-row">${char.stats.map(s => `<div class="stat-chip"><span class="stat-icon">${s.icon}</span><span class="stat-val">${s.val}</span></div>`).join('')}</div>` : '';
             
-            let traitsHtml = char.traits ? `<div class="section-title">Traits</div><div class="traits-row">${char.traits.map(t => `<span class="trait-tag"><span class="trait-icon">${t.icon}</span>${t.name}</span>`).join('')}</div>` : '';
+            let traitsHtml = char.traits ? `<div class="rpg-section-title">Traits</div><div class="traits-row">${char.traits.map(t => `<span class="trait-tag"><span class="trait-icon">${t.icon}</span>${t.name}</span>`).join('')}</div>` : '';
             
             let achievementsHtml = '';
             if (char.achievements) {
-                achievementsHtml = `<div class="section-title">Hauts Faits</div><div class="achievements-grid">${char.achievements.map(a => `<div class="achieve-card"><span class="ach-icon">${a.icon}</span><div class="ach-name">${a.name}</div><div class="ach-val">${a.val}</div></div>`).join('')}</div>`;
+                achievementsHtml = `<div class="rpg-section-title">Hauts Faits</div><div class="achievements-grid">${char.achievements.map(a => `<div class="achieve-card"><span class="ach-icon">${a.icon}</span><div class="ach-name">${a.name}</div><div class="ach-val">${a.val}</div></div>`).join('')}</div>`;
             } else if (char.facts) {
                 let factsList = char.facts.map(f => `<li><span class="bullet">♦</span> ${f}</li>`).join('');
-                achievementsHtml = `<div class="section-title">Faits Marquants</div><div class="lore-section"><ul class="lore-list">${factsList}</ul></div>`;
+                achievementsHtml = `<div class="rpg-section-title">Faits Marquants</div><div class="lore-section"><ul class="lore-list">${factsList}</ul></div>`;
             }
 
             let titlesHtml = '';
             if (char.titles) {
-                titlesHtml = `<div class="section-title">Titres & Dignités</div><div class="titles-list">${char.titles.map(t => `<div class="title-item"><span class="title-icon">${t.icon}</span><div><span class="title-text">${t.text}</span><span class="title-sub">${t.sub}</span></div></div>`).join('')}</div>`;
+                titlesHtml = `<div class="rpg-section-title">Titres & Dignités</div><div class="titles-list">${char.titles.map(t => `<div class="title-item"><span class="title-icon">${t.icon}</span><div><span class="title-text">${t.text}</span><span class="title-sub">${t.sub}</span></div></div>`).join('')}</div>`;
             } else if (char.role && char.heritage) {
                 const rTitle = char.isFictional ? "Rôle Symbolique" : "Rôle Historique";
                 const hTitle = char.isFictional ? "Signification" : "Héritage";
-                titlesHtml = `<div class="section-title">Héritage & Rôle</div><div class="titles-list"><div class="title-item"><span class="title-icon">📜</span><div><span class="title-text">${rTitle}</span><span class="title-sub">${char.role}</span></div></div><div class="title-item"><span class="title-icon">💎</span><div><span class="title-text">${hTitle}</span><span class="title-sub">${char.heritage}</span></div></div></div>`;
+                titlesHtml = `<div class="rpg-section-title">Héritage & Rôle</div><div class="titles-list"><div class="title-item"><span class="title-icon">📜</span><div><span class="title-text">${rTitle}</span><span class="title-sub">${char.role}</span></div></div><div class="title-item"><span class="title-icon">💎</span><div><span class="title-text">${hTitle}</span><span class="title-sub">${char.heritage}</span></div></div></div>`;
             }
 
             let frontFooterHtml = char.rpg ? `<div class="card-footer"><span class="footer-tag"><span class="dot"></span> ${char.rpg.classe}</span><span class="footer-tag"><span class="dot"></span> Faction ${char.rpg.faction}</span></div>` : '';
@@ -1120,7 +1124,7 @@
                             ${quoteHtml}
                             ${statsHtml}
                             ${traitsHtml}
-                            <div class="section-title">Biographie</div>
+                            <div class="rpg-section-title">Biographie</div>
                             <div class="lore-section"><p>${char.intro}</p></div>
                             ${achievementsHtml}
                             ${titlesHtml}
@@ -1135,7 +1139,7 @@
             if (char.rpg) {
                 let attributsHtml = '';
                 if (char.rpg && char.rpg.attributs) {
-                    attributsHtml = `<div class="section-title">Attributs</div><div class="stat-bars">${char.rpg.attributs.map(a => `<div class="stat-bar-row"><span class="stat-bar-label">${a.label}</span><div class="stat-bar-track"><div class="stat-bar-fill ${a.class}" style="width:${a.val}%"></div></div><span class="stat-bar-val">${a.val}</span></div>`).join('')}</div>`;
+                    attributsHtml = `<div class="rpg-section-title">Attributs</div><div class="stat-bars">${char.rpg.attributs.map(a => `<div class="stat-bar-row"><span class="stat-bar-label">${a.label}</span><div class="stat-bar-track"><div class="stat-bar-fill ${a.class}" style="width:${a.val}%"></div></div><span class="stat-bar-val">${a.val}</span></div>`).join('')}</div>`;
                 }
 
                 let skillsHtml = char.rpg.competences.map(c => `
@@ -1174,18 +1178,18 @@
 
                             <div class="card-body">
                                 ${attributsHtml}
-                                <div class="section-title">Compétences</div>
+                                <div class="rpg-section-title">Compétences</div>
                                 <div class="skills-grid">
                                     ${skillsHtml}
                                 </div>
 
-                                <div class="section-title">Pouvoir Ultime</div>
+                                <div class="rpg-section-title">Pouvoir Ultime</div>
                                 <div class="ultimate-box">
                                     <div class="ult-name">${char.rpg.ultime.nom}</div>
                                     <div class="ult-desc">« ${char.rpg.ultime.desc} »</div>
                                 </div>
 
-                                <div class="section-title">Relations</div>
+                                <div class="rpg-section-title">Relations</div>
                                 <div class="relations-grid">
                                     <div class="relation-group"><div class="rel-title allies">🛡️ Alliés</div><ul>${alliesHtml}</ul></div>
                                     <div class="relation-group"><div class="rel-title rivals">⚔️ Rivaux</div><ul>${rivauxHtml}</ul></div>
