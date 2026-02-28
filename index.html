@@ -377,15 +377,15 @@
         @keyframes float-sun { 0%, 100% { transform: translateY(0) scale(1); } 50% { transform: translateY(-4px) scale(1.05); } }
         
         .card-header h1, .card-header h2 {
-            font-family: 'Cinzel Decorative', serif; font-size: 22px; font-weight: 700;
-            color: var(--gold-light); position: relative; text-shadow: 0 2px 10px rgba(0,0,0,0.5); margin: 4px 0 0 0; line-height: 1.1;
+            font-family: 'Cinzel Decorative', serif; font-size: 28px; font-weight: 700;
+            color: var(--gold-light); position: relative; text-shadow: 0 2px 10px rgba(0,0,0,0.5); margin: 6px 0 0 0; line-height: 1.1;
         }
-        .card-header .subtitle { font-family: 'Cormorant Garamond', serif; font-size: 13px; color: rgba(232,212,139,0.8); font-style: italic; position: relative; display: block;}
+        .card-header .subtitle { font-family: 'Cormorant Garamond', serif; font-size: 16px; color: rgba(232,212,139,0.8); font-style: italic; position: relative; display: block; margin-top: 2px;}
         .card-header .date-badge {
-            display: inline-block; margin-top: 5px;
+            display: inline-block; margin-top: 8px;
             background: linear-gradient(135deg, var(--gold-dark), var(--gold));
             color: var(--royal-purple); font-family: 'Cinzel', serif; font-weight: 700;
-            font-size: 11px; padding: 2px 14px; border-radius: 20px; position: relative; letter-spacing: 1px;
+            font-size: 13px; padding: 4px 16px; border-radius: 20px; position: relative; letter-spacing: 1px;
         }
 
         /* Card Body */
@@ -395,88 +395,87 @@
         .card-body::-webkit-scrollbar-thumb { background: var(--gold); border-radius: 2px; }
 
         .rpg-section-title {
-            font-family: 'Cinzel', serif; font-size: 10px; font-weight: 700;
+            font-family: 'Cinzel', serif; font-size: 13px; font-weight: 700;
             text-transform: uppercase; letter-spacing: 2.5px; color: var(--gold-dark);
-            text-align: center; display: flex; align-items: center; gap: 10px; margin: 0;
+            text-align: center; display: flex; align-items: center; gap: 10px; margin: 15px 0 10px 0;
         }
         .rpg-section-title::before, .rpg-section-title::after { content: ''; flex: 1; height: 1px; background: linear-gradient(90deg, transparent, var(--gold), transparent); }
 
         .quote-line {
-            font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 13px;
-            color: var(--text-dark); text-align: center; padding: 0 8px; line-height: 1.3; opacity: 0.85;
+            font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 16px;
+            color: var(--text-dark); text-align: center; padding: 0 10px; line-height: 1.3; margin-bottom: 5px; opacity: 0.85;
         }
 
-        /* Stats (Front) */
-        .stats-row { display: flex; gap: 6px; justify-content: center; }
+        /* Stats (Front) - One Line */
+        .stats-row { display: flex; gap: 8px; justify-content: center; }
         .stat-chip {
-            display: flex; align-items: center; gap: 4px;
+            display: flex; align-items: center; justify-content: center; gap: 6px;
             background: linear-gradient(135deg, rgba(42,18,69,0.08), rgba(107,29,58,0.06));
-            border: 1px solid rgba(201,168,76,0.25); border-radius: 8px; padding: 4px 9px;
+            border: 1px solid rgba(201,168,76,0.25); border-radius: 8px; padding: 6px 14px;
             font-family: 'Cinzel', serif;
         }
-        .stat-chip .stat-icon { font-size: 12px; }
-        .stat-chip .stat-val { font-weight: 700; color: var(--burgundy); font-size: 13px; line-height: 1; }
-        .stat-chip .stat-label { font-size: 7.5px; text-transform: uppercase; letter-spacing: 0.5px; color: var(--text-dark); opacity: 0.7; }
+        .stat-chip .stat-icon { font-size: 18px; }
+        .stat-chip .stat-val { font-weight: 700; color: var(--burgundy); font-size: 18px; line-height: 1; }
 
         /* Traits */
-        .traits-row { display: flex; gap: 5px; justify-content: center; flex-wrap: wrap; }
+        .traits-row { display: flex; gap: 6px; justify-content: center; flex-wrap: wrap; }
         .trait-tag {
-            font-family: 'Cinzel', serif; font-size: 8.5px; font-weight: 600;
+            font-family: 'Cinzel', serif; font-size: 12px; font-weight: 600;
             text-transform: uppercase; letter-spacing: 0.8px;
-            padding: 3px 10px; border-radius: 20px;
+            padding: 4px 12px; border-radius: 20px;
             border: 1px solid rgba(201,168,76,0.3); color: var(--text-dark);
             background: linear-gradient(135deg, rgba(201,168,76,0.08), rgba(201,168,76,0.02));
         }
-        .trait-tag .trait-icon { margin-right: 3px; font-size: 10px; }
+        .trait-tag .trait-icon { margin-right: 4px; font-size: 12px; }
 
         /* Lore / Facts Box */
         .lore-section {
             background: linear-gradient(135deg, rgba(42,18,69,0.04), rgba(201,168,76,0.04));
-            border: 1px solid rgba(201,168,76,0.2); border-radius: 10px; padding: 10px 12px;
+            border: 1px solid rgba(201,168,76,0.2); border-radius: 10px; padding: 12px 14px;
         }
-        .lore-section p { font-size: 12px; color: var(--text-dark); line-height: 1.4; text-align: justify; margin: 0;}
-        .lore-list { list-style: none; padding: 0; margin: 0; font-size: 11.5px; color: var(--text-dark); line-height: 1.4; display: flex; flex-direction: column; gap: 6px; }
-        .lore-list li { display: flex; align-items: flex-start; gap: 5px; }
-        .lore-list li .bullet { color: var(--gold-dark); font-size: 12px; }
+        .lore-section p { font-size: 14px; color: var(--text-dark); line-height: 1.5; text-align: justify; margin: 0;}
+        .lore-list { list-style: none; padding: 0; margin: 0; font-size: 14px; color: var(--text-dark); line-height: 1.5; display: flex; flex-direction: column; gap: 8px; }
+        .lore-list li { display: flex; align-items: flex-start; gap: 6px; }
+        .lore-list li .bullet { color: var(--gold-dark); font-size: 14px; }
 
         /* Achievements Grid */
-        .achievements-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 5px; }
+        .achievements-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 6px; }
         .achieve-card {
             background: linear-gradient(145deg, #fff, var(--cream));
             border: 1px solid rgba(201,168,76,0.2); border-radius: 10px;
-            padding: 7px 5px 6px; text-align: center; transition: transform 0.2s;
+            padding: 10px 6px 8px; text-align: center; transition: transform 0.2s;
         }
         .achieve-card:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(201,168,76,0.12); }
-        .achieve-card .ach-icon { font-size: 20px; display: block; margin-bottom: 2px; }
-        .achieve-card .ach-name { font-family: 'Cinzel', serif; font-size: 8px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; color: var(--text-dark); line-height: 1.2; }
-        .achieve-card .ach-val { font-size: 9px; color: var(--burgundy); font-weight: 600; font-family: 'Cormorant Garamond', serif; }
+        .achieve-card .ach-icon { font-size: 26px; display: block; margin-bottom: 4px; }
+        .achieve-card .ach-name { font-family: 'Cinzel', serif; font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; color: var(--text-dark); line-height: 1.2; margin-bottom: 2px;}
+        .achieve-card .ach-val { font-size: 13px; color: var(--burgundy); font-weight: 600; font-family: 'Cormorant Garamond', serif; }
 
         /* Titles / Heritage Box */
-        .titles-list { display: flex; flex-direction: column; gap: 6px; padding: 0 4px; }
+        .titles-list { display: flex; flex-direction: column; gap: 8px; padding: 0 4px; }
         .title-item {
-            display: flex; align-items: center; gap: 8px; padding: 6px 10px;
+            display: flex; align-items: center; gap: 10px; padding: 8px 12px;
             background: linear-gradient(145deg, #fff, var(--cream));
             border: 1px solid rgba(201,168,76,0.15); border-radius: 8px;
         }
-        .title-item .title-icon { font-size: 18px; flex-shrink: 0; }
-        .title-item .title-text { font-family: 'Cinzel', serif; font-size: 9.5px; font-weight: 700; color: var(--text-dark); letter-spacing: 0.3px; text-transform: uppercase; }
-        .title-item .title-sub { font-size: 10px; color: var(--text-dark); font-style: italic; font-weight: 400; font-family: 'Cormorant Garamond', serif; line-height: 1.2; display: block; margin-top: 1px;}
+        .title-item .title-icon { font-size: 22px; flex-shrink: 0; }
+        .title-item .title-text { font-family: 'Cinzel', serif; font-size: 13px; font-weight: 700; color: var(--text-dark); letter-spacing: 0.3px; text-transform: uppercase; }
+        .title-item .title-sub { font-size: 12px; color: var(--text-dark); font-style: italic; font-weight: 400; font-family: 'Cormorant Garamond', serif; line-height: 1.2; display: block; margin-top: 2px;}
 
         /* Skills */
-        .skills-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
+        .skills-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
         .skill-card {
             background: linear-gradient(145deg, #fff, var(--cream));
             border: 1px solid rgba(201,168,76,0.2); border-radius: 10px;
-            padding: 8px 8px 7px; text-align: center; transition: transform 0.2s, box-shadow 0.2s;
+            padding: 10px 10px 8px; text-align: center; transition: transform 0.2s, box-shadow 0.2s;
         }
-        .skill-card .skill-name { font-family: 'Cinzel', serif; font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.8px; color: var(--text-dark); margin-bottom: 2px; }
-        .skill-card .skill-icon { font-size: 20px; display: block; margin: 2px 0; }
-        .skill-card .skill-desc { font-size: 10px; color: var(--text-dark); line-height: 1.2; font-style: italic; }
+        .skill-card .skill-name { font-family: 'Cinzel', serif; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.8px; color: var(--text-dark); margin-bottom: 4px; }
+        .skill-card .skill-icon { font-size: 26px; display: block; margin: 4px 0; }
+        .skill-card .skill-desc { font-size: 12px; color: var(--text-dark); line-height: 1.2; font-style: italic; }
 
         /* Stat Bars (Back) */
         .stat-bars { display: flex; flex-direction: column; gap: 6px; }
         .stat-bar-row { display: flex; align-items: center; gap: 8px; }
-        .stat-bar-label { font-family: 'Cinzel', serif; font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; color: var(--text-dark); width: 80px; text-align: right; }
+        .stat-bar-label { font-family: 'Cinzel', serif; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; color: var(--text-dark); width: 85px; text-align: right; }
         .stat-bar-track { flex: 1; height: 10px; background: var(--cream-dark); border-radius: 5px; overflow: hidden; border: 1px solid rgba(201,168,76,0.2); }
         .stat-bar-fill { height: 100%; border-radius: 5px; transition: width 1.2s cubic-bezier(0.4,0,0.2,1); }
         .stat-bar-fill.authority { background: linear-gradient(90deg, var(--royal-purple-mid), var(--burgundy)); }
@@ -485,28 +484,28 @@
         .stat-bar-fill.culture { background: linear-gradient(90deg, #6b1d3a, #c0392b); }
         .stat-bar-fill.diplomacy { background: linear-gradient(90deg, #1a6e4a, #27ae60); }
         .stat-bar-fill.warfare { background: linear-gradient(90deg, #4a3728, #8b6914); }
-        .stat-bar-val { font-family: 'Cinzel', serif; font-size: 10px; font-weight: 700; color: var(--text-dark); width: 28px; text-align: center; }
+        .stat-bar-val { font-family: 'Cinzel', serif; font-size: 12px; font-weight: 700; color: var(--text-dark); width: 28px; text-align: center; }
 
         /* Ultimate */
         .ultimate-box {
             background: linear-gradient(135deg, rgba(42,18,69,0.06), rgba(201,168,76,0.08));
-            border: 1.5px solid var(--gold); border-radius: 12px; padding: 10px 12px;
+            border: 1.5px solid var(--gold); border-radius: 12px; padding: 12px 14px;
             text-align: center;
         }
-        .ultimate-box .ult-name { font-family: 'Cinzel Decorative', serif; font-size: 13px; font-weight: 700; color: var(--burgundy); }
-        .ultimate-box .ult-desc { font-size: 11px; color: var(--text-dark); font-style: italic; line-height: 1.3; margin-top: 3px; }
+        .ultimate-box .ult-name { font-family: 'Cinzel Decorative', serif; font-size: 16px; font-weight: 700; color: var(--burgundy); }
+        .ultimate-box .ult-desc { font-size: 14px; color: var(--text-dark); font-style: italic; line-height: 1.3; margin-top: 4px; }
 
         /* Relations */
-        .relations-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 6px; }
-        .relation-group { background: linear-gradient(145deg, #fff, var(--cream)); border: 1px solid rgba(201,168,76,0.2); border-radius: 10px; padding: 8px 6px 6px; text-align: center; }
-        .relation-group .rel-title { font-family: 'Cinzel', serif; font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 4px; display: flex; align-items: center; justify-content: center; gap: 3px; border-bottom: 1px solid rgba(201,168,76,0.15); padding-bottom: 4px; }
+        .relations-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; }
+        .relation-group { background: linear-gradient(145deg, #fff, var(--cream)); border: 1px solid rgba(201,168,76,0.2); border-radius: 10px; padding: 10px 6px 8px; text-align: center; }
+        .relation-group .rel-title { font-family: 'Cinzel', serif; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 6px; display: flex; align-items: center; justify-content: center; gap: 4px; border-bottom: 1px solid rgba(201,168,76,0.15); padding-bottom: 4px; }
         .rel-title.allies { color: #2e7d32; } .rel-title.rivals { color: #b71c1c; } .rel-title.amours { color: #ad1457; }
-        .relation-group ul { list-style: none; font-size: 9.5px; color: var(--text-dark); line-height: 1.4; padding: 0; margin: 0; }
+        .relation-group ul { list-style: none; font-size: 12.5px; color: var(--text-dark); line-height: 1.5; padding: 0; margin: 0; }
         .relation-group ul li { margin-bottom: 2px;}
 
         /* Card Footer */
-        .card-footer { padding: 6px 16px 10px; display: flex; justify-content: center; gap: 16px; border-top: 1px solid rgba(201,168,76,0.15); flex-shrink: 0; }
-        .footer-tag { font-family: 'Cinzel', serif; font-size: 9px; text-transform: uppercase; letter-spacing: 1.5px; color: var(--gold-dark); display: flex; align-items: center; gap: 4px; }
+        .card-footer { padding: 8px 16px 12px; display: flex; justify-content: center; gap: 16px; border-top: 1px solid rgba(201,168,76,0.15); flex-shrink: 0; }
+        .footer-tag { font-family: 'Cinzel', serif; font-size: 11px; text-transform: uppercase; letter-spacing: 1.5px; color: var(--gold-dark); display: flex; align-items: center; gap: 4px; }
         .footer-tag .dot { width: 4px; height: 4px; border-radius: 50%; background: var(--gold); }
     </style>
 </head>
@@ -627,7 +626,7 @@
                 name: "Louis XIV", subtitle: "Le Roi-Soleil", backSubtitle: "Roi de France et de Navarre", dates: "1638 – 1715", icon: "crown", mainList: true, isFictional: false, actor: "Matthieu Desrosiers", 
                 quote: "Je m'en vais, mais l'État demeurera toujours.", 
                 intro: "Monarque absolu par excellence, Louis XIV a régné 72 ans — le plus long règne d'Europe. Bâtisseur de Versailles, mécène des arts et stratège politique redoutable, il a forgé l'identité de la monarchie française et illuminé le Grand Siècle.", 
-                stats: [ { icon: '⚔️', val: '95', label: 'ATQ' }, { icon: '🛡️', val: '80', label: 'DÉF' }, { icon: '✨', val: '98', label: 'CHA' }, { icon: '🧠', val: '88', label: 'INT' } ],
+                stats: [ { icon: '⚔️', val: '95' }, { icon: '🛡️', val: '80' }, { icon: '✨', val: '98' }, { icon: '🧠', val: '88' } ],
                 traits: [ { icon: '👑', name: 'Absolutiste' }, { icon: '🎭', name: 'Mécène' }, { icon: '🦁', name: 'Ambitieux' }, { icon: '🌟', name: 'Charismatique' }, { icon: '⛪', name: 'Dévot' } ],
                 achievements: [ { icon: '🏛️', name: 'Versailles', val: '1682' }, { icon: '⚔️', name: 'Guerre de Hollande', val: '1672–78' }, { icon: '📜', name: 'Code Louis', val: '1667' }, { icon: '🎭', name: 'Molière & Lully', val: 'Protecteur' }, { icon: '🏗️', name: 'Canal du Midi', val: '1681' }, { icon: '👑', name: 'Règne Record', val: '72 ans' } ],
                 titles: [ { icon: '⚜️', text: 'Roi de France et de Navarre', sub: 'Par la grâce de Dieu, 1643–1715' }, { icon: '☀️', text: 'Le Roi-Soleil', sub: 'Dieudonné — Louis le Grand' } ],
@@ -1073,7 +1072,7 @@
             let quoteHtml = char.quote ? `<div class="quote-line">« ${char.quote} »</div>` : '';
             
             // Front Components
-            let statsHtml = char.stats ? `<div class="stats-row">${char.stats.map(s => `<div class="stat-chip"><span class="stat-icon">${s.icon}</span><div><span class="stat-val">${s.val}</span><br><span class="stat-label">${s.label}</span></div></div>`).join('')}</div>` : '';
+            let statsHtml = char.stats ? `<div class="stats-row">${char.stats.map(s => `<div class="stat-chip"><span class="stat-icon">${s.icon}</span><span class="stat-val">${s.val}</span></div>`).join('')}</div>` : '';
             
             let traitsHtml = char.traits ? `<div class="section-title">Traits</div><div class="traits-row">${char.traits.map(t => `<span class="trait-tag"><span class="trait-icon">${t.icon}</span>${t.name}</span>`).join('')}</div>` : '';
             
