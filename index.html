@@ -10,9 +10,10 @@
     <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>👑</text></svg>">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Cinzel+Decorative:wght@400;700;900&family=Cinzel:wght@400;600;700;900&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400;1,700&display=swap" rel="stylesheet">
     <style>
         :root {
+            /* Variables Thème Principal */
             --bg-color: #1A2238;
             --text-color: #FDFBF7;
             --dark-text: #2C3550;
@@ -20,7 +21,19 @@
             --gold-light: #F4D38B;
             --primary-gradient: linear-gradient(135deg, #5C65CD 0%, #764BA4 100%);
             --card-bg: rgba(255, 255, 255, 0.93);
-            --parchment-bg: #FDF8EF;
+            
+            /* Variables Cartes RPG 3D */
+            --gold: #c9a84c; 
+            --gold-dark: #8b6914;
+            --royal-purple: #2a1245; 
+            --royal-purple-mid: #3d1a6e;
+            --cream: #f5edd6; 
+            --cream-dark: #e8dbb8; 
+            --parchment: #f8f0dc;
+            --burgundy: #6b1d3a;
+            --text-dark: #000000; /* Noir absolu */
+            --text-mid: #111111; /* Noir presque absolu pour la hiérarchie */
+            --shadow-gold: rgba(201,168,76,0.4);
         }
 
         body {
@@ -94,7 +107,7 @@
 
         .container { max-width: 800px; margin: 0 auto; padding: 20px 15px 40px 15px; position: relative; z-index: 10;}
 
-        h1, .modal-title, .char-card-info h3, .fact-title, .lexicon-title {
+        h1, .char-card-info h3, .fact-title, .lexicon-title {
             font-family: 'Playfair Display', Georgia, serif;
         }
 
@@ -139,11 +152,8 @@
         .fade-in-up { opacity: 0; transform: translateY(20px); animation: fadeInUp 0.5s cubic-bezier(0.2, 0.8, 0.2, 1) forwards; }
         @keyframes iconPulse { 0% { transform: scale(1) rotate(0deg); } 50% { transform: scale(1.2) rotate(5deg); } 100% { transform: scale(1) rotate(0deg); } }
 
-        /* --- EMOJI ICONS --- */
         .emoji-icon { font-size: 32px; display: inline-block; transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); line-height: 1; }
-        .modal-header-bg .emoji-icon { font-size: 48px; margin-bottom: 5px; }
-
-        /* Correction de performance : retrait du backdrop-filter sur les nombreuses cartes */
+        
         .glass-card { 
             background-color: var(--card-bg); 
             border: 1px solid rgba(255, 255, 255, 0.2); 
@@ -197,7 +207,6 @@
         }
         .timeline-item:nth-child(odd) { left: 0; }
         .timeline-item:nth-child(even) { left: 50%; }
-        /* Point central de la timeline */
         .timeline-item::after {
             content: ''; position: absolute; width: 20px; height: 20px;
             background-color: var(--bg-color); border: 4px solid var(--accent-color);
@@ -245,153 +254,6 @@
         .school-name { font-family: 'Playfair Display', serif; color: var(--accent-color); font-size: 1.25rem; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 3px; }
         .show-dates { font-size: 0.9rem; color: #FFF; opacity: 0.8; margin-bottom: 25px; font-weight: bold; letter-spacing: 1px; }
 
-        /* --- POPUP / MODALE --- */
-        .modal-overlay {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.5); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
-            z-index: 1000; display: none; justify-content: center; align-items: center;
-            padding: 20px; box-sizing: border-box;
-        }
-        .modal-overlay.active { display: flex; animation: fadeIn 0.3s ease; }
-        .modal-card {
-            background: rgba(255, 255, 255, 0.98); width: 100%; max-width: 500px;
-            max-height: 90vh; border-radius: 16px; overflow-y: auto; overflow-x: hidden;
-            position: relative; box-shadow: 0 15px 40px rgba(0,0,0,0.4); border: 1px solid rgba(255,255,255,0.4);
-            display: flex; flex-direction: column;
-        }
-        @media (max-width: 600px) {
-            .modal-overlay { padding: 0; align-items: flex-start; }
-            .modal-card { max-width: 100%; height: 100%; height: 100dvh; max-height: none; border-radius: 0; border: none; }
-            .modal-header-bg { padding-top: max(20px, env(safe-area-inset-top, 20px)); }
-            .modal-close, .modal-flip-btn { top: max(12px, env(safe-area-inset-top, 12px)); }
-            .modal-body { flex: 1; overflow-y: auto; -webkit-overflow-scrolling: touch; }
-        }
-        .modal-header-bg { background: var(--primary-gradient); padding: 20px 20px 15px 20px; text-align: center; color: #FFF; position: relative; flex-shrink: 0;}
-        
-        .modal-controls { position: absolute; top: 15px; right: 15px; display: flex; gap: 12px; align-items: center; z-index: 10;}
-        
-        /* Animation Pulse pour le bouton de retournement */
-        @keyframes pulseFlip {
-            0% { box-shadow: 0 0 0 0 rgba(226, 184, 106, 0.8); }
-            70% { box-shadow: 0 0 0 12px rgba(226, 184, 106, 0); }
-            100% { box-shadow: 0 0 0 0 rgba(226, 184, 106, 0); }
-        }
-
-        .modal-flip-btn {
-            background: var(--accent-color); border: none; width: 42px; height: 42px; border-radius: 50%; color: var(--bg-color);
-            cursor: pointer; display: flex; justify-content: center; align-items: center;
-            touch-action: manipulation; -webkit-tap-highlight-color: transparent; transition: background 0.2s, transform 0.2s;
-            animation: pulseFlip 2s infinite;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-        }
-        .modal-flip-btn:active { transform: scale(0.9); background: var(--gold-light); }
-        
-        .modal-close {
-            background: rgba(255,255,255,0.2); border: none; width: 36px; height: 36px; border-radius: 50%; color: #FFF;
-            font-size: 1.2rem; cursor: pointer; display: flex; justify-content: center; align-items: center;
-            touch-action: manipulation; -webkit-tap-highlight-color: transparent; transition: background 0.2s;
-        }
-        .modal-close:active { background: rgba(255,255,255,0.4); transform: scale(0.9); }
-        
-        .modal-icon { display: flex; justify-content: center; margin-bottom: 5px; }
-        .modal-icon .emoji-icon { font-size: 32px; margin-bottom: 0; }
-        .modal-title { font-size: 1.6rem; margin: 0 0 2px 0; }
-        .modal-subtitle { font-size: 0.95rem; opacity: 0.9; margin-bottom: 5px; }
-        .modal-dates { background: rgba(255,255,255,0.2); padding: 3px 12px; border-radius: 20px; font-size: 0.8rem; display: inline-block; font-weight: bold; }
-        .modal-dates.fictif { background: transparent; border: 1px dashed rgba(255, 255, 255, 0.7); color: #FFF; }
-        
-        .modal-body { padding: 25px 20px; flex-grow: 1;}
-
-        /* --- ORNEMENTS & CONTENU MODALE RECTO --- */
-        .ornament-divider { text-align: center; margin: 20px 0; position: relative; }
-        .ornament-divider::before { content: ''; position: absolute; top: 50%; left: 15%; width: 30%; height: 1px; background: linear-gradient(to right, transparent, rgba(92, 101, 205, 0.3)); }
-        .ornament-divider::after { content: ''; position: absolute; top: 50%; right: 15%; width: 30%; height: 1px; background: linear-gradient(to left, transparent, rgba(92, 101, 205, 0.3)); }
-        .ornament-divider span { color: #5C65CD; font-size: 1rem; opacity: 0.5; }
-        .modal-quote { font-style: italic; color: #FFF; opacity: 0.9; text-align: center; margin: 15px auto 0 auto; font-family: 'Playfair Display', serif; font-size: 1.1rem; max-width: 90%; line-height: 1.4;}
-        .intro-text { font-size: 0.95rem; text-align: justify; opacity: 0.9; margin-bottom: 20px; color: var(--dark-text); }
-        .section-title { color: #5C65CD; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px; font-weight: bold; margin: 0 0 12px 0; display: flex; align-items: center; gap: 8px; }
-        .facts-list { list-style: none; padding: 0; margin: 0 0 20px 0; }
-        .facts-list li { margin-bottom: 10px; display: flex; align-items: flex-start; gap: 10px; font-size: 0.9rem; color: var(--dark-text); opacity: 0.9; }
-        .facts-list li .emoji-icon { font-size: 16px; flex-shrink: 0; margin-top: 2px; }
-        .role-box, .heritage-box { border-radius: 8px; padding: 15px; margin-bottom: 12px; }
-        .role-box { background: var(--primary-gradient); color: #FFF; }
-        .heritage-box { background: rgba(92, 101, 205, 0.05); border: 1px solid #5C65CD; color: var(--dark-text); }
-        .box-title { font-weight: bold; text-transform: uppercase; font-size: 0.8rem; margin-bottom: 8px; letter-spacing: 0.5px; opacity: 0.9; }
-        .box-content { font-size: 0.9rem; margin: 0; line-height: 1.4; }
-
-        /* --- FLIP ANIMATION --- */
-        .flip-container {
-            display: grid; perspective: 1200px; width: 100%;
-        }
-        .flip-inner {
-            grid-area: 1 / 1; display: grid; transition: transform 0.6s cubic-bezier(0.4, 0.2, 0.2, 1);
-            transform-style: preserve-3d; width: 100%;
-        }
-        .flip-front, .flip-back {
-            grid-area: 1 / 1; backface-visibility: hidden; -webkit-backface-visibility: hidden; width: 100%;
-        }
-        .flip-back { transform: rotateY(180deg); }
-        .flip-inner.is-flipped { transform: rotateY(180deg); }
-
-        /* --- RPG CARD STYLING (VERSO PARCHEMIN) --- */
-        .rpg-card {
-            background: var(--parchment-bg); 
-            border: 1px solid rgba(139, 101, 8, 0.2);
-            border-radius: 8px;
-            padding: 20px;
-            color: #1a140b;
-            font-family: 'Playfair Display', serif;
-            box-shadow: inset 0 0 30px rgba(139, 101, 8, 0.05), 0 4px 15px rgba(0,0,0,0.1);
-            margin-top: -5px;
-            margin-bottom: 10px;
-        }
-        .rpg-section-title {
-            text-align: center; position: relative; margin: 15px 0 12px 0; z-index: 1;
-        }
-        .rpg-card > .rpg-section-title:first-child { margin-top: 0; }
-        .rpg-section-title::before {
-            content: ''; position: absolute; top: 50%; left: 0; right: 0;
-            border-top: 1px solid rgba(139, 101, 8, 0.3); z-index: -1;
-        }
-        .rpg-section-title span {
-            background: var(--parchment-bg);
-            color: #3b250e;
-            padding: 0 15px;
-            font-size: 0.95rem;
-            font-weight: bold;
-            letter-spacing: 1px;
-            text-transform: uppercase;
-        }
-        .rpg-skills { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-        .rpg-skill-box, .rpg-ult-box {
-            background: rgba(255,255,255,0.6); color: #1a140b;
-            border: 1px solid rgba(139, 101, 8, 0.2); border-radius: 6px;
-            padding: 12px 8px; text-align: center; box-shadow: none;
-        }
-        .rpg-skill-name { font-size: 0.8rem; font-weight: bold; text-transform: uppercase; margin-bottom: 5px; letter-spacing: 0.5px; }
-        .rpg-skill-icon { font-size: 28px; margin: 8px 0; }
-        .rpg-skill-desc { font-size: 0.75rem; font-family: sans-serif; line-height: 1.3; opacity: 0.9; }
-        .rpg-ult-name { font-size: 1rem; font-weight: bold; color: #3b250e; text-transform: uppercase; letter-spacing: 1px; }
-        
-        .rpg-relations { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; }
-        .rpg-rel-col {
-            background: rgba(255,255,255,0.6); color: #1a140b;
-            border: 1px solid rgba(139, 101, 8, 0.2); border-radius: 4px;
-            padding: 8px 5px; text-align: center; display: flex; flex-direction: column;
-        }
-        .rpg-rel-title {
-            font-size: 0.8rem; font-weight: bold; margin-bottom: 6px;
-            border-bottom: 1px solid rgba(139, 101, 8, 0.2); padding-bottom: 4px; color: #3b250e;
-        }
-        .rpg-rel-list { list-style: none; padding: 0; margin: 0; font-size: 0.7rem; font-family: sans-serif; font-weight: 500; }
-        .rpg-rel-list li { margin-bottom: 3px; }
-        
-        .rpg-footer {
-            text-align: center; font-size: 0.75rem; color: #3b250e; font-family: sans-serif;
-            letter-spacing: 1px; margin-top: 15px; border-top: 1px dashed rgba(139, 101, 8, 0.3);
-            padding-top: 12px; font-weight: bold;
-        }
-
         .back-to-top {
             position: fixed; bottom: 20px; right: 20px; background: var(--primary-gradient);
             color: white; width: 45px; height: 45px; border-radius: 50%; border: none;
@@ -411,6 +273,241 @@
         #toast.show { visibility: visible; animation: fadein 0.5s, fadeout 0.5s 2.5s; }
         @keyframes fadein { from {bottom: 0; opacity: 0;} to {bottom: 30px; opacity: 1;} }
         @keyframes fadeout { from {bottom: 30px; opacity: 1;} to {bottom: 0; opacity: 0;} }
+
+        /* ========================================================================= */
+        /* --- NOUVELLE MODALE : CARTES RPG 3D NATIVES --- */
+        /* ========================================================================= */
+        
+        .modal-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.75); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+            z-index: 10000; display: none; justify-content: center; align-items: center;
+            padding: 20px; box-sizing: border-box; overflow: hidden;
+            font-family: 'Cormorant Garamond', serif;
+        }
+        .modal-overlay.active { display: flex; animation: fadeIn 0.3s ease forwards; }
+
+        /* Particules en fond de modale */
+        .particles { position: absolute; inset: 0; pointer-events: none; overflow: hidden; z-index: 1;}
+        .particle { position: absolute; width: 3px; height: 3px; background: var(--gold); border-radius: 50%; opacity: 0; animation: drift 8s linear infinite; }
+        @keyframes drift { 0% {opacity:0; transform:translateY(100vh) scale(0);} 10% {opacity:0.6;} 90% {opacity:0.6;} 100% {opacity:0; transform:translateY(-20vh) scale(1);} }
+
+        /* Scene et Carte 3D */
+        .scene {
+            perspective: 1200px; width: 420px; height: 720px; 
+            filter: drop-shadow(0 30px 60px rgba(0,0,0,0.6));
+            z-index: 10; position: relative;
+        }
+        
+        /* ADAPTATION PLEIN ÉCRAN MOBILE */
+        @media (max-width: 600px) {
+            .modal-overlay { padding: 0; }
+            .scene { 
+                width: 100vw; height: 100dvh; 
+                transform: none !important; 
+                filter: none;
+                border-radius: 0;
+            }
+            .card-face { border-radius: 0; }
+            .card-face-inner::before { border-radius: 0; inset: 4px; border-width: 1px; }
+            .card-face-inner::after { display: none; }
+            .card-header { padding: max(30px, env(safe-area-inset-top, 30px)) 20px 20px; }
+            .btn-circle { top: max(14px, env(safe-area-inset-top, 14px)); }
+        }
+
+        .scene.hidden { animation: card-dismiss 0.4s ease-in forwards; }
+        @keyframes card-dismiss { 0% {opacity:1; transform:scale(1);} 100% {opacity:0; transform:scale(0.85) translateY(40px);} }
+
+        .card { width: 100%; height: 100%; position: relative; transform-style: preserve-3d; transition: transform 0.9s cubic-bezier(0.4,0,0.2,1); }
+        .card.flipped { transform: rotateY(180deg); }
+        .card-face { position: absolute; inset: 0; backface-visibility: hidden; -webkit-backface-visibility: hidden; border-radius: 18px; overflow: hidden; }
+        .card-back { transform: rotateY(180deg); }
+
+        /* Inner Structure */
+        .card-face-inner { display: flex; flex-direction: column; height: 100%; background: var(--parchment); position: relative; color: #000; }
+        .card-face-inner::before { content:''; position:absolute; inset:0; border-radius:18px; border:3px solid var(--gold); pointer-events:none; z-index:10; }
+        .card-face-inner::after { content:''; position:absolute; inset:5px; border-radius:14px; border:1px solid rgba(201,168,76,0.3); pointer-events:none; z-index:10; }
+
+        /* Buttons */
+        .btn-circle {
+            position: absolute; top: 14px; z-index: 100; width: 44px; height: 44px;
+            border-radius: 50%; border: 2px solid var(--gold);
+            background: radial-gradient(circle, rgba(201,168,76,0.3), rgba(42,18,69,0.8));
+            backdrop-filter: blur(6px); cursor: pointer; display: flex; align-items: center; justify-content: center;
+            transition: transform 0.3s, box-shadow 0.3s;
+            -webkit-tap-highlight-color: transparent;
+        }
+        .btn-circle svg { width: 22px; height: 22px; fill: var(--gold-light); }
+        .btn-circle:active { transform: scale(0.9); }
+        
+        .btn-flip { animation: pulse-glow 2s ease-in-out infinite; }
+        .btn-close svg { width: 18px; height: 18px; }
+        .btn-close:active { background: radial-gradient(circle, rgba(180,40,40,0.4), rgba(42,18,69,0.8)); border-color: #c0392b; }
+
+        .card-front .btn-flip { left: 14px; }
+        .card-front .btn-close { right: 14px; }
+        .card-back .btn-flip { right: 14px; }
+        .card-back .btn-close { left: 14px; }
+
+        @keyframes pulse-glow {
+            0%, 100% { box-shadow: 0 0 10px var(--shadow-gold), 0 0 20px rgba(201,168,76,0.1); }
+            50% { box-shadow: 0 0 25px var(--shadow-gold), 0 0 45px rgba(201,168,76,0.25), 0 0 60px rgba(201,168,76,0.1); }
+        }
+
+        /* Ornaments */
+        .ornament { position: absolute; width: 30px; height: 30px; z-index: 11; pointer-events: none; opacity: 0.5; }
+        .ornament svg { width: 100%; height: 100%; }
+        .orn-bl { bottom: 8px; left: 8px; transform: scaleY(-1); }
+        .orn-br { bottom: 8px; right: 8px; transform: scale(-1); }
+
+        /* Card Header */
+        .card-header {
+            background: linear-gradient(135deg, var(--royal-purple) 0%, var(--royal-purple-mid) 40%, var(--burgundy) 100%);
+            padding: 22px 18px 16px; text-align: center; position: relative; overflow: hidden; flex-shrink: 0;
+        }
+        .card-header::after {
+            content: ''; position: absolute; inset: 0;
+            background: url("data:image/svg+xml,%3Csvg width='80' height='80' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M40 10c4 7 11 11 18 11-7 0-14 4-18 11-4-7-11-11-18-11 7 0 14-4 18-11z' fill='rgba(201,168,76,0.05)'/%3E%3C/svg%3E");
+        }
+        .card-header .sun-emblem {
+            font-size: 32px; display: block; position: relative;
+            animation: float-sun 4s ease-in-out infinite;
+            filter: drop-shadow(0 0 12px rgba(201,168,76,0.5));
+        }
+        @keyframes float-sun { 0%, 100% { transform: translateY(0) scale(1); } 50% { transform: translateY(-4px) scale(1.05); } }
+        
+        .card-header h1, .card-header h2 {
+            font-family: 'Cinzel Decorative', serif; font-size: 22px; font-weight: 700;
+            color: var(--gold-light); position: relative; text-shadow: 0 2px 10px rgba(0,0,0,0.5); margin: 4px 0 0 0; line-height: 1.1;
+        }
+        .card-header .subtitle { font-family: 'Cormorant Garamond', serif; font-size: 13px; color: rgba(232,212,139,0.8); font-style: italic; position: relative; display: block;}
+        .card-header .date-badge {
+            display: inline-block; margin-top: 5px;
+            background: linear-gradient(135deg, var(--gold-dark), var(--gold));
+            color: var(--royal-purple); font-family: 'Cinzel', serif; font-weight: 700;
+            font-size: 11px; padding: 2px 14px; border-radius: 20px; position: relative; letter-spacing: 1px;
+        }
+
+        /* Card Body */
+        .card-body { flex: 1; padding: 12px 16px 8px; display: flex; flex-direction: column; gap: 10px; overflow-y: auto; -webkit-overflow-scrolling: touch; color: #000; }
+        .card-body::-webkit-scrollbar { width: 4px; }
+        .card-body::-webkit-scrollbar-track { background: transparent; }
+        .card-body::-webkit-scrollbar-thumb { background: var(--gold); border-radius: 2px; }
+
+        .rpg-section-title {
+            font-family: 'Cinzel', serif; font-size: 10px; font-weight: 700;
+            text-transform: uppercase; letter-spacing: 2.5px; color: var(--gold-dark);
+            text-align: center; display: flex; align-items: center; gap: 10px; margin: 0;
+        }
+        .rpg-section-title::before, .rpg-section-title::after { content: ''; flex: 1; height: 1px; background: linear-gradient(90deg, transparent, var(--gold), transparent); }
+
+        .quote-line {
+            font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 13px;
+            color: var(--text-dark); text-align: center; padding: 0 8px; line-height: 1.3; opacity: 0.85;
+        }
+
+        /* Stats (Front) */
+        .stats-row { display: flex; gap: 6px; justify-content: center; }
+        .stat-chip {
+            display: flex; align-items: center; gap: 4px;
+            background: linear-gradient(135deg, rgba(42,18,69,0.08), rgba(107,29,58,0.06));
+            border: 1px solid rgba(201,168,76,0.25); border-radius: 8px; padding: 4px 9px;
+            font-family: 'Cinzel', serif;
+        }
+        .stat-chip .stat-icon { font-size: 12px; }
+        .stat-chip .stat-val { font-weight: 700; color: var(--burgundy); font-size: 13px; line-height: 1; }
+        .stat-chip .stat-label { font-size: 7.5px; text-transform: uppercase; letter-spacing: 0.5px; color: var(--text-dark); opacity: 0.7; }
+
+        /* Traits */
+        .traits-row { display: flex; gap: 5px; justify-content: center; flex-wrap: wrap; }
+        .trait-tag {
+            font-family: 'Cinzel', serif; font-size: 8.5px; font-weight: 600;
+            text-transform: uppercase; letter-spacing: 0.8px;
+            padding: 3px 10px; border-radius: 20px;
+            border: 1px solid rgba(201,168,76,0.3); color: var(--text-dark);
+            background: linear-gradient(135deg, rgba(201,168,76,0.08), rgba(201,168,76,0.02));
+        }
+        .trait-tag .trait-icon { margin-right: 3px; font-size: 10px; }
+
+        /* Lore / Facts Box */
+        .lore-section {
+            background: linear-gradient(135deg, rgba(42,18,69,0.04), rgba(201,168,76,0.04));
+            border: 1px solid rgba(201,168,76,0.2); border-radius: 10px; padding: 10px 12px;
+        }
+        .lore-section p { font-size: 12px; color: var(--text-dark); line-height: 1.4; text-align: justify; margin: 0;}
+        .lore-list { list-style: none; padding: 0; margin: 0; font-size: 11.5px; color: var(--text-dark); line-height: 1.4; display: flex; flex-direction: column; gap: 6px; }
+        .lore-list li { display: flex; align-items: flex-start; gap: 5px; }
+        .lore-list li .bullet { color: var(--gold-dark); font-size: 12px; }
+
+        /* Achievements Grid */
+        .achievements-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 5px; }
+        .achieve-card {
+            background: linear-gradient(145deg, #fff, var(--cream));
+            border: 1px solid rgba(201,168,76,0.2); border-radius: 10px;
+            padding: 7px 5px 6px; text-align: center; transition: transform 0.2s;
+        }
+        .achieve-card:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(201,168,76,0.12); }
+        .achieve-card .ach-icon { font-size: 20px; display: block; margin-bottom: 2px; }
+        .achieve-card .ach-name { font-family: 'Cinzel', serif; font-size: 8px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; color: var(--text-dark); line-height: 1.2; }
+        .achieve-card .ach-val { font-size: 9px; color: var(--burgundy); font-weight: 600; font-family: 'Cormorant Garamond', serif; }
+
+        /* Titles / Heritage Box */
+        .titles-list { display: flex; flex-direction: column; gap: 6px; padding: 0 4px; }
+        .title-item {
+            display: flex; align-items: center; gap: 8px; padding: 6px 10px;
+            background: linear-gradient(145deg, #fff, var(--cream));
+            border: 1px solid rgba(201,168,76,0.15); border-radius: 8px;
+        }
+        .title-item .title-icon { font-size: 18px; flex-shrink: 0; }
+        .title-item .title-text { font-family: 'Cinzel', serif; font-size: 9.5px; font-weight: 700; color: var(--text-dark); letter-spacing: 0.3px; text-transform: uppercase; }
+        .title-item .title-sub { font-size: 10px; color: var(--text-dark); font-style: italic; font-weight: 400; font-family: 'Cormorant Garamond', serif; line-height: 1.2; display: block; margin-top: 1px;}
+
+        /* Skills */
+        .skills-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
+        .skill-card {
+            background: linear-gradient(145deg, #fff, var(--cream));
+            border: 1px solid rgba(201,168,76,0.2); border-radius: 10px;
+            padding: 8px 8px 7px; text-align: center; transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .skill-card .skill-name { font-family: 'Cinzel', serif; font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.8px; color: var(--text-dark); margin-bottom: 2px; }
+        .skill-card .skill-icon { font-size: 20px; display: block; margin: 2px 0; }
+        .skill-card .skill-desc { font-size: 10px; color: var(--text-dark); line-height: 1.2; font-style: italic; }
+
+        /* Stat Bars (Back) */
+        .stat-bars { display: flex; flex-direction: column; gap: 6px; }
+        .stat-bar-row { display: flex; align-items: center; gap: 8px; }
+        .stat-bar-label { font-family: 'Cinzel', serif; font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; color: var(--text-dark); width: 80px; text-align: right; }
+        .stat-bar-track { flex: 1; height: 10px; background: var(--cream-dark); border-radius: 5px; overflow: hidden; border: 1px solid rgba(201,168,76,0.2); }
+        .stat-bar-fill { height: 100%; border-radius: 5px; transition: width 1.2s cubic-bezier(0.4,0,0.2,1); }
+        .stat-bar-fill.authority { background: linear-gradient(90deg, var(--royal-purple-mid), var(--burgundy)); }
+        .stat-bar-fill.charisma { background: linear-gradient(90deg, var(--gold-dark), var(--gold)); }
+        .stat-bar-fill.strategy { background: linear-gradient(90deg, #1a4a6e, #2980b9); }
+        .stat-bar-fill.culture { background: linear-gradient(90deg, #6b1d3a, #c0392b); }
+        .stat-bar-fill.diplomacy { background: linear-gradient(90deg, #1a6e4a, #27ae60); }
+        .stat-bar-fill.warfare { background: linear-gradient(90deg, #4a3728, #8b6914); }
+        .stat-bar-val { font-family: 'Cinzel', serif; font-size: 10px; font-weight: 700; color: var(--text-dark); width: 28px; text-align: center; }
+
+        /* Ultimate */
+        .ultimate-box {
+            background: linear-gradient(135deg, rgba(42,18,69,0.06), rgba(201,168,76,0.08));
+            border: 1.5px solid var(--gold); border-radius: 12px; padding: 10px 12px;
+            text-align: center;
+        }
+        .ultimate-box .ult-name { font-family: 'Cinzel Decorative', serif; font-size: 13px; font-weight: 700; color: var(--burgundy); }
+        .ultimate-box .ult-desc { font-size: 11px; color: var(--text-dark); font-style: italic; line-height: 1.3; margin-top: 3px; }
+
+        /* Relations */
+        .relations-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 6px; }
+        .relation-group { background: linear-gradient(145deg, #fff, var(--cream)); border: 1px solid rgba(201,168,76,0.2); border-radius: 10px; padding: 8px 6px 6px; text-align: center; }
+        .relation-group .rel-title { font-family: 'Cinzel', serif; font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 4px; display: flex; align-items: center; justify-content: center; gap: 3px; border-bottom: 1px solid rgba(201,168,76,0.15); padding-bottom: 4px; }
+        .rel-title.allies { color: #2e7d32; } .rel-title.rivals { color: #b71c1c; } .rel-title.amours { color: #ad1457; }
+        .relation-group ul { list-style: none; font-size: 9.5px; color: var(--text-dark); line-height: 1.4; padding: 0; margin: 0; }
+        .relation-group ul li { margin-bottom: 2px;}
+
+        /* Card Footer */
+        .card-footer { padding: 6px 16px 10px; display: flex; justify-content: center; gap: 16px; border-top: 1px solid rgba(201,168,76,0.15); flex-shrink: 0; }
+        .footer-tag { font-family: 'Cinzel', serif; font-size: 9px; text-transform: uppercase; letter-spacing: 1.5px; color: var(--gold-dark); display: flex; align-items: center; gap: 4px; }
+        .footer-tag .dot { width: 4px; height: 4px; border-radius: 50%; background: var(--gold); }
     </style>
 </head>
 <body>
@@ -496,24 +593,12 @@
     <!-- TOAST MSG -->
     <div id="toast">Lien copié dans le presse-papier !</div>
 
-    <!-- MODALE PERSONNAGE -->
-    <div class="modal-overlay" id="charModal" onclick="closeModal(event)">
-        <div class="modal-card" onclick="event.stopPropagation()" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
-            <div class="modal-header-bg">
-                <div class="modal-controls">
-                    <button class="modal-flip-btn" id="flipBtn" aria-label="Retourner la carte" onclick="toggleCardFlip()">
-                        <svg viewBox="0 0 24 24" width="22" height="22" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M21.5 2v6h-6M2.5 22v-6h6M2 11.5a10 10 0 0 1 18.8-4.3M22 12.5a10 10 0 0 1-18.8 4.3"/></svg>
-                    </button>
-                    <button class="modal-close" aria-label="Fermer la fiche" onclick="closeModal(event)">✕</button>
-                </div>
-                <div class="modal-icon" aria-hidden="true" id="modalIcon"></div>
-                <h2 class="modal-title" id="modalTitle">Nom</h2>
-                <div class="modal-subtitle" id="modalSubtitle">Sous-titre</div>
-                <div class="modal-dates" id="modalDates">Dates</div>
-                <div class="modal-quote" id="modalQuote">"Citation"</div>
-            </div>
-            <div class="modal-body" id="modalBody">
-                <!-- Contenu injecté par JS -->
+    <!-- MODALE RPG NATIVE 3D -->
+    <div class="modal-overlay" id="charModal">
+        <div class="particles" id="particles"></div>
+        <div class="scene" id="scene">
+            <div class="card" id="card">
+                <!-- Injecté par JS -->
             </div>
         </div>
     </div>
@@ -536,403 +621,24 @@
             "lex-bourbon": "⚜️", "lex-absolutisme": "👑", "lex-siecle": "✨"
         };
 
-        const testRpgHtml = `<!DOCTYPE html>
-<html lang="fr">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Louis XIV — Carte RPG</title>
-<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Cinzel:wght@400;600;700;900&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400;1,700&display=swap" rel="stylesheet">
-<style>
-  :root {
-    --gold:#c9a84c; --gold-light:#e8d48b; --gold-dark:#8b6914;
-    --royal-purple:#2a1245; --royal-purple-mid:#3d1a6e;
-    --cream:#f5edd6; --cream-dark:#e8dbb8; --parchment:#f8f0dc;
-    --burgundy:#6b1d3a;
-    --text-dark:#2c1810; --text-mid:#5a3e2b;
-    --shadow-gold:rgba(201,168,76,0.4);
-  }
-  *{margin:0;padding:0;box-sizing:border-box;}
-  body{
-    min-height:100vh;display:flex;align-items:center;justify-content:center;
-    background:transparent;
-    font-family:'Cormorant Garamond',serif;overflow:hidden;
-  }
-  body::before{
-    content:'';position:fixed;inset:0;pointer-events:none;
-    background:url("data:image/svg+xml,%3Csvg width='60' height='60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M30 5 L35 25 L55 30 L35 35 L30 55 L25 35 L5 30 L25 25Z' fill='rgba(201,168,76,0.015)'/%3E%3C/svg%3E");
-  }
-
-  .scene{perspective:1200px;width:420px;height:720px;filter:drop-shadow(0 30px 60px rgba(0,0,0,0.6));}
-  @media (max-width: 450px) { .scene { transform: scale(0.85); transform-origin: center; } }
-  @media (max-height: 750px) { .scene { transform: scale(0.8); transform-origin: center; } }
-  @media (max-width: 380px) { .scene { transform: scale(0.75); transform-origin: center; } }
-
-  .card{width:100%;height:100%;position:relative;transform-style:preserve-3d;transition:transform 0.9s cubic-bezier(0.4,0,0.2,1);}
-  .card.flipped{transform:rotateY(180deg);}
-  .card-face{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;border-radius:18px;overflow:hidden;}
-  .card-back{transform:rotateY(180deg);}
-
-  /* BUTTONS */
-  .btn-circle{
-    position:absolute;top:14px;z-index:100;width:44px;height:44px;
-    border-radius:50%;border:2px solid var(--gold);
-    background:radial-gradient(circle,rgba(201,168,76,0.3),rgba(42,18,69,0.8));
-    backdrop-filter:blur(6px);cursor:pointer;display:flex;align-items:center;justify-content:center;
-    transition:transform 0.3s,box-shadow 0.3s;
-  }
-  .btn-circle svg{width:22px;height:22px;fill:var(--gold-light);}
-  .btn-circle:hover{transform:scale(1.15);box-shadow:0 0 30px var(--shadow-gold);}
-
-  .btn-flip{animation:pulse-glow 2s ease-in-out infinite;}
-  .btn-flip:hover{transform:scale(1.15) rotate(180deg);}
-
-  .btn-close svg{width:18px;height:18px;}
-  .btn-close:hover{background:radial-gradient(circle,rgba(180,40,40,0.4),rgba(42,18,69,0.8));border-color:#c0392b;}
-
-  /* Front: normal */
-  .card-front .btn-flip{left:14px;}
-  .card-front .btn-close{right:14px;}
-  /* Back: mirrored by rotateY(180deg) → swap left/right */
-  .card-back .btn-flip{right:14px;}
-  .card-back .btn-close{left:14px;}
-
-  @keyframes pulse-glow{
-    0%,100%{box-shadow:0 0 10px var(--shadow-gold),0 0 20px rgba(201,168,76,0.1);}
-    50%{box-shadow:0 0 25px var(--shadow-gold),0 0 45px rgba(201,168,76,0.25),0 0 60px rgba(201,168,76,0.1);}
-  }
-
-  /* INNER */
-  .card-face-inner{display:flex;flex-direction:column;height:100%;background:var(--parchment);position:relative;}
-  .card-face-inner::before{content:'';position:absolute;inset:0;border-radius:18px;border:3px solid var(--gold);pointer-events:none;z-index:10;}
-  .card-face-inner::after{content:'';position:absolute;inset:5px;border-radius:14px;border:1px solid rgba(201,168,76,0.3);pointer-events:none;z-index:10;}
-
-  /* HEADER */
-  .card-header{
-    background:linear-gradient(135deg,var(--royal-purple) 0%,var(--royal-purple-mid) 40%,var(--burgundy) 100%);
-    padding:22px 18px 16px;text-align:center;position:relative;overflow:hidden;flex-shrink:0;
-  }
-  .card-header::after{
-    content:'';position:absolute;inset:0;
-    background:url("data:image/svg+xml,%3Csvg width='80' height='80' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M40 10c4 7 11 11 18 11-7 0-14 4-18 11-4-7-11-11-18-11 7 0 14-4 18-11z' fill='rgba(201,168,76,0.05)'/%3E%3C/svg%3E");
-  }
-  .card-header .sun-emblem{
-    font-size:32px;display:block;position:relative;
-    animation:float-sun 4s ease-in-out infinite;
-    filter:drop-shadow(0 0 12px rgba(201,168,76,0.5));
-  }
-  @keyframes float-sun{0%,100%{transform:translateY(0) scale(1);}50%{transform:translateY(-4px) scale(1.05);}}
-  .card-header h1,.card-header h2{
-    font-family:'Cinzel Decorative',serif;font-size:22px;font-weight:700;
-    color:var(--gold-light);position:relative;text-shadow:0 2px 10px rgba(0,0,0,0.5);margin-top:4px;
-  }
-  .card-header .subtitle{font-family:'Cormorant Garamond',serif;font-size:13px;color:rgba(232,212,139,0.8);font-style:italic;position:relative;}
-  .card-header .date-badge{
-    display:inline-block;margin-top:5px;
-    background:linear-gradient(135deg,var(--gold-dark),var(--gold));
-    color:var(--royal-purple);font-family:'Cinzel',serif;font-weight:700;
-    font-size:11px;padding:2px 14px;border-radius:20px;position:relative;letter-spacing:1px;
-  }
-
-  /* BODY */
-  .card-body{flex:1;padding:12px 16px 8px;display:flex;flex-direction:column;gap:10px;overflow-y:auto;}
-  .card-body::-webkit-scrollbar{width:4px;}
-  .card-body::-webkit-scrollbar-track{background:transparent;}
-  .card-body::-webkit-scrollbar-thumb{background:var(--gold);border-radius:2px;}
-
-  .section-title{
-    font-family:'Cinzel',serif;font-size:10px;font-weight:700;
-    text-transform:uppercase;letter-spacing:2.5px;color:var(--gold-dark);
-    text-align:center;display:flex;align-items:center;gap:10px;
-  }
-  .section-title::before,.section-title::after{content:'';flex:1;height:1px;background:linear-gradient(90deg,transparent,var(--gold),transparent);}
-
-  .quote-line{
-    font-family:'Cormorant Garamond',serif;font-style:italic;font-size:12.5px;
-    color:var(--text-mid);text-align:center;padding:0 8px;line-height:1.3;opacity:0.85;
-  }
-
-  /* STATS — 4 chips, one line */
-  .stats-row{display:flex;gap:6px;justify-content:center;}
-  .stat-chip{
-    display:flex;align-items:center;gap:4px;
-    background:linear-gradient(135deg,rgba(42,18,69,0.08),rgba(107,29,58,0.06));
-    border:1px solid rgba(201,168,76,0.25);border-radius:8px;padding:4px 9px;
-    font-family:'Cinzel',serif;
-  }
-  .stat-chip .stat-icon{font-size:12px;}
-  .stat-chip .stat-val{font-weight:700;color:var(--burgundy);font-size:13px;line-height:1;}
-  .stat-chip .stat-label{font-size:7.5px;text-transform:uppercase;letter-spacing:0.5px;color:var(--text-mid);opacity:0.7;}
-
-  /* TRAITS */
-  .traits-row{display:flex;gap:5px;justify-content:center;flex-wrap:wrap;}
-  .trait-tag{
-    font-family:'Cinzel',serif;font-size:8.5px;font-weight:600;
-    text-transform:uppercase;letter-spacing:0.8px;
-    padding:3px 10px;border-radius:20px;
-    border:1px solid rgba(201,168,76,0.3);color:var(--text-dark);
-    background:linear-gradient(135deg,rgba(201,168,76,0.08),rgba(201,168,76,0.02));
-  }
-  .trait-tag .trait-icon{margin-right:3px;font-size:10px;}
-
-  /* LORE */
-  .lore-section{
-    background:linear-gradient(135deg,rgba(42,18,69,0.04),rgba(201,168,76,0.04));
-    border:1px solid rgba(201,168,76,0.2);border-radius:10px;padding:10px 12px;
-  }
-  .lore-section p{font-size:11px;color:var(--text-mid);line-height:1.5;text-align:justify;}
-
-  /* ACHIEVEMENTS */
-  .achievements-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:5px;}
-  .achieve-card{
-    background:linear-gradient(145deg,#fff,var(--cream));
-    border:1px solid rgba(201,168,76,0.2);border-radius:10px;
-    padding:7px 5px 6px;text-align:center;transition:transform 0.2s;
-  }
-  .achieve-card:hover{transform:translateY(-2px);box-shadow:0 4px 12px rgba(201,168,76,0.12);}
-  .achieve-card .ach-icon{font-size:20px;display:block;margin-bottom:2px;}
-  .achieve-card .ach-name{font-family:'Cinzel',serif;font-size:8px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:var(--text-dark);line-height:1.2;}
-  .achieve-card .ach-val{font-size:9px;color:var(--burgundy);font-weight:600;font-family:'Cormorant Garamond',serif;}
-
-  /* TITLES */
-  .titles-list{display:flex;flex-direction:column;gap:4px;padding:0 4px;}
-  .title-item{
-    display:flex;align-items:center;gap:8px;padding:5px 10px;
-    background:linear-gradient(145deg,#fff,var(--cream));
-    border:1px solid rgba(201,168,76,0.15);border-radius:8px;
-  }
-  .title-item .title-icon{font-size:16px;flex-shrink:0;}
-  .title-item .title-text{font-family:'Cinzel',serif;font-size:9.5px;font-weight:600;color:var(--text-dark);letter-spacing:0.3px;}
-  .title-item .title-sub{font-size:9px;color:var(--text-mid);font-style:italic;font-weight:400;font-family:'Cormorant Garamond',serif;}
-
-  /* ULTIMATE */
-  .ultimate-box{
-    background:linear-gradient(135deg,rgba(42,18,69,0.06),rgba(201,168,76,0.08));
-    border:1.5px solid var(--gold);border-radius:12px;padding:10px 12px;
-    text-align:center;
-  }
-  .ultimate-box .ult-name{font-family:'Cinzel Decorative',serif;font-size:12px;font-weight:700;color:var(--burgundy);}
-  .ultimate-box .ult-desc{font-size:10.5px;color:var(--text-mid);font-style:italic;line-height:1.3;margin-top:2px;}
-
-  /* SKILLS */
-  .skills-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;}
-  .skill-card{
-    background:linear-gradient(145deg,#fff,var(--cream));
-    border:1px solid rgba(201,168,76,0.2);border-radius:10px;
-    padding:8px 8px 7px;text-align:center;transition:transform 0.2s,box-shadow 0.2s;
-  }
-  .skill-card:hover{transform:translateY(-2px);box-shadow:0 4px 15px rgba(201,168,76,0.15);}
-  .skill-card .skill-name{font-family:'Cinzel',serif;font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:0.8px;color:var(--text-dark);margin-bottom:2px;}
-  .skill-card .skill-icon{font-size:20px;display:block;margin:2px 0;}
-  .skill-card .skill-desc{font-size:10px;color:var(--text-mid);line-height:1.2;font-style:italic;}
-
-  /* STAT BARS */
-  .stat-bars{display:flex;flex-direction:column;gap:6px;}
-  .stat-bar-row{display:flex;align-items:center;gap:8px;}
-  .stat-bar-label{font-family:'Cinzel',serif;font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:var(--text-dark);width:80px;text-align:right;}
-  .stat-bar-track{flex:1;height:10px;background:var(--cream-dark);border-radius:5px;overflow:hidden;border:1px solid rgba(201,168,76,0.2);}
-  .stat-bar-fill{height:100%;border-radius:5px;transition:width 1.2s cubic-bezier(0.4,0,0.2,1);}
-  .stat-bar-fill.authority{background:linear-gradient(90deg,var(--royal-purple-mid),var(--burgundy));}
-  .stat-bar-fill.charisma{background:linear-gradient(90deg,var(--gold-dark),var(--gold));}
-  .stat-bar-fill.strategy{background:linear-gradient(90deg,#1a4a6e,#2980b9);}
-  .stat-bar-fill.culture{background:linear-gradient(90deg,#6b1d3a,#c0392b);}
-  .stat-bar-fill.diplomacy{background:linear-gradient(90deg,#1a6e4a,#27ae60);}
-  .stat-bar-fill.warfare{background:linear-gradient(90deg,#4a3728,#8b6914);}
-  .stat-bar-val{font-family:'Cinzel',serif;font-size:10px;font-weight:700;color:var(--text-dark);width:28px;text-align:center;}
-
-  /* RELATIONS */
-  .relations-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;}
-  .relation-group{background:linear-gradient(145deg,#fff,var(--cream));border:1px solid rgba(201,168,76,0.2);border-radius:10px;padding:8px 6px 6px;text-align:center;}
-  .relation-group .rel-title{font-family:'Cinzel',serif;font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:1px;margin-bottom:4px;display:flex;align-items:center;justify-content:center;gap:3px;}
-  .rel-title.allies{color:#2e7d32;} .rel-title.rivals{color:#b71c1c;} .rel-title.amours{color:#ad1457;}
-  .relation-group ul{list-style:none;font-size:9.5px;color:var(--text-mid);line-height:1.5;}
-
-  /* FOOTER */
-  .card-footer{padding:6px 16px 10px;display:flex;justify-content:center;gap:16px;border-top:1px solid rgba(201,168,76,0.15);flex-shrink:0;}
-  .footer-tag{font-family:'Cinzel',serif;font-size:9px;text-transform:uppercase;letter-spacing:1.5px;color:var(--gold-dark);display:flex;align-items:center;gap:4px;}
-  .footer-tag .dot{width:4px;height:4px;border-radius:50%;background:var(--gold);}
-
-  /* ORNAMENTS */
-  .ornament{position:absolute;width:30px;height:30px;z-index:11;pointer-events:none;opacity:0.5;}
-  .ornament svg{width:100%;height:100%;}
-  .orn-bl{bottom:8px;left:8px;transform:scaleY(-1);}
-  .orn-br{bottom:8px;right:8px;transform:scale(-1);}
-
-  /* PARTICLES */
-  .particles{position:fixed;inset:0;pointer-events:none;overflow:hidden;}
-  .particle{position:absolute;width:3px;height:3px;background:var(--gold);border-radius:50%;opacity:0;animation:drift 8s linear infinite;}
-  @keyframes drift{
-    0%{opacity:0;transform:translateY(100vh) scale(0);}
-    10%{opacity:0.6;}90%{opacity:0.6;}
-    100%{opacity:0;transform:translateY(-20vh) scale(1);}
-  }
-
-  /* HIDDEN CARD */
-  .scene.hidden{
-    animation:card-dismiss 0.5s ease-in forwards;
-  }
-  @keyframes card-dismiss{
-    0%{opacity:1;transform:scale(1);}
-    100%{opacity:0;transform:scale(0.85) translateY(40px);}
-  }
-</style>
-</head>
-<body>
-<div class="particles" id="particles"></div>
-<div class="scene" id="scene">
-  <div class="card" id="card">
-
-    <!-- ══════════ RECTO ══════════ -->
-    <div class="card-face card-front">
-      <div class="card-face-inner">
-
-        <!-- Flip LEFT, Close RIGHT -->
-        <button class="btn-circle btn-flip" onclick="document.getElementById('card').classList.toggle('flipped')" title="Retourner">
-          <svg viewBox="0 0 24 24"><path d="M12 4V1L8 5l4 4V6c3.31 0 6 2.69 6 6 0 1.01-.25 1.97-.7 2.8l1.46 1.46C19.54 15.03 20 13.57 20 12c0-4.42-3.58-8-8-8zm0 14c-3.31 0-6-2.69-6-6 0-1.01.25-1.97.7-2.8L5.24 7.74C4.46 8.97 4 10.43 4 12c0 4.42 3.58 8 8 8v3l4-4-4-4v3z"/></svg>
-        </button>
-        <button class="btn-circle btn-close" onclick="closeAppModal()" title="Fermer">
-          <svg viewBox="0 0 24 24"><path d="M18.3 5.71a1 1 0 0 0-1.41 0L12 10.59 7.11 5.7A1 1 0 0 0 5.7 7.11L10.59 12 5.7 16.89a1 1 0 1 0 1.41 1.41L12 13.41l4.89 4.89a1 1 0 0 0 1.41-1.41L13.41 12l4.89-4.89a1 1 0 0 0 0-1.4z"/></svg>
-        </button>
-
-        <div class="ornament orn-bl"><svg viewBox="0 0 30 30"><path d="M2 2 Q15 2 15 15 Q15 2 28 2" stroke="rgba(201,168,76,0.6)" fill="none" stroke-width="1.5"/><circle cx="4" cy="4" r="1.5" fill="rgba(201,168,76,0.5)"/></svg></div>
-        <div class="ornament orn-br"><svg viewBox="0 0 30 30"><path d="M2 2 Q15 2 15 15 Q15 2 28 2" stroke="rgba(201,168,76,0.6)" fill="none" stroke-width="1.5"/><circle cx="4" cy="4" r="1.5" fill="rgba(201,168,76,0.5)"/></svg></div>
-
-        <div class="card-header">
-          <span class="sun-emblem">☀️</span>
-          <h1>Louis XIV</h1>
-          <span class="subtitle">Le Roi-Soleil</span>
-          <br><span class="date-badge">1638 – 1715</span>
-        </div>
-
-        <div class="card-body">
-          <div class="quote-line">« Je m'en vais, mais l'État demeurera toujours. »</div>
-
-          <div class="stats-row">
-            <div class="stat-chip"><span class="stat-icon">⚔️</span><div><span class="stat-val">95</span><br><span class="stat-label">ATQ</span></div></div>
-            <div class="stat-chip"><span class="stat-icon">🛡️</span><div><span class="stat-val">80</span><br><span class="stat-label">DÉF</span></div></div>
-            <div class="stat-chip"><span class="stat-icon">✨</span><div><span class="stat-val">98</span><br><span class="stat-label">CHA</span></div></div>
-            <div class="stat-chip"><span class="stat-icon">🧠</span><div><span class="stat-val">88</span><br><span class="stat-label">INT</span></div></div>
-          </div>
-
-          <div class="section-title">Traits</div>
-          <div class="traits-row">
-            <span class="trait-tag"><span class="trait-icon">👑</span>Absolutiste</span>
-            <span class="trait-tag"><span class="trait-icon">🎭</span>Mécène</span>
-            <span class="trait-tag"><span class="trait-icon">🦁</span>Ambitieux</span>
-            <span class="trait-tag"><span class="trait-icon">🌟</span>Charismatique</span>
-            <span class="trait-tag"><span class="trait-icon">⛪</span>Dévot</span>
-          </div>
-
-          <div class="section-title">Biographie</div>
-          <div class="lore-section">
-            <p>Monarque absolu par excellence, Louis XIV a régné 72 ans — le plus long règne d'Europe. Bâtisseur de Versailles, mécène des arts et stratège politique redoutable, il a forgé l'identité de la monarchie française et illuminé le Grand Siècle.</p>
-          </div>
-
-          <div class="section-title">Hauts Faits</div>
-          <div class="achievements-grid">
-            <div class="achieve-card"><span class="ach-icon">🏛️</span><div class="ach-name">Versailles</div><div class="ach-val">1682</div></div>
-            <div class="achieve-card"><span class="ach-icon">⚔️</span><div class="ach-name">Guerre de Hollande</div><div class="ach-val">1672–78</div></div>
-            <div class="achieve-card"><span class="ach-icon">📜</span><div class="ach-name">Code Louis</div><div class="ach-val">1667</div></div>
-            <div class="achieve-card"><span class="ach-icon">🎭</span><div class="ach-name">Molière & Lully</div><div class="ach-val">Protecteur</div></div>
-            <div class="achieve-card"><span class="ach-icon">🏗️</span><div class="ach-name">Canal du Midi</div><div class="ach-val">1681</div></div>
-            <div class="achieve-card"><span class="ach-icon">👑</span><div class="ach-name">Règne Record</div><div class="ach-val">72 ans</div></div>
-          </div>
-
-          <div class="section-title">Titres & Dignités</div>
-          <div class="titles-list">
-            <div class="title-item"><span class="title-icon">⚜️</span><div><span class="title-text">Roi de France et de Navarre</span><br><span class="title-sub">Par la grâce de Dieu, 1643–1715</span></div></div>
-            <div class="title-item"><span class="title-icon">☀️</span><div><span class="title-text">Le Roi-Soleil</span><br><span class="title-sub">Dieudonné — Louis le Grand</span></div></div>
-          </div>
-        </div>
-
-        <div class="card-footer">
-          <span class="footer-tag"><span class="dot"></span> Roi Légendaire</span>
-          <span class="footer-tag"><span class="dot"></span> Faction Royauté</span>
-        </div>
-      </div>
-    </div>
-
-    <!-- ══════════ VERSO ══════════ -->
-    <div class="card-face card-back">
-      <div class="card-face-inner">
-
-        <!-- MIRRORED: right→visually left, left→visually right -->
-        <button class="btn-circle btn-flip" onclick="document.getElementById('card').classList.toggle('flipped')" title="Retourner">
-          <svg viewBox="0 0 24 24"><path d="M12 4V1L8 5l4 4V6c3.31 0 6 2.69 6 6 0 1.01-.25 1.97-.7 2.8l1.46 1.46C19.54 15.03 20 13.57 20 12c0-4.42-3.58-8-8-8zm0 14c-3.31 0-6-2.69-6-6 0-1.01.25-1.97.7-2.8L5.24 7.74C4.46 8.97 4 10.43 4 12c0 4.42 3.58 8 8 8v3l4-4-4-4v3z"/></svg>
-        </button>
-        <button class="btn-circle btn-close" onclick="closeAppModal()" title="Fermer">
-          <svg viewBox="0 0 24 24"><path d="M18.3 5.71a1 1 0 0 0-1.41 0L12 10.59 7.11 5.7A1 1 0 0 0 5.7 7.11L10.59 12 5.7 16.89a1 1 0 1 0 1.41 1.41L12 13.41l4.89 4.89a1 1 0 0 0 1.41-1.41L13.41 12l4.89-4.89a1 1 0 0 0 0-1.4z"/></svg>
-        </button>
-
-        <div class="ornament orn-bl"><svg viewBox="0 0 30 30"><path d="M2 2 Q15 2 15 15 Q15 2 28 2" stroke="rgba(201,168,76,0.6)" fill="none" stroke-width="1.5"/><circle cx="4" cy="4" r="1.5" fill="rgba(201,168,76,0.5)"/></svg></div>
-        <div class="ornament orn-br"><svg viewBox="0 0 30 30"><path d="M2 2 Q15 2 15 15 Q15 2 28 2" stroke="rgba(201,168,76,0.6)" fill="none" stroke-width="1.5"/><circle cx="4" cy="4" r="1.5" fill="rgba(201,168,76,0.5)"/></svg></div>
-
-        <div class="card-header">
-          <span class="sun-emblem">☀️</span>
-          <h2>Louis XIV</h2>
-          <span class="subtitle">Roi de France et de Navarre</span>
-        </div>
-
-        <div class="card-body">
-          <div class="section-title">Attributs</div>
-          <div class="stat-bars">
-            <div class="stat-bar-row"><span class="stat-bar-label">Autorité</span><div class="stat-bar-track"><div class="stat-bar-fill authority" style="width:95%"></div></div><span class="stat-bar-val">95</span></div>
-            <div class="stat-bar-row"><span class="stat-bar-label">Charisme</span><div class="stat-bar-track"><div class="stat-bar-fill charisma" style="width:98%"></div></div><span class="stat-bar-val">98</span></div>
-            <div class="stat-bar-row"><span class="stat-bar-label">Stratégie</span><div class="stat-bar-track"><div class="stat-bar-fill strategy" style="width:82%"></div></div><span class="stat-bar-val">82</span></div>
-            <div class="stat-bar-row"><span class="stat-bar-label">Culture</span><div class="stat-bar-track"><div class="stat-bar-fill culture" style="width:96%"></div></div><span class="stat-bar-val">96</span></div>
-            <div class="stat-bar-row"><span class="stat-bar-label">Diplomatie</span><div class="stat-bar-track"><div class="stat-bar-fill diplomacy" style="width:75%"></div></div><span class="stat-bar-val">75</span></div>
-            <div class="stat-bar-row"><span class="stat-bar-label">Art de guerre</span><div class="stat-bar-track"><div class="stat-bar-fill warfare" style="width:78%"></div></div><span class="stat-bar-val">78</span></div>
-          </div>
-
-          <div class="section-title">Compétences</div>
-          <div class="skills-grid">
-            <div class="skill-card"><div class="skill-name">Règne Absolu</div><div class="skill-icon">⚜️</div><div class="skill-desc">Impose sa volonté royale</div></div>
-            <div class="skill-card"><div class="skill-name">Éclat Royal</div><div class="skill-icon">✨</div><div class="skill-desc">Éblouit par sa magnificence</div></div>
-            <div class="skill-card"><div class="skill-name">Majesté Divine</div><div class="skill-icon">🌟</div><div class="skill-desc">Incarne le pouvoir divin</div></div>
-            <div class="skill-card"><div class="skill-name">Vision d'Empire</div><div class="skill-icon">🏰</div><div class="skill-desc">Bâtit la grandeur française</div></div>
-          </div>
-
-          <div class="section-title">Pouvoir Ultime</div>
-          <div class="ultimate-box">
-            <div class="ult-name">Éclat du Soleil</div>
-            <div class="ult-desc">« Éblouit tous ses adversaires par sa magnificence royale »</div>
-          </div>
-
-          <div class="section-title">Relations</div>
-          <div class="relations-grid">
-            <div class="relation-group"><div class="rel-title allies">🛡️ Alliés</div><ul><li>Anne d'Autriche</li><li>Mazarin</li><li>Colbert</li><li>Mme de Maintenon</li></ul></div>
-            <div class="relation-group"><div class="rel-title rivals">⚔️ Rivaux</div><ul><li>Duc de Beaufort</li><li>La Voisin</li><li>Guillaume III</li><li>Frondeurs</li></ul></div>
-            <div class="relation-group"><div class="rel-title amours">❤️ Amours</div><ul><li>Marie Mancini</li><li>Mme de Montespan</li><li>Louise de La Vallière</li></ul></div>
-          </div>
-        </div>
-
-        <div class="card-footer">
-          <span class="footer-tag">⚜️ Collection « Le Grand Siècle » — Carte n°001 ⚜️</span>
-        </div>
-      </div>
-    </div>
-
-  </div>
-</div>
-<script>
-  const c=document.getElementById('particles');
-  for(let i=0;i<20;i++){const p=document.createElement('div');p.className='particle';p.style.left=Math.random()*100+'%';p.style.animationDelay=Math.random()*8+'s';p.style.animationDuration=(6+Math.random()*6)+'s';p.style.width=p.style.height=(1.5+Math.random()*2.5)+'px';c.appendChild(p);}
-  
-  function closeAppModal() {
-      document.getElementById('scene').classList.add('hidden');
-      setTimeout(() => {
-          if(window.parent && window.parent.closeModal) {
-              window.parent.closeModal({target: window.parent.document.querySelector('.modal-overlay')});
-          }
-      }, 400);
-  }
-<\/script>
-</body>
-</html>`;
-
         const characters = {
             // --- 1. LA FAMILLE ROYALE ---
-            "louis-xiv": { name: "Louis XIV", subtitle: "Le Roi-Soleil", dates: "1638-1715", icon: "crown", mainList: true, isFictional: false, actor: "Matthieu Desrosiers", quote: "Je m'en vais, mais l'État demeurera toujours.", intro: "Roi de France de 1643 à 1715, Louis XIV incarne l'absolutisme royal français. Surnommé le Roi-Soleil, il fait de la France la première puissance européenne.", facts: ["Règne de 72 ans, le plus long de l'histoire de France.", "Créateur du fastueux château de Versailles.", "Instaure l'étiquette de cour la plus raffinée d'Europe.", "Mène de nombreuses guerres pour étendre le territoire français."], role: "Monarque absolu qui centralise le pouvoir royal et fait rayonner la culture française en Europe.", heritage: "Modèle de l'absolutisme royal, créateur de Versailles, symbole intemporel de la grandeur française.", rpg: { classe: "Roi Légendaire", faction: "Royauté", competences: [ { nom: "Règne Absolu", desc: "Impose sa volonté royale", icon: "⚔️" }, { nom: "Éclat Royal", desc: "Éblouit par sa magnificence", icon: "✨" }, { nom: "Majesté Divine", desc: "Incarne le pouvoir divin", icon: "🌟" }, { nom: "Vision d'Empire", desc: "Bâtit la grandeur française", icon: "🏰" } ], ultime: { nom: "Éclat du Soleil", desc: "Éblouit tous ses adversaires par sa magnificence royale" }, relations: { allies: ["Anne d'Autriche", "Mazarin", "Colbert", "Mme de Maintenon"], rivaux: ["Duc de Beaufort", "La Voisin"], amours: ["Marie Mancini", "Mme de Montespan", "Mme de Maintenon"] } } },
+            "louis-xiv": { 
+                name: "Louis XIV", subtitle: "Le Roi-Soleil", backSubtitle: "Roi de France et de Navarre", dates: "1638 – 1715", icon: "crown", mainList: true, isFictional: false, actor: "Matthieu Desrosiers", 
+                quote: "Je m'en vais, mais l'État demeurera toujours.", 
+                intro: "Monarque absolu par excellence, Louis XIV a régné 72 ans — le plus long règne d'Europe. Bâtisseur de Versailles, mécène des arts et stratège politique redoutable, il a forgé l'identité de la monarchie française et illuminé le Grand Siècle.", 
+                stats: [ { icon: '⚔️', val: '95', label: 'ATQ' }, { icon: '🛡️', val: '80', label: 'DÉF' }, { icon: '✨', val: '98', label: 'CHA' }, { icon: '🧠', val: '88', label: 'INT' } ],
+                traits: [ { icon: '👑', name: 'Absolutiste' }, { icon: '🎭', name: 'Mécène' }, { icon: '🦁', name: 'Ambitieux' }, { icon: '🌟', name: 'Charismatique' }, { icon: '⛪', name: 'Dévot' } ],
+                achievements: [ { icon: '🏛️', name: 'Versailles', val: '1682' }, { icon: '⚔️', name: 'Guerre de Hollande', val: '1672–78' }, { icon: '📜', name: 'Code Louis', val: '1667' }, { icon: '🎭', name: 'Molière & Lully', val: 'Protecteur' }, { icon: '🏗️', name: 'Canal du Midi', val: '1681' }, { icon: '👑', name: 'Règne Record', val: '72 ans' } ],
+                titles: [ { icon: '⚜️', text: 'Roi de France et de Navarre', sub: 'Par la grâce de Dieu, 1643–1715' }, { icon: '☀️', text: 'Le Roi-Soleil', sub: 'Dieudonné — Louis le Grand' } ],
+                rpg: { 
+                    classe: "Roi Légendaire", faction: "Royauté", collection: "⚜️ Collection « Le Grand Siècle » — Carte n°001 ⚜️",
+                    attributs: [ { label: 'Autorité', class: 'authority', val: 95 }, { label: 'Charisme', class: 'charisma', val: 98 }, { label: 'Stratégie', class: 'strategy', val: 82 }, { label: 'Culture', class: 'culture', val: 96 }, { label: 'Diplomatie', class: 'diplomacy', val: 75 }, { label: 'Art de guerre', class: 'warfare', val: 78 } ],
+                    competences: [ { nom: "Règne Absolu", desc: "Impose sa volonté royale", icon: "⚜️" }, { nom: "Éclat Royal", desc: "Éblouit par sa magnificence", icon: "✨" }, { nom: "Majesté Divine", desc: "Incarne le pouvoir divin", icon: "🌟" }, { nom: "Vision d'Empire", desc: "Bâtit la grandeur française", icon: "🏰" } ], 
+                    ultime: { nom: "Éclat du Soleil", desc: "Éblouit tous ses adversaires par sa magnificence royale" }, 
+                    relations: { allies: ["Anne d'Autriche", "Mazarin", "Colbert", "Mme de Maintenon"], rivaux: ["Duc de Beaufort", "La Voisin", "Guillaume III", "Frondeurs"], amours: ["Marie Mancini", "Mme de Montespan", "Louise de La Vallière"] } 
+                } 
+            },
             "enfant-roi": { name: "L'enfant roi", subtitle: "Le Grand Dauphin", dates: "1661-1711", icon: "crown", mainList: true, isFictional: false, actor: "Leyton Guillot", quote: "Je serai roi un jour... si Dieu le veut.", intro: "Louis de France, fils aîné et héritier légitime de Louis XIV. Il est élevé dans l'exigence implacable de son futur rôle de monarque.", facts: ["Reçoit l'éducation la plus stricte de son temps, supervisée par le théoricien Bossuet.", "S'illustre comme un excellent commandant lors des grandes campagnes militaires.", "Décède tragiquement avant son père, sans jamais avoir accédé au trône."], role: "Héritier loyal, compétent, mais vivant perpétuellement écrasé sous l'ombre de son père.", heritage: "A assuré la pérennité de la dynastie (il est le grand-père du futur Louis XV et du roi d'Espagne).", rpg: { classe: "Roi en Devenir", faction: "Royauté", competences: [ { nom: "Innocence", desc: "Pureté enfantine", icon: "😇" }, { nom: "Apprentissage", desc: "Soif de grandir", icon: "📚" }, { nom: "Détermination", desc: "Volonté d'acier", icon: "💪" }, { nom: "Charme", desc: "Attendrissement", icon: "✨" } ], ultime: { nom: "Promesse d'avenir", desc: "Porte en lui la promesse de la grandeur future de la France" }, relations: { allies: ["Anne d'Autriche", "Précepteurs"], rivaux: ["La Fronde"], amours: ["Amour filial"] } } },
             "anne-autriche": { name: "Anne d'Autriche", subtitle: "La Reine Mère", dates: "1601-1666", icon: "crown", mainList: true, isFictional: false, actor: "Léa Douady", quote: "Mon fils, soyez le maître.", intro: "Reine de France, mère de Louis XIV, elle assure la régence du royaume d'une main de fer aux côtés de Mazarin.", facts: ["Défend farouchement l'autorité de son fils face aux frondeurs.", "Soutient indéfectiblement Mazarin malgré la haine du peuple.", "Transmet à Louis XIV une profonde piété catholique."], role: "Régente inflexible et garante de la transmission intacte du pouvoir absolu à son fils.", heritage: "L'incarnation de la mère protectrice de la couronne et d'une souveraine inébranlable dans la tempête.", rpg: { classe: "Régente Sage", faction: "Royauté", competences: [ { nom: "Amour Maternel", desc: "Dévouement absolu", icon: "💝" }, { nom: "Sagesse", desc: "Expérience du pouvoir", icon: "👑" }, { nom: "Force Intérieure", desc: "Résiste aux épreuves", icon: "💪" }, { nom: "Dévotion", desc: "Foi profonde", icon: "🙏" } ], ultime: { nom: "Protection maternelle", desc: "Protège et guide par l'amour inconditionnel d'une mère" }, relations: { allies: ["Mazarin", "Louis XIV", "Clergé"], rivaux: ["Frondeurs", "Ennemis du roi"], amours: ["Louis XIII", "Mazarin"] } } },
             "monsieur": { name: "Monsieur", subtitle: "Le frère du Roi", dates: "1640-1701", icon: "fleur", mainList: true, isFictional: false, actor: "Lucas Liaubet Correa", quote: "Je suis né pour briller à l'ombre du Soleil.", intro: "Philippe d'Orléans, frère cadet de Louis XIV. Brillant stratège, il est souvent écarté du pouvoir politique par un roi redoutant son envergure.", facts: ["Remporte de grandes victoires militaires pour la France.", "Connu pour son excentricité, son goût du faste, ses mœurs libérées et ses favoris.", "Mène une vie de cour brillante et mondaine au Palais-Royal."], role: "Soutien indéfectible de la couronne tout en incarnant une cour alternative, intellectuelle et festive.", heritage: "Fondateur de la maison d'Orléans, ancêtre de presque toutes les familles royales catholiques actuelles.", rpg: { classe: "Prince Rebelle", faction: "Royauté", competences: [ { nom: "Élégance", desc: "Style sophistiqué", icon: "💅" }, { nom: "Bravoure", desc: "Héros de guerre", icon: "⚔️" }, { nom: "Esprit Libre", desc: "Rejette les conventions", icon: "🦋" }, { nom: "Loyauté", desc: "Fidélité au Roi", icon: "👑" } ], ultime: { nom: "Authenticité royale", desc: "Inspire par son courage à être soi-même malgré les conventions" }, relations: { allies: ["Louis XIV", "Artistes"], rivaux: ["Courtisans"], amours: ["Épouses", "Favoris"] } } },
@@ -986,8 +692,7 @@
             "vauban": { name: "Vauban", dates: "1633-1707", icon: "castle", mainList: false, isFictional: false, subtitle: "L'ingénieur du Roi", quote: "La sueur épargne le sang.", intro: "Ingénieur militaire, révolutionne la fortification.", facts: ["Construit la Ceinture de fer.", "Ne perd aucun siège."], role: "Sécurise les frontières du royaume.", heritage: "Un réseau de fortifications classé à l'UNESCO.", rpg: { classe: "Génie Fortificateur", faction: "Armée Royale", competences: [ { nom: "Citadelles", desc: "Bâtisseur inouï", icon: "🏰" }, { nom: "Sièges", desc: "Fait tomber les murs", icon: "💥" }, { nom: "Calculs", desc: "Précision mortelle", icon: "📐" }, { nom: "Protection", desc: "Épargne ses hommes", icon: "🛡️" } ], ultime: { nom: "Ceinture de Fer", desc: "Rend les frontières de la France totalement imprenables" }, relations: { allies: ["Louis XIV", "L'Armée"], rivaux: ["Ennemis d'Europe"], amours: ["L'Ingénierie"] } } },
             "philippe-anjou": { name: "Philippe d'Anjou", dates: "1683-1746", icon: "crown", mainList: false, isFictional: false, subtitle: "Le roi d'Espagne", quote: "Il n'y a plus de Pyrénées.", intro: "Petit-fils de Louis XIV, héritier de l'Empire espagnol.", facts: ["Devient roi d'Espagne en 1700."], role: "Instrument de la politique dynastique.", heritage: "La dynastie des Bourbons d'Espagne.", rpg: { classe: "Héritier Dynastique", faction: "Bourbons", competences: [ { nom: "Sang Bleu", desc: "Héritier légitime", icon: "🩸" }, { nom: "Adaptation", desc: "Culture espagnole", icon: "🇪🇸" }, { nom: "Couronne", desc: "Prend le pouvoir", icon: "👑" }, { nom: "Alliances", desc: "Union des royaumes", icon: "🤝" } ], ultime: { nom: "Soleil sur l'Espagne", desc: "Installe la famille Bourbon sur un nouveau trône" }, relations: { allies: ["Louis XIV (grand-père)"], rivaux: ["Habsbourg", "Coalition"], amours: ["Marie-Louise de Savoie"] } } },
             "marlborough": { name: "Marlborough", dates: "1650-1722", icon: "sword", mainList: false, isFictional: false, subtitle: "Le stratège anglais", quote: "Je crains plus les mots que les balles.", intro: "Général britannique, grand adversaire de Louis XIV.", facts: ["Inflige de lourdes défaites aux Français."], role: "Le frein à l'expansionnisme français.", heritage: "Une légende militaire britannique.", rpg: { classe: "Général Ennemi", faction: "Coalition Anglaise", competences: [ { nom: "Discipline", desc: "Troupes de fer", icon: "💂" }, { nom: "Alliance", desc: "Unit l'Europe", icon: "🤝" }, { nom: "Ténacité", desc: "Acharnement", icon: "💪" }, { nom: "Stratégie", desc: "Contre le Roi", icon: "🗺️" } ], ultime: { nom: "Coalition Fatale", desc: "Freine l'hégémonie de la France par des victoires décisives" }, relations: { allies: ["Prince Eugène", "Angleterre"], rivaux: ["Louis XIV", "Armée Française"], amours: ["Sarah Churchill"] } } },
-            "lully": { name: "Lully", dates: "1632-1687", icon: "music", mainList: false, isFictional: false, subtitle: "Le Surintendant de la Musique", quote: "Toute la musique de France est à mon commandement.", intro: "Compositeur d'origine florentine, il devient le maître absolu de la musique sous Louis XIV.", facts: ["Collabore avec Molière pour inventer la comédie-ballet.", "Achète le monopole de l'opéra en France.", "Meurt d'une blessure au pied causée par son lourd bâton de direction."], role: "Créer la bande-son officielle et majestueuse du règne de Louis XIV.", heritage: "Créateur de l'opéra français (la tragédie lyrique).", rpg: { classe: "Maître de Musique", faction: "Artisans Royaux", competences: [ { nom: "Composition", desc: "Mélodies royales", icon: "🎼" }, { nom: "Monopole", desc: "Détruit les rivaux", icon: "📜" }, { nom: "Tempo", desc: "Bâton de direction", icon: "🦯" }, { nom: "Danse", desc: "Ballets de cour", icon: "🩰" } ], ultime: { nom: "Marche pour la cérémonie des Turcs", desc: "Orchestre un chef-d'œuvre qui fait trembler l'Europe" }, relations: { allies: ["Louis XIV", "Molière (début)"], rivaux: ["Molière (fin)", "Autres musiciens"], amours: ["L'Opéra"] } } },
-            "test-rpg": { name: "Louis XIV (3D)", subtitle: "Carte de Test", dates: "1638-1715", icon: "crown", mainList: true, isFictional: false, actor: "Test" }
+            "lully": { name: "Lully", dates: "1632-1687", icon: "music", mainList: false, isFictional: false, subtitle: "Le Surintendant de la Musique", quote: "Toute la musique de France est à mon commandement.", intro: "Compositeur d'origine florentine, il devient le maître absolu de la musique sous Louis XIV.", facts: ["Collabore avec Molière pour inventer la comédie-ballet.", "Achète le monopole de l'opéra en France.", "Meurt d'une blessure au pied causée par son lourd bâton de direction."], role: "Créer la bande-son officielle et majestueuse du règne de Louis XIV.", heritage: "Créateur de l'opéra français (la tragédie lyrique).", rpg: { classe: "Maître de Musique", faction: "Artisans Royaux", competences: [ { nom: "Composition", desc: "Mélodies royales", icon: "🎼" }, { nom: "Monopole", desc: "Détruit les rivaux", icon: "📜" }, { nom: "Tempo", desc: "Bâton de direction", icon: "🦯" }, { nom: "Danse", desc: "Ballets de cour", icon: "🩰" } ], ultime: { nom: "Marche pour la cérémonie des Turcs", desc: "Orchestre un chef-d'œuvre qui fait trembler l'Europe" }, relations: { allies: ["Louis XIV", "Molière (début)"], rivaux: ["Molière (fin)", "Autres musiciens"], amours: ["L'Opéra"] } } }
         };
 
         const historicalFacts = [
@@ -1077,8 +782,7 @@
             { id: "frondeurs", title: "Les frondeurs et artistes", chars: ["beaufort", "moliere", "scarron", "ninon"] },
             { id: "ombre", title: "L'ombre, le peuple et la fiction", chars: ["voisin", "lisieux", "isabelle"] },
             { id: "troupe", title: "La troupe et les rôles de cour", chars: ["les-courtisanes", "les-danseurs", "le-peuple", "les-operateurs", "les-soldats", "le-clerge", "la-dame-de-cour", "la-femme-de-chambre", "le-medecin", "le-ministre"] },
-            { id: "equipe", title: "L'Équipe Artistique", chars: ["natacha-muller", "gabriel-gitman", "frederique-bouwer", "nadia-guerin", "elise-devaux"] },
-            { id: "test", title: "Expérimentation 3D", chars: ["test-rpg"] }
+            { id: "equipe", title: "L'Équipe Artistique", chars: ["natacha-muller", "gabriel-gitman", "frederique-bouwer", "nadia-guerin", "elise-devaux"] }
         ];
 
         categoriesPersonnages.forEach(cat => {
@@ -1125,7 +829,6 @@
 
         // Regrouper les rôles par acteur (exclut l'équipe créative car ils n'ont pas l'attribut "actor")
         Object.keys(characters).forEach(charId => {
-            if (charId === "test-rpg") return; // Skip test character in roles
             const char = characters[charId];
             if (char.actor && char.mainList) {
                 let actorsArr = char.actor.split(',').map(s => s.trim());
@@ -1221,6 +924,18 @@
                 // Supprime le rideau du DOM après l'animation pour libérer de la mémoire
                 setTimeout(() => { curtain.remove(); }, 3000); 
             }
+            
+            // Initialiser les particules
+            const c = document.getElementById('particles');
+            for(let i=0; i<20; i++){
+                const p = document.createElement('div');
+                p.className = 'particle';
+                p.style.left = Math.random() * 100 + '%';
+                p.style.animationDelay = Math.random() * 8 + 's';
+                p.style.animationDuration = (6 + Math.random() * 6) + 's';
+                p.style.width = p.style.height = (1.5 + Math.random() * 2.5) + 'px';
+                c.appendChild(p);
+            }
         });
 
         // Bandeau disparition optimisée (requestAnimationFrame)
@@ -1241,7 +956,7 @@
             }
         }, { passive: true });
 
-        // Logique de SWIPE sur Mobile
+        // Logique de SWIPE sur Mobile (Onglets)
         let touchstartX = 0;
         let touchendX = 0;
         let touchstartY = 0;
@@ -1274,27 +989,30 @@
             }
         }, {passive: true});
 
-        // Logique de SWIPE vers le bas pour fermer la Modale
+        // Logique de SWIPE vers le bas pour fermer la Modale 3D
         let modalTouchStartY = 0;
         let modalTouchEndY = 0;
-        const modalCardWrapper = document.querySelector('.modal-card');
+        const modalOverlay = document.getElementById('charModal');
 
-        modalCardWrapper.addEventListener('touchstart', e => {
-            // Ne capter le swipe que si on est tout en haut de la modale
-            if (modalCardWrapper.scrollTop === 0) {
+        modalOverlay.addEventListener('touchstart', e => {
+            // Identifier si on est sur la partie défilante de la carte (card-body)
+            const scrollable = e.target.closest('.card-body');
+            
+            // Si on ne touche pas un élément défilant, OU si l'élément défilant est tout en haut
+            if (!scrollable || scrollable.scrollTop <= 0) {
                 modalTouchStartY = e.changedTouches[0].screenY;
             } else {
-                modalTouchStartY = -1;
+                modalTouchStartY = -1; // Ne pas déclencher la fermeture si on fait défiler le texte
             }
         }, {passive: true});
 
-        modalCardWrapper.addEventListener('touchend', e => {
+        modalOverlay.addEventListener('touchend', e => {
             if (modalTouchStartY === -1) return;
             modalTouchEndY = e.changedTouches[0].screenY;
             
             // Si on a glissé vers le bas de plus de 80px
             if (modalTouchEndY - modalTouchStartY > 80) {
-                closeModal({ target: document.querySelector('.modal-overlay') });
+                closeModal(null, true);
             }
         }, {passive: true});
 
@@ -1340,146 +1058,156 @@
             window.scrollTo({top: 0, behavior: 'smooth'});
         }
 
-        function toggleCardFlip() {
-            const inner = document.getElementById('modalFlipInner');
-            if(inner) inner.classList.toggle('is-flipped');
+        function toggleCardFlip(e) {
+            if(e) e.stopPropagation();
+            const card = document.getElementById('card');
+            if(card) card.classList.toggle('flipped');
         }
 
         function openCharModal(charId) {
             const char = characters[charId];
             if (!char) return;
 
-            const headerBg = document.querySelector('.modal-header-bg');
-            const modalCard = document.querySelector('.modal-card');
-            const modalBody = document.getElementById('modalBody');
-
-            // --- CAS SPÉCIFIQUE : CARTE RPG 3D ---
-            if (charId === 'test-rpg') {
-                headerBg.style.display = 'none';
-                modalCard.style.background = 'transparent';
-                modalCard.style.boxShadow = 'none';
-                modalCard.style.border = 'none';
-                modalCard.style.maxHeight = 'none'; // Overcome the 90vh limit for the 3D card
-                modalBody.style.padding = '0';
-                
-                const iframe = document.createElement('iframe');
-                iframe.style.cssText = "width:100%; height:100vh; max-height:100dvh; border:none; border-radius: 16px; overflow:hidden;";
-                modalBody.innerHTML = '';
-                modalBody.appendChild(iframe);
-                
-                iframe.contentWindow.document.open();
-                iframe.contentWindow.document.write(testRpgHtml);
-                iframe.contentWindow.document.close();
-                
-                const modal = document.getElementById('charModal');
-                modal.classList.add('active');
-                modal.setAttribute('aria-hidden', 'false');
-                document.body.style.overflow = 'hidden'; 
-                document.querySelector('.container').setAttribute('aria-hidden', 'true');
-                return; // On arrête l'exécution ici pour ne pas générer la modale standard
+            let emojiStrChar = icons[charId] || icons[char.icon] || icons.crown;
+            
+            let quoteHtml = char.quote ? `<div class="quote-line">« ${char.quote} »</div>` : '';
+            
+            // Front Components
+            let statsHtml = char.stats ? `<div class="stats-row">${char.stats.map(s => `<div class="stat-chip"><span class="stat-icon">${s.icon}</span><div><span class="stat-val">${s.val}</span><br><span class="stat-label">${s.label}</span></div></div>`).join('')}</div>` : '';
+            
+            let traitsHtml = char.traits ? `<div class="section-title">Traits</div><div class="traits-row">${char.traits.map(t => `<span class="trait-tag"><span class="trait-icon">${t.icon}</span>${t.name}</span>`).join('')}</div>` : '';
+            
+            let achievementsHtml = '';
+            if (char.achievements) {
+                achievementsHtml = `<div class="section-title">Hauts Faits</div><div class="achievements-grid">${char.achievements.map(a => `<div class="achieve-card"><span class="ach-icon">${a.icon}</span><div class="ach-name">${a.name}</div><div class="ach-val">${a.val}</div></div>`).join('')}</div>`;
+            } else if (char.facts) {
+                let factsList = char.facts.map(f => `<li><span class="bullet">♦</span> ${f}</li>`).join('');
+                achievementsHtml = `<div class="section-title">Faits Marquants</div><div class="lore-section"><ul class="lore-list">${factsList}</ul></div>`;
             }
 
-            // --- CAS STANDARD ---
-            headerBg.style.display = 'block';
-            modalCard.style.background = 'rgba(255, 255, 255, 0.98)';
-            modalCard.style.boxShadow = '0 15px 40px rgba(0,0,0,0.4)';
-            modalCard.style.border = '1px solid rgba(255,255,255,0.4)';
-            modalCard.style.maxHeight = '90vh';
-            modalBody.style.padding = '25px 20px';
+            let titlesHtml = '';
+            if (char.titles) {
+                titlesHtml = `<div class="section-title">Titres & Dignités</div><div class="titles-list">${char.titles.map(t => `<div class="title-item"><span class="title-icon">${t.icon}</span><div><span class="title-text">${t.text}</span><span class="title-sub">${t.sub}</span></div></div>`).join('')}</div>`;
+            } else if (char.role && char.heritage) {
+                const rTitle = char.isFictional ? "Rôle Symbolique" : "Rôle Historique";
+                const hTitle = char.isFictional ? "Signification" : "Héritage";
+                titlesHtml = `<div class="section-title">Héritage & Rôle</div><div class="titles-list"><div class="title-item"><span class="title-icon">📜</span><div><span class="title-text">${rTitle}</span><span class="title-sub">${char.role}</span></div></div><div class="title-item"><span class="title-icon">💎</span><div><span class="title-text">${hTitle}</span><span class="title-sub">${char.heritage}</span></div></div></div>`;
+            }
 
-            // Header Elements
-            let emojiStrChar = icons[charId] || icons[char.icon] || icons.crown;
-            document.getElementById('modalIcon').innerHTML = `<span class="emoji-icon">${emojiStrChar}</span>`;
-            document.getElementById('modalTitle').innerText = char.name;
-            document.getElementById('modalSubtitle').innerText = char.subtitle;
-            
-            const quoteEl = document.getElementById('modalQuote');
-            if(char.quote) { quoteEl.innerText = `« ${char.quote} »`; quoteEl.style.display = "block"; } 
-            else { quoteEl.style.display = "none"; }
-            
-            const datesEl = document.getElementById('modalDates');
-            datesEl.innerText = char.dates;
-            if (char.isFictional) datesEl.classList.add('fictif'); else datesEl.classList.remove('fictif');
+            let frontFooterHtml = char.rpg ? `<div class="card-footer"><span class="footer-tag"><span class="dot"></span> ${char.rpg.classe}</span><span class="footer-tag"><span class="dot"></span> Faction ${char.rpg.faction}</span></div>` : '';
 
-            // --- FRONT CARD HTML ---
-            let factsHtml = char.facts.map(f => `<li><span class="emoji-icon">${icons.crown}</span> <span>${f}</span></li>`).join('');
-            const roleTitle = char.isFictional ? "RÔLE SYMBOLIQUE :" : "RÔLE HISTORIQUE :";
-            const heritageTitle = char.isFictional ? "SIGNIFICATION :" : "HÉRITAGE :";
+            // --- RECTO (FRONT) ---
             let frontHtml = `
-                <div class="intro-text">${char.intro}</div>
-                <div class="ornament-divider"><span>♦</span></div>
-                <div class="section-title">✨ FAITS MARQUANTS</div>
-                <ul class="facts-list">${factsHtml}</ul>
-                <div class="role-box">
-                    <div class="box-title">${roleTitle}</div>
-                    <div class="box-content">${char.role}</div>
-                </div>
-                <div class="heritage-box">
-                    <div class="box-title">${heritageTitle}</div>
-                    <div class="box-content">${char.heritage}</div>
+                <div class="card-face card-front">
+                    <div class="card-face-inner">
+                        <button class="btn-circle btn-flip" onclick="toggleCardFlip(event)" title="Retourner">
+                            <svg viewBox="0 0 24 24"><path d="M12 4V1L8 5l4 4V6c3.31 0 6 2.69 6 6 0 1.01-.25 1.97-.7 2.8l1.46 1.46C19.54 15.03 20 13.57 20 12c0-4.42-3.58-8-8-8zm0 14c-3.31 0-6-2.69-6-6 0-1.01.25-1.97.7-2.8L5.24 7.74C4.46 8.97 4 10.43 4 12c0 4.42 3.58 8 8 8v3l4-4-4-4v3z"/></svg>
+                        </button>
+                        <button class="btn-circle btn-close" onclick="closeModal(event, true)" title="Fermer">
+                            <svg viewBox="0 0 24 24"><path d="M18.3 5.71a1 1 0 0 0-1.41 0L12 10.59 7.11 5.7A1 1 0 0 0 5.7 7.11L10.59 12 5.7 16.89a1 1 0 1 0 1.41 1.41L12 13.41l4.89 4.89a1 1 0 0 0 1.41-1.41L13.41 12l4.89-4.89a1 1 0 0 0 0-1.4z"/></svg>
+                        </button>
+
+                        <div class="ornament orn-bl"><svg viewBox="0 0 30 30"><path d="M2 2 Q15 2 15 15 Q15 2 28 2" stroke="rgba(201,168,76,0.6)" fill="none" stroke-width="1.5"/><circle cx="4" cy="4" r="1.5" fill="rgba(201,168,76,0.5)"/></svg></div>
+                        <div class="ornament orn-br"><svg viewBox="0 0 30 30"><path d="M2 2 Q15 2 15 15 Q15 2 28 2" stroke="rgba(201,168,76,0.6)" fill="none" stroke-width="1.5"/><circle cx="4" cy="4" r="1.5" fill="rgba(201,168,76,0.5)"/></svg></div>
+
+                        <div class="card-header">
+                            <span class="sun-emblem">${emojiStrChar}</span>
+                            <h1>${char.name}</h1>
+                            <span class="subtitle">${char.subtitle}</span>
+                            <br><span class="date-badge">${char.dates}</span>
+                        </div>
+
+                        <div class="card-body">
+                            ${quoteHtml}
+                            ${statsHtml}
+                            ${traitsHtml}
+                            <div class="section-title">Biographie</div>
+                            <div class="lore-section"><p>${char.intro}</p></div>
+                            ${achievementsHtml}
+                            ${titlesHtml}
+                        </div>
+                        ${frontFooterHtml}
+                    </div>
                 </div>
             `;
 
-            // --- BACK CARD (RPG) HTML ---
-            const rpg = char.rpg;
+            // --- VERSO (BACK) ---
             let backHtml = '';
-            if(rpg) {
-                document.getElementById('flipBtn').style.display = 'flex';
-                let skillsHtml = rpg.competences.map(c => `
-                    <div class="rpg-skill-box">
-                        <div class="rpg-skill-name">${c.nom}</div>
-                        <div class="rpg-skill-icon">${c.icon}</div>
-                        <div class="rpg-skill-desc">${c.desc}</div>
+            if (char.rpg) {
+                let attributsHtml = '';
+                if (char.rpg && char.rpg.attributs) {
+                    attributsHtml = `<div class="section-title">Attributs</div><div class="stat-bars">${char.rpg.attributs.map(a => `<div class="stat-bar-row"><span class="stat-bar-label">${a.label}</span><div class="stat-bar-track"><div class="stat-bar-fill ${a.class}" style="width:${a.val}%"></div></div><span class="stat-bar-val">${a.val}</span></div>`).join('')}</div>`;
+                }
+
+                let skillsHtml = char.rpg.competences.map(c => `
+                    <div class="skill-card">
+                        <div class="skill-name">${c.nom}</div>
+                        <div class="skill-icon">${c.icon}</div>
+                        <div class="skill-desc">${c.desc}</div>
                     </div>
                 `).join('');
-                
-                let alliesHtml = rpg.relations.allies.map(a => `<li>${a}</li>`).join('');
-                let rivauxHtml = rpg.relations.rivaux.map(r => `<li>${r}</li>`).join('');
-                let amoursHtml = rpg.relations.amours.map(a => `<li>${a}</li>`).join('');
+
+                let alliesHtml = char.rpg.relations.allies.map(a => `<li>${a}</li>`).join('');
+                let rivauxHtml = char.rpg.relations.rivaux.map(r => `<li>${r}</li>`).join('');
+                let amoursHtml = char.rpg.relations.amours.map(a => `<li>${a}</li>`).join('');
+
+                let backSubtitle = char.backSubtitle || char.subtitle;
+                let backFooterHtml = (char.rpg && char.rpg.collection) ? `<div class="card-footer"><span class="footer-tag">${char.rpg.collection}</span></div>` : frontFooterHtml;
 
                 backHtml = `
-                    <div class="rpg-card">
-                        <div class="rpg-section-title"><span>Compétences</span></div>
-                        <div class="rpg-skills">${skillsHtml}</div>
-                        
-                        <div class="rpg-section-title"><span>Pouvoir ultime</span></div>
-                        <div class="rpg-ult-box">
-                            <div class="rpg-ult-name">${rpg.ultime.nom}</div>
-                            <div class="rpg-skill-desc" style="margin-top: 5px;">"${rpg.ultime.desc}"</div>
-                        </div>
+                    <div class="card-face card-back">
+                        <div class="card-face-inner">
+                            <button class="btn-circle btn-flip" onclick="toggleCardFlip(event)" title="Retourner">
+                                <svg viewBox="0 0 24 24"><path d="M12 4V1L8 5l4 4V6c3.31 0 6 2.69 6 6 0 1.01-.25 1.97-.7 2.8l1.46 1.46C19.54 15.03 20 13.57 20 12c0-4.42-3.58-8-8-8zm0 14c-3.31 0-6-2.69-6-6 0-1.01.25-1.97.7-2.8L5.24 7.74C4.46 8.97 4 10.43 4 12c0 4.42 3.58 8 8 8v3l4-4-4-4v3z"/></svg>
+                            </button>
+                            <button class="btn-circle btn-close" onclick="closeModal(event, true)" title="Fermer">
+                                <svg viewBox="0 0 24 24"><path d="M18.3 5.71a1 1 0 0 0-1.41 0L12 10.59 7.11 5.7A1 1 0 0 0 5.7 7.11L10.59 12 5.7 16.89a1 1 0 1 0 1.41 1.41L12 13.41l4.89 4.89a1 1 0 0 0 1.41-1.41L13.41 12l4.89-4.89a1 1 0 0 0 0-1.4z"/></svg>
+                            </button>
 
-                        <div class="rpg-section-title"><span>Relations</span></div>
-                        <div class="rpg-relations">
-                            <div class="rpg-rel-col">
-                                <div class="rpg-rel-title">🛡️ Alliés</div>
-                                <ul class="rpg-rel-list">${alliesHtml}</ul>
+                            <div class="ornament orn-bl"><svg viewBox="0 0 30 30"><path d="M2 2 Q15 2 15 15 Q15 2 28 2" stroke="rgba(201,168,76,0.6)" fill="none" stroke-width="1.5"/><circle cx="4" cy="4" r="1.5" fill="rgba(201,168,76,0.5)"/></svg></div>
+                            <div class="ornament orn-br"><svg viewBox="0 0 30 30"><path d="M2 2 Q15 2 15 15 Q15 2 28 2" stroke="rgba(201,168,76,0.6)" fill="none" stroke-width="1.5"/><circle cx="4" cy="4" r="1.5" fill="rgba(201,168,76,0.5)"/></svg></div>
+
+                            <div class="card-header">
+                                <span class="sun-emblem">${emojiStrChar}</span>
+                                <h2>${char.name}</h2>
+                                <span class="subtitle">${backSubtitle}</span>
                             </div>
-                            <div class="rpg-rel-col">
-                                <div class="rpg-rel-title">⚔️ Rivaux</div>
-                                <ul class="rpg-rel-list">${rivauxHtml}</ul>
+
+                            <div class="card-body">
+                                ${attributsHtml}
+                                <div class="section-title">Compétences</div>
+                                <div class="skills-grid">
+                                    ${skillsHtml}
+                                </div>
+
+                                <div class="section-title">Pouvoir Ultime</div>
+                                <div class="ultimate-box">
+                                    <div class="ult-name">${char.rpg.ultime.nom}</div>
+                                    <div class="ult-desc">« ${char.rpg.ultime.desc} »</div>
+                                </div>
+
+                                <div class="section-title">Relations</div>
+                                <div class="relations-grid">
+                                    <div class="relation-group"><div class="rel-title allies">🛡️ Alliés</div><ul>${alliesHtml}</ul></div>
+                                    <div class="relation-group"><div class="rel-title rivals">⚔️ Rivaux</div><ul>${rivauxHtml}</ul></div>
+                                    <div class="relation-group"><div class="rel-title amours">❤️ Amours</div><ul>${amoursHtml}</ul></div>
+                                </div>
                             </div>
-                            <div class="rpg-rel-col">
-                                <div class="rpg-rel-title">❤️ Amours</div>
-                                <ul class="rpg-rel-list">${amoursHtml}</ul>
-                            </div>
+                            
+                            ${backFooterHtml}
                         </div>
-                        <div class="rpg-footer">Classe : ${rpg.classe} / Faction : ${rpg.faction}</div>
                     </div>
                 `;
-            } else {
-                document.getElementById('flipBtn').style.display = 'none';
             }
 
             // --- INJECTION ---
-            document.getElementById('modalBody').innerHTML = `
-                <div class="flip-container" id="modalFlipContainer">
-                    <div class="flip-inner" id="modalFlipInner">
-                        <div class="flip-front">${frontHtml}</div>
-                        <div class="flip-back">${backHtml}</div>
-                    </div>
-                </div>
-            `;
+            const cardEl = document.getElementById('card');
+            cardEl.innerHTML = frontHtml + backHtml;
+            cardEl.classList.remove('flipped'); // S'assurer que la carte apparaît toujours de face
             
+            const sceneEl = document.getElementById('scene');
+            sceneEl.classList.remove('hidden');
+
             const modal = document.getElementById('charModal');
             modal.classList.add('active');
             modal.setAttribute('aria-hidden', 'false');
@@ -1489,25 +1217,22 @@
             document.querySelector('.container').setAttribute('aria-hidden', 'true');
         }
 
-        function closeModal(e) {
-            // Si l'événement vient du bouton croix, ou STRICTEMENT de l'overlay (le fond sombre)
-            if (!e || e.target.classList.contains('modal-overlay') || e.target.closest('.modal-close')) {
-                const inner = document.getElementById('modalFlipInner');
-                if(inner) inner.classList.remove('is-flipped'); // Remet la carte à l'endroit en quittant
+        function closeModal(e, force = false) {
+            // Si c'est un clic forcé (bouton croix, swipe) ou un clic sur le fond sombre
+            if (force || !e || e.target.classList.contains('modal-overlay')) {
+                const sceneEl = document.getElementById('scene');
                 
-                const modal = document.getElementById('charModal');
-                modal.classList.remove('active');
-                modal.setAttribute('aria-hidden', 'true');
-                document.body.style.overflow = ''; 
+                // On déclenche l'animation de sortie de la carte 3D
+                sceneEl.classList.add('hidden');
                 
-                // Nettoyage de l'iframe si on était sur la carte test
-                const modalBody = document.getElementById('modalBody');
-                if (modalBody.querySelector('iframe')) {
-                    modalBody.innerHTML = '';
-                }
-                
-                // Accessibilité : Ré-afficher le reste du site quand la modale se ferme
-                document.querySelector('.container').removeAttribute('aria-hidden');
+                // On attend la fin de l'animation pour cacher la modale complètement
+                setTimeout(() => {
+                    const modal = document.getElementById('charModal');
+                    modal.classList.remove('active');
+                    modal.setAttribute('aria-hidden', 'true');
+                    document.body.style.overflow = ''; 
+                    document.querySelector('.container').removeAttribute('aria-hidden');
+                }, 400); // 400ms = durée de l'animation card-dismiss
             }
         }
     </script>
