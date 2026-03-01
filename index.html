@@ -1170,7 +1170,170 @@
                     ultime: { nom: "La Vérité du Texte", desc: "Révèle l'intention cachée derrière chaque réplique pour captiver l'audience" }, 
                     relations: { allies: ["Natacha Muller", "Les Comédiens"], rivaux: ["Les bafouillages", "Le texte sans âme"], amours: ["La Littérature"] } 
                 } 
-            }
+            },
+            /* --- PERSONNAGES HISTORIQUES - STRUCTURE 100% CONFORME --- */
+"le-notre": { 
+    name: "André Le Nôtre", subtitle: "Le jardinier du Roi", dates: "1613 – 1700", icon: "tree", mainList: false,
+    quote: "La nature doit se plier à la raison.",
+    intro: "Grand ordonnateur des jardins de Versailles, il a créé le style du jardin à la française, fondé sur la symétrie et la perspective infinie.",
+    stats: [ { icon: '⚔️', val: '10' }, { icon: '🛡️', val: '75' }, { icon: '✨', val: '98' }, { icon: '🧠', val: '95' } ],
+    traits: [ { icon: '🌳', name: 'Paysagiste' }, { icon: '📐', name: 'Géomètre' }, { icon: '👁️', name: 'Visionnaire' }, { icon: '🏛️', name: 'Classique' } ],
+    achievements: [ { icon: '🏰', name: 'Versailles', val: 'Jardins' }, { icon: '🌳', name: 'Vaux-le-Vicomte', val: '1656' }, { icon: '🎡', name: 'Tuileries', val: '1664' }, { icon: '📐', name: 'Perspective', val: 'Maître' }, { icon: '🗺️', name: 'Chantilly', val: 'Canaux' }, { icon: '👑', name: 'Annobli', val: '1675' } ],
+    titles: [ { icon: '🌳', text: 'Dessinateur des Jardins', sub: 'du Roi Louis XIV' }, { icon: '⚜️', text: 'Conseiller du Roi', sub: 'Contrôleur des Bâtiments' } ],
+    rpg: { 
+        classe: "Architecte Paysagiste", faction: "Artistes", collection: "🏛️ Les Bâtisseurs 🏛️",
+        attributs: [ { label: 'Autorité', class: 'authority', val: 70 }, { label: 'Charisme', class: 'charisma', val: 80 }, { label: 'Stratégie', class: 'strategy', val: 95 }, { label: 'Culture', class: 'culture', val: 98 }, { label: 'Diplomatie', class: 'diplomacy', val: 85 }, { label: 'Art de guerre', class: 'warfare', val: 10 } ],
+        competences: [ { nom: "Perspective", desc: "Maîtrise de l'espace", icon: "📐" }, { nom: "Souveraineté", desc: "Dompte la nature", icon: "🌳" }, { nom: "Symétrie", desc: "Ordre absolu", icon: "📏" }, { nom: "L'Optique", desc: "Jeux de regards", icon: "👁️" } ], 
+        ultime: { nom: "L'Axe Royal", desc: "Éblouit le monde par une perspective qui semble ne jamais finir" }, 
+        relations: { allies: ["Louis XIV", "Mansart", "Colbert"], rivaux: ["La nature sauvage"], amours: ["Ses jardins"] } 
+    } 
+},
+"mansart": { 
+    name: "Jules Hardouin-Mansart", subtitle: "L'architecte du Soleil", dates: "1646 – 1708", icon: "castle", mainList: false,
+    quote: "Bâtir pour l'éternité du monarque.",
+    intro: "Premier architecte du Roi, il est le maître d'œuvre de la Galerie des Glaces, du Grand Trianon et du Dôme des Invalides.",
+    stats: [ { icon: '⚔️', val: '20' }, { icon: '🛡️', val: '80' }, { icon: '✨', val: '95' }, { icon: '🧠', val: '92' } ],
+    traits: [ { icon: '🏰', name: 'Bâtisseur' }, { icon: '💎', name: 'Classique' }, { icon: '🏛️', name: 'Prestigieux' }, { icon: '🎨', name: 'Esthète' } ],
+    achievements: [ { icon: '✨', name: 'Galerie des Glaces', val: '1678' }, { icon: '⛪', name: 'Dôme Invalides', val: '1706' }, { icon: '🏰', name: 'Place Vendôme', val: '1699' }, { icon: '💎', name: 'Grand Trianon', val: '1687' }, { icon: '🏗️', name: 'Pont-Royal', val: '1685' }, { icon: '👑', name: 'Premier Architecte', val: '1681' } ],
+    titles: [ { icon: '🏰', text: 'Premier Architecte', sub: 'du Roi' }, { icon: '📜', text: 'Comte de Sagonne', sub: 'Titre de Noblesse' } ],
+    rpg: { 
+        classe: "Architecte Royal", faction: "Artistes", collection: "🏛️ Les Bâtisseurs 🏛️",
+        attributs: [ { label: 'Autorité', class: 'authority', val: 85 }, { label: 'Charisme', class: 'charisma', val: 75 }, { label: 'Stratégie', class: 'strategy', val: 90 }, { label: 'Culture', class: 'culture', val: 95 }, { label: 'Diplomatie', class: 'diplomacy', val: 80 }, { label: 'Art de guerre', class: 'warfare', val: 20 } ],
+        competences: [ { nom: "Grandeur", desc: "Élève des palais", icon: "🏰" }, { nom: "Reflets", desc: "Jeux de miroirs", icon: "✨" }, { nom: "Structure", desc: "Solidité éternelle", icon: "🏗️" }, { nom: "Lumière", desc: "Maîtrise l'éclat", icon: "☀️" } ], 
+        ultime: { nom: "Magnificence Royale", desc: "Transforme la pierre en un monument de lumière éternelle" }, 
+        relations: { allies: ["Louis XIV", "Le Nôtre", "Louvois"], rivaux: ["Le Brun"], amours: ["Le marbre"] } 
+    } 
+},
+"lully": { 
+    name: "Jean-Baptiste Lully", subtitle: "Le Surintendant de la Musique", dates: "1632 – 1687", icon: "music", mainList: false,
+    quote: "La musique est l'écho de la puissance royale.",
+    intro: "Compositeur favori du Roi, il invente l'opéra français et règne sans partage sur la vie musicale de la cour grâce à son monopole.",
+    stats: [ { icon: '⚔️', val: '40' }, { icon: '🛡️', val: '60' }, { icon: '✨', val: '99' }, { icon: '🧠', val: '95' } ],
+    traits: [ { icon: '🎼', name: 'Compositeur' }, { icon: '🇮🇹', name: 'Ambitieux' }, { icon: '🎻', name: 'Virtuose' }, { icon: '👑', name: 'Courtisan' } ],
+    achievements: [ { icon: '🎭', name: 'Opéra Français', val: 'Créateur' }, { icon: '🥁', name: 'Direction Bâton', val: 'Pionnier' }, { icon: '🎻', name: '24 Violons', val: 'Chef' }, { icon: '🎼', name: 'Te Deum', val: '1677' }, { icon: '💃', name: 'Comédie-Ballet', val: 'Molière' }, { icon: '💰', name: 'Monopole Royal', val: '1672' } ],
+    titles: [ { icon: '🎼', text: 'Surintendant', sub: 'de la Musique du Roi' }, { icon: '📜', text: 'Secrétaire du Roi', sub: 'Charge Royale' } ],
+    rpg: { 
+        classe: "Maître de Musique", faction: "Artistes", collection: "🎼 Les Génies 🎼",
+        attributs: [ { label: 'Autorité', class: 'authority', val: 95 }, { label: 'Charisme', class: 'charisma', val: 90 }, { label: 'Stratégie', class: 'strategy', val: 92 }, { label: 'Culture', class: 'culture', val: 99 }, { label: 'Diplomatie', class: 'diplomacy', val: 60 }, { label: 'Art de guerre', class: 'warfare', val: 5 } ],
+        competences: [ { nom: "Tempo", desc: "Dirige au bâton", icon: "🥁" }, { nom: "Monopole", desc: "Écrase ses rivaux", icon: "🎻" }, { nom: "Harmonie", desc: "Sublime les voix", icon: "🎶" }, { nom: "Rigueur", desc: "Discipline de fer", icon: "⏱️" } ], 
+        ultime: { nom: "L'Apothéose", desc: "Invoque un orchestre divin qui paralyse l'adversaire de beauté" }, 
+        relations: { allies: ["Louis XIV", "Molière (début)", "Quinault"], rivaux: ["Molière (fin)", "Campra"], amours: ["La renommée"] } 
+    } 
+},
+"vauban": { 
+    name: "Vauban", subtitle: "L'architecte de fer", dates: "1633 – 1707", icon: "castle", mainList: false,
+    quote: "Ville assiégée par Vauban, ville prise.",
+    intro: "Ingénieur, architecte militaire et maréchal de France. Il a entouré le royaume d'une ceinture de citadelles réputées imprenables.",
+    stats: [ { icon: '⚔️', val: '90' }, { icon: '🛡️', val: '99' }, { icon: '✨', val: '70' }, { icon: '🧠', val: '98' } ],
+    traits: [ { icon: '🧱', name: 'Ingénieur' }, { icon: '🇫🇷', name: 'Patriote' }, { icon: '📐', name: 'Précis' }, { icon: '⚖️', name: 'Honnête' } ],
+    achievements: [ { icon: '🧱', name: 'Le Pré Carré', val: 'Frontières' }, { icon: '🏰', name: '300 Places Fortes', val: 'Bâties' }, { icon: '🧨', name: '50 Sièges', val: 'Remportés' }, { icon: '⚓', name: 'Ports de Guerre', val: 'Brest/Toulon' }, { icon: '📜', name: 'La Dîme Royale', val: '1707' }, { icon: '🎖️', name: 'Maréchal', val: '1703' } ],
+    titles: [ { icon: '🛡️', text: 'Maréchal de France', sub: 'Distinction Militaire' }, { icon: '🏛️', text: 'Commissaire Général', sub: 'des Fortifications' } ],
+    rpg: { 
+        classe: "Ingénieur Royal", faction: "Armée", collection: "🧱 Le Pré Carré 🧱",
+        attributs: [ { label: 'Autorité', class: 'authority', val: 88 }, { label: 'Charisme', class: 'charisma', val: 80 }, { label: 'Stratégie', class: 'strategy', val: 99 }, { label: 'Culture', class: 'culture', val: 85 }, { label: 'Diplomatie', class: 'diplomacy', val: 60 }, { label: 'Art de guerre', class: 'warfare', val: 95 } ],
+        competences: [ { nom: "Poliorcétique", desc: "Siège scientifique", icon: "🧨" }, { nom: "Fortification", desc: "Étoile de pierre", icon: "🧱" }, { nom: "Logistique", desc: "Zéro gaspillage", icon: "📊" }, { nom: "Tranchée", desc: "Approche sûre", icon: "👣" } ], 
+        ultime: { nom: "Citadelle de Fer", desc: "Rend la position actuelle imprenable contre n'importe quel assaut" }, 
+        relations: { allies: ["Louis XIV", "Louvois", "Turenne"], rivaux: ["La cour superficielle"], amours: ["La patrie"] } 
+    } 
+},
+"bossuet": { 
+    name: "Bossuet", subtitle: "L'Aigle de Meaux", dates: "1627 – 1704", icon: "book", mainList: false,
+    quote: "Tout pouvoir vient de Dieu.",
+    intro: "Évêque, prédicateur et écrivain célèbre pour son éloquence. Il est le théoricien majeur de la monarchie absolue de droit divin et le précepteur du Grand Dauphin.",
+    stats: [ { icon: '⚔️', val: '20' }, { icon: '🛡️', val: '80' }, { icon: '✨', val: '85' }, { icon: '🧠', val: '95' } ],
+    traits: [ { icon: '📖', name: 'Théologien' }, { icon: '🗣️', name: 'Éloquent' }, { icon: '🙏', name: 'Dévot' }, { icon: '⚖️', name: 'Moraliste' } ],
+    achievements: [ { icon: '📜', name: 'Droit Divin', val: 'Théoricien' }, { icon: '⚰️', name: 'Oraisons', val: 'Funèbres' }, { icon: '🧒', name: 'Éducation', val: 'du Dauphin' }, { icon: '📖', name: 'Discours', val: '1681' }, { icon: '⛪', name: 'Gallicisme', val: 'Défenseur' }, { icon: '🖋️', name: 'Académie', val: '1671' } ],
+    titles: [ { icon: '⛪', text: 'Évêque de Meaux', sub: 'Prélat de l\'Église' }, { icon: '🎓', text: 'Précepteur', sub: 'du Fils de Louis XIV' } ],
+    rpg: { 
+        classe: "Prélat Éloquent", faction: "Clergé", collection: "📖 Les Plumes d'Église 📖",
+        attributs: [ { label: 'Autorité', class: 'authority', val: 90 }, { label: 'Charisme', class: 'charisma', val: 95 }, { label: 'Stratégie', class: 'strategy', val: 80 }, { label: 'Culture', class: 'culture', val: 99 }, { label: 'Diplomatie', class: 'diplomacy', val: 85 }, { label: 'Art de guerre', class: 'warfare', val: 10 } ],
+        competences: [ { nom: "Oraison", desc: "Éloquence sublime", icon: "⚰️" }, { nom: "Théologie", desc: "Rigueur du dogme", icon: "⛪" }, { nom: "Sermon", desc: "Culpabilise la cour", icon: "📖" }, { nom: "Droit Divin", desc: "Légitimation royale", icon: "👑" } ], 
+        ultime: { nom: "Verbe Sacré", desc: "Impose le silence et la soumission par la puissance de sa rhétorique" }, 
+        relations: { allies: ["Louis XIV", "Mme de Maintenon", "L'Église"], rivaux: ["Fénelon", "Les Protestants"], amours: ["La Foi"] } 
+    } 
+},
+"philippe-anjou": { 
+    name: "Philippe d'Anjou", subtitle: "Philippe V d'Espagne", dates: "1683 – 1746", icon: "crown", mainList: false,
+    quote: "Il n'y a plus de Pyrénées !",
+    intro: "Petit-fils de Louis XIV, son accession au trône d'Espagne déclenche la plus grande guerre du règne. Il devient le premier Bourbon à régner sur Madrid.",
+    stats: [ { icon: '⚔️', val: '75' }, { icon: '🛡️', val: '80' }, { icon: '✨', val: '90' }, { icon: '🧠', val: '70' } ],
+    traits: [ { icon: '🇪🇸', name: 'Hispano-Français' }, { icon: '👑', name: 'Héritier' }, { icon: '⚜️', name: 'Bourbon' }, { icon: '🤝', name: 'Loyal' } ],
+    achievements: [ { icon: '👑', name: 'Trône d\'Espagne', val: '1700' }, { icon: '⚔️', name: 'Bataille d\'Almansa', val: '1707' }, { icon: '📜', name: 'Décrets de Nueva Planta', val: '1707' }, { icon: '🕊️', name: 'Paix d\'Utrecht', val: '1713' }, { icon: '🏗️', name: 'Palais Royal', val: 'Madrid' }, { icon: '🎭', name: 'Mécène', val: 'Farinelli' } ],
+    titles: [ { icon: '👑', text: 'Roi d\'Espagne', sub: 'et des Indes' }, { icon: '⚜️', text: 'Duc d\'Anjou', sub: 'Prince de France' } ],
+    rpg: { 
+        classe: "Monarque Étranger", faction: "Royauté", collection: "🌍 Dynasties d'Europe 🌍",
+        attributs: [ { label: 'Autorité', class: 'authority', val: 85 }, { label: 'Charisme', class: 'charisma', val: 80 }, { label: 'Stratégie', class: 'strategy', val: 75 }, { label: 'Culture', class: 'culture', val: 85 }, { label: 'Diplomatie', class: 'diplomacy', val: 70 }, { label: 'Art de guerre', class: 'warfare', val: 80 } ],
+        competences: [ { nom: "Succession", desc: "Revendique le trône", icon: "📜" }, { nom: "Union", desc: "Lien avec la France", icon: "⚜️" }, { nom: "Réforme", desc: "Modernise l'État", icon: "⚙️" }, { nom: "Persévérance", desc: "Tient tête à l'Europe", icon: "🛡️" } ], 
+        ultime: { nom: "L'Héritage Bourbon", desc: "Invoque la puissance de sa lignée pour consolider son règne contesté" }, 
+        relations: { allies: ["Louis XIV", "Marie-Louise de Savoie"], rivaux: ["Charles d'Autriche", "Marlborough"], amours: ["Élisabeth Farnèse"] } 
+    } 
+},
+"marlborough": { 
+    name: "Marlborough", subtitle: "John Churchill", dates: "1650 – 1722", icon: "sword", mainList: false,
+    quote: "Le génie militaire ne connaît pas de frontières.",
+    intro: "Général anglais et diplomate redoutable. Principal adversaire de Louis XIV lors de la guerre de Succession d'Espagne, il reste invaincu sur le champ de bataille.",
+    stats: [ { icon: '⚔️', val: '99' }, { icon: '🛡️', val: '85' }, { icon: '✨', val: '75' }, { icon: '🧠', val: '98' } ],
+    traits: [ { icon: '🇬🇧', name: 'Britannique' }, { icon: '🐎', name: 'Stratège' }, { icon: '🏅', name: 'Invaincu' }, { icon: '🪙', name: 'Ambitieux' } ],
+    achievements: [ { icon: '⚔️', name: 'Blenheim', val: '1704' }, { icon: '💥', name: 'Ramillies', val: '1706' }, { icon: '🛡️', name: 'Oudenarde', val: '1708' }, { icon: '🩸', name: 'Malplaquet', val: '1709' }, { icon: '🏰', name: 'Blenheim Palace', val: 'Bâtisseur' }, { icon: '🤝', name: 'Coalition', val: 'Leader' } ],
+    titles: [ { icon: '🛡️', text: 'Duc de Marlborough', sub: 'Généralissime' }, { icon: '🎖️', text: 'Capitaine Général', sub: 'des Forces Armées' } ],
+    rpg: { 
+        classe: "Commandant Suprême", faction: "Ennemis du Roi", collection: "⚔️ Adversaires de la France ⚔️",
+        attributs: [ { label: 'Autorité', class: 'authority', val: 95 }, { label: 'Charisme', class: 'charisma', val: 85 }, { label: 'Stratégie', class: 'strategy', val: 99 }, { label: 'Culture', class: 'culture', val: 80 }, { label: 'Diplomatie', class: 'diplomacy', val: 90 }, { label: 'Art de guerre', class: 'warfare', val: 99 } ],
+        competences: [ { nom: "Manœuvre", desc: "Déjoue les lignes françaises", icon: "🗺️" }, { nom: "Coalition", desc: "Unit les nations", icon: "🤝" }, { nom: "Assaut", desc: "Frappe avec précision", icon: "🏹" }, { nom: "Fortune", desc: "Succès constant", icon: "🪙" } ], 
+        ultime: { nom: "Génie Tactique", desc: "Neutralise la stratégie adverse en anticipant chaque mouvement avec un coup d'avance" }, 
+        relations: { allies: ["Reine Anne", "Prince Eugène"], rivaux: ["Louis XIV", "Villars"], amours: ["Sarah Jennings"] } 
+    } 
+},
+
+/* --- LES GRANDES GLOIRES MILITAIRES --- */
+"turenne": { 
+    name: "Turenne", subtitle: "Le Grand Capitaine", dates: "1611 – 1675", icon: "sword", mainList: false,
+    quote: "Dieu est du côté des gros bataillons.",
+    intro: "Henri de La Tour d'Auvergne, vicomte de Turenne. L'un des plus grands chefs militaires de l'histoire de France, tacticien hors pair dont les campagnes seront étudiées par Napoléon Bonaparte lui-même.",
+    stats: [ { icon: '⚔️', val: '99' }, { icon: '🛡️', val: '85' }, { icon: '✨', val: '75' }, { icon: '🧠', val: '95' } ],
+    traits: [ { icon: '🐎', name: 'Stratège' }, { icon: '🛡️', name: 'Protecteur' }, { icon: '🧠', name: 'Méthodique' }, { icon: '🇫🇷', name: 'Patriote' } ],
+    achievements: [ { icon: '⚔️', name: 'Bataille des Dunes', val: '1658' }, { icon: '🗺️', name: 'Campagne d\'Alsace', val: '1674' }, { icon: '💥', name: 'Turckheim', val: '1675' }, { icon: '👑', name: 'Invalides', val: 'Panthéonisé' }, { icon: '🤝', name: 'Paix de Westphalie', val: 'Acteur' } ],
+    titles: [ { icon: '🛡️', text: 'Maréchal Général', sub: 'des Camps et Armées du Roi' }, { icon: '👑', text: 'Vicomte', sub: 'de Turenne' } ],
+    rpg: { 
+        classe: "Maréchal de France", faction: "Armée Royale", collection: "⚔️ Les Gloires Militaires ⚔️",
+        attributs: [ { label: 'Autorité', class: 'authority', val: 95 }, { label: 'Charisme', class: 'charisma', val: 85 }, { label: 'Stratégie', class: 'strategy', val: 99 }, { label: 'Culture', class: 'culture', val: 70 }, { label: 'Diplomatie', class: 'diplomacy', val: 65 }, { label: 'Art de guerre', class: 'warfare', val: 99 } ],
+        competences: [ { nom: "Manoeuvre", desc: "Déplacement invisible", icon: "🗺️" }, { nom: "Bravoure", desc: "Exemple au feu", icon: "🔥" }, { nom: "Hivernage", desc: "Attaque hors saison", icon: "❄️" }, { nom: "Soutien", desc: "Rallie les troupes", icon: "🛡️" } ], 
+        ultime: { nom: "L'Assaut Imprévisible", desc: "Contourne totalement l'armée ennemie pour frapper son point faible" }, 
+        relations: { allies: ["Louis XIV", "Vauban"], rivaux: ["Condé (pendant la Fronde)", "Montecuccoli"], amours: ["Le Devoir"] } 
+    } 
+},
+"conde": { 
+    name: "Le Grand Condé", subtitle: "Le Premier Prince du Sang", dates: "1621 – 1686", icon: "sword", mainList: false,
+    quote: "Le sang et la gloire sont mes seuls maîtres.",
+    intro: "Louis II de Bourbon-Condé. D'abord vainqueur fulgurant à Rocroi, ce prince rebelle mène la Fronde contre le Roi avant de se soumettre et de redevenir l'un des plus brillants généraux du royaume.",
+    stats: [ { icon: '⚔️', val: '98' }, { icon: '🛡️', val: '70' }, { icon: '✨', val: '90' }, { icon: '🧠', val: '85' } ],
+    traits: [ { icon: '⚡', name: 'Impétueux' }, { icon: '👑', name: 'Prince' }, { icon: '🏴‍☠️', name: 'Frondeur' }, { icon: '💎', name: 'Mécène' } ],
+    achievements: [ { icon: '⚡', name: 'Bataille de Rocroi', val: '1643' }, { icon: '⚔️', name: 'Bataille de Lens', val: '1648' }, { icon: '🏰', name: 'Domaine de Chantilly', val: 'Créateur' }, { icon: '🎭', name: 'Protecteur de Molière', val: 'Mécénat' }, { icon: '🍷', name: 'Festin de Vatel', val: '1671' } ],
+    titles: [ { icon: '👑', text: 'Premier Prince du Sang', sub: 'Maison de Bourbon' }, { icon: '⚜️', text: 'Duc d\'Enghien', sub: 'Titre de jeunesse' } ],
+    rpg: { 
+        classe: "Prince Guerrier", faction: "Royauté", collection: "⚔️ Les Gloires Militaires ⚔️",
+        attributs: [ { label: 'Autorité', class: 'authority', val: 92 }, { label: 'Charisme', class: 'charisma', val: 95 }, { label: 'Stratégie', class: 'strategy', val: 90 }, { label: 'Culture', class: 'culture', val: 90 }, { label: 'Diplomatie', class: 'diplomacy', val: 40 }, { label: 'Art de guerre', class: 'warfare', val: 98 } ],
+        competences: [ { nom: "Fureur", desc: "Charge irrésistible", icon: "⚡" }, { nom: "Rébellion", desc: "Soulève la noblesse", icon: "🏴‍☠️" }, { nom: "Mécénat", desc: "Attire les génies", icon: "💎" }, { nom: "Intimidation", desc: "Regard d'aigle", icon: "🦅" } ], 
+        ultime: { nom: "Le Choc de Rocroi", desc: "Brise l'invincibilité de n'importe quelle armée par un assaut foudroyant" }, 
+        relations: { allies: ["Louis XIV (à la fin)", "Molière", "Boileau"], rivaux: ["Mazarin", "Turenne (souvent)"], amours: ["La Gloire"] } 
+    } 
+},
+"luxembourg": { 
+    name: "Duc de Luxembourg", subtitle: "Le Tapissier de Notre-Dame", dates: "1628 – 1695", icon: "sword", mainList: false,
+    quote: "Je n'ai jamais vu la cour tourner le dos à la victoire.",
+    intro: "François-Henri de Montmorency. Compagnon d'armes de Condé, ce maréchal au physique disgracieux ne perdit jamais une bataille. Il captura tant d'étendards ennemis qu'on le surnomma le 'Tapissier de Notre-Dame'.",
+    stats: [ { icon: '⚔️', val: '95' }, { icon: '🛡️', val: '80' }, { icon: '✨', val: '60' }, { icon: '🧠', val: '95' } ],
+    traits: [ { icon: '🧠', name: 'Génie' }, { icon: '🏅', name: 'Invaincu' }, { icon: '🦊', name: 'Rusé' }, { icon: '🛡️', name: 'Tactique' } ],
+    achievements: [ { icon: '⚔️', name: 'Fleurus', val: '1690' }, { icon: '💥', name: 'Steinkerque', val: '1692' }, { icon: '🩸', name: 'Neerwinden', val: '1693' }, { icon: '🚩', name: 'Prises d\'étendards', val: 'Innombrables' }, { icon: '🛡️', name: 'Guerre d\'Augsbourg', val: 'Héros' } ],
+    titles: [ { icon: '🛡️', text: 'Maréchal de France', sub: 'Le plus grand de son époque' }, { icon: '🏰', text: 'Duc de Piney', sub: 'Pair de France' } ],
+    rpg: { 
+        classe: "Général Invaincu", faction: "Armée Royale", collection: "⚔️ Les Gloires Militaires ⚔️",
+        attributs: [ { label: 'Autorité', class: 'authority', val: 90 }, { label: 'Charisme', class: 'charisma', val: 65 }, { label: 'Stratégie', class: 'strategy', val: 98 }, { label: 'Culture', class: 'culture', val: 75 }, { label: 'Diplomatie', class: 'diplomacy', val: 50 }, { label: 'Art de guerre', class: 'warfare', val: 96 } ],
+        competences: [ { nom: "Embuscade", desc: "Surprise totale", icon: "🦊" }, { nom: "Trophée", desc: "Vole les drapeaux", icon: "🚩" }, { nom: "Opiniâtreté", desc: "Ne recule jamais", icon: "🧱" }, { nom: "Coup d'œil", desc: "Lit le champ de bataille", icon: "👁️" } ], 
+        ultime: { nom: "La Tapisserie de Drapeaux", desc: "Humilie l'adversaire en décorant les églises de Paris avec ses étendards capturés" }, 
+        relations: { allies: ["Louis XIV", "Condé"], rivaux: ["Guillaume d'Orange", "Louvois"], amours: ["La tactique"] } 
+    } 
+}
         };
 
         const historicalFacts = [
