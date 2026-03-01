@@ -1154,6 +1154,22 @@
                     ultime: { nom: "La Maîtrise du Plateau", desc: "Synchronise 30 personnes dans l'ombre et la lumière" }, 
                     relations: { allies: ["Danseurs", "Mise en scène", "Technique"], rivaux: ["Le retard", "Les faux-pas"], amours: ["Le Rythme"] } 
                 } 
+            },
+            marie-jacquier": { 
+                name: "Marie Jacquier", subtitle: "L'Éclaireuse des Rôles", backSubtitle: "Coach d'Interprétation", dates: "Condorcet 2026", icon: "masks", mainList: true, isFictional: false, 
+                quote: "Les mots portent l'âme du personnage, la diction en est l'épée.", 
+                intro: "Elle a permis aux élèves de mieux comprendre leur personnage par une lecture fine et une analyse précise de leur statut dans la pièce. Elle a également forgé leur diction à travers des virelangues redoutables.", 
+                stats: [ { icon: '⚔️', val: '75' }, { icon: '🛡️', val: '85' }, { icon: '✨', val: '95' }, { icon: '🧠', val: '98' } ],
+                traits: [ { icon: '📖', name: 'Analytique' }, { icon: '🗣️', name: 'Éloquente' }, { icon: '🎭', name: 'Théâtrale' }, { icon: '🧠', name: 'Pédagogue' } ],
+                achievements: [ { icon: '📚', name: 'Lecture Fine', val: 'Des textes' }, { icon: '🗣️', name: 'Virelangues', val: 'Maîtrisés' }, { icon: '👑', name: 'Statut Social', val: 'Incarné' } ],
+                titles: [ { icon: '🎭', text: 'Coach d\'Interprétation', sub: 'Lycée Condorcet' }, { icon: '📖', text: 'Maîtresse des Mots', sub: 'Projet Musical' } ],
+                rpg: { 
+                    classe: "Forgeuse d'Âmes", faction: "Créateurs", collection: "🎓 L'Équipe Artistique 🎓",
+                    attributs: [ { label: 'Autorité', class: 'authority', val: 85 }, { label: 'Charisme', class: 'charisma', val: 90 }, { label: 'Stratégie', class: 'strategy', val: 95 }, { label: 'Culture', class: 'culture', val: 98 }, { label: 'Diplomatie', class: 'diplomacy', val: 90 }, { label: 'Art de guerre', class: 'warfare', val: 40 } ],
+                    competences: [ { nom: "Diction", desc: "Articule à la perfection", icon: "🗣️" }, { nom: "Analyse", desc: "Décortique le texte", icon: "📖" }, { nom: "Statut", desc: "Posture de noble", icon: "👑" }, { nom: "Virelangue", desc: "Débloque les mâchoires", icon: "👅" } ], 
+                    ultime: { nom: "La Vérité du Texte", desc: "Révèle l'intention cachée derrière chaque réplique pour captiver l'audience" }, 
+                    relations: { allies: ["Natacha Muller", "Les Comédiens"], rivaux: ["Les bafouillages", "Le texte sans âme"], amours: ["La Littérature"] } 
+                } 
             }
         };
 
@@ -1244,7 +1260,8 @@
             { id: "frondeurs", title: "Les frondeurs et artistes", chars: ["beaufort", "moliere", "scarron", "ninon"] },
             { id: "ombre", title: "L'ombre, le peuple et la fiction", chars: ["voisin", "lisieux", "isabelle"] },
             { id: "troupe", title: "La troupe et les rôles de cour", chars: ["les-courtisanes", "les-danseurs", "le-peuple", "les-operateurs", "les-soldats", "le-clerge", "la-dame-de-cour", "la-femme-de-chambre", "le-medecin", "le-ministre"] },
-            { id: "equipe", title: "L'Équipe Artistique", chars: ["natacha-muller", "gabriel-gitman", "frederique-bouwer", "nadia-guerin", "elise-devaux"] }
+            { id: "equipe", title: "L'Équipe Artistique", chars: ["natacha-muller", "gabriel-gitman", "frederique-bouwer", "nadia-guerin", "elise-devaux"] },
+            { id: "equipe", title: "L'Équipe Artistique", chars: ["natacha-muller", "gabriel-gitman", "frederique-bouwer", "nadia-guerin", "elise-devaux", "marie-jacquier"] }
         ];
 
         categoriesPersonnages.forEach(cat => {
