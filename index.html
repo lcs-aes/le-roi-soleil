@@ -132,7 +132,72 @@
         h1 { color: var(--accent-color); text-align: center; font-size: 2.4rem; font-weight: 600; margin: 15px 0 25px 0; position: relative; text-transform: uppercase; letter-spacing: 1px;}
         .h1-subtitle { display: block; font-family: sans-serif; font-size: 0.9rem; letter-spacing: 3px; color: #FDFBF7; font-weight: 300; margin-top: 5px; }
 
-        /* --- BOUTON PARTAGER --- */
+/* --- BOTTOM NAVIGATION BAR --- */
+.bottom-nav {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background: rgba(26, 34, 56, 0.95);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    border-top: 1px solid rgba(201, 168, 76, 0.3);
+    display: flex;
+    justify-content: space-around;
+    padding-bottom: env(safe-area-inset-bottom); /* Fix pour iPhone */
+    z-index: 9000;
+    box-shadow: 0 -4px 20px rgba(0,0,0,0.4);
+}
+
+.nav-item {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 0;
+    color: rgba(253, 251, 247, 0.5);
+    text-decoration: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.nav-item .nav-icon {
+    font-size: 22px;
+    margin-bottom: 4px;
+    transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    filter: grayscale(100%) opacity(0.7);
+}
+
+.nav-item .nav-text {
+    font-size: 10px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.nav-item.active {
+    color: var(--accent-color);
+}
+
+.nav-item.active .nav-icon {
+    transform: translateY(-4px) scale(1.15);
+    filter: none;
+}
+
+/* Espacer le footer pour qu'il ne soit pas caché par la barre de navigation */
+.container {
+    padding-bottom: 90px;
+}
+
+/* On cache l'ancien menu horizontal */
+.tab-menu {
+    display: none; 
+}        
+
+
+/* --- BOUTON PARTAGER --- */
         .share-btn {
             position: absolute; top: 20px; right: 15px;
             background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 255, 255, 0.2);
@@ -535,7 +600,55 @@
         .card-footer { padding: 10px 16px 16px; display: flex; justify-content: center; gap: 16px; border-top: 1px solid rgba(201,168,76,0.15); flex-shrink: 0; }
         .footer-tag { font-family: 'Cinzel', serif; font-size: 10px; text-transform: uppercase; letter-spacing: 1.5px; color: var(--gold-dark); display: flex; align-items: center; gap: 4px; }
         .footer-tag .dot { width: 4px; height: 4px; border-radius: 50%; background: var(--gold); }
-    </style>
+    
+/* =========================================
+   CORRECTIFS SYNOPSIS (ALIGNEMENT & COULEURS)
+   ========================================= */
+
+/* 1. Aligner toutes les cartes au centre et prendre 100% de la largeur */
+#tab-synopsis .timeline-item {
+    width: 100% !important;
+    left: 0 !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+}
+
+/* Cacher la barre verticale de la timeline sur cette page */
+#tab-synopsis .timeline::after, 
+#tab-synopsis .timeline-item::after {
+    display: none !important;
+}
+
+/* 2. Fixer la lisibilité du bloc "Le Spectacle" */
+#tab-synopsis .lore-section {
+    background: #F4E8D1 !important; /* Couleur parchemin opaque */
+    border: 1px solid #c9a84c !important;
+}
+#tab-synopsis .lore-section p {
+    color: #111111 !important; /* Texte bien noir */
+}
+
+/* 3. Fixer la lisibilité des Actes (cartes blanches) */
+#tab-synopsis .glass-card {
+    background: #ffffff !important;
+    color: #1a1a1a !important;
+    border: 1px solid #ccc !important;
+}
+
+/* Assombrir la couleur des chansons (or sombre au lieu de jaune clair) */
+#tab-synopsis .actor-roles-list span[style*="color:var(--accent-color)"] {
+    color: #8b6914 !important;
+    font-weight: 600;
+}
+
+/* 4. Fixer la lisibilité de la boîte Entracte */
+#tab-synopsis .fact-card[style*="background: transparent"] {
+    background: rgba(26, 34, 56, 0.95) !important; /* Fond sombre opaque */
+    border: 2px dashed #c9a84c !important;
+}
+
+
+</style>
 </head>
 <body>
     
@@ -566,15 +679,94 @@
         </div>
 
         <!-- TABS MENU -->
-        <div class="tab-menu" role="tablist" aria-label="Menu principal">
-            <button class="tab-btn active" id="btn-personnages" role="tab" aria-selected="true" aria-controls="tab-personnages" onclick="switchTab('personnages')">Personnages</button>
-            <button class="tab-btn" id="btn-roles" role="tab" aria-selected="false" aria-controls="tab-roles" onclick="switchTab('roles')">Rôles</button>
-            <button class="tab-btn" id="btn-faits" role="tab" aria-selected="false" aria-controls="tab-faits" onclick="switchTab('faits')">Histoire</button>
-            <button class="tab-btn" id="btn-lexique" role="tab" aria-selected="false" aria-controls="tab-lexique" onclick="switchTab('lexique')">Lexique</button>
+        <nav class="bottom-nav" role="tablist" aria-label="Menu de navigation">
+    <a class="nav-item active" id="btn-synopsis" role="tab" aria-selected="true" aria-controls="tab-synopsis" onclick="switchTab('synopsis')">
+        <span class="nav-icon">📜</span>
+        <span class="nav-text">Synopsis</span>
+    </a>
+    <a class="nav-item" id="btn-personnages" role="tab" aria-selected="false" aria-controls="tab-personnages" onclick="switchTab('personnages')">
+        <span class="nav-icon">🎭</span>
+        <span class="nav-text">Héros</span>
+    </a>
+    <a class="nav-item" id="btn-roles" role="tab" aria-selected="false" aria-controls="tab-roles" onclick="switchTab('roles')">
+        <span class="nav-icon">👥</span>
+        <span class="nav-text">Rôles</span>
+    </a>
+    <a class="nav-item" id="btn-faits" role="tab" aria-selected="false" aria-controls="tab-faits" onclick="switchTab('faits')">
+        <span class="nav-icon">⏳</span>
+        <span class="nav-text">Histoire</span>
+    </a>
+    <a class="nav-item" id="btn-lexique" role="tab" aria-selected="false" aria-controls="tab-lexique" onclick="switchTab('lexique')">
+        <span class="nav-icon">📖</span>
+        <span class="nav-text">Lexique</span>
+    </a>
+</nav>
+
+<div id="tab-synopsis" class="tab-content active" role="tabpanel" aria-labelledby="btn-synopsis">
+    
+    <div class="lore-section fade-in-up" style="margin-bottom: 30px;">
+        <h2 class="rpg-section-title" style="margin-top: 5px; font-size: 1.1rem;"><span>Le Spectacle</span></h2>
+        <p style="text-align: center; font-style: italic; font-size: 1.05rem; padding: 10px;">
+            Plongez au cœur du XVIIe siècle, à l'aube du règne le plus flamboyant de l'Histoire de France. De la rébellion de la Fronde aux fastes grandioses de Versailles, suivez l'ascension de Louis XIV, un jeune roi tiraillé entre l'amour passionnel et le lourd devoir d'État. Trahisons, magies obscures, romances secrètes et luttes de pouvoir : découvrez les coulisses du Roi-Soleil dans une fresque musicale épique où la grandeur a un prix.
+        </p>
+    </div>
+
+    <h2 class="category-title fade-in-up" style="animation-delay: 0.1s">Programme Musical</h2>
+    
+    <div class="timeline" style="margin-top: 10px;">
+        <div class="timeline-item fade-in-up" style="animation-delay: 0.2s; width: 100%; padding-left: 20px;">
+            <div class="fact-card glass-card" style="border-left: 4px solid #c9a84c;">
+                <div class="fact-dates" style="background: var(--royal-purple);">ACTE I</div>
+                <ul class="actor-roles-list" style="margin-top: 15px;">
+                    <li><span class="emoji-icon">🎻</span> Prélude versaillais <i>(Instrumental)</i></li>
+                    <li><span class="emoji-icon">🎭</span> <b>Scène 1 :</b> Introduction de Molière</li>
+                    <li><span class="emoji-icon">🎭</span> <b>Scène 2 :</b> La Révolte<br> <span style="color:var(--accent-color); margin-left: 35px;">🎵 Contre ceux d'en haut</span></li>
+                    <li><span class="emoji-icon">🎭</span> <b>Scène 3 :</b> La Canonade<br> <span style="color:var(--accent-color); margin-left: 35px;">🎵 Qu’avons-nous fait de vous ?</span><br> <span style="color:var(--accent-color); margin-left: 35px;">🎵 La Mazarinade</span></li>
+                    <li><span class="emoji-icon">🎭</span> <b>Scène 4 :</b> Présentation de Françoise<br> <span style="color:var(--accent-color); margin-left: 35px;">🎵 Je serai à lui</span></li>
+                    <li><span class="emoji-icon">🎭</span> <b>Scène 5 :</b> Anne et Mazarin<br> <span style="color:var(--accent-color); margin-left: 35px;">🎵 Être à la hauteur</span></li>
+                    <li><span class="emoji-icon">🎭</span> <b>Scène 6 :</b> Hommage au Roi<br> <span style="color:var(--accent-color); margin-left: 35px;">🎵 Ça Marche</span></li>
+                    <li><span class="emoji-icon">🎭</span> <b>Scène 7 :</b> Le Roi et Marie</li>
+                    <li><span class="emoji-icon">🎭</span> <b>Scène 8 :</b> On parle du Roi et de Marie<br> <span style="color:var(--accent-color); margin-left: 35px;">🎵 Où ça mène quand on s'aime</span></li>
+                    <li><span class="emoji-icon">🎭</span> <b>Scène 9 :</b> Départ pour la guerre<br> <span style="color:var(--accent-color); margin-left: 35px;">🎵 Requiem aeternam</span><br> <span style="color:var(--accent-color); margin-left: 35px;">🎵 À qui la faute</span></li>
+                    <li><span class="emoji-icon">🎭</span> <b>Scène 10 :</b> Le Roi va mieux<br> <span style="color:var(--accent-color); margin-left: 35px;">🎵 Je fais de toi mon essentiel</span></li>
+                    <li><span class="emoji-icon">🎭</span> <b>Scène 11 :</b> Les Amants surpris<br> <span style="color:var(--accent-color); margin-left: 35px;">🎵 S’aimer c’est interdit</span></li>
+                </ul>
+            </div>
         </div>
 
+        <div class="timeline-item fade-in-up" style="animation-delay: 0.3s; width: 100%; padding-left: 20px; text-align: center;">
+            <div class="fact-card" style="background: transparent; border: 2px dashed rgba(201,168,76,0.5); padding: 15px;">
+                <span class="emoji-icon">🍷</span><br>
+                <b style="color: var(--gold-light); letter-spacing: 2px;">ENTRACTE</b><br>
+                <span style="font-size: 0.85rem; opacity: 0.8;">(30 Minutes)</span>
+            </div>
+        </div>
+
+        <div class="timeline-item fade-in-up" style="animation-delay: 0.4s; width: 100%; padding-left: 20px;">
+            <div class="fact-card glass-card" style="border-left: 4px solid #6b1d3a;">
+                <div class="fact-dates" style="background: var(--burgundy);">ACTE II</div>
+                <ul class="actor-roles-list" style="margin-top: 15px;">
+                    <li><span class="emoji-icon">🎭</span> <b>Scène 1 :</b> Confession de Mazarin</li>
+                    <li><span class="emoji-icon">🎭</span> <b>Scène 2 :</b> L’État c’est moi<br> <span style="color:var(--accent-color); margin-left: 35px;">🎵 Pour arriver à moi</span></li>
+                    <li><span class="emoji-icon">🎭</span> <b>Scène 3 :</b> Présentation de Madame de Montespan<br> <span style="color:var(--accent-color); margin-left: 35px;">🎵 Un geste de vous</span></li>
+                    <li><span class="emoji-icon">🎭</span> <b>Scène 4 :</b> Triomphe de Madame de Montespan</li>
+                    <li><span class="emoji-icon">🎭</span> <b>Scène 5 :</b> Madame de Montespan chez La Voisin</li>
+                    <li><span class="emoji-icon">🎭</span> <b>Scène 6 :</b> Françoise gouvernante</li>
+                    <li><span class="emoji-icon">🎭</span> <b>Scène 7 :</b> La fête à Versailles<br> <span style="color:var(--accent-color); margin-left: 35px;">🎵 Entre ciel et terre</span></li>
+                    <li><span class="emoji-icon">🎭</span> <b>Scène 8 :</b> La colère de Madame de Montespan<br> <span style="color:var(--accent-color); margin-left: 35px;">🎵 Alors d'accord</span></li>
+                    <li><span class="emoji-icon">🎭</span> <b>Scène 9 :</b> Le Roi et l’Enfant</li>
+                    <li><span class="emoji-icon">🎭</span> <b>Scène 10 :</b> Louis et Françoise<br> <span style="color:var(--accent-color); margin-left: 35px;">🎵 J’en appelle</span></li>
+                    <li><span class="emoji-icon">🎭</span> <b>Scène 11 :</b> Le Bannissement de Mme de Montespan<br> <span style="color:var(--accent-color); margin-left: 35px;">🎵 Et vice et Versailles</span></li>
+                    <li><span class="emoji-icon">🎭</span> <b>Scène 12 :</b> La Lettre<br> <span style="color:var(--accent-color); margin-left: 35px;">🎵 La vie passe</span></li>
+                    <li><span class="emoji-icon">🎭</span> <b>Scène 13 :</b> Conclusion de Molière<br> <span style="color:var(--accent-color); margin-left: 35px;">🎵 Tant qu'on rêve encore</span></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
         <!-- ONGLET 1 : PERSONNAGES -->
-        <div id="tab-personnages" class="tab-content active" role="tabpanel" aria-labelledby="btn-personnages">
+        <div id="tab-personnages" class="tab-content" role="tabpanel" aria-labelledby="btn-personnages">
             <div id="chars-container">
                 <!-- Généré par JS -->
             </div>
@@ -1688,7 +1880,7 @@
         let touchendX = 0;
         let touchstartY = 0;
         let touchendY = 0;
-        const mainTabs = ['personnages', 'roles', 'faits', 'lexique'];
+        const mainTabs = ['synopsis', 'personnages', 'roles', 'faits', 'lexique'];
 
         document.addEventListener('touchstart', e => {
             touchstartX = e.changedTouches[0].screenX;
