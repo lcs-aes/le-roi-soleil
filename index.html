@@ -648,6 +648,34 @@
     color: #FDFBF7 !important; /* Force le texte en blanc/crème */
 }
 
+/* =========================================
+   CORRECTIFS MOBILE : LISTES & BOUTON
+   ========================================= */
+
+/* 1. Réparer la mise en forme du texte écrasé sur le Synopsis */
+#tab-synopsis .actor-roles-list li {
+    display: block !important;
+    margin-bottom: 18px !important;
+    line-height: 1.5;
+}
+
+#tab-synopsis .actor-roles-list li .emoji-icon {
+    vertical-align: middle;
+    margin-right: 5px;
+}
+
+/* 2. Aligner les chansons proprement en dessous des scènes */
+#tab-synopsis .actor-roles-list span[style*="margin-left"] {
+    display: block !important;
+    margin-left: 38px !important;
+    margin-top: 6px;
+}
+
+/* 3. Remonter le bouton "Retour en haut" au-dessus du menu */
+.back-to-top {
+    bottom: 85px !important;
+    z-index: 9001 !important;
+}
 
 </style>
 </head>
@@ -722,13 +750,13 @@
                     <li><span class="emoji-icon">🎻</span> Prélude versaillais <i>(Instrumental)</i></li>
                     <li><span class="emoji-icon">🎭</span> <b>Scène 1 :</b> Introduction de Molière</li>
                     <li><span class="emoji-icon">🎭</span> <b>Scène 2 :</b> La Révolte<br> <span style="color:var(--accent-color); margin-left: 35px;">🎵 Contre ceux d'en haut</span></li>
-                    <li><span class="emoji-icon">🎭</span> <b>Scène 3 :</b> La Canonade<br> <span style="color:var(--accent-color); margin-left: 35px;">🎵 Qu’avons-nous fait de vous ?</span><br> <span style="color:var(--accent-color); margin-left: 35px;">🎵 La Mazarinade</span></li>
+                    <li><span class="emoji-icon">🎭</span> <b>Scène 3 :</b> La Canonade<br> <span style="color:var(--accent-color); margin-left: 35px;">🎵 Qu’avons-nous fait de vous ?</span> <span style="color:var(--accent-color); margin-left: 35px;">🎵 La Mazarinade</span></li>
                     <li><span class="emoji-icon">🎭</span> <b>Scène 4 :</b> Présentation de Françoise<br> <span style="color:var(--accent-color); margin-left: 35px;">🎵 Je serai à lui</span></li>
                     <li><span class="emoji-icon">🎭</span> <b>Scène 5 :</b> Anne et Mazarin<br> <span style="color:var(--accent-color); margin-left: 35px;">🎵 Être à la hauteur</span></li>
                     <li><span class="emoji-icon">🎭</span> <b>Scène 6 :</b> Hommage au Roi<br> <span style="color:var(--accent-color); margin-left: 35px;">🎵 Ça Marche</span></li>
                     <li><span class="emoji-icon">🎭</span> <b>Scène 7 :</b> Le Roi et Marie</li>
                     <li><span class="emoji-icon">🎭</span> <b>Scène 8 :</b> On parle du Roi et de Marie<br> <span style="color:var(--accent-color); margin-left: 35px;">🎵 Où ça mène quand on s'aime</span></li>
-                    <li><span class="emoji-icon">🎭</span> <b>Scène 9 :</b> Départ pour la guerre<br> <span style="color:var(--accent-color); margin-left: 35px;">🎵 Requiem aeternam</span><br> <span style="color:var(--accent-color); margin-left: 35px;">🎵 À qui la faute</span></li>
+                    <li><span class="emoji-icon">🎭</span> <b>Scène 9 :</b> Départ pour la guerre<br> <span style="color:var(--accent-color); margin-left: 35px;">🎵 Requiem aeternam</span> <span style="color:var(--accent-color); margin-left: 35px;">🎵 À qui la faute</span></li>
                     <li><span class="emoji-icon">🎭</span> <b>Scène 10 :</b> Le Roi va mieux<br> <span style="color:var(--accent-color); margin-left: 35px;">🎵 Je fais de toi mon essentiel</span></li>
                     <li><span class="emoji-icon">🎭</span> <b>Scène 11 :</b> Les Amants surpris<br> <span style="color:var(--accent-color); margin-left: 35px;">🎵 S’aimer c’est interdit</span></li>
                 </ul>
