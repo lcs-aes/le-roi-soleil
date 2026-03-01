@@ -312,7 +312,11 @@
 
         /* Scene et Carte 3D */
         .scene {
-            perspective: 1200px; width: 420px; height: 720px; 
+            perspective: 1200px; 
+            height: 90vh; /* La carte prend 90% de la hauteur de l'écran */
+            max-height: 1200px; /* Sécurité : on bloque à 1200px max pour les écrans géants */
+            aspect-ratio: 420 / 720; /* Le secret : on verrouille les proportions exactes de votre carte d'origine */
+            max-width: 95vw; /* Sécurité largeur pour les tablettes */
             filter: drop-shadow(0 30px 60px rgba(0,0,0,0.6));
             z-index: 10; position: relative;
         }
