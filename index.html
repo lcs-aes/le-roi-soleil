@@ -3541,11 +3541,8 @@ function updateGaugeDisplay() {
     
     // Changement des valeurs et réapparition
     setTimeout(() => {
-        // currentLang doit être défini dans votre logique de traduction globale
-        // Si elle n'est pas accessible ici, on vérifie quelle classe est visible
-        const isEnglish = document.body.classList.contains('lang-en-active') || document.documentElement.lang === 'en';
-        
-        dateEl.innerHTML = isEnglish ? item.dateEn : `<span class="lang-fr">${item.dateFr}</span><span class="lang-en">${item.dateEn}</span>`;
+        // L'astuce : on injecte les deux langues, c'est le CSS qui décide laquelle afficher instantanément !
+        dateEl.innerHTML = `<span class="lang-fr">${item.dateFr}</span><span class="lang-en">${item.dateEn}</span>`;
         pctEl.innerText = item.pct + "%";
         fillEl.style.width = item.pct + "%";
         
