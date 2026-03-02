@@ -788,6 +788,61 @@
     <style>
         #lang-switcher button.active-lang { opacity: 1 !important; transform: scale(1.18); }
         #lang-switcher button:hover { opacity: 0.85 !important; }
+/* --- JAUGE D'AFFLUENCE TOURNANTE --- */
+.royal-gauge-container {
+    background: rgba(0, 0, 0, 0.4); /* Fond un peu plus sombre pour contraster sur l'image */
+    border: 1px solid rgba(226, 184, 106, 0.4);
+    border-radius: 12px;
+    padding: 12px 20px;
+    margin: 30px auto 0 auto; /* Espacement parfait sous le bouton */
+    max-width: 320px;
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+}
+.royal-gauge-title {
+    font-family: 'Cinzel', serif;
+    color: var(--gold-light);
+    margin: 0 0 10px 0;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+.royal-gauge-content {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+.gauge-date {
+    font-weight: bold;
+    font-size: 0.85rem;
+    width: 75px;
+    text-align: left;
+    color: #FFF;
+    transition: opacity 0.3s ease;
+}
+.gauge-track {
+    flex-grow: 1;
+    height: 8px;
+    background: rgba(0,0,0,0.6);
+    border-radius: 10px;
+    overflow: hidden;
+    border: 1px solid rgba(226, 184, 106, 0.2);
+}
+.gauge-fill {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, #E2B86A, #F4D38B);
+    box-shadow: 0 0 10px rgba(226, 184, 106, 0.5);
+    transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.gauge-pct {
+    font-size: 0.85rem;
+    font-weight: bold;
+    width: 45px;
+    text-align: right;
+    color: var(--accent-color);
+    transition: opacity 0.3s ease;
+}
     </style>
 
     
@@ -859,6 +914,21 @@
                <span class="lang-fr">RÉSERVER MON SIÈGE ROYAL</span><span class="lang-en">BOOK MY ROYAL SEAT</span>
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512" style="width: 24px; height: 24px; fill: currentColor;"><defs><style>.fa-secondary{opacity:.4}</style></defs><path class="fa-secondary" d="M248 72a40 40 0 1 1 80 0 40 40 0 1 1 -80 0zM0 136a40 40 0 1 1 80 0A40 40 0 1 1 0 136zM536 96a40 40 0 1 1 0 80 40 40 0 1 1 0-80z"/><path class="fa-primary" d="M504 160l-89.1 71.3c-15.9 12.7-39.5 7.5-48.6-10.7L309 106c-6.1 3.8-13.3 6-21 6s-14.9-2.2-21-6L209.7 220.6c-9.1 18.2-32.7 23.4-48.6 10.7L72 160c-7.2 9.5-18.5 15.8-31.3 16L86.4 427.4c5.5 30.4 32 52.6 63 52.6H426.6c30.9 0 57.4-22.1 63-52.6L535.3 176c-12.8-.2-24.1-6.5-31.3-16z"/></svg>
             </a>
+</a> <div class="royal-gauge-container">
+    <h4 class="royal-gauge-title" id="gauge-title">
+        <span class="lang-fr">Sièges Royaux Réservés</span>
+        <span class="lang-en">Royal Seats Reserved</span>
+    </h4>
+    <div class="royal-gauge-content">
+        <span id="gauge-date" class="gauge-date">--</span>
+        <div class="gauge-track">
+            <div id="gauge-fill" class="gauge-fill" style="width: 0%;"></div>
+        </div>
+        <span id="gauge-pct" class="gauge-pct">--%</span>
+    </div>
+</div>
+
+        </div> </header>
         </div>
     </header>
 
@@ -3405,6 +3475,70 @@
             if (ben) ben.classList.toggle('active-lang', lang === 'en');
             if (lang === 'en') rebuildDynamicContent();
         });
+
+// --- JAUGE D'AFFLUENCE TOURNANTE ---
+let capacityData = [];
+let currentGaugeIndex = 0;
+
+async function initRoyalGauge() {
+    const url = "https://script.googleusercontent.com/macros/echo?user_content_key=AY5xjrSgGKE2EVU9_SGNg3_fQmgAPnyHzXm9e6u0Kfgb3uDvClBOqK5R73bgv4W9qD7Jj4xq6xNh7j5lrYXvoOIa10gwpEolJQMV6puZ9u6uo0TtmweSmzJvJgymOE-mODBl6ZBgNrAMDwuH5yN19Gs_hkBjJ6lxkwMpm-6Qq8L03VHgA73z3hWApAs770rUjscb3-nxZols4mZmrSctmQlQyTmOz-QK4m7X-4fHUz03lKlLYUWfd-ZPZ01_rgMfIaJSTjQMC5m0CA6KonEq3Cp1GgnF4s4SmQ&lib=Matw_EsxjWd5YCVXQSK25nmwCk3FUI3ig";
+    const maxCap = 250;
+    
+    try {
+        const res = await fetch(url);
+        const data = await res.json();
+        
+        if(data.ok) {
+            capacityData = [
+                { dateFr: "14 Mars", dateEn: "March 14", pct: Math.min(Math.round((data.E / maxCap) * 100), 100) },
+                { dateFr: "19 Mars", dateEn: "March 19", pct: Math.min(Math.round((data.F / maxCap) * 100), 100) },
+                { dateFr: "21 Mars", dateEn: "March 21", pct: Math.min(Math.round((data.G / maxCap) * 100), 100) }
+            ];
+            
+            // Première mise à jour immédiate
+            updateGaugeDisplay();
+            // Lancement de la rotation toutes les 3 secondes
+            setInterval(updateGaugeDisplay, 3000);
+        }
+    } catch (err) {
+        console.error("Erreur de chargement de la jauge:", err);
+    }
+}
+
+function updateGaugeDisplay() {
+    if(capacityData.length === 0) return;
+    
+    const item = capacityData[currentGaugeIndex];
+    const dateEl = document.getElementById("gauge-date");
+    const fillEl = document.getElementById("gauge-fill");
+    const pctEl = document.getElementById("gauge-pct");
+    
+    // Disparition en douceur du texte
+    dateEl.style.opacity = 0;
+    pctEl.style.opacity = 0;
+    
+    // Changement des valeurs et réapparition
+    setTimeout(() => {
+        // currentLang doit être défini dans votre logique de traduction globale
+        // Si elle n'est pas accessible ici, on vérifie quelle classe est visible
+        const isEnglish = document.body.classList.contains('lang-en-active') || document.documentElement.lang === 'en';
+        
+        dateEl.innerHTML = isEnglish ? item.dateEn : `<span class="lang-fr">${item.dateFr}</span><span class="lang-en">${item.dateEn}</span>`;
+        pctEl.innerText = item.pct + "%";
+        fillEl.style.width = item.pct + "%";
+        
+        dateEl.style.opacity = 1;
+        pctEl.style.opacity = 1;
+        
+        // Passer à l'index suivant pour le prochain cycle
+        currentGaugeIndex = (currentGaugeIndex + 1) % capacityData.length;
+    }, 400);
+}
+
+// Démarrer la jauge une fois la page chargée
+document.addEventListener('DOMContentLoaded', () => {
+    initRoyalGauge();
+});
 
     </script>
 </body>
