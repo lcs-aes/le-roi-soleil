@@ -1,0 +1,26 @@
+name: Mise a jour de la Jauge Royale
+
+on:
+  schedule:
+    - cron: '*/30 * * * *' # S'exécute toutes les 30 minutes
+  workflow_dispatch: # Permet de lancer la mise à jour manuellement si besoin
+
+permissions:
+  contents: write
+
+jobs:
+  update-jauge:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 1. Récupérer le code du site
+        uses: actions/checkout@v4
+
+      - name: 2. Interroger le Messager Google
+        run: |
+          curl -sL "https://script.googleusercontent.com/macros/echo?user_content_key=AY5xjrSgGKE2EVU9_SGNg3_fQmgAPnyHzXm9e6u0Kfgb3uDvClBOqK5R73bgv4W9qD7Jj4xq6xNh7j5lrYXvoOIa10gwpEolJQMV6puZ9u6uo0TtmweSmzJvJgymOE-mODBl6ZBgNrAMDwuH5yN19Gs_hkBjJ6lxkwMpm-6Qq8L03VHgA73z3hWApAs770rUjscb3-nxZols4mZmrSctmQlQyTmOz-QK4m7X-4fHUz03lKlLYUWfd-ZPZ01_rgMfIaJSTjQMC5m0CA6KonEq3Cp1GgnF4s4SmQ&lib=Matw_EsxjWd5YCVXQSK25nmwCk3FUI3ig" -o capacite.json
+
+      - name: 3. Sauvegarder les nouveaux chiffres sur GitHub
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "Mise à jour automatique des places royales"
+          file_pattern: 'capacite.json'
