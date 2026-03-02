@@ -2252,7 +2252,8 @@
     document.getElementById('btn-' + tabId).setAttribute('aria-selected', 'true');
     document.getElementById('tab-' + tabId).setAttribute('aria-hidden', 'false');
     
-    window.scrollTo({top: 0, behavior: 'smooth'});
+    // On remonte tout en haut instantanément, sans effet "smooth" hideux
+    window.scrollTo(0, 0);
 }
 
         function toggleCardFlip(e) {
