@@ -20,6 +20,7 @@
             --accent-color: #E2B86A;
             --gold-light: #F4D38B;
             --primary-gradient: linear-gradient(135deg, #5C65CD 0%, #764BA4 100%);
+            --btn-top-gradient: linear-gradient(135deg, #c9a84c 0%, #8b6914 100%);
             --card-bg: rgba(255, 255, 255, 0.93);
             --parchment-bg: #F4E8D1; /* Couleur d'origine bien visible pour le lexique */
             
@@ -338,7 +339,7 @@
         .show-dates { font-size: 0.9rem; color: #FFF; opacity: 0.8; margin-bottom: 25px; font-weight: bold; letter-spacing: 1px; }
 
         .back-to-top {
-            position: fixed; bottom: 20px; right: 20px; background: var(--primary-gradient);
+            position: fixed; bottom: 20px; right: 20px; background: var(--btn-top-gradient);
             color: white; width: 45px; height: 45px; border-radius: 50%; border: none;
             font-size: 1.5rem; box-shadow: 0 4px 10px rgba(0,0,0,0.3); cursor: pointer;
             display: none; justify-content: center; align-items: center; z-index: 1000;
@@ -760,8 +761,35 @@
 }
 
 </style>
+
+    <style id="lang-toggle-css">
+        html[lang="en"] .lang-fr { display: none !important; }
+        html[lang="fr"] .lang-en { display: none !important; }
+        html[lang="en"] .lang-en { display: inline !important; }
+        html[lang="fr"] .lang-fr { display: inline !important; }
+        html[lang="en"] .lang-fr-block { display: none !important; }
+        html[lang="fr"] .lang-en-block { display: none !important; }
+    </style>
 </head>
 <body>
+    <script>
+        (function() {
+            // Langue par défaut : toujours français au chargement
+            localStorage.setItem('lang', 'fr');
+            var lang = 'fr';
+            document.documentElement.lang = lang;
+        })();
+    </script>
+    <!-- Bouton de changement de langue -->
+    <div id="lang-switcher" style="position:fixed;top:14px;right:14px;z-index:9999;display:flex;gap:6px;background:rgba(30,20,60,0.82);border:1px solid rgba(201,168,76,0.4);border-radius:30px;padding:5px 10px;backdrop-filter:blur(8px);box-shadow:0 2px 12px rgba(0,0,0,0.4);">
+        <button id="btn-fr" onclick="setLang('fr')" title="Version Française" style="background:none;border:none;cursor:pointer;font-size:1.3rem;padding:2px 4px;border-radius:50%;transition:transform 0.2s,opacity 0.2s;opacity:0.5;" aria-label="Passer en français">🇫🇷</button>
+        <button id="btn-en" onclick="setLang('en')" title="English Version" style="background:none;border:none;cursor:pointer;font-size:1.3rem;padding:2px 4px;border-radius:50%;transition:transform 0.2s,opacity 0.2s;opacity:0.5;" aria-label="Switch to English">🇬🇧</button>
+    </div>
+    <style>
+        #lang-switcher button.active-lang { opacity: 1 !important; transform: scale(1.18); }
+        #lang-switcher button:hover { opacity: 0.85 !important; }
+    </style>
+
     
     <!-- Animation d'ouverture -->
    <div id="loader-container">
@@ -784,27 +812,27 @@
         <nav class="bottom-nav" role="tablist" aria-label="Menu de navigation">
     <a class="nav-item active" id="btn-accueil" role="tab" aria-selected="true" aria-controls="tab-accueil" onclick="switchTab('accueil')">
         <span class="nav-icon">🏰</span>
-        <span class="nav-text">Accueil</span>
+        <span class="nav-text"><span class="lang-fr">Accueil</span><span class="lang-en">Home</span></span>
     </a>
     <a class="nav-item" id="btn-synopsis" role="tab" aria-selected="false" aria-controls="tab-synopsis" onclick="switchTab('synopsis')">
         <span class="nav-icon">📜</span>
-        <span class="nav-text">Synopsis</span>
+        <span class="nav-text"><span class="lang-fr">Synopsis</span><span class="lang-en">Synopsis</span></span>
     </a>
     <a class="nav-item" id="btn-personnages" role="tab" aria-selected="false" aria-controls="tab-personnages" onclick="switchTab('personnages')">
         <span class="nav-icon">🎭</span>
-        <span class="nav-text">Héros</span>
+        <span class="nav-text"><span class="lang-fr">Héros</span><span class="lang-en">Heroes</span></span>
     </a>
     <a class="nav-item" id="btn-roles" role="tab" aria-selected="false" aria-controls="tab-roles" onclick="switchTab('roles')">
         <span class="nav-icon">👥</span>
-        <span class="nav-text">Rôles</span>
+        <span class="nav-text"><span class="lang-fr">Rôles</span><span class="lang-en">Roles</span></span>
     </a>
     <a class="nav-item" id="btn-faits" role="tab" aria-selected="false" aria-controls="tab-faits" onclick="switchTab('faits')">
         <span class="nav-icon">⏳</span>
-        <span class="nav-text">Histoire</span>
+        <span class="nav-text"><span class="lang-fr">Histoire</span><span class="lang-en">History</span></span>
     </a>
     <a class="nav-item" id="btn-lexique" role="tab" aria-selected="false" aria-controls="tab-lexique" onclick="switchTab('lexique')">
         <span class="nav-icon">📖</span>
-        <span class="nav-text">Lexique</span>
+        <span class="nav-text"><span class="lang-fr">Lexique</span><span class="lang-en">Glossary</span></span>
     </a>
 </nav>
 
@@ -812,15 +840,15 @@
     
     <header style="background: linear-gradient(rgba(26, 34, 56, 0.8), rgba(26, 34, 56, 0.8)), url('https://images.unsplash.com/photo-1590059433753-37d45722383c?q=80&w=2000') center/cover; padding: 60px 20px; text-align: center; border-bottom: 3px solid var(--accent-color); margin: -20px -15px 30px -15px;">
         <div style="max-width: 900px; margin: 0 auto;">
-            <span style="font-family: 'Cinzel', serif; letter-spacing: 5px; color: var(--gold-light); text-transform: uppercase; font-size: 0.85rem;">La Magie de Versailles à Sydney</span>
+            <span style="font-family: 'Cinzel', serif; letter-spacing: 5px; color: var(--gold-light); text-transform: uppercase; font-size: 0.85rem;"><span class="lang-fr">La Magie de Versailles à Sydney</span><span class="lang-en">The Magic of Versailles in Sydney</span></span>
             
             <h1 style="font-size: clamp(2.5rem, 10vw, 5rem); margin: 15px 0; line-height: 1; text-shadow: 0 0 30px rgba(226, 184, 106, 0.5);">LE ROI SOLEIL</h1>
             
-            <p style="font-family: 'Playfair Display', serif; font-style: italic; font-size: 1.2rem; color: #FFF; margin-bottom: 30px; padding: 0 10px;">"Un spectacle grandiose où la grandeur a un prix."</p>
+            <p style="font-family: 'Playfair Display', serif; font-style: italic; font-size: 1.2rem; color: #FFF; margin-bottom: 30px; padding: 0 10px;"><span class="lang-fr">"Un spectacle grandiose où la grandeur a un prix."</span><span class="lang-en">"A grandiose show where greatness comes at a price."</span></p>
             
             <div style="background: rgba(255,255,255,0.1); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); display: inline-block; padding: 15px 25px; border-radius: 15px; border: 1px solid var(--accent-color); margin-bottom: 40px;">
                 <p style="margin: 0; font-weight: bold; color: var(--gold-light);">📅 14, 19 et 21 MARS | 🕗 18h30</p>
-                <p style="margin: 5px 0 0 0; font-size: 0.85rem; opacity: 0.9; color: #FFF;">Portes : 18h00 | Théâtre du Lycée Condorcet</p>
+                <p style="margin: 5px 0 0 0; font-size: 0.85rem; opacity: 0.9; color: #FFF;"><span class="lang-fr">Portes : 18h00 | Théâtre du Lycée Condorcet</span><span class="lang-en">Doors: 6:00 PM | Lycée Condorcet Theatre</span></p>
             </div>
             
             <br>
@@ -828,23 +856,23 @@
                target="_blank"
                style="background: linear-gradient(135deg, #E2B86A 0%, #F4D38B 50%, #E2B86A 100%); color: #1A2238; padding: 18px 30px; border-radius: 50px; font-family: 'Cinzel', serif; font-weight: 900; text-decoration: none; text-transform: uppercase; letter-spacing: 1px; box-shadow: 0 0 25px rgba(226, 184, 106, 0.6); display: inline-flex; align-items: center; gap: 12px; animation: pulseResa 5s infinite;">
                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512" style="width: 24px; height: 24px; fill: currentColor;"><defs><style>.fa-secondary{opacity:.4}</style></defs><path class="fa-secondary" d="M248 72a40 40 0 1 1 80 0 40 40 0 1 1 -80 0zM0 136a40 40 0 1 1 80 0A40 40 0 1 1 0 136zM536 96a40 40 0 1 1 0 80 40 40 0 1 1 0-80z"/><path class="fa-primary" d="M504 160l-89.1 71.3c-15.9 12.7-39.5 7.5-48.6-10.7L309 106c-6.1 3.8-13.3 6-21 6s-14.9-2.2-21-6L209.7 220.6c-9.1 18.2-32.7 23.4-48.6 10.7L72 160c-7.2 9.5-18.5 15.8-31.3 16L86.4 427.4c5.5 30.4 32 52.6 63 52.6H426.6c30.9 0 57.4-22.1 63-52.6L535.3 176c-12.8-.2-24.1-6.5-31.3-16z"/></svg>
-               RÉSERVER MON SIÈGE ROYAL
+               <span class="lang-fr">RÉSERVER MON SIÈGE ROYAL</span><span class="lang-en">BOOK MY ROYAL SEAT</span>
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512" style="width: 24px; height: 24px; fill: currentColor;"><defs><style>.fa-secondary{opacity:.4}</style></defs><path class="fa-secondary" d="M248 72a40 40 0 1 1 80 0 40 40 0 1 1 -80 0zM0 136a40 40 0 1 1 80 0A40 40 0 1 1 0 136zM536 96a40 40 0 1 1 0 80 40 40 0 1 1 0-80z"/><path class="fa-primary" d="M504 160l-89.1 71.3c-15.9 12.7-39.5 7.5-48.6-10.7L309 106c-6.1 3.8-13.3 6-21 6s-14.9-2.2-21-6L209.7 220.6c-9.1 18.2-32.7 23.4-48.6 10.7L72 160c-7.2 9.5-18.5 15.8-31.3 16L86.4 427.4c5.5 30.4 32 52.6 63 52.6H426.6c30.9 0 57.4-22.1 63-52.6L535.3 176c-12.8-.2-24.1-6.5-31.3-16z"/></svg>
             </a>
         </div>
     </header>
 
     <div class="lexicon-card fade-in-up" style="background: #F4E8D1; border-left: 5px solid var(--burgundy); margin-bottom: 20px;">
-        <h2 class="lexicon-title" style="justify-content: center; color: var(--burgundy);">📜 Informations</h2>
+        <h2 class="lexicon-title" style="justify-content: center; color: var(--burgundy);">📜 <span class="lang-fr">Informations</span><span class="lang-en">Information</span></h2>
         <div style="font-family: 'Cormorant Garamond', serif; font-size: 1.25rem; color: #2c1e10; line-height: 1.6; text-align: center;">
-            <p style="margin: 10px 0;"><strong>📅 DATES :</strong> 14, 19 et 21 Mars 2026</p>
-            <p style="margin: 10px 0;"><strong>🕗 SPECTACLE :</strong> 18h30 (Portes à 18h00)</p>
-            <p style="margin: 10px 0;"><strong>🎭 LIEU :</strong> Théâtre du Lycée Condorcet, entrée sur Moverly Road</p>
+            <p style="margin: 10px 0;"><strong>📅 <span class="lang-fr">DATES :</span><span class="lang-en">DATES:</span></strong> <span class="lang-fr">14, 19 et 21 Mars 2026</span><span class="lang-en">14, 19 and 21 March 2026</span></p>
+            <p style="margin: 10px 0;"><strong>🕗 <span class="lang-fr">SPECTACLE :</span><span class="lang-en">SHOW:</span></strong> <span class="lang-fr">18h30 (Portes à 18h00)</span><span class="lang-en">6:30 PM (Doors at 6:00 PM)</span></p>
+            <p style="margin: 10px 0;"><strong>🎭 <span class="lang-fr">LIEU :</span><span class="lang-en">VENUE:</span></strong> <span class="lang-fr">Théâtre du Lycée Condorcet, entrée sur Moverly Road</span><span class="lang-en">Lycée Condorcet Theatre, entrance on Moverly Road</span></p>
             
             <div style="margin: 25px 0; padding: 15px; border: 1px dashed var(--gold-dark); background: rgba(255,255,255,0.3); border-radius: 8px;">
                 <span style="font-size: 1.5rem;">🍷</span><br>
-                <strong>RESTAURATION :</strong><br>
-                Un stand de victuailles sera à votre disposition pour festoyer avant le lever de rideau et pendant l'entracte!
+                <strong><span class="lang-fr">RESTAURATION :</span><span class="lang-en">REFRESHMENTS:</span></strong><br>
+                <span class="lang-fr">Un stand de victuailles sera à votre disposition pour festoyer avant le lever de rideau et pendant l'entracte!</span><span class="lang-en">A refreshment stand will be available for you to enjoy before the curtain rises and during the intermission!</span>
             </div>
         </div>
 
@@ -857,31 +885,32 @@
 <div id="tab-synopsis" class="tab-content" role="tabpanel" aria-labelledby="btn-synopsis">
     
     <div class="lore-section fade-in-up" style="margin-bottom: 30px;">
-        <h2 class="rpg-section-title" style="margin-top: 5px; font-size: 1.1rem;"><span>Le Spectacle</span></h2>
+        <h2 class="rpg-section-title" style="margin-top: 5px; font-size: 1.1rem;"><span class="lang-fr">Le Spectacle</span><span class="lang-en">The Show</span></h2>
         <p style="text-align: center; font-style: italic; font-size: 1.05rem; padding: 10px;">
-            Plongez au cœur du XVIIe siècle, à l'aube du règne le plus flamboyant de l'Histoire de France. De la rébellion de la Fronde aux fastes grandioses de Versailles, suivez l'ascension de Louis XIV, un jeune roi tiraillé entre l'amour passionnel et le lourd devoir d'État. Trahisons, magies obscures, romances secrètes et luttes de pouvoir : découvrez les coulisses du Roi-Soleil dans une fresque musicale épique où la grandeur a un prix.
+            <span class="lang-fr">Plongez au cœur du XVIIe siècle, à l'aube du règne le plus flamboyant de l'Histoire de France. De la rébellion de la Fronde aux fastes grandioses de Versailles, suivez l'ascension de Louis XIV, un jeune roi tiraillé entre l'amour passionnel et le lourd devoir d'État. Trahisons, magies obscures, romances secrètes et luttes de pouvoir : découvrez les coulisses du Roi-Soleil dans une fresque musicale épique où la grandeur a un prix.</span>
+            <span class="lang-en">Plunge into the heart of the 17th century, at the dawn of the most dazzling reign in French history. From the rebellion of the Fronde to the grandiose splendour of Versailles, follow the rise of Louis XIV — a young king torn between passionate love and the heavy duty of State. Betrayals, dark magic, secret romances and power struggles: discover the backstage of the Sun King in an epic musical fresco where greatness comes at a price.</span>
         </p>
     </div>
 
-    <h2 class="category-title fade-in-up" style="animation-delay: 0.1s">Programme Musical</h2>
+    <h2 class="category-title fade-in-up" style="animation-delay: 0.1s"><span class="lang-fr">Programme Musical</span><span class="lang-en">Musical Programme</span></h2>
     
     <div class="timeline" style="margin-top: 10px;">
         <div class="timeline-item fade-in-up" style="animation-delay: 0.2s; width: 100%; padding-left: 20px;">
             <div class="fact-card glass-card" style="border-left: 4px solid #c9a84c;">
-                <div class="fact-dates" style="background: var(--royal-purple);">ACTE I</div>
+                <div class="fact-dates" style="background: var(--royal-purple);"><span class="lang-fr">ACTE I</span><span class="lang-en">ACT I</span></div>
                 <ul class="actor-roles-list" style="margin-top: 15px;">
                     <li><span class="emoji-icon">🎻</span> Prélude versaillais <i>(Instrumental)</i></li>
-                    <li><span class="emoji-icon">🎭</span> <b>Scène 1 :</b> Introduction de Molière</li>
-                    <li><span class="emoji-icon">🎭</span> <b>Scène 2 :</b> La Révolte<br> <span style="color:var(--accent-color); margin-left: 35px;">🎵 Contre ceux d'en haut</span></li>
-                    <li><span class="emoji-icon">🎭</span> <b>Scène 3 :</b> La Canonade<br> <span style="color:var(--accent-color); margin-left: 35px;">🎵 Qu’avons-nous fait de vous ?</span> <span style="color:var(--accent-color); margin-left: 35px;">🎵 La Mazarinade</span></li>
-                    <li><span class="emoji-icon">🎭</span> <b>Scène 4 :</b> Présentation de Françoise<br> <span style="color:var(--accent-color); margin-left: 35px;">🎵 Je serai à lui</span></li>
-                    <li><span class="emoji-icon">🎭</span> <b>Scène 5 :</b> Anne et Mazarin<br> <span style="color:var(--accent-color); margin-left: 35px;">🎵 Être à la hauteur</span></li>
-                    <li><span class="emoji-icon">🎭</span> <b>Scène 6 :</b> Hommage au Roi<br> <span style="color:var(--accent-color); margin-left: 35px;">🎵 Ça Marche</span></li>
-                    <li><span class="emoji-icon">🎭</span> <b>Scène 7 :</b> Le Roi et Marie</li>
-                    <li><span class="emoji-icon">🎭</span> <b>Scène 8 :</b> On parle du Roi et de Marie<br> <span style="color:var(--accent-color); margin-left: 35px;">🎵 Où ça mène quand on s'aime</span></li>
-                    <li><span class="emoji-icon">🎭</span> <b>Scène 9 :</b> Départ pour la guerre<br> <span style="color:var(--accent-color); margin-left: 35px;">🎵 Requiem aeternam</span> <span style="color:var(--accent-color); margin-left: 35px;">🎵 À qui la faute</span></li>
-                    <li><span class="emoji-icon">🎭</span> <b>Scène 10 :</b> Le Roi va mieux<br> <span style="color:var(--accent-color); margin-left: 35px;">🎵 Je fais de toi mon essentiel</span></li>
-                    <li><span class="emoji-icon">🎭</span> <b>Scène 11 :</b> Les Amants surpris<br> <span style="color:var(--accent-color); margin-left: 35px;">🎵 S’aimer c’est interdit</span></li>
+                    <li><span class="emoji-icon">🎭</span> <b><span class="lang-fr">Scène 1 :</span><span class="lang-en">Scene 1:</span></b> <span class="lang-fr">Introduction de Molière</span><span class="lang-en">Introduction of Molière</span></li>
+                    <li><span class="emoji-icon">🎭</span> <b><span class="lang-fr">Scène 2 :</span><span class="lang-en">Scene 2:</span></b> <span class="lang-fr">La Révolte</span><span class="lang-en">The Revolt</span><br> <span style="color:var(--accent-color); margin-left: 35px;">🎵 Contre ceux d'en haut</span></li>
+                    <li><span class="emoji-icon">🎭</span> <b><span class="lang-fr">Scène 3 :</span><span class="lang-en">Scene 3:</span></b> <span class="lang-fr">La Canonade</span><span class="lang-en">The Cannonade</span><br> <span style="color:var(--accent-color); margin-left: 35px;">🎵 Qu’avons-nous fait de vous ?</span> <span style="color:var(--accent-color); margin-left: 35px;">🎵 La Mazarinade</span></li>
+                    <li><span class="emoji-icon">🎭</span> <b><span class="lang-fr">Scène 4 :</span><span class="lang-en">Scene 4:</span></b> <span class="lang-fr">Présentation de Françoise</span><span class="lang-en">Introduction of Françoise</span><br> <span style="color:var(--accent-color); margin-left: 35px;">🎵 Je serai à lui</span></li>
+                    <li><span class="emoji-icon">🎭</span> <b><span class="lang-fr">Scène 5 :</span><span class="lang-en">Scene 5:</span></b> <span class="lang-fr">Anne et Mazarin</span><span class="lang-en">Anne and Mazarin</span><br> <span style="color:var(--accent-color); margin-left: 35px;">🎵 Être à la hauteur</span></li>
+                    <li><span class="emoji-icon">🎭</span> <b><span class="lang-fr">Scène 6 :</span><span class="lang-en">Scene 6:</span></b> <span class="lang-fr">Hommage au Roi</span><span class="lang-en">Tribute to the King</span><br> <span style="color:var(--accent-color); margin-left: 35px;">🎵 Ça Marche</span></li>
+                    <li><span class="emoji-icon">🎭</span> <b><span class="lang-fr">Scène 7 :</span><span class="lang-en">Scene 7:</span></b> <span class="lang-fr">Le Roi et Marie</span><span class="lang-en">The King and Marie</span></li>
+                    <li><span class="emoji-icon">🎭</span> <b><span class="lang-fr">Scène 8 :</span><span class="lang-en">Scene 8:</span></b> <span class="lang-fr">On parle du Roi et de Marie</span><span class="lang-en">Talking about the King and Marie</span><br> <span style="color:var(--accent-color); margin-left: 35px;">🎵 Où ça mène quand on s'aime</span></li>
+                    <li><span class="emoji-icon">🎭</span> <b><span class="lang-fr">Scène 9 :</span><span class="lang-en">Scene 9:</span></b> <span class="lang-fr">Départ pour la guerre</span><span class="lang-en">Departure for War</span><br> <span style="color:var(--accent-color); margin-left: 35px;">🎵 Requiem aeternam</span> <span style="color:var(--accent-color); margin-left: 35px;">🎵 À qui la faute</span></li>
+                    <li><span class="emoji-icon">🎭</span> <b><span class="lang-fr">Scène 10 :</span><span class="lang-en">Scene 10:</span></b> <span class="lang-fr">Le Roi va mieux</span><span class="lang-en">The King Recovers</span><br> <span style="color:var(--accent-color); margin-left: 35px;">🎵 Je fais de toi mon essentiel</span></li>
+                    <li><span class="emoji-icon">🎭</span> <b><span class="lang-fr">Scène 11 :</span><span class="lang-en">Scene 11:</span></b> <span class="lang-fr">Les Amants surpris</span><span class="lang-en">The Surprised Lovers</span><br> <span style="color:var(--accent-color); margin-left: 35px;">🎵 S’aimer c’est interdit</span></li>
                 </ul>
             </div>
         </div>
@@ -889,28 +918,28 @@
         <div class="timeline-item fade-in-up" style="animation-delay: 0.3s; width: 100%; padding-left: 20px; text-align: center;">
             <div class="fact-card" style="background: transparent; border: 2px dashed rgba(201,168,76,0.5); padding: 15px;">
                 <span class="emoji-icon">🍷</span><br>
-                <b style="color: var(--gold-light); letter-spacing: 2px;">ENTRACTE</b><br>
+                <b style="color: var(--gold-light); letter-spacing: 2px;"><span class="lang-fr">ENTRACTE</span><span class="lang-en">INTERMISSION</span></b><br>
                 <span style="font-size: 0.85rem; opacity: 0.8;">(20 Minutes)</span>
             </div>
         </div>
 
         <div class="timeline-item fade-in-up" style="animation-delay: 0.4s; width: 100%; padding-left: 20px;">
             <div class="fact-card glass-card" style="border-left: 4px solid #6b1d3a;">
-                <div class="fact-dates" style="background: var(--burgundy);">ACTE II</div>
+                <div class="fact-dates" style="background: var(--burgundy);"><span class="lang-fr">ACTE II</span><span class="lang-en">ACT II</span></div>
                 <ul class="actor-roles-list" style="margin-top: 15px;">
-                    <li><span class="emoji-icon">🎭</span> <b>Scène 1 :</b> Confession de Mazarin</li>
-                    <li><span class="emoji-icon">🎭</span> <b>Scène 2 :</b> L’État c’est moi<br> <span style="color:var(--accent-color); margin-left: 35px;">🎵 Pour arriver à moi</span></li>
-                    <li><span class="emoji-icon">🎭</span> <b>Scène 3 :</b> Présentation de Madame de Montespan<br> <span style="color:var(--accent-color); margin-left: 35px;">🎵 Un geste de vous</span></li>
-                    <li><span class="emoji-icon">🎭</span> <b>Scène 4 :</b> Triomphe de Madame de Montespan</li>
-                    <li><span class="emoji-icon">🎭</span> <b>Scène 5 :</b> Madame de Montespan chez La Voisin</li>
-                    <li><span class="emoji-icon">🎭</span> <b>Scène 6 :</b> Françoise gouvernante</li>
-                    <li><span class="emoji-icon">🎭</span> <b>Scène 7 :</b> La fête à Versailles<br> <span style="color:var(--accent-color); margin-left: 35px;">🎵 Entre ciel et terre</span></li>
-                    <li><span class="emoji-icon">🎭</span> <b>Scène 8 :</b> La colère de Madame de Montespan<br> <span style="color:var(--accent-color); margin-left: 35px;">🎵 Alors d'accord</span></li>
-                    <li><span class="emoji-icon">🎭</span> <b>Scène 9 :</b> Le Roi et l’Enfant</li>
-                    <li><span class="emoji-icon">🎭</span> <b>Scène 10 :</b> Louis et Françoise<br> <span style="color:var(--accent-color); margin-left: 35px;">🎵 J’en appelle</span></li>
-                    <li><span class="emoji-icon">🎭</span> <b>Scène 11 :</b> Le Bannissement de Mme de Montespan<br> <span style="color:var(--accent-color); margin-left: 35px;">🎵 Et vice et Versailles</span></li>
-                    <li><span class="emoji-icon">🎭</span> <b>Scène 12 :</b> La Lettre<br> <span style="color:var(--accent-color); margin-left: 35px;">🎵 La vie passe</span></li>
-                    <li><span class="emoji-icon">🎭</span> <b>Scène 13 :</b> Conclusion de Molière<br> <span style="color:var(--accent-color); margin-left: 35px;">🎵 Tant qu'on rêve encore</span></li>
+                    <li><span class="emoji-icon">🎭</span> <b><span class="lang-fr">Scène 1 :</span><span class="lang-en">Scene 1:</span></b> <span class="lang-fr">Confession de Mazarin</span><span class="lang-en">Mazarin's Confession</span></li>
+                    <li><span class="emoji-icon">🎭</span> <b><span class="lang-fr">Scène 2 :</span><span class="lang-en">Scene 2:</span></b> <span class="lang-fr">L'État c'est moi</span><span class="lang-en">The State Is Me</span><br> <span style="color:var(--accent-color); margin-left: 35px;">🎵 Pour arriver à moi</span></li>
+                    <li><span class="emoji-icon">🎭</span> <b><span class="lang-fr">Scène 3 :</span><span class="lang-en">Scene 3:</span></b> <span class="lang-fr">Présentation de Madame de Montespan</span><span class="lang-en">Introduction of Madame de Montespan</span><br> <span style="color:var(--accent-color); margin-left: 35px;">🎵 Un geste de vous</span></li>
+                    <li><span class="emoji-icon">🎭</span> <b><span class="lang-fr">Scène 4 :</span><span class="lang-en">Scene 4:</span></b> <span class="lang-fr">Triomphe de Madame de Montespan</span><span class="lang-en">Triumph of Madame de Montespan</span></li>
+                    <li><span class="emoji-icon">🎭</span> <b><span class="lang-fr">Scène 5 :</span><span class="lang-en">Scene 5:</span></b> <span class="lang-fr">Madame de Montespan chez La Voisin</span><span class="lang-en">Madame de Montespan at La Voisin's</span></li>
+                    <li><span class="emoji-icon">🎭</span> <b><span class="lang-fr">Scène 6 :</span><span class="lang-en">Scene 6:</span></b> <span class="lang-fr">Françoise gouvernante</span><span class="lang-en">Françoise the Governess</span></li>
+                    <li><span class="emoji-icon">🎭</span> <b><span class="lang-fr">Scène 7 :</span><span class="lang-en">Scene 7:</span></b> <span class="lang-fr">La fête à Versailles</span><span class="lang-en">The Feast at Versailles</span><br> <span style="color:var(--accent-color); margin-left: 35px;">🎵 Entre ciel et terre</span></li>
+                    <li><span class="emoji-icon">🎭</span> <b><span class="lang-fr">Scène 8 :</span><span class="lang-en">Scene 8:</span></b> <span class="lang-fr">La colère de Madame de Montespan</span><span class="lang-en">The Anger of Madame de Montespan</span><br> <span style="color:var(--accent-color); margin-left: 35px;">🎵 Alors d'accord</span></li>
+                    <li><span class="emoji-icon">🎭</span> <b><span class="lang-fr">Scène 9 :</span><span class="lang-en">Scene 9:</span></b> <span class="lang-fr">Le Roi et l'Enfant</span><span class="lang-en">The King and the Child</span></li>
+                    <li><span class="emoji-icon">🎭</span> <b><span class="lang-fr">Scène 10 :</span><span class="lang-en">Scene 10:</span></b> <span class="lang-fr">Louis et Françoise</span><span class="lang-en">Louis and Françoise</span><br> <span style="color:var(--accent-color); margin-left: 35px;">🎵 J’en appelle</span></li>
+                    <li><span class="emoji-icon">🎭</span> <b><span class="lang-fr">Scène 11 :</span><span class="lang-en">Scene 11:</span></b> <span class="lang-fr">Le Bannissement de Mme de Montespan</span><span class="lang-en">The Banishment of Mme de Montespan</span><br> <span style="color:var(--accent-color); margin-left: 35px;">🎵 Et vice et Versailles</span></li>
+                    <li><span class="emoji-icon">🎭</span> <b><span class="lang-fr">Scène 12 :</span><span class="lang-en">Scene 12:</span></b> <span class="lang-fr">La Lettre</span><span class="lang-en">The Letter</span><br> <span style="color:var(--accent-color); margin-left: 35px;">🎵 La vie passe</span></li>
+                    <li><span class="emoji-icon">🎭</span> <b><span class="lang-fr">Scène 13 :</span><span class="lang-en">Scene 13:</span></b> <span class="lang-fr">Conclusion de Molière</span><span class="lang-en">Molière's Conclusion</span><br> <span style="color:var(--accent-color); margin-left: 35px;">🎵 Tant qu'on rêve encore</span></li>
                 </ul>
             </div>
         </div>
@@ -922,13 +951,13 @@
             <div id="chars-container">
                 <!-- Généré par JS -->
             </div>
-            <div class="fictional-legend">✦ Personnage créé pour la comédie musicale</div>
+            <div class="fictional-legend">✦ <span class="lang-fr">Personnage créé pour la comédie musicale</span><span class="lang-en">Character created for the musical</span></div>
         </div>
 
         <!-- ONGLET 2 : RÔLES (COMÉDIENS) -->
         <div id="tab-roles" class="tab-content" role="tabpanel" aria-labelledby="btn-roles" aria-hidden="true">
             <div class="welcome-banner" style="margin-top:0; font-size: 0.9rem; opacity: 0.8;">
-                Découvrez la distribution complète. Cliquez sur un rôle pour voir la fiche du personnage.
+                <span class="lang-fr">Découvrez la distribution complète. Cliquez sur un rôle pour voir la fiche du personnage.</span><span class="lang-en">Discover the full cast. Click on a role to view the character sheet.</span>
             </div>
             <div id="roles-container" class="chars-grid">
                 <!-- Généré par JS -->
@@ -2311,6 +2340,1072 @@
                 }, 400); // 400ms = durée de l'animation card-dismiss
             }
         }
+    
+        // ============================================================
+        // SYSTEME BILINGUE FR / EN — injection non-destructive
+        // ============================================================
+
+        let currentLang = localStorage.getItem('lang') || 'fr';
+
+        function t(field) {
+            if (!field) return '';
+            if (typeof field === 'object' && field.fr !== undefined) return field[currentLang] || field.fr;
+            return field;
+        }
+
+        // ============================================================
+        // TRADUCTIONS RPG : CLASSES, FACTIONS, COLLECTIONS
+        // ============================================================
+        var rpgTranslations = {
+            // Classes
+            'Roi Légendaire':        'Legendary King',
+            'Roi en Devenir':        'King in the Making',
+            'Régente Inflexible':    'Unyielding Regent',
+            'Prince Rebelle':        'Rebel Prince',
+            'Stratège Politique':    'Political Strategist',
+            'Génie Économique':      'Economic Genius',
+            'Dame de Cœur':          'Lady of Hearts',
+            'Enchanteresse':         'Enchantress',
+            "Conseillère de l'Ombre": 'Shadow Advisor',
+            'Héros Populaire':       "People's Hero",
+            'Maître des Arts':       'Master of Arts',
+            'Plume Satirique':       'Satirical Pen',
+            'Esprit Libertin':       'Libertine Spirit',
+            'Sorcière':              'Sorceress',
+            'Courtisane Novice':     'Novice Courtesan',
+            'Cœur Rebelle':          'Rebel Heart',
+            'Illusionnistes Dorées': 'Golden Illusionists',
+            'Artistes en Mouvement': 'Artists in Motion',
+            'Force Brute':           'Brute Force',
+            "Créateurs d'Illusions": 'Illusion Makers',
+            "Guerriers de l'État":   'Warriors of the State',
+            'Guides Spirituels':     'Spiritual Guides',
+            'Diplomate de Salon':    'Salon Diplomat',
+            "L'Ombre Efficace":      'The Efficient Shadow',
+            'Guérisseur Brutal':     'Brutal Healer',
+            'Bureaucrate Suprême':   'Supreme Bureaucrat',
+            "Créatrice d'Univers":   'Universe Creator',
+            'Mage du Son':           'Sound Mage',
+            "Cheffe d'Harmonie":     'Harmony Leader',
+            'Créatrice Visuelle':    'Visual Creator',
+            'Orchestratrice':        'Orchestrator',
+            "Forgeuse d'Âmes":       'Soul Forger',
+            'Architecte Paysagiste': 'Landscape Architect',
+            'Architecte Royal':      'Royal Architect',
+            'Maître de Musique':     'Music Master',
+            'Ingénieur Royal':       'Royal Engineer',
+            'Prélat Éloquent':       'Eloquent Prelate',
+            'Monarque Étranger':     'Foreign Monarch',
+            'Commandant Suprême':    'Supreme Commander',
+            'Maréchal de France':    'Marshal of France',
+            'Prince Guerrier':       'Warrior Prince',
+            'Général Invaincu':      'Undefeated General',
+            // Factions
+            'Royauté':               'Royalty',
+            'Cour Royale':           'Royal Court',
+            'État':                  'The State',
+            'Courtisane':            'Courtesan',
+            'Dame de cour':          'Lady-in-Waiting',
+            'Frondeurs':             'The Fronde',
+            'Artistes':              'Artists',
+            'Cour Alternative':      'Alternative Court',
+            'Bas-Fonds':             'Underworld',
+            'Le Peuple':             'The People',
+            'Troupe':                'The Troupe',
+            'Tiers État':            'Third Estate',
+            'Armée Royale':          'Royal Army',
+            'Clergé':                'Clergy',
+            'Service':               'Royal Service',
+            'Science':               'Science',
+            'Administration':        'Administration',
+            'Créateurs':             'Creators',
+            'Armée':                 'Army',
+            'Ennemis du Roi':        'Enemies of the King',
+            // Collections (verso)
+            '⚜️ Collection « Le Grand Siècle » — Carte n°001 ⚜️': '⚜️ Collection "The Grand Century" — Card No.001 ⚜️',
+            '⚜️ Collection « Le Grand Siècle » ⚜️':               '⚜️ Collection "The Grand Century" ⚜️',
+            '✨ Personnages Fictifs — Comédie Musicale ✨':         '✨ Fictional Characters — Musical ✨',
+            '🎭 Rôles de Cour 🎭':                                 '🎭 Court Roles 🎭',
+            "🎓 L'Équipe Artistique 🎓":                           '🎓 The Artistic Team 🎓',
+            '🏛️ Les Bâtisseurs 🏛️':                              '🏛️ The Builders 🏛️',
+            '🎼 Les Génies 🎼':                                    '🎼 The Geniuses 🎼',
+            '🧱 Le Pré Carré 🧱':                                  '🧱 The Fortress 🧱',
+            "📖 Les Plumes d'Église 📖":                           "📖 The Church's Pens 📖",
+            "🌍 Dynasties d'Europe 🌍":                           '🌍 Dynasties of Europe 🌍',
+            '⚔️ Adversaires de la France ⚔️':                     '⚔️ Adversaries of France ⚔️',
+            '⚔️ Les Gloires Militaires ⚔️':                       '⚔️ Military Glories ⚔️',
+        };
+
+        function setLang(lang) {
+            currentLang = lang;
+            localStorage.setItem('lang', lang);
+            document.documentElement.lang = lang;
+            var bfr = document.getElementById('btn-fr');
+            var ben = document.getElementById('btn-en');
+            if (bfr) bfr.classList.toggle('active-lang', lang === 'fr');
+            if (ben) ben.classList.toggle('active-lang', lang === 'en');
+            rebuildDynamicContent();
+        }
+
+        // Traductions des attributs RPG
+        var attrLabels = {
+            'Autorité':    'Authority',
+            'Charisme':    'Charisma',
+            'Stratégie':   'Strategy',
+            'Culture':     'Culture',
+            'Diplomatie':  'Diplomacy',
+            'Art de guerre': 'Warfare',
+        };
+
+        // Traductions des categories de personnages
+        var catTitlesTranslations = {
+            'La famille royale': 'The Royal Family',
+            'Les piliers de l\u2019\u00c9tat': 'The Pillars of the State',
+            'Les amours du roi': "The King's Loves",
+            'Les frondeurs et artistes': 'The Frondeurs & Artists',
+            "L'ombre, le peuple et la fiction": 'The Shadow, the People & Fiction',
+            'La troupe et les r\u00f4les de cour': 'The Troupe & Court Roles',
+            "L'\u00c9quipe Artistique": 'The Creative Team',
+        };
+
+        // Traductions bilingues des personnages
+        var charTranslations = {
+            'louis-xiv': {
+                subtitle: 'The Sun King',
+                backSubtitle: 'The Absolute Monarch',
+                quote: 'I depart, but the State shall endure forever.',
+                intro: 'The absolute monarch par excellence, Louis XIV reigned for 72 years \u2014 the longest reign in Europe. Builder of Versailles, patron of the arts and formidable political strategist, he forged the identity of the French monarchy and illuminated the Grand Si\u00e8cle.',
+                traits: ['Absolutist','Patron','Ambitious','Charismatic','Devout'],
+                achievements: ['Versailles','War of Holland','Code Louis','Moli\u00e8re & Lully','Canal du Midi','Record Reign'],
+                titles: ['King of France and Navarre','The Sun King'],
+                competences: [['Absolute Reign','Imposes his royal will'],['Royal Radiance','Dazzles with his magnificence'],['Divine Majesty','Embodies divine power'],['Imperial Vision','Builds French greatness']],
+                ultime: 'Solar Radiance',
+                ultimedesc: 'Dazzles all opponents with his royal magnificence',
+                allies: ['Anne of Austria','Mazarin','Colbert','Mme de Maintenon'],
+                rivaux: ['Duc de Beaufort','La Voisin','William III','The Frondeurs'],
+                amours: ['Marie Mancini','Mme de Montespan','Madame de Maintenon'],
+            },
+            'enfant-roi': {
+                subtitle: 'The Grand Dauphin',
+                backSubtitle: 'The Heir to the Throne',
+                quote: 'I shall be king, like my father.',
+                intro: 'Louis of France, eldest son of Louis XIV. Destined to reign, he died before his father, leaving the throne to his grandson. His existence embodies the weight of royal destiny.',
+                traits: ['Heir','Studious','Reserved','Obedient'],
+                achievements: ['Military Campaigns','Court Marriage','Dauphin'],
+                titles: ['Grand Dauphin','Duke of Burgundy'],
+                competences: [['Protocol','Masters court etiquette'],['Heritage','Bears the crown'],['Discretion','Lives in the shadow'],['Patience','Bides his time']],
+                ultime: "The King's Shadow",
+                ultimedesc: 'Reminds all that the King is mortal and succession is sacred',
+                allies: ['Louis XIV','Anne of Austria'],
+                rivaux: ['Jealous courtiers'],
+                amours: ['Marie-Anne de Bourbon'],
+            },
+            'anne-autriche': {
+                subtitle: 'The Queen Mother',
+                backSubtitle: 'The Regent',
+                quote: 'A king does not weep, he reigns.',
+                intro: "Regent of France during Louis XIV's minority, she governs alongside Mazarin through the turmoil of the Fronde. A woman of character and deep faith, she shapes her son's destiny.",
+                traits: ['Devout','Authoritative','Protective','Spanish'],
+                achievements: ['Regency','The Fronde','Val-de-Grace'],
+                titles: ['Queen of France','Regent of France'],
+                competences: [["Regency","Rules in the King's absence"],['Faith','Protects the Church'],['Diplomacy','Negotiates alliances'],['Motherhood','Raises the future King']],
+                ultime: 'The Will of God',
+                ultimedesc: 'Imposes her vision through faith and dynastic legitimacy',
+                allies: ['Mazarin','Louis XIV','The Church'],
+                rivaux: ['The Frondeurs','Duc de Beaufort'],
+                amours: ['Mazarin (secret)'],
+            },
+            'monsieur': {
+                subtitle: "The King's Brother",
+                backSubtitle: 'The Flamboyant Prince',
+                quote: 'Why be king when one can be free?',
+                intro: "Philippe d'Orl\u00e9ans, younger brother of Louis XIV. Brilliant and eccentric, he is deliberately kept away from power by his brother. A courageous general, he won the Battle of Cassel in 1677.",
+                traits: ['Eccentric','Courageous','Flamboyant','Jealous'],
+                achievements: ['Battle of Cassel','Palais-Royal','Marriages'],
+                titles: ['Duke of Orl\u00e9ans','Monsieur'],
+                competences: [['Bravery','Victor at Cassel'],['Salon','Hosts the Palais-Royal'],['Fashion','Sets the trends'],['Intrigue','Plays the court']],
+                ultime: 'The Triumph of Cassel',
+                ultimedesc: "Wins a brilliant military victory despite his brother's indifference",
+                allies: ['The Chevalier de Lorraine','Liberal nobles'],
+                rivaux: ['Louis XIV','Louvois'],
+                amours: ['The Chevalier de Lorraine'],
+            },
+            'mazarin': {
+                subtitle: 'The Chief Minister',
+                backSubtitle: 'The Architect of Power',
+                quote: 'Time and I against any two.',
+                intro: 'Cardinal and First Minister of France, successor to Richelieu. Mentor of Louis XIV, he guides France through the Fronde and lays the foundations of royal absolutism.',
+                traits: ['Diplomat','Calculating','Ambitious','Discreet'],
+                achievements: ['Treaty of the Pyrenees','Peace of Westphalia','The Fronde'],
+                titles: ['Cardinal','First Minister'],
+                competences: [['Negotiation','Concludes treaties'],['Patience','Waits for the right moment'],['Manipulation','Plays the factions'],['Mentoring','Shapes the future King']],
+                ultime: 'The Peace of the Pyrenees',
+                ultimedesc: "Ends the war and seals France's future with a masterful treaty",
+                allies: ['Anne of Austria','Louis XIV'],
+                rivaux: ['The Frondeurs','Duc de Beaufort','Cond\u00e9'],
+                amours: ['Anne of Austria (secret)','Marie Mancini'],
+            },
+            'colbert': {
+                subtitle: 'The Great Superintendent',
+                backSubtitle: 'The Builder of the State',
+                quote: "The art of finance is to move money from the people's pocket to the king's with as little noise as possible.",
+                intro: 'Minister of Finance and the Navy under Louis XIV, he reforms the French economy, creates royal manufactures, develops the fleet and founds the great cultural institutions.',
+                traits: ['Rigorous','Hardworking','Loyal','Cold'],
+                achievements: ['Royal Manufactures','Academy of Sciences','Royal Navy'],
+                titles: ['Controller-General','Marquis de Seignelay'],
+                competences: [['Mercantilism','Enriches the kingdom'],['Manufactures','Creates industry'],['Navy','Builds the fleet'],['Rigour','Hunts down fraud']],
+                ultime: 'The Grand Ordinance',
+                ultimedesc: "Reforms the entire kingdom's finances in a single decree",
+                allies: ['Louis XIV','Vauban'],
+                rivaux: ['Louvois','Fouquet'],
+                amours: ['The State'],
+            },
+            'marie-mancini': {
+                subtitle: 'The First Love',
+                backSubtitle: 'The Forbidden Love',
+                quote: 'You are king, Sire, and yet you weep!',
+                intro: "Niece of Mazarin, she is the great love of Louis XIV's youth. Their passionate relationship is broken by reason of State: Louis must marry Marie-Th\u00e9r\u00e8se of Spain.",
+                traits: ['Passionate','Cultured','Courageous','Rebellious'],
+                achievements: ["King's Love",'Exile','Memoirs'],
+                titles: ["Cardinal's Niece",'Princess Colonna'],
+                competences: [['Charm','Enchants the King'],['Culture','Introduces Louis to the arts'],['Courage','Faces reason of State'],['Memory','Writes her memoirs']],
+                ultime: "The King's Farewell",
+                ultimedesc: "Breaks the King's heart through the force of royal duty",
+                allies: ['Mazarin'],
+                rivaux: ['Anne of Austria','Reason of State'],
+                amours: ['Louis XIV'],
+            },
+            'montespan': {
+                subtitle: 'The Flamboyant Favourite',
+                backSubtitle: 'The Queen of Versailles',
+                quote: "I shall never be another woman's shadow.",
+                intro: 'Athen\u00e4is de Rochechouart de Mortemart, Marquise de Montespan. Official favourite of Louis XIV for over ten years, she rules Versailles with unparalleled intelligence and ambition.',
+                traits: ['Ambitious','Brilliant','Dominant','Reckless'],
+                achievements: ['Official Favourite','Affair of the Poisons','Patron'],
+                titles: ['Marquise de Montespan','Royal Favourite'],
+                competences: [['Fascination','Captivates the King'],['Influence','Controls appointments'],['Luxury','Spends without restraint'],['Danger','Flirts with the occult']],
+                ultime: 'The Black Mass',
+                ultimedesc: "Attempts to retain the King's love through desperate and dark means",
+                allies: ['La Voisin','Complicit nobles'],
+                rivaux: ['Mme de Maintenon','The Queen'],
+                amours: ['Louis XIV'],
+            },
+            'maintenon': {
+                subtitle: 'The Secret Wife',
+                backSubtitle: 'The Shadow Queen',
+                quote: 'True greatness consists in never departing from one\'s principles.',
+                intro: "Fran\u00e7oise d'Aubign\u00e9, widow of Scarron. Governess of the King's illegitimate children, she gradually establishes herself as his secret wife and profoundly influences the religious policy of the reign.",
+                traits: ['Pietist','Influential','Discreet','Ambitious'],
+                achievements: ['Secret Marriage','Revocation of the Edict','Saint-Cyr'],
+                titles: ['Marquise de Maintenon','Secret Wife'],
+                competences: [['Piety','Influences religious policy'],['Education','Founds Saint-Cyr'],['Discretion','Acts in the shadows'],['Perseverance','Wins the King']],
+                ultime: 'The Twilight Wife',
+                ultimedesc: 'Transforms the ageing King and secures her dominance over Versailles',
+                allies: ['Louis XIV','The Church','Bossuet'],
+                rivaux: ['Mme de Montespan','Libertines'],
+                amours: ['Louis XIV'],
+            },
+            'beaufort': {
+                subtitle: 'The King of the Markets',
+                backSubtitle: "The People's Hero",
+                quote: "Paris is mine, not Mazarin's!",
+                intro: "Fran\u00e7ois de Bourbon-Vend\u00f4me, Duke of Beaufort. Illegitimate grandson of Henri IV, he is the idol of the Parisian people during the Fronde. His popular charisma makes him a formidable opponent of Mazarin.",
+                traits: ['Impetuous','Brave','Popular','Frondeur'],
+                achievements: ['Escape from Vincennes','Siege of Paris','Expedition to Candia'],
+                titles: ['King of the Markets','Grand Master of Navigation'],
+                competences: [['Charge','Blind bravery'],['Fervour','Stirs the crowds'],['Duel','Master of the sword'],['Ship','Admiral of the seas']],
+                ultime: 'The Cry of Paris',
+                ultimedesc: 'Triggers an impenetrable popular barricade',
+                allies: ['The People of Paris','Isabelle (Fiction)'],
+                rivaux: ['Mazarin','Anne of Austria'],
+                amours: ['Mme de Montbazon','Isabelle'],
+            },
+            'moliere': {
+                subtitle: 'The Genius of Comedy',
+                backSubtitle: 'The Observer of Manners',
+                quote: 'The duty of comedy is to correct men while entertaining them.',
+                intro: "Jean-Baptiste Poquelin is the prot\u00e9g\u00e9 of Louis XIV. Through his comic genius, he delivers a fierce and brilliant satire of the vices of his society.",
+                traits: ['Playwright','Satirist','Observer','Tireless'],
+                achievements: ['Le Tartuffe','Creation of Com\u00e9die-Ballet',"King's Troupe"],
+                titles: ['Troupe Leader','Royal Upholsterer'],
+                competences: [['Quill','Writes masterpieces'],['Satire','Denounces hypocrites'],['Acting','Stage presence'],['Direction','Leads his troupe']],
+                ultime: 'The Imaginary Invalid',
+                ultimedesc: 'Makes the Court roar with laughter and enrages the devout',
+                allies: ['Louis XIV','Lully (at first)','The Troupe'],
+                rivaux: ['Lully (later)','The Devout Party'],
+                amours: ['Armande B\u00e9jart','Madeleine B\u00e9jart'],
+            },
+            'scarron': {
+                subtitle: 'The Master of Burlesque',
+                backSubtitle: 'The Free Spirit',
+                quote: 'I am not made like other men.',
+                intro: "A major author and pioneer of the burlesque style. Severely disabled by illness, he hosts a brilliant salon and marries the young Fran\u00e7oise d'Aubign\u00e9 to save her.",
+                traits: ['Burlesque','Resilient','Free Spirit','Epicurean'],
+                achievements: ['Le Roman Comique','Salon du Marais','Marriage'],
+                titles: ['Burlesque Poet','Abb\u00e9'],
+                competences: [['Parody','Subverts myths'],['Laughter','Saving humour'],['Salon','Gathers minds'],['Courage','Defies pain']],
+                ultime: 'Burlesque Verses',
+                ultimedesc: 'Disarms any noble through self-mockery',
+                allies: ["Fran\u00e7oise d'Aubign\u00e9","Ninon de l'Enclos",'Frondeurs'],
+                rivaux: ['The Acad\u00e9mie Fran\u00e7aise','Mazarin (sometimes)'],
+                amours: ["Fran\u00e7oise d'Aubign\u00e9"],
+            },
+            'ninon': {
+                subtitle: 'The Free Woman',
+                backSubtitle: 'The Epicurean',
+                quote: 'The joy of the mind marks its strength.',
+                intro: 'Famous courtesan and woman of letters, she is the figurehead of (philosophical) libertinism in Paris. She champions the total independence of women.',
+                traits: ['Independent','Philosopher','Seductress','Epicurean'],
+                achievements: ['The Marais','Patron','Emancipation'],
+                titles: ['Woman of Letters','Queen of Minds'],
+                competences: [['Freedom','Refuses dogma'],['Philosophy','Avant-garde thought'],['Charm','Enchants scholars'],['Patronage','Supports talents']],
+                ultime: 'The Choice of Lovers',
+                ultimedesc: 'Loves whom she wishes, when she wishes, freely',
+                allies: ['Scarron','Moli\u00e8re','La Fontaine'],
+                rivaux: ['The Devout Party','Anne of Austria'],
+                amours: ['The Grand Cond\u00e9','S\u00e9vign\u00e9','(Many)'],
+            },
+            'voisin': {
+                subtitle: 'The Fortune-Teller',
+                backSubtitle: 'Mistress of Poisons',
+                quote: 'Death is a trade like any other.',
+                intro: 'Catherine Deshayes, known as La Voisin. She operates in the Parisian underworld, selling love potions, horoscopes and poisons to the most powerful nobles of Versailles.',
+                traits: ['Poisoner','Occultist','Greedy','Secretive'],
+                achievements: ['Affair of the Poisons','Royal Clientele','Burned at the Stake'],
+                titles: ['Fortune-Teller','Queen of the Underworld'],
+                competences: [['Succession Powder','Undetectable poison'],['Black Mass','Dark ritual'],['Blackmail','Holds secrets'],['Prediction','Reads the future']],
+                ultime: 'The Shadow over Versailles',
+                ultimedesc: 'Makes the highest nobility tremble with fear',
+                allies: ['Ambitious nobles','Mages'],
+                rivaux: ['La Reynie','Justice','Louis XIV'],
+                amours: ['Money','Lesage'],
+            },
+            'lisieux': {
+                subtitle: 'The Ingenue at Court',
+                backSubtitle: 'Provincial Ambition',
+                quote: 'The light of the Sun burns those who draw too close.',
+                intro: 'A symbolic character in the musical. From the minor provincial nobility, she arrives at Versailles full of dreams and discovers the cruelty of power.',
+                traits: ['Ingenue','Dreamer','Ambitious','Vulnerable'],
+                achievements: ['Arrival at Court','The Grand Ball','Disillusionment'],
+                titles: ['Lady-in-Waiting','The Provincial Flower'],
+                competences: [['Wonder','Pure gaze'],['Discretion','Learns silence'],['Adaptation','Imitates the nobles'],['Naivety','Easy target']],
+                ultime: "The Fool's Mirror",
+                ultimedesc: 'Reveals the falseness of the court through her downfall',
+                allies: ['Other newcomers'],
+                rivaux: ['Favourites','Experienced courtesans'],
+                amours: ['The King (from afar)'],
+            },
+            'isabelle': {
+                subtitle: 'The Girl of the People',
+                backSubtitle: 'The Voice of the Streets',
+                quote: 'Even shadows have the right to love.',
+                intro: 'An essential character in the musical. A young, rebellious and passionate commoner, she lives an impossible love with the Duke of Beaufort at the heart of the Fronde.',
+                traits: ['Rebel','Passionate','Authentic','Courageous'],
+                achievements: ['The Barricades','Forbidden Love','Voice of the People'],
+                titles: ['Commoner','The Frondeur Soul'],
+                competences: [['Frankness','Speaks from the heart'],['Support','Helps the oppressed'],['Defiance','Defies the nobles'],['Passion','Unconditional love']],
+                ultime: 'The Impossible Love',
+                ultimedesc: 'Breaks class barriers through the power of feeling',
+                allies: ['The People of Paris','Frondeurs'],
+                rivaux: ["King's Guards",'Distant nobility'],
+                amours: ['Duke of Beaufort'],
+            },
+            'les-courtisanes': {
+                name: 'The Courtesans',
+                subtitle: 'The Art of Appearance',
+                backSubtitle: 'The Elite of Versailles',
+                quote: 'Appearance is our first nobility, and slander our sword.',
+                intro: 'They form the living backdrop of Versailles. Bound by Etiquette and adorned in gold, they fiercely compete behind the scenes for a glance from the King.',
+                traits: ['Superficial','Vipers','Elegant','Hypocritical'],
+                achievements: ['Royal Balls','Rules of Etiquette','Rumours'],
+                titles: ['High Nobility','Actresses'],
+                competences: [['Appearance','Perfect beauty'],['Slander','Kills by rumour'],['Reverence','Pure bow of Etiquette'],['Frivolity','Ruins her estate']],
+                ultime: 'The Court of Miracles',
+                ultimedesc: 'Drowns the opponent in glitter and false smiles',
+                allies: ['Jewellers','Tailors','Favourites'],
+                rivaux: ['The Newcomers','The Devout Party'],
+                amours: ['Power','The King'],
+            },
+            'les-danseurs': {
+                name: 'The Dancers',
+                subtitle: 'The Art of Movement',
+                backSubtitle: 'The Choreographic Elite',
+                quote: "As long as the music plays, the court forgets the world's misery.",
+                intro: 'At the heart of Versailles life, dance is an instrument of power. The dancers bring to life the sumptuous court ballets that the King cherishes so dearly.',
+                traits: ['Graceful','Athletic','Precise','Artists'],
+                achievements: ['Ballet de la Nuit','Com\u00e9die-Ballet','Royal Academy'],
+                titles: ['Dancing Masters','Stage Lights'],
+                competences: [['Entrechat','Absolute agility'],['Rhythm',"To Lully's music"],['Endurance','12-hour ballets'],['Grace','Dazzles the audience']],
+                ultime: 'The Grand Ballet',
+                ultimedesc: 'Hypnotises the entire court in a perfect movement',
+                allies: ['Lully','Louis XIV','Moli\u00e8re'],
+                rivaux: ['The Missteps','Devout'],
+                amours: ['The Stage'],
+            },
+            'le-peuple': {
+                name: 'The People of Paris',
+                subtitle: 'The Voice of the Street',
+                backSubtitle: 'The Silent Force',
+                quote: 'Those who build palaces sleep in the mud.',
+                intro: "Far from the gilding of Versailles, the Third Estate bears the weight of the monarchy through its taxes, sweat and blood in the King's endless wars.",
+                traits: ['Resilient','Hardworking','Hungry','Angry'],
+                achievements: ['Construction of Versailles','Support for the Frondeurs','Survival of Famines'],
+                titles: ['Third Estate','Builders'],
+                competences: [['Labour','Infinite workforce'],['Rumble','Mass uprising'],['Solidarity','Mutual support'],['Sacrifice','Pays the tax']],
+                ultime: 'The Revolt',
+                ultimedesc: 'Makes the walls of the capital tremble through sheer numbers',
+                allies: ['Artisans','Peasants','Isabelle'],
+                rivaux: ['Tax Farmers','Nobility','Guards'],
+                amours: ['The Homeland'],
+            },
+            'les-operateurs': {
+                name: 'The Stage Crew',
+                subtitle: 'The Magic of the Stage',
+                backSubtitle: 'The Shadow of the Theatre',
+                quote: 'Illusion is our trade, shadow is our domain.',
+                intro: 'True masters of time and space, they manipulate the heavy wooden and canvas sets in the darkness so that the magic of the stage can work.',
+                traits: ['Technical','Invisible','Precise','Agile'],
+                achievements: ['Set Changes','Stage Magic','Mastery of Darkness'],
+                titles: ['Stagehands','The Shadow Team'],
+                competences: [['Pulleys','Pulls the strings'],['Silence','Silent movements'],['Mechanics','Theatrical genius'],['Rescue','Saves the show']],
+                ultime: 'Instant Scene Change',
+                ultimedesc: 'Transforms a salon into a forest in the snap of a finger',
+                allies: ['Moli\u00e8re','Actors','Direction'],
+                rivaux: ['Stuck ropes','Technical failures'],
+                amours: ['The Theatre'],
+            },
+            'les-soldats': {
+                name: 'The Soldiers',
+                subtitle: 'The Armed Arm of the King',
+                backSubtitle: 'The Force of the State',
+                quote: 'The strength of the State rests on the iron of our swords.',
+                intro: "Guardians of order, musketeers or infantry regiments, they execute the King's orders without flinching to ensure his absolute authority.",
+                traits: ['Loyal','Disciplined','Enduring','Patriots'],
+                achievements: ['Wars of Louis XIV','Palace Guard','Suppression of the Fronde'],
+                titles: ['Musketeers','Infantry'],
+                competences: [['Halberd','Maintains order'],['Musket','Precision shot'],['Discipline','Obeys without question'],['Loyalty','Dies for the King']],
+                ultime: 'The Royal Charge',
+                ultimedesc: 'Breaks any rebellion through force and discipline',
+                allies: ['Louvois','Turenne','Louis XIV'],
+                rivaux: ['Foreign armies','Frondeurs'],
+                amours: ['Glory (and wine)'],
+            },
+            'le-clerge': {
+                name: 'The Clergy',
+                subtitle: 'The Influence of the Church',
+                backSubtitle: 'The Voice of God',
+                quote: 'God establishes kings as his ministers, and reigns through them over the peoples.',
+                intro: "Guardians of the faith, they legitimise the King's divine right to power. Their moral influence over the court becomes overwhelming in the second half of the reign.",
+                traits: ['Theologians','Devout','Eloquent','Moral'],
+                achievements: ['Edict of Nantes','Coronation at Reims','Royal Chapel'],
+                titles: ['The First Order','Prelates'],
+                competences: [['Sermon','Guilts the court'],['Divine Right','Legitimises the King'],['Confession','Obtains secrets'],['Excommunication','Banishes souls']],
+                ultime: 'The Celestial Wrath',
+                ultimedesc: 'Brings moral thunder down upon libertine ways',
+                allies: ['Devout','Mme de Maintenon'],
+                rivaux: ['Libertines','Actors'],
+                amours: ['The Church'],
+            },
+            'la-dame-de-cour': {
+                name: 'The Lady-in-Waiting',
+                subtitle: 'Confidante and Ally',
+                backSubtitle: 'The Eye of Versailles',
+                quote: 'Loyalty has a price that only the court knows.',
+                intro: 'A high-ranking noblewoman attached to the direct service of the Queen or princesses. She chaperones, advises and manoeuvres carefully amid the intrigues.',
+                traits: ['Refined','Discreet','Observant','Political'],
+                achievements: ['Mastery of Etiquette','Network of Informants','Service to the Queen'],
+                titles: ['Lady of the Palace','Confidante'],
+                competences: [['Fan','Secret language'],['Whisper','Spreads poison'],['Reverence','Avoids conflicts'],['Alliance','Positions herself well']],
+                ultime: 'The Invisible Network',
+                ultimedesc: 'Brings down a minister without ever uttering his name',
+                allies: ['The Queen','Princesses','Ministers'],
+                rivaux: ['Favourites','Upstarts'],
+                amours: ['Ambition'],
+            },
+            'la-femme-de-chambre': {
+                name: 'The Chambermaid',
+                subtitle: 'In the Shadow of the Powerful',
+                backSubtitle: 'The Eyes and Ears',
+                quote: 'We see everything, we hear everything, but we say nothing.',
+                intro: 'She manages the intimate daily life of the nobles. Indispensable to the splendour of the court, she often holds secrets capable of ruining lives.',
+                traits: ['Hardworking','Silent','Attentive','Quick'],
+                achievements: ['Court Dressing','Secret Messenger','Upkeep of Apartments'],
+                titles: ['Servant','Keeper of Secrets'],
+                competences: [['Corset','Tightens the etiquette'],['Listening','Catches whispers'],['Invisibility','Blends into the wall'],['Devotion','Loyalty (or venality)']],
+                ultime: 'The Stolen Letter',
+                ultimedesc: 'Changes the fate of the kingdom with a scrap of paper',
+                allies: ['The People','Other servants'],
+                rivaux: ['Cruel stewards'],
+                amours: ['Commoner'],
+            },
+            'le-medecin': {
+                name: 'The Physician',
+                subtitle: 'The Stumbling Science',
+                backSubtitle: 'Between Science and Charlatanism',
+                quote: 'Nature heals the disease, the doctor merely amuses the patient.',
+                intro: 'At a time when medicine is still too often limited to bloodletting and purges, he attempts to preserve the health of the powerful... often with grave consequences.',
+                traits: ['Scholar','Bleeder','Pedant','Authoritarian'],
+                achievements: ["The King's Fistula",'Epidemics','Emetics'],
+                titles: ['First Physician','Doctor'],
+                competences: [['Bloodletting','Weakens (everyone)'],['Latin','Confuses the patient'],['Purge','Radical remedy'],['Diagnosis','By guesswork']],
+                ultime: 'The Great Operation',
+                ultimedesc: "Saves the monarch's life (against all odds)",
+                allies: ['Apothecaries','Surgeons'],
+                rivaux: ['Moli\u00e8re','Diseases'],
+                amours: ['Theory'],
+            },
+            'le-ministre': {
+                name: 'The Minister',
+                subtitle: 'The State in Action',
+                backSubtitle: 'The Royal Machine',
+                quote: 'Power is not given, it is administered with rigour.',
+                intro: 'A servant of the State and member of the High Council, he executes the will of Louis XIV, managing taxes, justice or war. He is the embodiment of centralisation.',
+                traits: ['Administrator','Rigorous','Faithful','Cold'],
+                achievements: ['High Council','Tax Collection','Drafting of Laws'],
+                titles: ['Secretary of State',"King's Counsellor"],
+                competences: [['Decree','The law applies'],['Taxation','Empties the coffers'],['Censorship','Silences the press'],['Organisation','State logistics']],
+                ultime: 'Reason of State',
+                ultimedesc: 'Justifies all actions in the name of the Crown',
+                allies: ['Colbert','Louvois','Louis XIV'],
+                rivaux: ['Frondeur nobility','The People'],
+                amours: ['Order'],
+            },
+            'natacha-muller': {
+                name: 'Natacha Muller',
+                subtitle: 'The Mistress of Illusions',
+                backSubtitle: 'The Stage Director',
+                quote: "All the world's a stage.",
+                intro: 'The true conductor of this adventure, she guides the students to bring this great historical and musical fresco to life. She conceived the entire universe of the show.',
+                traits: ['Visionary','Leader','Creative','Passionate'],
+                achievements: ['Stage Direction','Actor Direction','Total Show'],
+                titles: ['Stage Director','Conductor'],
+                competences: [['Vision','Sees the final picture'],['Direction','Guides souls'],['Patience','Resists chaos'],['Motivation','Galvanises the troupe']],
+                ultime: 'The Curtain Rise',
+                ultimedesc: 'Triggers the magic of the complete show with a single word',
+                allies: ['The entire troupe','The Team'],
+                rivaux: ['Stage fright','Lack of time'],
+                amours: ['The Theatre'],
+            },
+            'gabriel-gitman': {
+                subtitle: 'The Golden Voice',
+                backSubtitle: 'Vocal Coach',
+                quote: 'Music is the language of emotions.',
+                intro: 'A dedicated vocal coach, he accompanies the soloists to elevate every note and convey the pure emotion of the musical to the audience.',
+                traits: ['Melodic','Perfect Pitch','Teacher','Emotional'],
+                achievements: ['Soloists Direction','Musical Arrangements','Self-Surpassing'],
+                titles: ['Vocal Coach','Master of Notes'],
+                competences: [['Vocalises','Warms up the vocal cords'],['Pitch','Corrects the note'],['Breath','Gives endurance'],['Harmony','Touches hearts']],
+                ultime: 'The Perfect Note',
+                ultimedesc: 'Makes the audience shiver with a masterful high note',
+                allies: ['Soloists','Fr\u00e9d\u00e9rique Bouwer'],
+                rivaux: ['Wrong notes','Voice loss'],
+                amours: ['Music'],
+            },
+            'frederique-bouwer': {
+                subtitle: 'The Celestial Harmony',
+                backSubtitle: 'Choir Director',
+                quote: 'A single voice is beautiful, a choir is invincible.',
+                intro: 'In charge of collective power, she directs the choir to give the breadth and epic dimension needed for the great scenes of the show.',
+                traits: ['Unifier','Rhythmic','Epic','Powerful'],
+                achievements: ['Choir Direction','Troupe Cohesion','Sound Breadth'],
+                titles: ['Choir Director','Mistress of Voices'],
+                competences: [['Polyphony','Manages 4 voices'],['Cohesion','Unites the group'],['Tempo','Keeps the rhythm'],['Power','Epic sound']],
+                ultime: 'The Royal Choir',
+                ultimedesc: 'Invokes the power of the collective for a resounding finale',
+                allies: ['The Ensemble','Gabriel Gitman'],
+                rivaux: ['Cacophony','Being off-beat'],
+                amours: ['The Collective'],
+            },
+            'nadia-guerin': {
+                subtitle: 'The Architect of Dreams',
+                backSubtitle: 'Costumes & Sets',
+                quote: 'The costume makes the noble, and the set makes the palace.',
+                intro: 'A visual magician, she designs the immersive sets and flamboyant costumes that instantly transport the audience to the 17th century.',
+                traits: ['Aesthete','Meticulous','Ingenious','Builder'],
+                achievements: ['Costume Creation','Set Design','Quick Changes'],
+                titles: ['Costume Designer','Set Designer'],
+                competences: [['Golden Needle','Sews the impossible'],['Perspective','Trompe-l\'oeil'],['Palette','Mixes colours'],['Improvisation','Fixes everything']],
+                ultime: 'The Splendour of Versailles',
+                ultimedesc: 'Dazzles the entire audience from the moment the curtain opens',
+                allies: ['Actors','Stagehands'],
+                rivaux: ['Tears','Stains'],
+                amours: ['Aestheticism'],
+            },
+            'elise-devaux': {
+                subtitle: 'The Mistress of Time',
+                backSubtitle: 'Choreographer & Stage Manager',
+                quote: 'Grace in movement, rigour in the shadows.',
+                intro: 'Both creator of stage movements (choreographer) and absolute guardian of smooth backstage operations (Stage Manager).',
+                traits: ['Graceful','Organised','Quicksilver','Hawk Eye'],
+                achievements: ['Choreographies','Stage Management','Backstage Management'],
+                titles: ['Choreographer','Stage Manager'],
+                competences: [['Movement','Perfect dance'],['Planning','Absolute rigour'],['Starting Signal','Gives the signal'],['Ubiquity','Everywhere at once']],
+                ultime: 'Mastery of the Stage',
+                ultimedesc: 'Synchronises 30 people in shadow and light',
+                allies: ['Dancers','Direction','Technical'],
+                rivaux: ['Lateness','Missteps'],
+                amours: ['Rhythm'],
+            },
+            'marie-jacquier': {
+                subtitle: 'The Illuminator of Roles',
+                backSubtitle: 'Acting Coach',
+                quote: 'Words carry the soul of the character, diction is its sword.',
+                intro: 'She helped students better understand their characters through careful reading and precise analysis of their role in the play. She also honed their diction through formidable tongue twisters.',
+                traits: ['Analytical','Teacher','Demanding','Caring'],
+                achievements: ['Text Analysis','Diction Work','Role Understanding'],
+                titles: ['Acting Coach','Literature Teacher'],
+                competences: [['Analysis','Deciphers texts'],['Diction','Shapes speech'],['Empathy','Understands characters'],['Rigour','Pushes for excellence']],
+                ultime: 'The Role Revelation',
+                ultimedesc: 'Makes a student truly understand who they are on stage',
+                allies: ['Students','Natacha Muller'],
+                rivaux: ['Stage fright','Forgotten lines'],
+                amours: ['Literature'],
+            },
+
+            'le-notre': {
+                subtitle: "The King's Gardener",
+                backSubtitle: 'Master of Perspectives',
+                quote: 'Nature must yield to reason.',
+                intro: 'Grand designer of the gardens of Versailles, he created the French formal garden style, founded on symmetry and infinite perspective.',
+                traits: ['Landscape Architect','Geometer','Visionary','Classicist'],
+                achievements: ['Versailles','Vaux-le-Vicomte','Tuileries','Perspective','Chantilly','Ennobled'],
+                titles: ['Garden Designer to the King','Counsellor to the King'],
+                competences: [['Perspective','Masters space'],['Sovereignty','Tames nature'],['Symmetry','Absolute order'],['Optics','Play of sight lines']],
+                ultime: 'The Royal Axis',
+                ultimedesc: 'Dazzles the world with a perspective that seems never to end',
+                allies: ['Louis XIV','Mansart','Colbert'],
+                rivaux: ['Wild nature'],
+                amours: ['His gardens'],
+            },
+            'mansart': {
+                subtitle: 'The Architect of the Sun',
+                backSubtitle: 'The Royal Builder',
+                quote: 'To build for the eternity of the monarch.',
+                intro: 'First Architect to the King, he is the master builder of the Hall of Mirrors, the Grand Trianon and the Dôme des Invalides.',
+                traits: ['Builder','Classicist','Prestigious','Aesthete'],
+                achievements: ['Hall of Mirrors','Dôme des Invalides','Place Vendôme','Grand Trianon','Pont-Royal','First Architect'],
+                titles: ['First Architect to the King','Count of Sagonne'],
+                competences: [['Grandeur','Raises palaces'],['Reflections','Play of mirrors'],['Structure','Eternal solidity'],['Light','Masters brilliance']],
+                ultime: 'Royal Magnificence',
+                ultimedesc: 'Transforms stone into a monument of eternal light',
+                allies: ['Louis XIV','Le Nôtre','Louvois'],
+                rivaux: ['Le Brun'],
+                amours: ['Marble'],
+            },
+            'lully': {
+                subtitle: 'The Superintendent of Music',
+                backSubtitle: 'The King of French Opera',
+                quote: 'Music is the echo of royal power.',
+                intro: "The King's favourite composer, he invented French opera and reigned unchallenged over the musical life of the court through his royal monopoly.",
+                traits: ['Composer','Ambitious','Virtuoso','Courtier'],
+                achievements: ['French Opera','Conducting Baton','24 Violins','Te Deum','Comédie-Ballet','Royal Monopoly'],
+                titles: ["Superintendent of the King's Music",'Secretary to the King'],
+                competences: [['Tempo','Conducts with the baton'],['Monopoly','Crushes his rivals'],['Harmony','Elevates the voices'],['Rigour','Iron discipline']],
+                ultime: 'The Apotheosis',
+                ultimedesc: 'Invokes a divine orchestra that paralyses the opponent with beauty',
+                allies: ['Louis XIV','Molière (at first)','Quinault'],
+                rivaux: ['Molière (later)','Campra'],
+                amours: ['Fame'],
+            },
+            'vauban': {
+                subtitle: 'The Iron Architect',
+                backSubtitle: 'The Master of Fortifications',
+                quote: 'A town besieged by Vauban is a town taken.',
+                intro: 'Engineer, military architect and Marshal of France. He surrounded the kingdom with a belt of citadels reputed to be impregnable.',
+                traits: ['Engineer','Patriot','Precise','Honest'],
+                achievements: ['The Iron Belt','300 Fortresses','50 Sieges','War Ports','La Dîme Royale','Marshal'],
+                titles: ['Marshal of France','Commissary-General of Fortifications'],
+                competences: [['Poliorcetics','Scientific siege'],['Fortification','Star-shaped stone'],['Logistics','Zero waste'],['Trench','Safe approach']],
+                ultime: 'Iron Citadel',
+                ultimedesc: 'Makes the current position impregnable against any assault',
+                allies: ['Louis XIV','Louvois','Turenne'],
+                rivaux: ['The superficial court'],
+                amours: ['The Homeland'],
+            },
+            'bossuet': {
+                subtitle: 'The Eagle of Meaux',
+                backSubtitle: 'The Voice of Divine Right',
+                quote: 'All power comes from God.',
+                intro: 'Bishop, preacher and writer famous for his eloquence. He is the foremost theorist of absolute monarchy by divine right and tutor to the Grand Dauphin.',
+                traits: ['Theologian','Eloquent','Devout','Moralist'],
+                achievements: ['Divine Right','Funeral Orations','Education of the Dauphin','Discourse','Gallicanism','Académie'],
+                titles: ['Bishop of Meaux','Tutor to the Dauphin'],
+                competences: [['Oration','Sublime eloquence'],['Theology','Rigour of dogma'],['Sermon','Guilts the court'],['Divine Right','Royal legitimation']],
+                ultime: 'The Sacred Word',
+                ultimedesc: 'Imposes silence and submission through the power of his rhetoric',
+                allies: ['Louis XIV','Mme de Maintenon','The Church'],
+                rivaux: ['Fénelon','The Protestants'],
+                amours: ['The Faith'],
+            },
+            'philippe-anjou': {
+                subtitle: 'Philip V of Spain',
+                backSubtitle: 'The Bourbon of Madrid',
+                quote: 'There are no more Pyrenees!',
+                intro: "Grandson of Louis XIV, his accession to the Spanish throne triggers the greatest war of the reign. He becomes the first Bourbon to rule in Madrid.",
+                traits: ['Franco-Spanish','Heir','Bourbon','Loyal'],
+                achievements: ['Throne of Spain','Battle of Almansa','Nueva Planta Decrees','Peace of Utrecht','Royal Palace','Patron'],
+                titles: ['King of Spain and the Indies','Duke of Anjou'],
+                competences: [['Succession','Claims the throne'],['Union','Bond with France'],['Reform','Modernises the State'],['Perseverance','Stands firm against Europe']],
+                ultime: 'The Bourbon Legacy',
+                ultimedesc: 'Invokes the power of his lineage to consolidate his contested reign',
+                allies: ['Louis XIV','Marie-Louise of Savoy'],
+                rivaux: ['Archduke Charles','Marlborough'],
+                amours: ['Élisabeth Farnèse'],
+            },
+            'marlborough': {
+                subtitle: 'John Churchill',
+                backSubtitle: 'The Supreme Commander',
+                quote: 'Military genius knows no borders.',
+                intro: 'English general and formidable diplomat. The principal adversary of Louis XIV during the War of the Spanish Succession, he remained undefeated on the battlefield.',
+                traits: ['British','Strategist','Undefeated','Ambitious'],
+                achievements: ['Blenheim','Ramillies','Oudenarde','Malplaquet','Blenheim Palace','Coalition Leader'],
+                titles: ['Duke of Marlborough','Captain-General of the Armed Forces'],
+                competences: [['Manoeuvre','Outflanks the French lines'],['Coalition','Unites the nations'],['Assault','Strikes with precision'],['Fortune','Constant success']],
+                ultime: 'Tactical Genius',
+                ultimedesc: 'Neutralises the opposing strategy by anticipating every move one step ahead',
+                allies: ['Queen Anne','Prince Eugene'],
+                rivaux: ['Louis XIV','Villars'],
+                amours: ['Sarah Jennings'],
+            },
+            'turenne': {
+                subtitle: 'The Great Captain',
+                backSubtitle: 'The Unrivalled Tactician',
+                quote: 'God is on the side of the big battalions.',
+                intro: "Henri de La Tour d'Auvergne, Viscount of Turenne. One of the greatest military commanders in French history, a peerless tactician whose campaigns were studied by Napoleon Bonaparte himself.",
+                traits: ['Strategist','Protector','Methodical','Patriot'],
+                achievements: ['Battle of the Dunes','Alsace Campaign','Turckheim','Panthéon','Peace of Westphalia'],
+                titles: ["Marshal-General of the King's Camps and Armies",'Viscount of Turenne'],
+                competences: [['Manoeuvre','Invisible movement'],['Bravery','Leads by example under fire'],['Winter Campaign','Attacks out of season'],['Support','Rallies the troops']],
+                ultime: 'The Unpredictable Assault',
+                ultimedesc: "Completely outflanks the enemy army to strike its weak point",
+                allies: ['Louis XIV','Vauban'],
+                rivaux: ['Condé (during the Fronde)','Montecuccoli'],
+                amours: ['Duty'],
+            },
+            'conde': {
+                subtitle: 'The First Prince of the Blood',
+                backSubtitle: 'The Warrior Prince',
+                quote: 'Blood and glory are my only masters.',
+                intro: 'Louis II de Bourbon-Condé. First a dazzling victor at Rocroi, this rebel prince leads the Fronde against the King before submitting and becoming one of the most brilliant generals of the kingdom.',
+                traits: ['Impetuous','Prince','Frondeur','Patron'],
+                achievements: ['Battle of Rocroi','Battle of Lens','Chantilly Estate',"Patron of Molière","Vatel's Feast"],
+                titles: ['First Prince of the Blood','Duke of Enghien'],
+                competences: [['Fury','Irresistible charge'],['Rebellion','Stirs the nobility'],['Patronage','Attracts geniuses'],['Intimidation',"Eagle's gaze"]],
+                ultime: 'The Shock of Rocroi',
+                ultimedesc: 'Breaks the invincibility of any army with a lightning assault',
+                allies: ['Louis XIV (in the end)','Molière','Boileau'],
+                rivaux: ['Mazarin','Turenne (often)'],
+                amours: ['Glory'],
+            },
+            'luxembourg': {
+                subtitle: 'The Tapestry-Maker of Notre-Dame',
+                backSubtitle: 'The Undefeated General',
+                quote: 'I have never seen the court turn its back on victory.',
+                intro: "François-Henri de Montmorency. Companion-in-arms of Condé, this marshal of ungainly appearance never lost a battle. He captured so many enemy standards that he was nicknamed the 'Tapestry-Maker of Notre-Dame'.",
+                traits: ['Genius','Undefeated','Cunning','Tactician'],
+                achievements: ['Fleurus','Steinkerque','Neerwinden','Countless Standards','War of Augsburg Hero'],
+                titles: ['Marshal of France','Duke of Piney'],
+                competences: [['Ambush','Total surprise'],['Trophy','Steals the flags'],['Tenacity','Never retreats'],['Eye for Ground','Reads the battlefield']],
+                ultime: 'The Tapestry of Flags',
+                ultimedesc: 'Humiliates the adversary by decorating the churches of Paris with captured standards',
+                allies: ['Louis XIV','Condé'],
+                rivaux: ["William of Orange",'Louvois'],
+                amours: ['Tactics'],
+            },
+        };
+
+        // Traductions des faits historiques
+        var historicalFactsEN = [
+            { title: 'The Fronde', cat: 'CIVIL WAR', desc: 'A series of civil wars against royal authority and Mazarin. This revolt profoundly marks the young Louis XIV.', impact: 'Strengthens the will for royal absolutism', cons: ['Distrust of Paris', 'Desire to control the nobility'] },
+            { title: 'Seizure of Absolute Power', cat: 'DOMESTIC POLITICS', desc: 'At the death of Mazarin, Louis XIV, aged 22, decides to govern alone without a chief minister. He has Superintendent Fouquet arrested to assert his total authority.', impact: 'Birth of the absolute monarchy of divine right', cons: ['Extreme centralisation', 'Rise of Colbert'] },
+            { title: 'Construction of Versailles', cat: 'ARCHITECTURE', desc: 'Transformation of a hunting lodge into a sumptuous palace. Versailles becomes the symbol of French greatness.', impact: 'Centralisation of power and the court', cons: ['Strict control of the nobility', 'European artistic influence'] },
+            { title: 'The Pleasures of the Enchanted Isle', cat: 'ART & CULTURE', desc: 'A grandiose multi-day festival at Versailles mixing theatre, ballets, fireworks and feasts. Moli\u00e8re and Lully present their works.', impact: 'Cultural influence of France throughout Europe', cons: ['Domestication of the nobility through entertainment', 'Birth of the com\u00e9die-ballet'] },
+            { title: 'War of Holland', cat: 'MILITARY CONFLICT', desc: 'War waged by Louis XIV against the United Provinces. The apex of French military power.', impact: 'Assertion of French hegemony in Europe', cons: ['Territorial conquests', 'Absolute military prestige'] },
+            { title: 'The Affair of the Poisons', cat: 'STATE SCANDAL', desc: 'A vast wave of investigations reveals that high members of the court (including Mme de Montespan) have resorted to black magic and poisons to gain the King\'s favour.', impact: 'Moral shock and paranoia at the top of the State', cons: ['Execution of La Voisin', 'Disgrace of Montespan', 'Rise of Mme de Maintenon'] },
+            { title: 'Revocation of the Edict of Nantes', cat: 'RELIGIOUS DECISION', desc: "Louis XIV revokes Henri IV's edict of religious tolerance. Protestants lose their rights.", impact: 'Religious unification of the kingdom', cons: ['Mass exodus of Huguenots', 'Economic weakening'] },
+            { title: 'War of the League of Augsburg', cat: 'EUROPEAN WAR', desc: 'European coalition against French hegemony. The first great limit encountered by Louis XIV.', impact: 'Limits of French power revealed', cons: ['Financial exhaustion of the kingdom', 'Tragic famines'] },
+            { title: 'War of the Spanish Succession', cat: 'DYNASTIC CONFLICT', desc: "The last great war of the reign to place the king's grandson on the Spanish throne.", impact: 'Exhaustion of the kingdom but dynastic victory', cons: ['Philippe V becomes King of Spain', 'Treaty of Utrecht'] },
+            { title: 'The Death of the Sun King', cat: 'SUCCESSION', desc: 'After 72 years of reign, Louis XIV dies at Versailles of gangrene, leaving a powerful but financially drained kingdom and a starving people.', impact: 'End of the Grand Si\u00e8cle', cons: ['Regency of the Duke of Orl\u00e9ans', 'Liberation of morals after austerity'] },
+        ];
+
+        // Traductions du lexique
+        var lexiconTermsEN = [
+            { title: 'Absolutism', desc: 'A political regime in which the king concentrates all powers (legislative, executive, judicial) without any external control.' },
+            { title: 'Divine Right', desc: "A political doctrine stating that the King's absolute power is directly entrusted to him by God. He is accountable to no one else." },
+            { title: 'The Etiquette', desc: 'The complex and rigid set of rules of behaviour at the court of Versailles. Louis XIV used it as an instrument of absolute power to domesticate the nobility.' },
+            { title: 'Favourite', desc: 'A semi-official title given to the King\'s principal mistress (such as Mme de Montespan). She holds enormous political and cultural influence at court.' },
+            { title: 'Grand Si\u00e8cle', desc: 'A period of French history (17th century) marked by the reign of Louis XIV, and by exceptional cultural, military and artistic influence.' },
+            { title: 'Lettre de Cachet', desc: "A letter sealed with the King's personal seal containing a direct and incontestable order, often used to imprison without trial." },
+            { title: 'Libertinism', desc: "In the 17th century, this was above all a great freedom of philosophical thought and an emancipation from religious dogmas and conventions (e.g. Ninon de l'Enclos)." },
+            { title: 'House of Bourbon', desc: 'An important European royal dynasty from which Louis XIV descended. Its descendants still reign in Spain today.' },
+            { title: 'Musketeer', desc: "An elite soldier of the King's military household, armed with a musket and a sword. They form the sovereign's personal guard." },
+            { title: 'Prince of the Blood', desc: 'A title given exclusively to legitimate princes descended from the royal house of France (such as the Grand Cond\u00e9).' },
+        ];
+
+        // ============================================================
+        // SURCHARGE DE openCharModal POUR LA TRADUCTION
+        // ============================================================
+        var _origOpenCharModal = openCharModal;
+        openCharModal = function(charId) {
+            var modal = document.getElementById('charModal');
+            if (modal) modal.dataset.currentChar = charId;
+
+            if (currentLang === 'fr') {
+                return _origOpenCharModal(charId);
+            }
+
+            var char = characters[charId];
+            if (!char) return;
+            var tr = charTranslations[charId];
+
+            var emojiStrChar = icons[charId] || icons[char.icon] || icons.crown;
+
+            // Quote
+            var quoteText = (tr && tr.quote) ? tr.quote : char.quote;
+            var quoteHtml = quoteText ? '<div class="quote-line">\u00ab ' + quoteText + ' \u00bb</div>' : '';
+
+            // Stats (inchangees)
+            var statsHtml = char.stats ? '<div class="stats-row">' + char.stats.map(function(s) { return '<div class="stat-chip"><span class="stat-icon">' + s.icon + '</span><span class="stat-val">' + s.val + '</span></div>'; }).join('') + '</div>' : '';
+
+            // Traits
+            var traitsHtml = '';
+            if (char.traits) {
+                var traitItems;
+                if (tr && tr.traits) {
+                    traitItems = char.traits.map(function(t, i) {
+                        var name = tr.traits[i] || t.name;
+                        return '<span class="trait-tag"><span class="trait-icon">' + t.icon + '</span>' + name + '</span>';
+                    }).join('');
+                } else {
+                    traitItems = char.traits.map(function(t) { return '<span class="trait-tag"><span class="trait-icon">' + t.icon + '</span>' + t.name + '</span>'; }).join('');
+                }
+                traitsHtml = '<div class="rpg-section-title"><span>Traits</span></div><div class="traits-row">' + traitItems + '</div>';
+            }
+
+            // Achievements / Facts
+            var achievementsHtml = '';
+            if (char.achievements) {
+                var achItems;
+                if (tr && tr.achievements) {
+                    achItems = char.achievements.map(function(a, i) {
+                        var name = tr.achievements[i] || a.name;
+                        return '<div class="achieve-card"><span class="ach-icon">' + a.icon + '</span><div class="ach-name">' + name + '</div><div class="ach-val">' + a.val + '</div></div>';
+                    }).join('');
+                } else {
+                    achItems = char.achievements.map(function(a) { return '<div class="achieve-card"><span class="ach-icon">' + a.icon + '</span><div class="ach-name">' + a.name + '</div><div class="ach-val">' + a.val + '</div></div>'; }).join('');
+                }
+                achievementsHtml = '<div class="rpg-section-title"><span>Achievements</span></div><div class="achievements-grid">' + achItems + '</div>';
+            } else if (char.facts) {
+                var factsList = char.facts.map(function(f) { return '<li><span class="bullet">\u2666</span> ' + f + '</li>'; }).join('');
+                achievementsHtml = '<div class="rpg-section-title"><span>Key Facts</span></div><div class="lore-section"><ul class="lore-list">' + factsList + '</ul></div>';
+            }
+
+            // Titles
+            var titlesHtml = '';
+            if (char.titles) {
+                var titleItems;
+                if (tr && tr.titles) {
+                    titleItems = char.titles.map(function(t, i) {
+                        var name = tr.titles[i] || t.text;
+                        return '<div class="title-item"><span class="title-icon">' + t.icon + '</span><div><span class="title-text">' + name + '</span><span class="title-sub">' + t.sub + '</span></div></div>';
+                    }).join('');
+                } else {
+                    titleItems = char.titles.map(function(t) { return '<div class="title-item"><span class="title-icon">' + t.icon + '</span><div><span class="title-text">' + t.text + '</span><span class="title-sub">' + t.sub + '</span></div></div>'; }).join('');
+                }
+                titlesHtml = '<div class="rpg-section-title"><span>Titles & Honours</span></div><div class="titles-list">' + titleItems + '</div>';
+            } else if (char.role && char.heritage) {
+                var rTitle = char.isFictional ? 'Symbolic Role' : 'Historical Role';
+                var hTitle = char.isFictional ? 'Significance' : 'Legacy';
+                titlesHtml = '<div class="rpg-section-title"><span>Heritage & Role</span></div><div class="titles-list"><div class="title-item"><span class="title-icon">\uD83D\uDCDC</span><div><span class="title-text">' + rTitle + '</span><span class="title-sub">' + char.role + '</span></div></div><div class="title-item"><span class="title-icon">\uD83D\uDC8E</span><div><span class="title-text">' + hTitle + '</span><span class="title-sub">' + char.heritage + '</span></div></div></div>';
+            }
+
+            // Intro
+            var introText = (tr && tr.intro) ? tr.intro : char.intro;
+            var subtitle = (tr && tr.subtitle) ? tr.subtitle : char.subtitle;
+
+            // Footer front
+            var frontFooterHtml = '';
+            if (char.rpg) {
+                var classeEN = rpgTranslations[char.rpg.classe] || char.rpg.classe;
+                var factionEN = rpgTranslations[char.rpg.faction] || char.rpg.faction;
+                frontFooterHtml = '<div class="card-footer"><span class="footer-tag"><span class="dot"></span> ' + classeEN + '</span><span class="footer-tag"><span class="dot"></span> Faction ' + factionEN + '</span></div>';
+            }
+
+            // FRONT HTML — structure identique a l'original
+            var frontHtml = '<div class="card-face card-front"><div class="card-face-inner"><button class="btn-circle btn-flip" onclick="toggleCardFlip(event)" title="Flip"><svg viewBox="0 0 24 24"><path d="M12 4V1L8 5l4 4V6c3.31 0 6 2.69 6 6 0 1.01-.25 1.97-.7 2.8l1.46 1.46C19.54 15.03 20 13.57 20 12c0-4.42-3.58-8-8-8zm0 14c-3.31 0-6-2.69-6-6 0-1.01.25-1.97.7-2.8L5.24 7.74C4.46 8.97 4 10.43 4 12c0 4.42 3.58 8 8 8v3l4-4-4-4v3z"/></svg></button><button class="btn-circle btn-close" onclick="closeModal(event, true)" title="Close"><svg viewBox="0 0 24 24"><path d="M18.3 5.71a1 1 0 0 0-1.41 0L12 10.59 7.11 5.7A1 1 0 0 0 5.7 7.11L10.59 12 5.7 16.89a1 1 0 1 0 1.41 1.41L12 13.41l4.89 4.89a1 1 0 0 0 1.41-1.41L13.41 12l4.89-4.89a1 1 0 0 0 0-1.4z"/></svg></button><div class="ornament orn-bl"><svg viewBox="0 0 30 30"><path d="M2 2 Q15 2 15 15 Q15 2 28 2" stroke="rgba(201,168,76,0.6)" fill="none" stroke-width="1.5"/><circle cx="4" cy="4" r="1.5" fill="rgba(201,168,76,0.5)"/></svg></div><div class="ornament orn-br"><svg viewBox="0 0 30 30"><path d="M2 2 Q15 2 15 15 Q15 2 28 2" stroke="rgba(201,168,76,0.6)" fill="none" stroke-width="1.5"/><circle cx="4" cy="4" r="1.5" fill="rgba(201,168,76,0.5)"/></svg></div><div class="card-header"><span class="sun-emblem">' + emojiStrChar + '</span><h1>' + char.name + '</h1><span class="subtitle">' + subtitle + '</span><br><span class="date-badge">' + char.dates + '</span></div><div class="card-body">' + quoteHtml + statsHtml + traitsHtml + '<div class="rpg-section-title"><span>Biography</span></div><div class="lore-section"><p>' + introText + '</p></div>' + achievementsHtml + titlesHtml + '</div>' + frontFooterHtml + '</div></div>';
+
+            // BACK HTML
+            var backHtml = '';
+            if (char.rpg) {
+                // Attributs
+                var attributsHtml = '';
+                if (char.rpg.attributs) {
+                    var attrRows = char.rpg.attributs.map(function(a) {
+                        var lbl = attrLabels[a.label] || a.label;
+                        return '<div class="stat-bar-row"><span class="stat-bar-label">' + lbl + '</span><div class="stat-bar-track"><div class="stat-bar-fill ' + a.class + '" style="width:' + a.val + '%"></div></div><span class="stat-bar-val">' + a.val + '</span></div>';
+                    }).join('');
+                    attributsHtml = '<div class="rpg-section-title"><span>Attributes</span></div><div class="stat-bars">' + attrRows + '</div>';
+                }
+
+                // Competences
+                var skillsHtml;
+                if (tr && tr.competences) {
+                    skillsHtml = char.rpg.competences.map(function(c, i) {
+                        var pair = tr.competences[i] || [c.nom, c.desc];
+                        return '<div class="skill-card"><div class="skill-name">' + pair[0] + '</div><div class="skill-icon">' + c.icon + '</div><div class="skill-desc">' + pair[1] + '</div></div>';
+                    }).join('');
+                } else {
+                    skillsHtml = char.rpg.competences.map(function(c) { return '<div class="skill-card"><div class="skill-name">' + c.nom + '</div><div class="skill-icon">' + c.icon + '</div><div class="skill-desc">' + c.desc + '</div></div>'; }).join('');
+                }
+
+                // Ultime
+                var ultNom = (tr && tr.ultime) ? tr.ultime : char.rpg.ultime.nom;
+                var ultDesc = (tr && tr.ultimedesc) ? tr.ultimedesc : char.rpg.ultime.desc;
+
+                // Relations
+                var alliesHtml = (tr && tr.allies) ? tr.allies.map(function(a) { return '<li>' + a + '</li>'; }).join('') : char.rpg.relations.allies.map(function(a) { return '<li>' + a + '</li>'; }).join('');
+                var rivauxHtml = (tr && tr.rivaux) ? tr.rivaux.map(function(a) { return '<li>' + a + '</li>'; }).join('') : char.rpg.relations.rivaux.map(function(a) { return '<li>' + a + '</li>'; }).join('');
+                var amoursHtml = (tr && tr.amours) ? tr.amours.map(function(a) { return '<li>' + a + '</li>'; }).join('') : char.rpg.relations.amours.map(function(a) { return '<li>' + a + '</li>'; }).join('');
+
+                var backSubtitle = (tr && tr.backSubtitle) ? tr.backSubtitle : (char.backSubtitle || char.subtitle);
+                var collectionEN = rpgTranslations[char.rpg.collection] || char.rpg.collection;
+                var backFooterHtml = (char.rpg && char.rpg.collection) ? '<div class="card-footer"><span class="footer-tag">' + collectionEN + '</span></div>' : frontFooterHtml;
+
+                backHtml = '<div class="card-face card-back"><div class="card-face-inner"><button class="btn-circle btn-flip" onclick="toggleCardFlip(event)" title="Flip"><svg viewBox="0 0 24 24"><path d="M12 4V1L8 5l4 4V6c3.31 0 6 2.69 6 6 0 1.01-.25 1.97-.7 2.8l1.46 1.46C19.54 15.03 20 13.57 20 12c0-4.42-3.58-8-8-8zm0 14c-3.31 0-6-2.69-6-6 0-1.01.25-1.97.7-2.8L5.24 7.74C4.46 8.97 4 10.43 4 12c0 4.42 3.58 8 8 8v3l4-4-4-4v3z"/></svg></button><button class="btn-circle btn-close" onclick="closeModal(event, true)" title="Close"><svg viewBox="0 0 24 24"><path d="M18.3 5.71a1 1 0 0 0-1.41 0L12 10.59 7.11 5.7A1 1 0 0 0 5.7 7.11L10.59 12 5.7 16.89a1 1 0 1 0 1.41 1.41L12 13.41l4.89 4.89a1 1 0 0 0 1.41-1.41L13.41 12l4.89-4.89a1 1 0 0 0 0-1.4z"/></svg></button><div class="ornament orn-bl"><svg viewBox="0 0 30 30"><path d="M2 2 Q15 2 15 15 Q15 2 28 2" stroke="rgba(201,168,76,0.6)" fill="none" stroke-width="1.5"/><circle cx="4" cy="4" r="1.5" fill="rgba(201,168,76,0.5)"/></svg></div><div class="ornament orn-br"><svg viewBox="0 0 30 30"><path d="M2 2 Q15 2 15 15 Q15 2 28 2" stroke="rgba(201,168,76,0.6)" fill="none" stroke-width="1.5"/><circle cx="4" cy="4" r="1.5" fill="rgba(201,168,76,0.5)"/></svg></div><div class="card-header"><span class="sun-emblem">' + emojiStrChar + '</span><h2>' + char.name + '</h2><span class="subtitle">' + backSubtitle + '</span></div><div class="card-body">' + attributsHtml + '<div class="rpg-section-title"><span>Skills</span></div><div class="skills-grid">' + skillsHtml + '</div><div class="rpg-section-title"><span>Ultimate Power</span></div><div class="ultimate-box"><div class="ult-name">' + ultNom + '</div><div class="ult-desc">\u00ab ' + ultDesc + ' \u00bb</div></div><div class="rpg-section-title"><span>Relations</span></div><div class="relations-grid"><div class="relation-group"><div class="rel-title allies">\uD83D\uDEE1\uFE0F Allies</div><ul>' + alliesHtml + '</ul></div><div class="relation-group"><div class="rel-title rivals">\u2694\uFE0F Rivals</div><ul>' + rivauxHtml + '</ul></div><div class="relation-group"><div class="rel-title amours">\u2764\uFE0F Loves</div><ul>' + amoursHtml + '</ul></div></div></div>' + backFooterHtml + '</div></div>';
+            }
+
+            // Injection — identique a l'original
+            var cardEl = document.getElementById('card');
+            cardEl.innerHTML = frontHtml + backHtml;
+            cardEl.classList.remove('flipped');
+            var sceneEl = document.getElementById('scene');
+            sceneEl.classList.remove('hidden');
+            var modal2 = document.getElementById('charModal');
+            modal2.classList.add('active');
+            modal2.setAttribute('aria-hidden', 'false');
+            document.body.style.overflow = 'hidden';
+            document.querySelector('.container').setAttribute('aria-hidden', 'true');
+        };
+
+        // ============================================================
+        // RECONSTRUCTION DU CONTENU DYNAMIQUE (grilles, faits, lexique)
+        // ============================================================
+        function rebuildDynamicContent() {
+            // 1. Grille des personnages
+            var charsContainer = document.getElementById('chars-container');
+            if (charsContainer) {
+                charsContainer.innerHTML = '';
+                var charDelay = 0;
+                categoriesPersonnages.forEach(function(cat) {
+                    var catTitle = currentLang === 'en' ? (catTitlesTranslations[cat.title] || cat.title) : cat.title;
+                    var catHtml = '<h2 class="category-title fade-in-up" style="animation-delay:' + charDelay + 's">' + catTitle + '</h2><div class="chars-grid">';
+                    cat.chars.forEach(function(id) {
+                        var char = characters[id];
+                        if (!char || !char.mainList) return;
+                        var tr = charTranslations[id];
+                        var subtitle = (currentLang === 'en' && tr && tr.subtitle) ? tr.subtitle : char.subtitle;
+                        var emojiStr = icons[id] || icons[char.icon] || icons.crown;
+                        var charIcon = '<span class="emoji-icon">' + emojiStr + '</span>';
+                        var starHtml = char.isFictional ? '<span class="fictional-star" aria-hidden="true" title="' + (currentLang === 'en' ? 'Character created for the musical' : 'Personnage cr\u00e9\u00e9 pour la com\u00e9die musicale') + '">\u2746</span>' : '';
+                        var actorTagHtml = '';
+                        if (char.actor) {
+                            var actorsArr = char.actor.split(',').map(function(s) { return s.trim(); });
+                            actorsArr.sort(function(a, b) { return a.localeCompare(b, 'fr'); });
+                            actorTagHtml = '<div class="actor-tag"><span class="actor-name">\uD83C\uDFAD ' + actorsArr.join(', ') + '</span></div>';
+                        }
+                        var charName = (currentLang === 'en' && tr && tr.name) ? tr.name : char.name;
+                        catHtml += '<div class="char-card glass-card fade-in-up" style="animation-delay:' + charDelay + 's" onclick="openCharModal(\'' + id + '\')" role="button" tabindex="0"><div class="char-card-icon" aria-hidden="true">' + charIcon + '</div><div class="char-card-info"><h3>' + charName + starHtml + '</h3><p class="char-subtitle">' + subtitle + '</p>' + actorTagHtml + '</div></div>';
+                        charDelay += 0.05;
+                    });
+                    catHtml += '</div>';
+                    charsContainer.insertAdjacentHTML('beforeend', catHtml);
+                });
+            }
+
+            // 2. Grille des roles
+            var rolesContainer = document.getElementById('roles-container');
+            if (rolesContainer) {
+                rolesContainer.innerHTML = '';
+                var actorsMap = {};
+                Object.keys(characters).forEach(function(charId) {
+                    var char = characters[charId];
+                    if (char.actor && char.mainList) {
+                        var actorsArr = char.actor.split(',').map(function(s) { return s.trim(); });
+                        actorsArr.forEach(function(actorName) {
+                            if (!actorsMap[actorName]) actorsMap[actorName] = [];
+                            var starHtml = char.isFictional ? '<span class="fictional-star" aria-hidden="true" style="font-size:0.9rem;">\u2746</span>' : '';
+                            var emojiStr = icons[charId] || icons[char.icon] || icons.crown;
+                            var trChar = charTranslations[charId];
+                            var charName = (currentLang === 'en' && trChar && trChar.name) ? trChar.name : char.name;
+                            actorsMap[actorName].push({ id: charId, name: charName + starHtml, icon: emojiStr });
+                        });
+                    }
+                });
+                var sortedActors = Object.keys(actorsMap).sort(function(a, b) { return a.localeCompare(b, 'fr'); });
+                var rolesDelay = 0;
+                sortedActors.forEach(function(actor) {
+                    var rolesListHtml = actorsMap[actor].map(function(r) {
+                        return '<li onclick="openCharModal(\'' + r.id + '\')"><span class="emoji-icon">' + r.icon + '</span> ' + r.name + '</li>';
+                    }).join('');
+                    var html = '<div class="actor-card glass-card fade-in-up" style="animation-delay:' + rolesDelay + 's"><div class="actor-header">\uD83C\uDFAD ' + actor + '</div><ul class="actor-roles-list">' + rolesListHtml + '</ul></div>';
+                    rolesContainer.insertAdjacentHTML('beforeend', html);
+                    rolesDelay += 0.05;
+                });
+            }
+
+            // 3. Faits historiques
+            var factsContainer = document.getElementById('facts-container');
+            if (factsContainer) {
+                factsContainer.innerHTML = '';
+                var factDelay = 0;
+                historicalFacts.forEach(function(fact, index) {
+                    var factEN = historicalFactsEN[index] || {};
+                    var title = currentLang === 'en' ? (factEN.title || fact.title) : fact.title;
+                    var cat = currentLang === 'en' ? (factEN.cat || fact.cat) : fact.cat;
+                    var desc = currentLang === 'en' ? (factEN.desc || fact.desc) : fact.desc;
+                    var impact = currentLang === 'en' ? (factEN.impact || fact.impact) : fact.impact;
+                    var cons = currentLang === 'en' ? (factEN.cons || fact.cons) : fact.cons;
+                    var tagsHtml = fact.chars.map(function(c) { return '<button class="tag" onclick="openCharModal(\'' + c.id + '\')">' + c.name + '</button>'; }).join('');
+                    var consHtml = cons.map(function(c) { return '<li>' + c + '</li>'; }).join('');
+                    var emojiStrFact = icons[fact.icon] || icons.crown;
+                    var impactLabel = currentLang === 'en' ? 'IMPACT:' : 'IMPACT\u00a0:';
+                    var consLabel = currentLang === 'en' ? 'CONSEQUENCES:' : 'CONS\u00c9QUENCES\u00a0:';
+                    var persosLabel = currentLang === 'en' ? 'KEY CHARACTERS:' : 'PERSONNAGES CL\u00c9S\u00a0:';
+                    var html = '<div class="timeline-item fade-in-up" style="animation-delay:' + factDelay + 's"><div class="fact-card glass-card"><div class="fact-header"><div class="fact-icon" aria-hidden="true"><span class="emoji-icon">' + emojiStrFact + '</span></div><div class="fact-meta"><div class="fact-dates">' + fact.dates + '</div><br><span class="fact-category">' + cat + '</span></div></div><h3 class="fact-title">' + title + '</h3><div class="fact-desc">' + desc + '</div><div class="fact-subtitle">' + impactLabel + '</div><div class="fact-impact">' + impact + '</div><div class="fact-subtitle">' + consLabel + '</div><ul class="fact-ul">' + consHtml + '</ul><div class="fact-subtitle">' + persosLabel + '</div><div class="fact-tags">' + tagsHtml + '</div></div></div>';
+                    factsContainer.insertAdjacentHTML('beforeend', html);
+                    factDelay += 0.1;
+                });
+            }
+
+            // 4. Lexique
+            var lexiconContainer = document.getElementById('lexicon-container');
+            if (lexiconContainer) {
+                lexiconContainer.innerHTML = '';
+                var lexDelay = 0;
+                lexiconTerms.forEach(function(term, index) {
+                    var termEN = lexiconTermsEN[index] || {};
+                    var title = currentLang === 'en' ? (termEN.title || term.title) : term.title;
+                    var desc = currentLang === 'en' ? (termEN.desc || term.desc) : term.desc;
+                    var emojiStrLex = icons[term.id] || icons[term.icon] || icons.crown;
+                    var lexIcon = '<span class="emoji-icon">' + emojiStrLex + '</span>';
+                    var html = '<div class="lexicon-card fade-in-up" style="animation-delay:' + lexDelay + 's"><h3 class="lexicon-title">' + lexIcon + ' ' + title + '</h3><p class="lexicon-desc">' + desc + '</p></div>';
+                    lexiconContainer.insertAdjacentHTML('beforeend', html);
+                    lexDelay += 0.1;
+                });
+            }
+        }
+
+    
+        // Initialisation du bouton langue au chargement
+        document.addEventListener('DOMContentLoaded', function() {
+            var lang = localStorage.getItem('lang') || 'fr';
+            var bfr = document.getElementById('btn-fr');
+            var ben = document.getElementById('btn-en');
+            if (bfr) bfr.classList.toggle('active-lang', lang === 'fr');
+            if (ben) ben.classList.toggle('active-lang', lang === 'en');
+            if (lang === 'en') rebuildDynamicContent();
+        });
+
     </script>
 </body>
 </html>
