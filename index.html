@@ -3507,27 +3507,30 @@ let capacityData = [];
 let currentGaugeIndex = 0;
 
 async function initRoyalGauge() {
-    const url = "https://script.googleusercontent.com/macros/echo?user_content_key=AY5xjrSgGKE2EVU9_SGNg3_fQmgAPnyHzXm9e6u0Kfgb3uDvClBOqK5R73bgv4W9qD7Jj4xq6xNh7j5lrYXvoOIa10gwpEolJQMV6puZ9u6uo0TtmweSmzJvJgymOE-mODBl6ZBgNrAMDwuH5yN19Gs_hkBjJ6lxkwMpm-6Qq8L03VHgA73z3hWApAs770rUjscb3-nxZols4mZmrSctmQlQyTmOz-QK4m7X-4fHUz03lKlLYUWfd-ZPZ01_rgMfIaJSTjQMC5m0CA6KonEq3Cp1GgnF4s4SmQ&lib=Matw_EsxjWd5YCVXQSK25nmwCk3FUI3ig";
+    // On lit le fichier généré par GitHub (temps de réponse : ~0.05 seconde !)
+    const url = "capacite.json";
     const maxCap = 250;
     
     try {
-        const res = await fetch(url);
+        // On met un petit paramètre anti-cache du navigateur pour être sûr de lire la dernière version
+        const res = await fetch(url + '?t=' + new Date().getTime());
         const data = await res.json();
         
-        if(data.ok) {
+        if(data.ok || data.E !== undefined) {
             capacityData = [
-                { dateFr: "14 Mars", dateEn: "March 14", pct: Math.min(Math.round((data.E / maxCap) * 100), 100) },
-                { dateFr: "19 Mars", dateEn: "March 19", pct: Math.min(Math.round((data.F / maxCap) * 100), 100) },
-                { dateFr: "21 Mars", dateEn: "March 21", pct: Math.min(Math.round((data.G / maxCap) * 100), 100) }
+                { dateFr: "14 Mars", dateEn: "March 14", pct: Math.min(Math.round(((data.E || 0) / maxCap) * 100), 100) },
+                { dateFr: "19 Mars", dateEn: "March 19", pct: Math.min(Math.round(((data.F || 0) / maxCap) * 100), 100) },
+                { dateFr: "21 Mars", dateEn: "March 21", pct: Math.min(Math.round(((data.G || 0) / maxCap) * 100), 100) }
             ];
             
-            // Première mise à jour immédiate
             updateGaugeDisplay();
-            // Lancement de la rotation toutes les 3 secondes
-            setInterval(updateGaugeDisplay, 3000);
+            
+            if (!window.gaugeInterval) {
+                window.gaugeInterval = setInterval(updateGaugeDisplay, 3000);
+            }
         }
     } catch (err) {
-        console.error("Erreur de chargement de la jauge:", err);
+        console.error("Erreur de chargement de la jauge locale:", err);
     }
 }
 
