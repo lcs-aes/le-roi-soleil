@@ -1120,7 +1120,7 @@
             "conde": "🛡️", "bossuet": "📖", "luxembourg": "⚔️", "vauban": "🧱", "philippe-anjou": "👑",
             "marlborough": "💂", "lully": "🎼", "lex-etiquette": "📜", "lex-favorite": "💍", "lex-prince": "🩸",
             "lex-droit": "🕊️", "lex-libertinage": "🍷", "lex-lettre": "✉️", "lex-mousquetaire": "🤺",
-            "lex-bourbon": "⚜️", "lex-absolutisme": "👑", "lex-siecle": "✨"
+            "lex-bourbon": "⚜️", "lex-absolutisme": "👑", "lex-siecle": "✨","lightbulb": "💡", "projector": "📽️", "computer": "💻"
         };
 
         const characters = {
@@ -1649,6 +1649,164 @@
                     relations: { allies: ["Natacha Muller", "Les Comédiens"], rivaux: ["Les bafouillages", "Le texte sans âme"], amours: ["La Littérature"] } 
                 } 
             },
+               // --- L'ÉQUIPE TECHNIQUE ---
+            "jeremie-perrault": {
+                name: "Jérémie Perrault",
+                subtitle: '<span class="lang-fr">Le Maître des Lumières</span><span class="lang-en">The Master of Lights</span>',
+                backSubtitle: '<span class="lang-fr">Régisseur Lumière</span><span class="lang-en">Lighting Director</span>',
+                dates: "Condorcet 2026", icon: "lightbulb", mainList: true, isFictional: false,
+                quote: '<span class="lang-fr">Que la lumière soit, et Versailles s\'illumina.</span><span class="lang-en">Let there be light, and Versailles was illuminated.</span>',
+                intro: '<span class="lang-fr">Véritable magicien de l\'ombre, il sculpte l\'espace avec ses faisceaux lumineux. Il donne vie aux dorures du palais et plonge les intrigues de cour dans la pénombre.</span><span class="lang-en">A true magician in the shadows, he sculpts space with his light beams. He brings the gilding of the palace to life and plunges court intrigues into darkness.</span>',
+                stats: [ { icon: '⚔️', val: '70' }, { icon: '🛡️', val: '85' }, { icon: '✨', val: '98' }, { icon: '🧠', val: '90' } ],
+                traits: [
+                    { icon: '💡', name: '<span class="lang-fr">Illuminateur</span><span class="lang-en">Illuminator</span>' },
+                    { icon: '⚡', name: '<span class="lang-fr">Électrique</span><span class="lang-en">Electric</span>' },
+                    { icon: '👁️', name: '<span class="lang-fr">Précis</span><span class="lang-en">Precise</span>' },
+                    { icon: '🎭', name: '<span class="lang-fr">Dramatique</span><span class="lang-en">Dramatic</span>' }
+                ],
+                achievements: [
+                    { icon: '✨', name: '<span class="lang-fr">Création d\'Ambiance</span><span class="lang-en">Mood Creation</span>', val: '<span class="lang-fr">Immersive</span><span class="lang-en">Immersive</span>' },
+                    { icon: '🔦', name: '<span class="lang-fr">Poursuite</span><span class="lang-en">Spotlight</span>', val: '<span class="lang-fr">Millimétrée</span><span class="lang-en">Precise</span>' },
+                    { icon: '🌑', name: '<span class="lang-fr">Blackout</span><span class="lang-en">Blackout</span>', val: '<span class="lang-fr">Instant</span><span class="lang-en">Instant</span>' }
+                ],
+                titles: [
+                    { icon: '💡', text: '<span class="lang-fr">Régisseur Lumière</span><span class="lang-en">Lighting Designer</span>', sub: '<span class="lang-fr">Lycée Condorcet</span><span class="lang-en">Lycée Condorcet</span>' },
+                    { icon: '☀️', text: '<span class="lang-fr">Sculpteur de Lux</span><span class="lang-en">Master of Lux</span>', sub: '<span class="lang-fr">Projet Musical</span><span class="lang-en">Musical Project</span>' }
+                ],
+                rpg: {
+                    classe: '<span class="lang-fr">Sculpteur de Lumière</span><span class="lang-en">Light Sculptor</span>',
+                    faction: '<span class="lang-fr">Technique</span><span class="lang-en">Technical</span>',
+                    collection: '<span class="lang-fr">⚙️ L\'Équipe Technique ⚙️</span><span class="lang-en">⚙️ The Technical Team ⚙️</span>',
+                    attributs: [
+                        { label: '<span class="lang-fr">Autorité</span><span class="lang-en">Authority</span>', class: 'authority', val: 80 },
+                        { label: '<span class="lang-fr">Charisme</span><span class="lang-en">Charisma</span>', class: 'charisma', val: 90 },
+                        { label: '<span class="lang-fr">Stratégie</span><span class="lang-en">Strategy</span>', class: 'strategy', val: 95 },
+                        { label: '<span class="lang-fr">Culture</span><span class="lang-en">Culture</span>', class: 'culture', val: 85 },
+                        { label: '<span class="lang-fr">Diplomatie</span><span class="lang-en">Diplomacy</span>', class: 'diplomacy', val: 80 },
+                        { label: '<span class="lang-fr">Art de guerre</span><span class="lang-en">Warfare</span>', class: 'warfare', val: 50 }
+                    ],
+                    competences: [
+                        { nom: '<span class="lang-fr">Pleins Feux</span><span class="lang-en">Spotlight</span>', desc: '<span class="lang-fr">Éblouit la cour</span><span class="lang-en">Dazzles the court</span>', icon: '☀️' },
+                        { nom: '<span class="lang-fr">Ombre</span><span class="lang-en">Shadow</span>', desc: '<span class="lang-fr">Cache les secrets</span><span class="lang-en">Hides secrets</span>', icon: '🌑' },
+                        { nom: '<span class="lang-fr">Gélatine</span><span class="lang-en">Color Gel</span>', desc: '<span class="lang-fr">Change la couleur</span><span class="lang-en">Changes the color</span>', icon: '🎨' },
+                        { nom: '<span class="lang-fr">Stroboscope</span><span class="lang-en">Strobe</span>', desc: '<span class="lang-fr">Fige le temps</span><span class="lang-en">Freezes time</span>', icon: '⚡' }
+                    ],
+                    ultime: {
+                        nom: '<span class="lang-fr">L\'Aurore Solaire</span><span class="lang-en">The Royal Dawn</span>',
+                        desc: '<span class="lang-fr">Dissipe les ténèbres par une explosion majestueuse</span><span class="lang-en">Dispels the darkness with a majestic explosion</span>'
+                    },
+                    relations: {
+                        allies: ['<span class="lang-fr">Comédiens</span><span class="lang-en">Actors</span>', '<span class="lang-fr">Mise en scène</span><span class="lang-en">Directors</span>'],
+                        rivaux: ['<span class="lang-fr">Courts-circuits</span><span class="lang-en">Short circuits</span>', '<span class="lang-fr">Ampoules grillées</span><span class="lang-en">Blown bulbs</span>'],
+                        amours: ['<span class="lang-fr">La Clarté</span><span class="lang-en">Clarity</span>']
+                    }
+                }
+            },
+            "rose-lespets": {
+                name: "Rose Lespets",
+                subtitle: '<span class="lang-fr">La Gardienne des Images</span><span class="lang-en">Guardian of Images</span>',
+                backSubtitle: '<span class="lang-fr">Régisseuse Vidéo</span><span class="lang-en">Video Technician</span>',
+                dates: "Condorcet 2026", icon: "projector", mainList: true, isFictional: false,
+                quote: '<span class="lang-fr">Une image vaut mille mots, une projection crée un monde.</span><span class="lang-en">A picture is worth a thousand words, a projection creates a world.</span>',
+                intro: '<span class="lang-fr">Elle habille la scène de paysages mouvants et d\'illusions visuelles. Grâce à elle, les murs du théâtre se transforment en jardins à la française ou en sombres cachots.</span><span class="lang-en">She dresses the stage in moving landscapes and visual illusions. Thanks to her, the theatre walls transform into formal French gardens or dark dungeons.</span>',
+                stats: [ { icon: '⚔️', val: '65' }, { icon: '🛡️', val: '90' }, { icon: '✨', val: '95' }, { icon: '🧠', val: '92' } ],
+                traits: [
+                    { icon: '🖼️', name: '<span class="lang-fr">Visuelle</span><span class="lang-en">Visual</span>' },
+                    { icon: '⏱️', name: '<span class="lang-fr">Synchronisée</span><span class="lang-en">Synchronized</span>' },
+                    { icon: '🎨', name: '<span class="lang-fr">Créative</span><span class="lang-en">Creative</span>' },
+                    { icon: '🏰', name: '<span class="lang-fr">Immersive</span><span class="lang-en">Immersive</span>' }
+                ],
+                achievements: [
+                    { icon: '🏰', name: '<span class="lang-fr">Décors Virtuels</span><span class="lang-en">Virtual Sets</span>', val: '<span class="lang-fr">Versailles</span><span class="lang-en">Versailles</span>' },
+                    { icon: '🎬', name: '<span class="lang-fr">Mapping</span><span class="lang-en">Mapping</span>', val: '<span class="lang-fr">Précision</span><span class="lang-en">Precision</span>' },
+                    { icon: '✨', name: '<span class="lang-fr">Illusions</span><span class="lang-en">Illusions</span>', val: '<span class="lang-fr">Parfaites</span><span class="lang-en">Perfect</span>' }
+                ],
+                titles: [
+                    { icon: '📽️', text: '<span class="lang-fr">Régisseuse Vidéo</span><span class="lang-en">Video Technician</span>', sub: '<span class="lang-fr">Lycée Condorcet</span><span class="lang-en">Lycée Condorcet</span>' },
+                    { icon: '🖼️', text: '<span class="lang-fr">Maîtresse des Illusions</span><span class="lang-en">Mistress of Illusions</span>', sub: '<span class="lang-fr">Projet Musical</span><span class="lang-en">Musical Project</span>' }
+                ],
+                rpg: {
+                    classe: '<span class="lang-fr">Tisseuse d\'Images</span><span class="lang-en">Image Weaver</span>',
+                    faction: '<span class="lang-fr">Technique</span><span class="lang-en">Technical</span>',
+                    collection: '<span class="lang-fr">⚙️ L\'Équipe Technique ⚙️</span><span class="lang-en">⚙️ The Technical Team ⚙️</span>',
+                    attributs: [
+                        { label: '<span class="lang-fr">Autorité</span><span class="lang-en">Authority</span>', class: 'authority', val: 75 },
+                        { label: '<span class="lang-fr">Charisme</span><span class="lang-en">Charisma</span>', class: 'charisma', val: 88 },
+                        { label: '<span class="lang-fr">Stratégie</span><span class="lang-en">Strategy</span>', class: 'strategy', val: 92 },
+                        { label: '<span class="lang-fr">Culture</span><span class="lang-en">Culture</span>', class: 'culture', val: 90 },
+                        { label: '<span class="lang-fr">Diplomatie</span><span class="lang-en">Diplomacy</span>', class: 'diplomacy', val: 85 },
+                        { label: '<span class="lang-fr">Art de guerre</span><span class="lang-en">Warfare</span>', class: 'warfare', val: 40 }
+                    ],
+                    competences: [
+                        { nom: '<span class="lang-fr">Fondu</span><span class="lang-en">Crossfade</span>', desc: '<span class="lang-fr">Transition douce</span><span class="lang-en">Smooth transition</span>', icon: '🌫️' },
+                        { nom: '<span class="lang-fr">Mise au point</span><span class="lang-en">Focus</span>', desc: '<span class="lang-fr">Netteté absolue</span><span class="lang-en">Absolute sharpness</span>', icon: '👁️' },
+                        { nom: '<span class="lang-fr">Décor Numérique</span><span class="lang-en">Digital Set</span>', desc: '<span class="lang-fr">Invoque un palais</span><span class="lang-en">Invokes a palace</span>', icon: '🏰' },
+                        { nom: '<span class="lang-fr">Apparition</span><span class="lang-en">Apparition</span>', desc: '<span class="lang-fr">Magie visuelle</span><span class="lang-en">Visual magic</span>', icon: '✨' }
+                    ],
+                    ultime: {
+                        nom: '<span class="lang-fr">Le Mirage de Versailles</span><span class="lang-en">The Mirage of Versailles</span>',
+                        desc: '<span class="lang-fr">Téléporte instantanément l\'audience dans une autre dimension</span><span class="lang-en">Instantly teleports the audience to another dimension</span>'
+                    },
+                    relations: {
+                        allies: ['<span class="lang-fr">Nadia Guérin</span><span class="lang-en">Nadia Guérin</span>', '<span class="lang-fr">Jérémie Perrault</span><span class="lang-en">Jérémie Perrault</span>'],
+                        rivaux: ['<span class="lang-fr">Les reflets</span><span class="lang-en">Reflections</span>', '<span class="lang-fr">La perte de signal</span><span class="lang-en">Signal loss</span>'],
+                        amours: ['<span class="lang-fr">L\'Esthétisme</span><span class="lang-en">Aestheticism</span>']
+                    }
+                }
+            },
+            "jeremie-desrosiers": {
+                name: "Jérémie Desrosiers",
+                subtitle: '<span class="lang-fr">L\'Artisan Numérique</span><span class="lang-en">The Digital Craftsman</span>',
+                backSubtitle: '<span class="lang-fr">Coordinateur & Webmaster</span><span class="lang-en">Coordinator & Webmaster</span>',
+                dates: "Condorcet 2026", icon: "computer", mainList: true, isFictional: false,
+                quote: '<span class="lang-fr">Dans l\'ombre des projecteurs, quelqu\'un doit s\'assurer que le site ne plante pas.</span><span class="lang-en">In the shadow of the spotlights, someone has to make sure the site doesn\'t crash.</span>',
+                intro: '<span class="lang-fr">Cheville ouvrière du projet et artisan de ce site internet, il tisse les liens entre les équipes. Plus à l\'aise derrière un clavier que sous les dorures, il veille au bon déroulement des opérations.</span><span class="lang-en">The linchpin of the project and craftsman of this website, he weaves the links between the teams. More comfortable behind a keyboard than under the gilding, he ensures smooth operations.</span>',
+                stats: [ { icon: '⚔️', val: '60' }, { icon: '🛡️', val: '85' }, { icon: '✨', val: '75' }, { icon: '🧠', val: '92' } ],
+                traits: [
+                    { icon: '🤝', name: '<span class="lang-fr">Organisé</span><span class="lang-en">Organized</span>' },
+                    { icon: '💻', name: '<span class="lang-fr">Connecté</span><span class="lang-en">Connected</span>' },
+                    { icon: '☕', name: '<span class="lang-fr">Caféiné</span><span class="lang-en">Caffeinated</span>' },
+                    { icon: '🛠️', name: '<span class="lang-fr">Débrouillard</span><span class="lang-en">Resourceful</span>' }
+                ],
+                achievements: [
+                    { icon: '🤝', name: '<span class="lang-fr">Coordination</span><span class="lang-en">Coordination</span>', val: '<span class="lang-fr">En cours</span><span class="lang-en">In progress</span>' },
+                    { icon: '🌐', name: '<span class="lang-fr">Site Internet</span><span class="lang-en">Website</span>', val: '<span class="lang-fr">En Ligne</span><span class="lang-en">Online</span>' },
+                    { icon: '🐛', name: '<span class="lang-fr">Chasse aux Bugs</span><span class="lang-en">Bug Hunting</span>', val: '<span class="lang-fr">Quotidienne</span><span class="lang-en">Daily</span>' }
+                ],
+                titles: [
+                    { icon: '⚙️', text: '<span class="lang-fr">Coordinateur du Projet</span><span class="lang-en">Project Coordinator</span>', sub: '<span class="lang-fr">Lycée Condorcet</span><span class="lang-en">Lycée Condorcet</span>' },
+                    { icon: '💻', text: '<span class="lang-fr">Développeur de l\'Ombre</span><span class="lang-en">Shadow Developer</span>', sub: '<span class="lang-fr">Projet Musical</span><span class="lang-en">Musical Project</span>' }
+                ],
+                rpg: {
+                    classe: '<span class="lang-fr">Artisan du Code</span><span class="lang-en">Code Craftsman</span>',
+                    faction: '<span class="lang-fr">Organisation</span><span class="lang-en">Organization</span>',
+                    collection: '<span class="lang-fr">⚙️ L\'Équipe Technique ⚙️</span><span class="lang-en">⚙️ The Technical Team ⚙️</span>',
+                    attributs: [
+                        { label: '<span class="lang-fr">Autorité</span><span class="lang-en">Authority</span>', class: 'authority', val: 75 },
+                        { label: '<span class="lang-fr">Charisme</span><span class="lang-en">Charisma</span>', class: 'charisma', val: 70 },
+                        { label: '<span class="lang-fr">Stratégie</span><span class="lang-en">Strategy</span>', class: 'strategy', val: 90 },
+                        { label: '<span class="lang-fr">Culture</span><span class="lang-en">Culture</span>', class: 'culture', val: 80 },
+                        { label: '<span class="lang-fr">Diplomatie</span><span class="lang-en">Diplomacy</span>', class: 'diplomacy', val: 85 },
+                        { label: '<span class="lang-fr">Art de guerre</span><span class="lang-en">Warfare</span>', class: 'warfare', val: 40 }
+                    ],
+                    competences: [
+                        { nom: '<span class="lang-fr">Organisation</span><span class="lang-en">Organization</span>', desc: '<span class="lang-fr">Tente d\'aligner les plannings</span><span class="lang-en">Tries to align schedules</span>', icon: '📅' },
+                        { nom: '<span class="lang-fr">Code Source</span><span class="lang-en">Source Code</span>', desc: '<span class="lang-fr">Bricole le HTML</span><span class="lang-en">Tinkers with HTML</span>', icon: '💻' },
+                        { nom: '<span class="lang-fr">Plan B</span><span class="lang-en">Plan B</span>', desc: '<span class="lang-fr">Improvise une solution</span><span class="lang-en">Improvises a solution</span>', icon: '🛠️' },
+                        { nom: '<span class="lang-fr">Appel à l\'Aide</span><span class="lang-en">Call for Help</span>', desc: '<span class="lang-fr">Invoque une IA en renfort</span><span class="lang-en">Summons an AI for backup</span>', icon: '🤖' }
+                    ],
+                    ultime: {
+                        nom: '<span class="lang-fr">Le Ctrl+Z d\'Urgence</span><span class="lang-en">The Emergency Ctrl+Z</span>',
+                        desc: '<span class="lang-fr">Annule la dernière catastrophe technique en croisant les doigts</span><span class="lang-en">Cancels the last technical disaster by crossing fingers</span>'
+                    },
+                    relations: {
+                        allies: ['<span class="lang-fr">Toute l\'équipe</span><span class="lang-en">The whole team</span>', '<span class="lang-fr">Le Café</span><span class="lang-en">Coffee</span>'],
+                        rivaux: ['<span class="lang-fr">Les nuits blanches</span><span class="lang-en">Sleepless nights</span>', '<span class="lang-fr">Les balises HTML oubliées</span><span class="lang-en">Forgotten HTML tags</span>'],
+                        amours: ['<span class="lang-fr">Que tout fonctionne</span><span class="lang-en">Everything working</span>']
+                    }
+                }
+            },
+            
             /* --- PERSONNAGES HISTORIQUES - STRUCTURE 100% CONFORME --- */
 "le-notre": { 
     name: "André Le Nôtre", subtitle: "Le jardinier du Roi", dates: "1613 – 1700", icon: "tree", mainList: false,
@@ -1901,7 +2059,8 @@
             { id: "frondeurs", title: "Les frondeurs et artistes", chars: ["beaufort", "moliere", "scarron", "ninon"] },
             { id: "ombre", title: "L'ombre, le peuple et la fiction", chars: ["voisin", "lisieux", "isabelle"] },
             { id: "troupe", title: "La troupe et les rôles de cour", chars: ["les-courtisanes", "les-danseurs", "le-peuple", "les-operateurs", "les-soldats", "le-clerge", "la-dame-de-cour", "la-femme-de-chambre", "le-medecin", "le-ministre"] },
-            { id: "equipe", title: "L'Équipe Artistique", chars: ["natacha-muller", "gabriel-gitman", "frederique-bouwer", "nadia-guerin", "elise-devaux", "marie-jacquier"] }
+            { id: "equipe", title: "L'Équipe Artistique", chars: ["natacha-muller", "gabriel-gitman", "frederique-bouwer", "nadia-guerin", "elise-devaux", "marie-jacquier"] },
+            { id: "technique", title: "<span class='lang-fr'>L'Équipe Technique</span><span class='lang-en'>The Technical Team</span>", chars: ["jeremie-perrault", "rose-lespets", "jeremie-desrosiers"] }
         ];
 
         categoriesPersonnages.forEach(cat => {
