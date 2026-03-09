@@ -788,61 +788,72 @@
     <style>
         #lang-switcher button.active-lang { opacity: 1 !important; transform: scale(1.18); }
         #lang-switcher button:hover { opacity: 0.85 !important; }
-/* --- JAUGE D'AFFLUENCE TOURNANTE --- */
-.royal-gauge-container {
-    background: rgba(0, 0, 0, 0.4); /* Fond un peu plus sombre pour contraster sur l'image */
+
+/* --- AFFICHAGE DES SIÈGES DISPONIBLES --- */
+.royal-seats-container {
+    background: rgba(0, 0, 0, 0.4);
     border: 1px solid rgba(226, 184, 106, 0.4);
     border-radius: 12px;
-    padding: 12px 20px;
-    margin: 30px auto 0 auto; /* Espacement parfait sous le bouton */
-    max-width: 320px;
+    padding: 15px 20px;
+    margin: 30px auto 0 auto;
+    max-width: 500px;
     backdrop-filter: blur(8px);
     -webkit-backdrop-filter: blur(8px);
 }
-.royal-gauge-title {
+
+.royal-seats-title {
     font-family: 'Cinzel', serif;
     color: var(--gold-light);
-    margin: 0 0 10px 0;
+    margin: 0 0 15px 0;
     font-size: 0.85rem;
     text-transform: uppercase;
-    letter-spacing: 1px;
+    letter-spacing: 2px;
 }
-.royal-gauge-content {
+
+.royal-seats-grid {
     display: flex;
+    justify-content: space-between;
     align-items: center;
-    gap: 12px;
+    gap: 10px;
 }
-.gauge-date {
-    font-weight: bold;
-    font-size: 0.85rem;
-    width: 75px;
-    text-align: left;
-    color: #FFF;
-    transition: opacity 0.3s ease;
+
+.seat-block {
+    flex: 1;
+    text-align: center;
+    border-right: 1px dashed rgba(226, 184, 106, 0.2);
 }
-.gauge-track {
-    flex-grow: 1;
-    height: 8px;
-    background: rgba(0,0,0,0.6);
-    border-radius: 10px;
-    overflow: hidden;
-    border: 1px solid rgba(226, 184, 106, 0.2);
+
+.seat-block:last-child {
+    border-right: none;
 }
-.gauge-fill {
-    height: 100%;
-    width: 0%;
-    background: linear-gradient(90deg, #E2B86A, #F4D38B);
-    box-shadow: 0 0 10px rgba(226, 184, 106, 0.5);
-    transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+
+.seat-date {
+    font-family: sans-serif;
+    font-size: 0.75rem;
+    color: rgba(255, 255, 255, 0.8);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    display: block;
+    margin-bottom: 5px;
 }
-.gauge-pct {
-    font-size: 0.85rem;
-    font-weight: bold;
-    width: 45px;
-    text-align: right;
+
+.seat-count {
+    font-family: 'Cinzel Decorative', serif;
+    font-size: 2rem;
     color: var(--accent-color);
-    transition: opacity 0.3s ease;
+    line-height: 1;
+    text-shadow: 0 0 15px rgba(226, 184, 106, 0.4);
 }
+
+.seat-label {
+    font-size: 0.7rem;
+    color: var(--gold-light);
+    opacity: 0.7;
+    font-style: italic;
+    display: block;
+    margin-top: 2px;
+}
+
     </style>
 
     
@@ -925,19 +936,14 @@
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512" style="width: 24px; height: 24px; fill: currentColor;"><defs><style>.fa-secondary{opacity:.4}</style></defs><path class="fa-secondary" d="M248 72a40 40 0 1 1 80 0 40 40 0 1 1 -80 0zM0 136a40 40 0 1 1 80 0A40 40 0 1 1 0 136zM536 96a40 40 0 1 1 0 80 40 40 0 1 1 0-80z"/><path class="fa-primary" d="M504 160l-89.1 71.3c-15.9 12.7-39.5 7.5-48.6-10.7L309 106c-6.1 3.8-13.3 6-21 6s-14.9-2.2-21-6L209.7 220.6c-9.1 18.2-32.7 23.4-48.6 10.7L72 160c-7.2 9.5-18.5 15.8-31.3 16L86.4 427.4c5.5 30.4 32 52.6 63 52.6H426.6c30.9 0 57.4-22.1 63-52.6L535.3 176c-12.8-.2-24.1-6.5-31.3-16z"/></svg>
             </a>
 
-            <div class="royal-gauge-container">
-                <h4 class="royal-gauge-title" id="gauge-title">
-                    <span class="lang-fr">Sièges Royaux Réservés</span>
-                    <span class="lang-en">Royal Seats Reserved</span>
-                </h4>
-                <div class="royal-gauge-content">
-                    <span id="gauge-date" class="gauge-date">--</span>
-                    <div class="gauge-track">
-                        <div id="gauge-fill" class="gauge-fill" style="width: 0%;"></div>
-                    </div>
-                    <span id="gauge-pct" class="gauge-pct">--%</span>
-                </div>
-            </div>
+            <div class="royal-seats-container">
+    <h4 class="royal-seats-title" id="seats-title">
+        <span class="lang-fr">Sièges Disponibles</span>
+        <span class="lang-en">Available Seats</span>
+    </h4>
+    <div class="royal-seats-grid" id="seats-grid">
+        </div>
+</div>
 
         </div>
     </header>
@@ -3670,68 +3676,52 @@
             if (lang === 'en') rebuildDynamicContent();
         });
 
-// --- JAUGE D'AFFLUENCE TOURNANTE ---
-let capacityData = [];
-let currentGaugeIndex = 0;
-
-async function initRoyalGauge() {
-    // On lit le fichier généré par GitHub (temps de réponse : ~0.05 seconde !)
+// --- AFFICHAGE DES SIÈGES DISPONIBLES ---
+async function initRoyalSeats() {
     const url = "capacite.json";
-    const maxCap = 250;
+    const maxCap = 300; 
     
     try {
-        // On met un petit paramètre anti-cache du navigateur pour être sûr de lire la dernière version
         const res = await fetch(url + '?t=' + new Date().getTime());
         const data = await res.json();
         
         if(data.ok || data.E !== undefined) {
-            capacityData = [
-                { dateFr: "14 Mars", dateEn: "March 14", pct: Math.min(Math.round(((data.E || 0) / maxCap) * 100), 100) },
-                { dateFr: "19 Mars", dateEn: "March 19", pct: Math.min(Math.round(((data.F || 0) / maxCap) * 100), 100) },
-                { dateFr: "21 Mars", dateEn: "March 21", pct: Math.min(Math.round(((data.G || 0) / maxCap) * 100), 100) }
+            const dates = [
+                { dateFr: "14 Mars", dateEn: "Mar 14", booked: data.E || 0 },
+                { dateFr: "19 Mars", dateEn: "Mar 19", booked: data.F || 0 },
+                { dateFr: "21 Mars", dateEn: "Mar 21", booked: data.G || 0 }
             ];
             
-            updateGaugeDisplay();
+            const grid = document.getElementById("seats-grid");
+            grid.innerHTML = ''; 
             
-            if (!window.gaugeInterval) {
-                window.gaugeInterval = setInterval(updateGaugeDisplay, 3000);
-            }
+            dates.forEach(item => {
+                const available = Math.max(0, maxCap - item.booked);
+                
+                const block = document.createElement('div');
+                block.className = 'seat-block';
+                block.innerHTML = `
+                    <span class="seat-date">
+                        <span class="lang-fr">${item.dateFr}</span>
+                        <span class="lang-en">${item.dateEn}</span>
+                    </span>
+                    <div class="seat-count">${available}</div>
+                    <span class="seat-label">
+                        <span class="lang-fr">libres</span>
+                        <span class="lang-en">left</span>
+                    </span>
+                `;
+                grid.appendChild(block);
+            });
         }
     } catch (err) {
-        console.error("Erreur de chargement de la jauge locale:", err);
+        console.error("Erreur de chargement des capacités:", err);
     }
 }
 
-function updateGaugeDisplay() {
-    if(capacityData.length === 0) return;
-    
-    const item = capacityData[currentGaugeIndex];
-    const dateEl = document.getElementById("gauge-date");
-    const fillEl = document.getElementById("gauge-fill");
-    const pctEl = document.getElementById("gauge-pct");
-    
-    // Disparition en douceur du texte
-    dateEl.style.opacity = 0;
-    pctEl.style.opacity = 0;
-    
-    // Changement des valeurs et réapparition
-    setTimeout(() => {
-        // L'astuce : on injecte les deux langues, c'est le CSS qui décide laquelle afficher instantanément !
-        dateEl.innerHTML = `<span class="lang-fr">${item.dateFr}</span><span class="lang-en">${item.dateEn}</span>`;
-        pctEl.innerText = item.pct + "%";
-        fillEl.style.width = item.pct + "%";
-        
-        dateEl.style.opacity = 1;
-        pctEl.style.opacity = 1;
-        
-        // Passer à l'index suivant pour le prochain cycle
-        currentGaugeIndex = (currentGaugeIndex + 1) % capacityData.length;
-    }, 400);
-}
-
-// Démarrer la jauge une fois la page chargée
 document.addEventListener('DOMContentLoaded', () => {
-    initRoyalGauge();
+    initRoyalSeats();
+    setInterval(initRoyalSeats, 60000); 
 });
 
     </script>
