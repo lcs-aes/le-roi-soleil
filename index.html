@@ -781,13 +781,65 @@
         })();
     </script>
     <!-- Bouton de changement de langue -->
-    <div id="lang-switcher" style="position:fixed;top:14px;right:14px;z-index:9999;display:flex;gap:6px;background:rgba(30,20,60,0.82);border:1px solid rgba(201,168,76,0.4);border-radius:30px;padding:5px 10px;backdrop-filter:blur(8px);box-shadow:0 2px 12px rgba(0,0,0,0.4);">
-        <button id="btn-fr" onclick="setLang('fr')" title="Version Française" style="background:none;border:none;cursor:pointer;font-size:1.3rem;padding:2px 4px;border-radius:50%;transition:transform 0.2s,opacity 0.2s;opacity:0.5;" aria-label="Passer en français">🇫🇷</button>
-        <button id="btn-en" onclick="setLang('en')" title="English Version" style="background:none;border:none;cursor:pointer;font-size:1.3rem;padding:2px 4px;border-radius:50%;transition:transform 0.2s,opacity 0.2s;opacity:0.5;" aria-label="Switch to English">🇬🇧</button>
+   <div id="lang-switcher" style="position:fixed;top:14px;right:14px;z-index:9999;display:flex;align-items:center;gap:6px;background:rgba(30,20,60,0.82);border:1px solid rgba(201,168,76,0.4);border-radius:30px;padding:5px 10px;backdrop-filter:blur(8px);box-shadow:0 2px 12px rgba(0,0,0,0.4);">
+        <button id="btn-fr" onclick="setLang('fr')" title="Version Française" class="lang-btn" aria-label="Passer en français">
+            <span class="lang-flag">🇫🇷</span>
+            <span class="lang-text">FR</span>
+        </button>
+        <span class="lang-sep" style="color: rgba(201,168,76,0.5); font-size: 0.9rem; pointer-events:none;">|</span>
+        <button id="btn-en" onclick="setLang('en')" title="English Version" class="lang-btn" aria-label="Switch to English">
+            <span class="lang-flag">🇬🇧</span>
+            <span class="lang-text">EN</span>
+        </button>
     </div>
     <style>
-        #lang-switcher button.active-lang { opacity: 1 !important; transform: scale(1.18); }
+        .lang-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            transition: all 0.2s;
+            opacity: 0.5;
+            padding: 2px;
+        }
+        
+        /* Apparence du texte FR/EN */
+        .lang-text {
+            font-size: 0.95rem;
+            font-family: 'Cinzel', serif;
+            font-weight: bold;
+            color: #FDFBF7;
+            display: none; /* Masqué par défaut (pour mobile) */
+        }
+        
+        /* Apparence des drapeaux */
+        .lang-flag {
+            font-size: 1.3rem;
+            border-radius: 50%;
+            display: inline; /* Visible par défaut (pour mobile) */
+        }
+        
+        .lang-sep { display: none; } /* Séparateur masqué par défaut */
+
+        #lang-switcher button.active-lang { 
+            opacity: 1 !important; 
+            transform: scale(1.15); 
+        }
+        
+        #lang-switcher button.active-lang .lang-text {
+            color: #E2B86A !important;
+            text-shadow: 0 0 8px rgba(226, 184, 106, 0.4);
+        }
+        
         #lang-switcher button:hover { opacity: 0.85 !important; }
+
+        /* --- MEDIA QUERY : COMPORTEMENT SUR ORDINATEUR --- */
+        /* Si l'écran est plus large que 768 pixels : */
+        @media screen and (min-width: 768px) {
+            .lang-flag { display: none; } /* On masque les drapeaux */
+            .lang-text { display: inline; } /* On affiche le texte */
+            .lang-sep { display: inline; } /* On affiche le séparateur | */
+            #lang-switcher { padding: 5px 12px; gap: 8px; }
+        }
 
 /* --- AFFICHAGE DES SIÈGES DISPONIBLES --- */
 .royal-seats-container {
