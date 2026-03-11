@@ -3928,6 +3928,21 @@ async function initRoyalSeats() {
             dates.forEach(item => {
                 const available = Math.max(0, maxCap - item.booked);
                 
+                // --- LOGIQUE D'URGENCE (FOMO) ---
+                let colorClass = "color: var(--accent-color);"; // Doré par défaut
+                let animationClass = "";
+                let alertTag = "";
+
+                if (available <= 25) {
+                    // Alerte Rouge (Presque complet)
+                    colorClass = "color: #c0392b; text-shadow: 0 0 15px rgba(192, 57, 43, 0.6);";
+                    animationClass = "animation: pulseResa 2s infinite;"; // Réutilise ton animation du bouton
+                    alertTag = `<div style="color:#c0392b; font-size:0.6rem; font-weight:bold; text-transform:uppercase; margin-top:3px; letter-spacing:1px;"><span class="lang-fr">Vite !</span><span class="lang-en">Hurry!</span></div>`;
+                } else if (available <= 60) {
+                    // Alerte Orange (Se remplit vite)
+                    colorClass = "color: #e67e22; text-shadow: 0 0 10px rgba(230, 126, 34, 0.4);";
+                }
+
                 const block = document.createElement('div');
                 block.className = 'seat-block';
                 block.innerHTML = `
@@ -3935,11 +3950,12 @@ async function initRoyalSeats() {
                         <span class="lang-fr">${item.dateFr}</span>
                         <span class="lang-en">${item.dateEn}</span>
                     </span>
-                    <div class="seat-count">${available}</div>
+                    <div class="seat-count" style="${colorClass} ${animationClass}">${available}</div>
                     <span class="seat-label">
                         <span class="lang-fr">libres</span>
                         <span class="lang-en">left</span>
                     </span>
+                    ${alertTag}
                 `;
                 grid.appendChild(block);
             });
