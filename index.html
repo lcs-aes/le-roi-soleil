@@ -827,19 +827,18 @@
 .secret-chest-btn {
     background: none;
     border: none;
-    font-size: 2.5rem;
+    font-size: 1.3rem; /* Taille réduite (avant c'était 2.5rem) */
     cursor: pointer;
-    animation: floatChest 3s ease-in-out infinite;
-    filter: drop-shadow(0 0 15px rgba(226, 184, 106, 0.8));
-    margin: 15px auto;
-    display: block;
+    /* L'animation floatChest a été supprimée pour le rendre immobile */
+    filter: drop-shadow(0 0 5px rgba(226, 184, 106, 0.5)); /* Halo lumineux beaucoup plus léger */
+    margin: 5px; /* Marges réduites */
+    display: inline-block;
     transition: transform 0.2s;
+    opacity: 0.8; /* Légèrement transparent pour se fondre dans le fond */
 }
-.secret-chest-btn:active { transform: scale(0.9); }
-
-@keyframes floatChest {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-10px); }
+.secret-chest-btn:hover {
+    opacity: 1;
+    transform: scale(1.1);
 }
 
 /* Fond sombre de la modale */
@@ -4156,73 +4155,73 @@ const qcmContainer = document.getElementById('qcm-container');
 const anecdoteBox = document.getElementById('anecdote-success');
 const rareCardBorder = document.getElementById('rare-card-border');
 
-// La base de données complète des 10 jours de spectacle
+// La base de données complète des 10 jours de spectacle (AVEC ICÔNES DYNAMIQUES)
 const chestData = {
-    12: { // Jeudi 12 (Test)
-        tab: 'tab-accueil', color: 'linear-gradient(45deg, #FFD700, #ff5252, #8e44ad, #FFD700)',
+    12: { 
+        icon: '⚜️', tab: 'tab-accueil', color: 'linear-gradient(45deg, #FFD700, #ff5252, #8e44ad, #FFD700)',
         taunt: "👑 Bravo ! Tu as découvert le passage secret du 12 Mars... Mais sauras-tu le débusquer demain lorsqu'il aura changé de cachette ?",
         question: "À Versailles, quel était le privilège ultime et le plus disputé par les nobles lors du réveil du Roi ?",
         anecdote: "Le \"Lever du Roi\" était une chorégraphie absurde. Les princes se battaient pour tendre la manche droite de sa chemise. Faire tomber la chemise était une humiliation suprême !",
         answers: [ { text: "Lui tendre sa chemise", isCorrect: true }, { text: "Lui brosser les dents", isCorrect: false }, { text: "Lui chanter une berceuse", isCorrect: false }, { text: "Lui nouer ses lacets", isCorrect: false }, { text: "Goûter son café", isCorrect: false }, { text: "Lui peigner sa perruque", isCorrect: false }, { text: "Lui gratter le dos", isCorrect: false }, { text: "Lui chauffer ses chaussons", isCorrect: false }, { text: "Lui parfumer les aisselles", isCorrect: false }, { text: "Lui lire la gazette", isCorrect: false } ]
     },
-    13: { // Vendredi 13
-        tab: 'tab-personnages', color: 'linear-gradient(45deg, #FFD700, #2ecc71, #27ae60, #FFD700)',
-        taunt: "✨ Incroyable ! Tu as déniché le secret du 13 Mars parmi les héros...",
+    13: { 
+        icon: '🪞', tab: 'tab-personnages', color: 'linear-gradient(45deg, #FFD700, #2ecc71, #27ae60, #FFD700)',
+        taunt: "✨ Incroyable ! Tu as déniché le miroir secret du 13 Mars parmi les héros...",
         question: "Pourquoi Louis XIV ne montrait-il absolument jamais les dents sur ses portraits officiels ?",
         anecdote: "Les médecins pensaient que les dents étaient des nids à infections. Son dentiste lui a arraché toutes les dents (en lui fracturant la mâchoire au passage !).",
         answers: [ { text: "Il n'en avait presque plus", isCorrect: true }, { text: "Elles étaient en or", isCorrect: false }, { text: "Sourire était interdit", isCorrect: false }, { text: "Elles étaient noires de réglisse", isCorrect: false }, { text: "C'était un signe de faiblesse", isCorrect: false }, { text: "Il portait un dentier en bois", isCorrect: false }, { text: "Il cachait un diamant", isCorrect: false }, { text: "Pour cacher son haleine", isCorrect: false }, { text: "Molière s'en était moqué", isCorrect: false }, { text: "Il mâchait du tabac", isCorrect: false } ]
     },
-    14: { // Samedi 14 - PREMIÈRE
-        tab: 'tab-synopsis', color: 'linear-gradient(45deg, #FFD700, #3498db, #2980b9, #FFD700)',
+    14: { 
+        icon: '👠', tab: 'tab-synopsis', color: 'linear-gradient(45deg, #FFD700, #3498db, #2980b9, #FFD700)',
         taunt: "🔥 JOUR DE PREMIÈRE ! Le secret du 14 Mars était bien gardé dans le synopsis...",
         question: "Quel accessoire de mode inventé par le Roi servait de 'Pass VIP' exclusif à la Cour ?",
         anecdote: "Le Roi a décrété que seuls les nobles ayant ses faveurs pouvaient peindre les talons de leurs chaussures en rouge, prouvant qu'ils ne marchaient jamais dans la boue !",
         answers: [ { text: "Les talons rouges", isCorrect: true }, { text: "La plume de paon", isCorrect: false }, { text: "La canne à pommeau d'or", isCorrect: false }, { text: "L'épée gravée", isCorrect: false }, { text: "La mouche sur la joue", isCorrect: false }, { text: "Les gants en soie", isCorrect: false }, { text: "La montre à gousset", isCorrect: false }, { text: "Le chapeau à large bord", isCorrect: false }, { text: "Le ruban vert", isCorrect: false }, { text: "La cape en velours", isCorrect: false } ]
     },
-    15: { // Dimanche 15
-        tab: 'tab-roles', color: 'linear-gradient(45deg, #bdc3c7, #9b59b6, #8e44ad, #bdc3c7)',
+    15: { 
+        icon: '🛁', tab: 'tab-roles', color: 'linear-gradient(45deg, #bdc3c7, #9b59b6, #8e44ad, #bdc3c7)',
         taunt: "🎭 Tu as trouvé le trésor du 15 Mars caché parmi les comédiens !",
         question: "Selon les registres de ses médecins, combien de vrais bains à l'eau le Roi a-t-il pris dans sa vie ?",
         anecdote: "Moins d'une demi-douzaine. On pensait que l'eau chaude laissait entrer les maladies. On le frictionnait avec des linges imbibés d'alcool et de parfums forts.",
         answers: [ { text: "Moins de six", isCorrect: true }, { text: "Un par jour", isCorrect: false }, { text: "Un par semaine", isCorrect: false }, { text: "Seulement l'été", isCorrect: false }, { text: "Exactement cent", isCorrect: false }, { text: "Jamais", isCorrect: false }, { text: "Uniquement dans du lait", isCorrect: false }, { text: "Uniquement à l'eau de rose", isCorrect: false }, { text: "Après chaque victoire", isCorrect: false }, { text: "Une fois par mois", isCorrect: false } ]
     },
-    16: { // Lundi 16
-        tab: 'tab-faits', color: 'linear-gradient(45deg, #cd7f32, #e67e22, #d35400, #cd7f32)',
+    16: { 
+        icon: '🍗', tab: 'tab-faits', color: 'linear-gradient(45deg, #cd7f32, #e67e22, #d35400, #cd7f32)',
         taunt: "⏳ Remonter le temps t'a permis de trouver le secret du 16 Mars...",
         question: "Qu'était-il tout à fait normal pour Louis XIV de manger lors d'un seul dîner ?",
         anecdote: "Son appétit terrifiait la cour. À sa mort, l'autopsie a révélé que son estomac et ses intestins faisaient le double de la taille d'un être humain normal !",
         answers: [ { text: "4 soupes, 1 faisan, 1 canard, viandes...", isCorrect: true }, { text: "Juste du pain et du vin", isCorrect: false }, { text: "Un cygne rôti", isCorrect: false }, { text: "Seulement des fruits", isCorrect: false }, { text: "Un bœuf entier", isCorrect: false }, { text: "Des huîtres et du caviar", isCorrect: false }, { text: "De la bouillie d'avoine", isCorrect: false }, { text: "Uniquement du poisson", isCorrect: false }, { text: "Des légumes vapeurs", isCorrect: false }, { text: "Seulement des pâtisseries", isCorrect: false } ]
     },
-    17: { // Mardi 17
-        tab: 'tab-lexique', color: 'linear-gradient(45deg, #FFD700, #e84393, #c0392b, #FFD700)',
+    17: { 
+        icon: '🩹', tab: 'tab-lexique', color: 'linear-gradient(45deg, #FFD700, #e84393, #c0392b, #FFD700)',
         taunt: "📖 Le dictionnaire du 17 Mars cachait bien son jeu...",
         question: "En 1686, quelle opération chirurgicale subie par le Roi est devenue la grande 'mode' ?",
         anecdote: "Le Roi ayant survécu à cette lourde intervention, tous les courtisans ont subitement prétendu souffrir du même mal pour se faire opérer comme lui, par pur snobisme !",
         answers: [ { text: "La fistule anale", isCorrect: true }, { text: "L'amputation d'un orteil", isCorrect: false }, { text: "L'ablation de l'appendice", isCorrect: false }, { text: "La saignée de la joue", isCorrect: false }, { text: "L'extraction de calculs", isCorrect: false }, { text: "La trépanation", isCorrect: false }, { text: "Le redressement du nez", isCorrect: false }, { text: "La greffe de cheveux", isCorrect: false }, { text: "L'opération de la cataracte", isCorrect: false }, { text: "Le limage d'une dent", isCorrect: false } ]
     },
-    18: { // Mercredi 18
-        tab: 'tab-festin', color: 'linear-gradient(45deg, #ecf0f1, #00cec9, #7ed6df, #ecf0f1)',
+    18: { 
+        icon: '🍷', tab: 'tab-festin', color: 'linear-gradient(45deg, #ecf0f1, #00cec9, #7ed6df, #ecf0f1)',
         taunt: "🍷 En plein banquet, tu as mis la main sur le secret du 18 Mars !",
         question: "Que se passait-il régulièrement lors des grands banquets d'hiver au Château de Versailles ?",
         anecdote: "Versailles était immense mais impossible à chauffer. Les courants d'air étaient tels que les boissons se transformaient en glaçons sur la table du Roi.",
         answers: [ { text: "Le vin gelait dans les verres", isCorrect: true }, { text: "Les lustres tombaient", isCorrect: false }, { text: "Les portes restaient bloquées", isCorrect: false }, { text: "La Seine inondait le château", isCorrect: false }, { text: "Les perruques gelaient", isCorrect: false }, { text: "Les feux d'artifice explosaient", isCorrect: false }, { text: "Les vitres éclataient", isCorrect: false }, { text: "Les fontaines bouillaient", isCorrect: false }, { text: "Les courtisans s'évanouissaient", isCorrect: false }, { text: "Les chiens mouraient de froid", isCorrect: false } ]
     },
-    19: { // Jeudi 19 - DEUXIÈME
-        tab: 'tab-accueil', color: 'linear-gradient(45deg, #FFD700, #c0392b, #8e44ad, #FFD700)',
+    19: { 
+        icon: '💈', tab: 'tab-accueil', color: 'linear-gradient(45deg, #FFD700, #c0392b, #8e44ad, #FFD700)',
         taunt: "🏰 JOUR DE REPRÉSENTATION ! Le secret du 19 Mars est de retour aux portes du palais...",
         question: "Quelle est la véritable raison pour laquelle l'immense perruque bouclée est devenue obligatoire ?",
         anecdote: "Complexé par sa perte de cheveux très précoce, Louis XIV a engagé 48 perruquiers personnels. Toute la cour l'a imité, lançant la mode dans toute l'Europe.",
         answers: [ { text: "Il devenait chauve très jeune", isCorrect: true }, { text: "Il avait toujours froid", isCorrect: false }, { text: "Pour cacher une cicatrice", isCorrect: false }, { text: "Pour paraître plus grand", isCorrect: false }, { text: "C'était une tradition espagnole", isCorrect: false }, { text: "Pour cacher des poux", isCorrect: false }, { text: "Pour imiter les Romains", isCorrect: false }, { text: "Sur les conseils de Molière", isCorrect: false }, { text: "À cause d'un vœu religieux", isCorrect: false }, { text: "C'était la mode anglaise", isCorrect: false } ]
     },
-    20: { // Vendredi 20
-        tab: 'tab-roles', color: 'linear-gradient(45deg, #FFD700, #f39c12, #f1c40f, #FFD700)',
+    20: { 
+        icon: '🪑', tab: 'tab-roles', color: 'linear-gradient(45deg, #FFD700, #f39c12, #f1c40f, #FFD700)',
         taunt: "👥 Parmi la cour, le secret du 20 Mars s'était bien dissimulé...",
         question: "Quelle activité très privée le Roi exerçait-il parfois publiquement tout en donnant ses ordres ?",
         anecdote: "L'étiquette n'avait aucune limite. Le Roi possédait de luxueuses 'chaises d'affaires' (toilettes). Recevoir quelqu'un pendant qu'il se soulageait était une marque de très grande confiance.",
         answers: [ { text: "Faire ses besoins (Chaise percée)", isCorrect: true }, { text: "Prendre son bain", isCorrect: false }, { text: "Manger un poulet rôti", isCorrect: false }, { text: "Se faire masser", isCorrect: false }, { text: "Dormir", isCorrect: false }, { text: "Jouer aux cartes", isCorrect: false }, { text: "Peindre", isCorrect: false }, { text: "Chanter", isCorrect: false }, { text: "Essayer ses vêtements", isCorrect: false }, { text: "Se brosser les dents", isCorrect: false } ]
     },
-    21: { // Samedi 21 - LA DERNIÈRE
-        tab: 'tab-festin', color: 'linear-gradient(45deg, #FFD700, #ff5252, #3498db, #2ecc71, #FFD700)',
+    21: { 
+        icon: '🐕', tab: 'tab-festin', color: 'linear-gradient(45deg, #FFD700, #ff5252, #3498db, #2ecc71, #FFD700)',
         taunt: "🎆 LA GRANDE FINALE ! Tu as trouvé l'ultime secret du 21 Mars. Profite bien du banquet !",
         question: "Quels étaient les seuls habitants de Versailles que le Roi nourrissait de ses propres mains avec des biscuits ?",
         anecdote: "Louis XIV adorait ses chiens. Ils avaient leur propre pièce, le 'Cabinet des Chiens', garnie de coussins en velours, et le Roi leur donnait des biscuits personnalisés appelés poupelins.",
