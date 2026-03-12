@@ -4089,9 +4089,10 @@ async function initRoyalSeats() {
         
         if(data.ok || data.E !== undefined) {
             const dates = [
-                { dateFr: "14 Mars", dateEn: "Mar 14", booked: data.E || 0 },
-                { dateFr: "19 Mars", dateEn: "Mar 19", booked: data.F || 0 },
-                { dateFr: "21 Mars", dateEn: "Mar 21", booked: data.G || 0 }
+                { dateFr: "14 Mars", dateEn: "Mar 14", booked: data.E || 0, isSoldOut: false },
+                { dateFr: "19 Mars", dateEn: "Mar 19", booked: data.F || 0, isSoldOut: false },
+                // On force le statut COMPLET pour le 21 Mars, peu importe le fichier JSON
+                { dateFr: "21 Mars", dateEn: "Mar 21", booked: maxCap, isSoldOut: true } 
             ];
             
             const grid = document.getElementById("seats-grid");
@@ -4100,20 +4101,26 @@ async function initRoyalSeats() {
             dates.forEach(item => {
                 const available = Math.max(0, maxCap - item.booked);
                 
-                // --- LOGIQUE D'URGENCE (CORRIGÉE) ---
-                let colorClass = "color: var(--accent-color);"; // Doré par défaut
-                
-                // On crée un espace fantôme de 15px de haut par défaut pour TOUTES les dates.
-                // Cela garantit que les 3 blocs auront exactement la même hauteur et resteront alignés.
+                let colorClass = "color: var(--accent-color);"; 
                 let alertTag = `<div style="height: 15px; margin-top: 3px;"></div>`; 
+                let countDisplay = available;
+                // Le mot "libres" par défaut
+                let labelDisplay = `<span class="seat-label"><span class="lang-fr">libres</span><span class="lang-en">left</span></span>`;
 
-                if (available <= 25) {
-                    // Alerte Rouge Corail (très lumineux sur fond sombre) - Sans le pulse carré moche
+                if (item.isSoldOut) {
+                    // --- AFFICHAGE SPÉCIAL SOLD OUT ---
+                    countDisplay = `<span style="font-size: 1.1rem; font-family: 'Cinzel', serif; font-weight: bold; letter-spacing: 1px; text-transform: uppercase;"><span class="lang-fr">Complet</span><span class="lang-en">Sold out</span></span>`;
+                    colorClass = "color: #ff5252; text-shadow: 0 0 10px rgba(255, 82, 82, 0.4);";
+                    // On rend "libres" invisible pour garder l'alignement parfait avec les autres colonnes
+                    labelDisplay = `<span class="seat-label" style="visibility: hidden;">-</span>`; 
+                    // Petit cadenas pour combler l'espace du "Vite !"
+                    alertTag = `<div style="color:#ff5252; font-size:0.8rem; margin-top:3px; height: 15px; line-height: 15px;">🔒</div>`;
+                } else if (available <= 25) {
+                    // Alerte Rouge
                     colorClass = "color: #ff5252; text-shadow: 0 0 12px rgba(255, 82, 82, 0.8);";
-                    // On remplace l'espace fantôme par le vrai texte
                     alertTag = `<div style="color:#ff5252; font-size:0.65rem; font-weight:bold; text-transform:uppercase; margin-top:3px; letter-spacing:1px; height: 15px; line-height: 15px;"><span class="lang-fr">Vite !</span><span class="lang-en">Hurry!</span></div>`;
                 } else if (available <= 60) {
-                    // Alerte Orange Vif (très lisible)
+                    // Alerte Orange
                     colorClass = "color: #ffa502; text-shadow: 0 0 10px rgba(255, 165, 2, 0.5);";
                 }
 
@@ -4124,11 +4131,10 @@ async function initRoyalSeats() {
                         <span class="lang-fr">${item.dateFr}</span>
                         <span class="lang-en">${item.dateEn}</span>
                     </span>
-                    <div class="seat-count" style="${colorClass}">${available}</div>
-                    <span class="seat-label">
-                        <span class="lang-fr">libres</span>
-                        <span class="lang-en">left</span>
-                    </span>
+                    <div class="seat-count" style="${colorClass} display: flex; align-items: center; justify-content: center; min-height: 2rem;">
+                        ${countDisplay}
+                    </div>
+                    ${labelDisplay}
                     ${alertTag}
                 `;
                 grid.appendChild(block);
