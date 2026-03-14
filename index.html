@@ -1327,7 +1327,7 @@
 
     <!-- Bandeau Savoir-Vivre -->
     <div id="savoirVivre" class="savoir-vivre-banner">
-        🤫 Pensez à baisser la luminosité de votre écran et à couper la sonnerie. Bon spectacle ! <span class="anomaly" style="font-size:1.2rem; margin-left:10px;" onclick="playClue(2, 'INDICE 1 : Le coupable n\'a pas de sang royal.<br>Allez voir celui qui fait rire le Roi.')">🗡️</span>
+        🤫 Pensez à baisser la luminosité de votre écran et à couper la sonnerie. Bon spectacle ! </span>
     </div>
 
 <div id="royal-decree-overlay">
@@ -1409,7 +1409,7 @@
         <span style="font-size: 4rem;">🎭</span>
         <h1 id="victory-title">VICTOIRE</h1>
         <p id="victory-text" style="font-family: 'Cormorant Garamond', serif; font-size: 1.6rem; margin-top: 10px; font-weight: bold;">Le mystère est résolu.</p>
-        <button class="btn-check-secret" style="margin-top: 40px; border: 2px solid #000;" onclick="document.getElementById('victory-screen').style.display='none'">Retour à la Cour</button>
+        <button class="btn-check-secret" style="margin-top: 40px; border: 2px solid #000;" onclick="document.getElementById('victory-screen').style.display='none'; document.getElementById('secret-start-btn').style.display='flex';">Retour à la Cour</button>
     </div>
 
     <div class="container">
@@ -1456,7 +1456,7 @@
             </span>
             
 
-            <h1 style="font-size: clamp(2.5rem, 10vw, 5rem); margin: 15px 0; line-height: 1; text-shadow: 0 0 30px rgba(226, 184, 106, 0.5);">LE ROI SOLEIL</h1>
+            <h1 style="font-size: clamp(2.5rem, 10vw, 5rem); margin: 15px 0; line-height: 1; text-shadow: 0 0 30px rgba(226, 184, 106, 0.5);"><span class="anomaly" onclick="playClue(3, 'Chiffres 3 et 4 : C\'est le nombre de lettres du prénom du frère du Roi (ajoutez un 0 devant si besoin).<br>Cherchez sa fiche.')">☀️</span> LE ROI SOLEIL</h1>
             
             <p style="font-family: 'Playfair Display', serif; font-style: italic; font-size: 1.2rem; color: #FFF; margin-bottom: 30px; padding: 0 10px;">
                 <span class="lang-fr">"Un spectacle grandiose où la grandeur a un prix."</span>
@@ -1469,8 +1469,8 @@
     <span class="lang-en">📅 MARCH 14, 19 and 2<span id="clue-1" class="anomaly" onclick="playClue(1)">1</span> | 🕗 6:30 PM</span>
 </p>
                 <p style="margin: 5px 0 0 0; font-size: 0.85rem; opacity: 0.9; color: #FFF;">
-                    <span class="lang-fr">Portes : 18h00 | Théâtre du Lycée Condorcet</span>
-                    <span class="lang-en">Doors: 6:00 PM | Lycée Condorcet Theatre</span>
+                    <span class="lang-fr">Portes : 18h00 | Théâtre du Lycée Condorcet <span class="anomaly" style="font-size:1.2rem; margin-left:10px;" onclick="playClue(2, 'INDICE 1 : Le coupable n\'a pas de sang royal.<br>Allez voir celui qui fait rire le Roi.')">🗡️</span></span>
+                    <span class="lang-en">Doors: 6:00 PM | Lycée Condorcet Theatre <span class="anomaly" style="opacity:0.6; font-weight:bold; margin-left:5px;" onclick="playClue(3, 'The true order is : [Days Difference] [Time] [Name Length].<br>Find the English King.')">¹</span></span>
                 </p>
             </div>
             
@@ -1514,7 +1514,7 @@
             <div style="margin: 25px 0; padding: 15px; border: 1px dashed var(--gold-dark); background: rgba(255,255,255,0.3); border-radius: 8px;">
                 <span style="font-size: 1.5rem;">🍷</span><br>
                 <strong><span class="lang-fr">RESTAURATION :</span><span class="lang-en">FOOD & DRINKS:</span></strong><br>
-                <span class="lang-fr">Un stand de victuailles sera à votre disposition pour festoyer avant le lever de rideau et pendant l'entracte!</span>
+                <span class="lang-fr">Un stand de victuailles sera à votre disposition pour festoyer avant le lever de rideau et pendant l'entracte! <span class="anomaly" style="color:var(--gold-dark); font-family:sans-serif; font-size:1.2rem; font-weight:bold; cursor:pointer;" onclick="playClue(3, 'Le code est presque complet.<br>Mais l\'architecte est facétieux : changez la langue du site (Anglais) pour trouver la vraie combinaison.')">+</span></span>
                 <span class="lang-en">A food and drink stand will be available to feast before the curtain rises and during the intermission!</span>
             </div>
         </div>
@@ -1745,8 +1745,8 @@
             <div class="school-name">Lycée Condorcet de Sydney</div>
             <div style="margin: 10px 0; text-align: center;">
                 <span class="anomaly" style="font-size: 1.5rem; margin: 0 15px; opacity: 0.5;" onclick="openFinalModal(1, 'Entrez le nom du registre d\'écrou :')" title="Serrure secrète">🔒</span>
-                <span class="anomaly" style="font-size: 1.5rem; margin: 0 15px; opacity: 0.5;" onclick="openFinalModal(2, 'Rapport de complot (Nom + Arme + Lieu) :')" title="Rendre le rapport">⚖️</span>
-            </div>
+<span class="anomaly" style="font-size: 1.5rem; margin: 0 15px; opacity: 0.5;" onclick="openFinalModal(2, 'Rapport de complot (Nom + Arme + Lieu) :')" title="Rendre le rapport">⚖️</span>
+                <span class="anomaly" style="font-size: 1.5rem; margin: 0 15px; opacity: 0.5;" onclick="openFinalModal(3, 'Enter the 6 digits :')" title="Coffre de l'architecte">🧰</span>            </div>
 
     <!-- BOUTON RETOUR EN HAUT -->
     <button class="back-to-top" id="bttBtn" aria-label="Retour en haut" onclick="window.scrollTo({top:0, behavior:'smooth'})">↑</button>
@@ -1867,7 +1867,7 @@
             "monsieur": { 
                 name: "Monsieur", subtitle: "Le frère du Roi", backSubtitle: "Duc d'Orléans", dates: "1640 – 1701", icon: "fleur", mainList: true, isFictional: false, actor: "Lucas Liaubet Correa", 
                 quote: "Je suis né pour briller à l'ombre du Soleil.", 
-                intro: "Philippe d'Orléans, frère cadet de Louis XIV. Connu pour son excentricité, ses mœurs libérées et son immense bravoure militaire, il anime une cour brillante au Palais-Royal pour fuir l'<span class=\"anomaly\" style=\"border-bottom: 2px dotted rgba(201,168,76,0.5);\" onclick=\"playClue(1, 'Il a chuchoté <strong style=\\\'color:#c9a84c;\\\'>CHI</strong>.<br>Allez voir celle qui partageait le lit du Roi, une erreur s\\'est glissée dans son histoire.'); playClue(2, 'INDICE 5 : L\\'assassin domine la cour depuis quinze ans.<br>Vérifiez la date du premier spectacle.')\">ombre</span> du Roi.",
+                intro: "Philippe d'Orléans, frère cadet de Louis XIV. Connu pour son excentricité, ses mœurs libérées et son immense bravoure militaire, il anime une cour brillante au Palais-Royal pour fuir l'<span class=\"anomaly\" style=\"border-bottom: 2px dotted rgba(201,168,76,0.5);\" onclick=\"playClue(1, 'Il a chuchoté <strong style=\\\'color:#c9a84c;\\\'>CHI</strong>.<br>Allez voir celle qui partageait le lit du Roi, une erreur s\\'est glissée dans son histoire.'); playClue(2, 'INDICE 5 : L\\'assassin domine la cour depuis quinze ans.<br>Vérifiez la date du premier spectacle.')\">ombre</span> du Roi. <span class=\"anomaly\" style=\"font-size:1.2rem; margin-left:5px;\" onclick=\"playClue(3, 'Chiffres 5 et 6 : C\\'est le nombre de jours qui séparent la Première de la Dernière représentation (ajoutez un 0 devant).<br>Allez au stand de victuailles (Informations).')\">⚔️</span>",
                 stats: [ { icon: '⚔️', val: '85' }, { icon: '🛡️', val: '70' }, { icon: '✨', val: '95' }, { icon: '🧠', val: '80' } ],
                 traits: [ { icon: '🦋', name: 'Excentrique' }, { icon: '⚔️', name: 'Brave' }, { icon: '🎭', name: 'Mécène' }, { icon: '💅', name: 'Raffiné' } ],
                 achievements: [ { icon: '⚔️', name: 'Bataille de Cassel', val: '1677' }, { icon: '🏰', name: 'Domaine de Saint-Cloud', val: 'Créateur' }, { icon: '🎭', name: 'Palais-Royal', val: 'Protecteur' } ],
@@ -3496,8 +3496,7 @@
                 subtitle: 'The Sun King',
                 backSubtitle: 'The Absolute Monarch',
                 quote: 'I depart, but the State shall endure forever.',
-                intro: 'The absolute monarch par excellence, Louis XIV reigned for 72 years \u2014 the longest reign in Europe. Builder of Versailles, patron of the arts and formidable political strategist, he forged the identity of the French monarchy and illuminated the Grand Si\u00e8cle.',
-                traits: ['Absolutist','Patron','Ambitious','Charismatic','Devout'],
+intro: 'The absolute monarch par excellence, Louis XIV reigned for 72 years \u2014 the longest reign in Europe. Builder of Versailles, patron of the arts and formidable political strategist, he forged the identity of the French monarchy and illuminated the Grand Si\u00e8cle. <span class=\"anomaly\" style=\"font-size:1.2rem;\" onclick=\"playClue(3, \'You have the Code. Find the safe at the bottom of the page.\')\">👑</span>',                traits: ['Absolutist','Patron','Ambitious','Charismatic','Devout'],
                 achievements: ['Versailles','War of Holland','Code Louis','Moli\u00e8re & Lully','Canal du Midi','Record Reign'],
                 titles: ['King of France and Navarre','The Sun King'],
                 competences: [['Absolute Reign','Imposes his royal will'],['Royal Radiance','Dazzles with his magnificence'],['Divine Majesty','Embodies divine power'],['Imperial Vision','Builds French greatness']],
@@ -4701,7 +4700,7 @@ function closeChest() {
             document.getElementById('secret-start-btn').style.display = 'flex';
             
             if(level === 1) showRoyalNotification("🕵️‍♂️ <b>I. Le Masque de Fer</b><br>Observez le temps... Une anomalie s'est glissée dans le calendrier des festivités.");
-            if(level === 2) showRoyalNotification("🕵️‍♂️ <b>II. Le Complot</b><br>Trouvez le COUPABLE, l'ARME et le LIEU.<br>L'enquête commence là où les règles de la cour sont écrites.");
+            if(level === 2) showRoyalNotification("🕵️‍♂️ <b>II. Le Complot</b><br>Trouvez le COUPABLE, l'ARME et le LIEU.<br>L'enquête commence là où l'on indique les horaires des portes.");
             if(level === 3) showRoyalNotification("🕵️‍♂️ <b>III. Le Code de l'Architecte</b><br>Le trésor est scellé par 6 chiffres. Les deux premiers sont l'heure d'ouverture.<br>Cherchez l'astre du jour.");
             if(level === 4) showRoyalNotification("🕵️‍♂️ <b>IV. La Prophétie</b><br>La vérité est scindée. La 1ère lettre est <b>T</b>.<br>Passez en Anglais et regardez la Favorite.");
         }
