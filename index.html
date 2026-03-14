@@ -1108,74 +1108,62 @@
 
 
 /* =========================================
-   JEU DE PISTE : LE MASQUE DE FER
+   JEU DE PISTE : LE CABINET NOIR (MOTEUR 4 ÉNIGMES)
    ========================================= */
-/* Le Billet Flottant (Placé en bas à gauche) */
 #secret-start-btn {
-    position: fixed; bottom: 100px; left: 10px; z-index: 9990;
-    width: 40px; height: 40px; background: #6b0000; border: 2px solid #c9a84c;
+    position: fixed; bottom: 100px; left: 20px; z-index: 9990;
+    width: 50px; height: 50px; background: #6b0000; border: 2px solid #c9a84c;
     border-radius: 50%; display: flex; justify-content: center; align-items: center;
     font-size: 24px; cursor: pointer; box-shadow: 0 4px 10px rgba(0,0,0,0.5);
     animation: floatSecret 3s ease-in-out infinite; -webkit-tap-highlight-color: transparent;
 }
 @keyframes floatSecret { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
 
-/* Modale d'introduction du jeu */
-#secret-intro-modal {
-    position: fixed; inset: 0; z-index: 9995; background: rgba(0,0,0,0.8); backdrop-filter: blur(5px);
-    display: none; justify-content: center; align-items: center;
+#secret-intro-modal, #secret-final-modal, #victory-screen {
+    position: fixed; inset: 0; z-index: 9995; background: rgba(0,0,0,0.9); backdrop-filter: blur(5px);
+    display: none; justify-content: center; align-items: center; flex-direction: column;
 }
 .secret-intro-content {
-    background: #1a140b; border: 1px solid #c9a84c; padding: 30px; width: 85%; max-width: 400px;
+    background: #1a140b; border: 1px solid #c9a84c; padding: 30px; width: 90%; max-width: 450px;
     color: #eaddc5; text-align: center; border-radius: 8px; box-shadow: 0 0 30px rgba(201,168,76,0.3);
-    font-family: 'Cormorant Garamond', serif; font-size: 1.2rem; line-height: 1.4;
+    font-family: 'Cormorant Garamond', serif;
 }
-.secret-intro-content h3 { font-family: 'Cinzel Decorative', serif; color: #c9a84c; margin-bottom: 15px; font-size: 1.8rem; }
+.secret-intro-content h3 { font-family: 'Cinzel Decorative', serif; color: #c9a84c; margin-bottom: 10px; font-size: 1.8rem; }
+.secret-intro-content p { font-size: 1.2rem; margin-bottom: 20px; }
 
-/* Notification Royale (Indices) */
+/* Menu des 4 énigmes */
+.enigma-menu { display: flex; flex-direction: column; gap: 10px; margin-bottom: 20px; }
+.enigma-btn {
+    background: transparent; border: 1px solid rgba(201,168,76,0.5); color: #c9a84c;
+    padding: 12px; font-family: 'Cinzel', serif; font-size: 1rem; cursor: pointer;
+    transition: all 0.2s; border-radius: 4px; text-align: left;
+}
+.enigma-btn:hover { background: rgba(201,168,76,0.2); border-color: #c9a84c; color: #fff; }
+
+.close-btn { background: transparent; border: none; color: #888; text-decoration: underline; cursor: pointer; font-family: sans-serif; }
+
+/* Notification Royale */
 #royal-notification {
-    position: fixed; bottom: -150px; left: 50%; transform: translateX(-50%); z-index: 9999;
+    position: fixed; bottom: -200px; left: 50%; transform: translateX(-50%); z-index: 9999;
     background: linear-gradient(90deg, #1a140b, #3a2205, #1a140b); border: 1px solid #c9a84c;
     color: #eaddc5; padding: 15px 20px; border-radius: 5px; text-align: center;
-    font-family: 'Cormorant Garamond', serif; font-size: 1.2rem; width: 90%; max-width: 380px;
+    font-family: 'Cormorant Garamond', serif; font-size: 1.2rem; width: 90%; max-width: 400px;
     box-shadow: 0 -5px 20px rgba(0,0,0,0.8); transition: bottom 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 #royal-notification.show { bottom: 25px; }
 
-/* Style visuel des anomalies (Indices cliquables) */
+/* Styles pour cacher les indices (générique) */
 .anomaly { cursor: pointer; display: inline-block; -webkit-tap-highlight-color: transparent; }
-#clue-1 { 
-    opacity: 0.6; 
-    font-family: 'Times New Roman', serif; 
-    font-style: italic; 
-    color: #c9a84c; /* Le force en doré */
-    text-shadow: 0 0 5px rgba(255,0,0,0.5); /* Lueur rouge */
-    transform: translateY(2px) rotate(-5deg); /* Le tord légèrement */
-    display: inline-block;
-}#clue-2 { border-bottom: 2px dotted rgba(201,168,76,0.5); } /* Le mot ombre */
-#clue-3 { color: #b71c1c; font-weight: bold; font-family: sans-serif; } /* Pøison */
-#clue-4 { filter: grayscale(100%); display: inline-block; transform: rotate(180deg); } /* Note Lully */
-#clue-5 { cursor: pointer; font-size: 1.5rem; opacity: 0.5; margin-top: 15px; display: inline-block; -webkit-tap-highlight-color: transparent; }
 
-/* Modale de fin (Mot de passe) */
-#secret-final-modal {
-    position: fixed; inset: 0; z-index: 9996; background: rgba(0,0,0,0.95); display: none;
-    justify-content: center; align-items: center; flex-direction: column;
-}
+/* Cadenas et Victoire */
 #secret-password {
     background: transparent; border: none; border-bottom: 2px solid #c9a84c; color: #fff;
-    font-family: 'Cinzel', serif; font-size: 2rem; text-align: center; width: 80%; max-width: 300px;
-    margin-bottom: 20px; text-transform: uppercase; outline: none; padding: 10px; letter-spacing: 5px;
+    font-family: 'Cinzel', serif; font-size: 1.5rem; text-align: center; width: 90%; max-width: 350px;
+    margin-bottom: 20px; text-transform: uppercase; outline: none; padding: 10px; letter-spacing: 2px;
 }
 .btn-check-secret { background: #c9a84c; color: #000; border: none; padding: 10px 20px; font-family: 'Cinzel', serif; cursor: pointer; font-weight: bold; border-radius: 3px; font-size: 1.2rem; }
-
-/* Écran de Victoire Wahou */
-#victory-screen {
-    position: fixed; inset: 0; background: radial-gradient(circle at center, #c9a84c 0%, #3a2205 60%, #1a140b 100%);
-    z-index: 10000; display: none; justify-content: center; align-items: center; text-align: center;
-    color: #000; font-family: 'Cinzel Decorative', serif; flex-direction: column; padding: 20px;
-}
-#victory-screen h1 { font-size: 3.5rem; margin: 0; text-shadow: 0 0 20px rgba(255,255,255,0.8); }
+#victory-screen { z-index: 10000; text-align: center; color: #000; background: radial-gradient(circle at center, #c9a84c 0%, #3a2205 60%, #1a140b 100%); padding: 20px; }
+#victory-screen h1 { font-family: 'Cinzel Decorative', serif; font-size: 3rem; margin: 15px 0; text-shadow: 0 0 20px rgba(255,255,255,0.8); }
 
 
 </style>
@@ -1339,7 +1327,7 @@
 
     <!-- Bandeau Savoir-Vivre -->
     <div id="savoirVivre" class="savoir-vivre-banner">
-        🤫 Pensez à baisser la luminosité de votre écran et à couper la sonnerie. Bon spectacle !
+        🤫 Pensez à baisser la luminosité de votre écran et à couper la sonnerie. Bon spectacle ! <span class="anomaly" style="font-size:1.2rem; margin-left:10px;" onclick="playClue(2, 'INDICE 1 : Le coupable n\'a pas de sang royal.<br>Allez voir celui qui fait rire le Roi.')">🗡️</span>
     </div>
 
 <div id="royal-decree-overlay">
@@ -1390,14 +1378,19 @@
     </div>
 
 
-<div id="secret-start-btn" onclick="openSecretIntro()" title="Ouvrir la lettre">📜</div>
+<div id="secret-start-btn" onclick="openSecretIntro()" title="Le Cabinet Noir">📜</div>
 
     <div id="secret-intro-modal" onclick="closeSecretIntro(event)">
         <div class="secret-intro-content">
-            <h3>Le Secret d'État</h3>
-            <p>Une rumeur parcourt les couloirs de Versailles... Le nom du plus célèbre prisonnier du Roi a été effacé des registres de la Cour. Serez-vous capable de reconstituer son identité ?</p>
-            <p style="margin-top: 20px; font-style: italic; color: #c9a84c; font-size: 1.1rem;">Pour commencer votre enquête, observez le temps... Une anomalie s'est glissée dans le calendrier des festivités.</p>
-            <button style="margin-top: 20px; background: transparent; border: 1px solid #c9a84c; color: #c9a84c; padding: 5px 15px; cursor:pointer;" onclick="closeSecretIntro(event)">Fermer</button>
+            <h3>Le Cabinet Noir</h3>
+            <p>Serez-vous capable de percer les secrets de Versailles ? Choisissez votre enquête.</p>
+            <div class="enigma-menu">
+                <button class="enigma-btn" onclick="startEnigma(1)">I. Le Masque de Fer (Facile)</button>
+                <button class="enigma-btn" onclick="startEnigma(2)">II. Le Complot de la Fronde (Moyen)</button>
+                <button class="enigma-btn" onclick="startEnigma(3)">III. Le Code de l'Architecte (Difficile)</button>
+                <button class="enigma-btn" onclick="startEnigma(4)">IV. La Prophétie (Expert)</button>
+            </div>
+            <button class="close-btn" onclick="closeSecretIntro(event)">Fermer</button>
         </div>
     </div>
 
@@ -1405,18 +1398,17 @@
 
     <div id="secret-final-modal">
         <div style="text-align: center;">
-            <h3 style="color: #c9a84c; font-family: 'Cinzel Decorative', serif; margin-bottom: 20px; font-size: 1.8rem;">Entrez le nom du registre d'écrou</h3>
+            <h3 id="final-question-text" style="color: #c9a84c; font-family: 'Cinzel Decorative', serif; margin-bottom: 20px; font-size: 1.5rem;">Saisissez la réponse :</h3>
             <input type="text" id="secret-password" autocomplete="off" spellcheck="false"><br>
-            <button class="btn-check-secret" onclick="checkSecretPassword()">Libérer le prisonnier</button>
-            <p style="color: #666; margin-top: 20px; cursor: pointer; font-family: sans-serif; font-size: 0.9rem;" onclick="closeFinalModal()">Annuler</p>
+            <button class="btn-check-secret" onclick="checkSecretPassword()">Valider</button>
+            <p style="color: #888; margin-top: 20px; cursor: pointer; text-decoration: underline;" onclick="closeFinalModal()">Annuler</p>
         </div>
     </div>
 
     <div id="victory-screen">
-        <span style="font-size: 4rem; margin-bottom: 20px;">🎭</span>
-        <h1>MARCHIALY</h1>
-        <p style="font-family: 'Cormorant Garamond', serif; font-size: 1.8rem; margin-top: 20px; font-weight: bold;">Le Masque de Fer a retrouvé son nom.</p>
-        <p style="font-family: 'Cormorant Garamond', serif; font-size: 1.4rem; margin-top: 10px;">Félicitations, Grand Inquisiteur du Roi.</p>
+        <span style="font-size: 4rem;">🎭</span>
+        <h1 id="victory-title">VICTOIRE</h1>
+        <p id="victory-text" style="font-family: 'Cormorant Garamond', serif; font-size: 1.6rem; margin-top: 10px; font-weight: bold;">Le mystère est résolu.</p>
         <button class="btn-check-secret" style="margin-top: 40px; border: 2px solid #000;" onclick="document.getElementById('victory-screen').style.display='none'">Retour à la Cour</button>
     </div>
 
@@ -1473,7 +1465,7 @@
             
             <div style="background: rgba(255,255,255,0.1); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); display: inline-block; padding: 15px 25px; border-radius: 15px; border: 1px solid var(--accent-color); margin-bottom: 40px;">
                 <p style="margin: 0; font-weight: bold; color: var(--gold-light);">
-    <span class="lang-fr">📅 14, 19 et 2<span id="clue-1" class="anomaly" onclick="playClue(1)">1</span> MARS | 🕗 18h30</span>
+    <span class="lang-fr">📅 <span class="anomaly" onclick="playClue(2, 'Avez-vous les 3 mots ? Coupable, Arme, Lieu.<br>Descendez dans les abysses pour rendre votre rapport.')">14</span>, 19 et 2<span class="anomaly" style="opacity: 0.7; font-style: italic; color: #c9a84c;" onclick="playClue(1, 'Le prisonnier sans visage cherche son nom : <strong style=\'color:#c9a84c;\'>MAR</strong>.<br>Demandez au frère du Roi, il cache un secret dans son ombre.')">1</span> MARS | 🕗 18h30</span>
     <span class="lang-en">📅 MARCH 14, 19 and 2<span id="clue-1" class="anomaly" onclick="playClue(1)">1</span> | 🕗 6:30 PM</span>
 </p>
                 <p style="margin: 5px 0 0 0; font-size: 0.85rem; opacity: 0.9; color: #FFF;">
@@ -1491,7 +1483,7 @@
 
             <div class="royal-seats-container">
     <h4 class="royal-seats-title" id="seats-title">
-        <span class="lang-fr">Sièges Disponibles</span>
+        <span class="lang-fr">Sièges Disponibles <span class="anomaly" style="font-size:1.1rem; margin-left:8px;" onclick="playClue(2, 'INDICE 3 : L\'arme est un liquide mortel (6 lettres).<br>Demandez au musicien où le drame aura lieu.')">💧</span></span>
         <span class="lang-en">Available Seats</span>
     </h4>
     <div class="royal-seats-grid" id="seats-grid">
@@ -1508,7 +1500,7 @@
         <div style="font-family: 'Cormorant Garamond', serif; font-size: 1.25rem; color: #2c1e10; line-height: 1.6; text-align: center;">
             <p style="margin: 10px 0;">
                 <strong><span class="lang-fr">📅 DATES :</span><span class="lang-en">📅 DATES:</span></strong> 
-                <span class="lang-fr">14, 19 et 21 Mars 2026</span><span class="lang-en">March 14, 19 and 21, 2026</span>
+                <span class="lang-fr">📅 <span class="anomaly" onclick="playClue(2, 'Avez-vous les 3 mots ? Coupable, Arme, Lieu.<br>Descendez dans les abysses pour rendre votre rapport.')">14</span>, 19 et 2<span class="anomaly" style="opacity: 0.7; font-style: italic; color: #c9a84c;" onclick="playClue(1, 'Le prisonnier sans visage cherche son nom : <strong style=\'color:#c9a84c;\'>MAR</strong>.<br>Demandez au frère du Roi, il cache un secret dans son ombre.')">1</span> MARS | 🕗 18h30</span>
             </p>
             <p style="margin: 10px 0;">
                 <strong><span class="lang-fr">🕗 SPECTACLE :</span><span class="lang-en">🕗 SHOW:</span></strong> 
@@ -1751,9 +1743,10 @@
         <!-- FOOTER CREDITS -->
         <footer>
             <div class="school-name">Lycée Condorcet de Sydney</div>
-            <div id="clue-5" class="anomaly" onclick="openFinalModal()" title="Serrure secrète">🔒</div>
-            <div class="show-dates">14, 19 et 21 Mars 2026</div>
-    </div>
+            <div style="margin: 10px 0; text-align: center;">
+                <span class="anomaly" style="font-size: 1.5rem; margin: 0 15px; opacity: 0.5;" onclick="openFinalModal(1, 'Entrez le nom du registre d\'écrou :')" title="Serrure secrète">🔒</span>
+                <span class="anomaly" style="font-size: 1.5rem; margin: 0 15px; opacity: 0.5;" onclick="openFinalModal(2, 'Rapport de complot (Nom + Arme + Lieu) :')" title="Rendre le rapport">⚖️</span>
+            </div>
 
     <!-- BOUTON RETOUR EN HAUT -->
     <button class="back-to-top" id="bttBtn" aria-label="Retour en haut" onclick="window.scrollTo({top:0, behavior:'smooth'})">↑</button>
@@ -1874,7 +1867,7 @@
             "monsieur": { 
                 name: "Monsieur", subtitle: "Le frère du Roi", backSubtitle: "Duc d'Orléans", dates: "1640 – 1701", icon: "fleur", mainList: true, isFictional: false, actor: "Lucas Liaubet Correa", 
                 quote: "Je suis né pour briller à l'ombre du Soleil.", 
-                intro: "Philippe d'Orléans, frère cadet de Louis XIV. Connu pour son excentricité, ses mœurs libérées et son immense bravoure militaire, il anime une cour brillante au Palais-Royal pour fuir l'<span id=\"clue-2\" class=\"anomaly\" onclick=\"playClue(2)\">ombre</span> du Roi.", 
+                intro: "Philippe d'Orléans, frère cadet de Louis XIV. Connu pour son excentricité, ses mœurs libérées et son immense bravoure militaire, il anime une cour brillante au Palais-Royal pour fuir l'<span class=\"anomaly\" style=\"border-bottom: 2px dotted rgba(201,168,76,0.5);\" onclick=\"playClue(1, 'Il a chuchoté <strong style=\\\'color:#c9a84c;\\\'>CHI</strong>.<br>Allez voir celle qui partageait le lit du Roi, une erreur s\\'est glissée dans son histoire.'); playClue(2, 'INDICE 5 : L\\'assassin domine la cour depuis quinze ans.<br>Vérifiez la date du premier spectacle.')\">ombre</span> du Roi.",
                 stats: [ { icon: '⚔️', val: '85' }, { icon: '🛡️', val: '70' }, { icon: '✨', val: '95' }, { icon: '🧠', val: '80' } ],
                 traits: [ { icon: '🦋', name: 'Excentrique' }, { icon: '⚔️', name: 'Brave' }, { icon: '🎭', name: 'Mécène' }, { icon: '💅', name: 'Raffiné' } ],
                 achievements: [ { icon: '⚔️', name: 'Bataille de Cassel', val: '1677' }, { icon: '🏰', name: 'Domaine de Saint-Cloud', val: 'Créateur' }, { icon: '🎭', name: 'Palais-Royal', val: 'Protecteur' } ],
@@ -1942,7 +1935,7 @@
             "montespan": { 
                 name: "Mme de Montespan", subtitle: "La favorite flamboyante", backSubtitle: "La maîtresse absolue", dates: "1640 – 1707", icon: "sparkles", mainList: true, isFictional: false, actor: "Chloé Woringer", 
                 quote: "Je veux être la maîtresse du maître.", 
-                intro: "D'une beauté piquante et d'un esprit redoutable, Françoise de Rochechouart de Mortemart domine la cour pendant quinze ans. Son nom restera lié à l'Affaire des <span id=\"clue-3\" class=\"anomaly\" onclick=\"playClue(3)\">Pøisons</span>.", 
+                intro: "D'une beauté piquante et d'un esprit redoutable, Françoise de Rochechouart de Mortemart domine la cour pendant quinze ans. Son nom restera lié à l'Affaire des <span class=\"anomaly\" style=\"color: #b71c1c; font-weight: bold; font-family: sans-serif;\" onclick=\"playClue(1, 'La lettre <strong style=\\\'color:#c9a84c;\\\'>A</strong>.<br>Cherchez le Surintendant de la Musique, une fausse note s\\'est glissée sur sa partition.')\">Pøisons</span>.",
                 stats: [ { icon: '⚔️', val: '60' }, { icon: '🛡️', val: '40' }, { icon: '✨', val: '99' }, { icon: '🧠', val: '85' } ],
                 traits: [ { icon: '👑', name: 'Ambitieuse' }, { icon: '✨', name: 'Éblouissante' }, { icon: '🎭', name: 'Esprit Mortemart' }, { icon: '☠️', name: 'Sulfureuse' } ],
                 achievements: [ { icon: '👶', name: 'Enfants Royaux', val: '7 enfants' }, { icon: '🏰', name: 'Château de Clagny', val: 'Protectrice' }, { icon: '🎭', name: 'Protectrice des Arts', val: 'Mécénat' } ],
@@ -1992,7 +1985,7 @@
             "moliere": { 
                 name: "Molière", subtitle: "Le génie de la comédie", backSubtitle: "L'observateur des mœurs", dates: "1622 – 1673", icon: "masks", mainList: true, isFictional: false, actor: "Baptiste Desrosiers", 
                 quote: "Le devoir de la comédie est de corriger les hommes en les divertissant.", 
-                intro: "Jean-Baptiste Poquelin est le protégé de Louis XIV. Par son génie comique, il dresse une satire féroce et brillante des travers de la société de son temps.", 
+                intro: "Jean-Baptiste Poquelin est le protégé de Louis XIV. Par son génie comique, il dresse une satire féroce et brillante des travers de la société de son temps. <span class=\"anomaly\" onclick=\"playClue(2, 'INDICE 2 : Le coupable est une femme.<br>Cherchez l\\'arme là où l\\'on réserve sa place.')\">🎭</span>",
                 stats: [ { icon: '⚔️', val: '20' }, { icon: '🛡️', val: '60' }, { icon: '✨', val: '95' }, { icon: '🧠', val: '99' } ],
                 traits: [ { icon: '🎭', name: 'Dramaturge' }, { icon: '😂', name: 'Satirique' }, { icon: '👁️', name: 'Observateur' }, { icon: '🏃', name: 'Infatigable' } ],
                 achievements: [ { icon: '🎭', name: 'Le Tartuffe', val: '1664' }, { icon: '💃', name: 'Création Comédie-Ballet', val: '1661' }, { icon: '👑', name: 'Troupe du Roi', val: '1665' } ],
@@ -2541,7 +2534,7 @@
 "lully": { 
     name: "Jean-Baptiste Lully", subtitle: "Le Surintendant de la Musique", dates: "1632 – 1687", icon: "music", mainList: false,
     quote: "La musique est l'écho de la puissance royale.",
-    intro: "Compositeur favori du Roi, il invente l'opéra français et règne sans partage sur la vie musicale de la cour grâce à son monopole. <span id=\"clue-4\" class=\"anomaly\" onclick=\"playClue(4)\">🎵</span>",
+    intro: "Compositeur favori du Roi, il invente l'opéra français et règne sans partage sur la vie musicale de la cour grâce à son monopole. <span class=\"anomaly\" style=\"filter: grayscale(100%); display: inline-block; transform: rotate(180deg);\" onclick=\"playClue(1, 'Les dernières lettres sont <strong style=\\\'color:#c9a84c;\\\'>LY</strong>.<br>Trouvez le cadenas caché sous l\\'adresse du spectacle.'); playClue(2, 'INDICE 4 : Le lieu est l\\'endroit caché où les acteurs se préparent (9 lettres).<br>Observez le frère du Roi.')\">🎵</span>",
     stats: [ { icon: '⚔️', val: '40' }, { icon: '🛡️', val: '60' }, { icon: '✨', val: '99' }, { icon: '🧠', val: '95' } ],
     traits: [ { icon: '🎼', name: 'Compositeur' }, { icon: '🇮🇹', name: 'Ambitieux' }, { icon: '🎻', name: 'Virtuose' }, { icon: '👑', name: 'Courtisan' } ],
     achievements: [ { icon: '🎭', name: 'Opéra Français', val: 'Créateur' }, { icon: '🥁', name: 'Direction Bâton', val: 'Pionnier' }, { icon: '🎻', name: '24 Violons', val: 'Chef' }, { icon: '🎼', name: 'Te Deum', val: '1677' }, { icon: '💃', name: 'Comédie-Ballet', val: 'Molière' }, { icon: '💰', name: 'Monopole Royal', val: '1672' } ],
@@ -4676,80 +4669,90 @@ function closeChest() {
 }
 
 // =========================================
-        // JEU DE PISTE : LE MASQUE DE FER (LOGIQUE)
+        // JEU DE PISTE : LE MOTEUR (4 ÉNIGMES)
         // =========================================
-        
-        // Gère l'ouverture et fermeture de la lettre introductive
+        let activeEnigma = 0; // 0 = Aucune enquête en cours
+
         function openSecretIntro() {
             document.getElementById('secret-intro-modal').style.display = 'flex';
-            document.getElementById('secret-start-btn').style.display = 'none'; // Cache le billet
+            document.getElementById('secret-start-btn').style.display = 'none';
         }
         
         function closeSecretIntro(e) {
-            if(e.target.id === 'secret-intro-modal' || e.target.tagName === 'BUTTON') {
+            if(e.target.id === 'secret-intro-modal' || e.target.classList.contains('close-btn')) {
                 document.getElementById('secret-intro-modal').style.display = 'none';
-                document.getElementById('secret-start-btn').style.display = 'flex'; // Réaffiche le billet
+                document.getElementById('secret-start-btn').style.display = 'flex';
             }
         }
 
-        // Gère les bannières de notification
         let notificationTimeout;
         function showRoyalNotification(message) {
             const notif = document.getElementById('royal-notification');
             notif.innerHTML = message;
             notif.classList.add('show');
-            
             clearTimeout(notificationTimeout);
-            notificationTimeout = setTimeout(() => {
-                notif.classList.remove('show');
-            }, 7000); // Reste affiché 7 secondes
+            notificationTimeout = setTimeout(() => { notif.classList.remove('show'); }, 8000); 
         }
 
-        // Distribue les messages selon l'indice tapoté
-        function playClue(step) {
-            switch(step) {
-                case 1:
-                    showRoyalNotification("Le prisonnier sans visage cherche son nom : <strong style='color:#c9a84c;'>MAR</strong>.<br>Demandez au frère du Roi, il cache un secret dans son <em>ombre</em>.");
-                    break;
-                case 2:
-                    showRoyalNotification("Il a chuchoté <strong style='color:#c9a84c;'>CHI</strong>.<br>Allez voir celle qui partageait le lit du Roi, une erreur s'est glissée dans son histoire.");
-                    break;
-                case 3:
-                    showRoyalNotification("La lettre <strong style='color:#c9a84c;'>A</strong>.<br>Cherchez le Surintendant de la Musique, une fausse note s'est glissée sur sa partition.");
-                    break;
-                case 4:
-                    showRoyalNotification("Les dernières lettres sont <strong style='color:#c9a84c;'>LY</strong>.<br>Vous avez son nom entier (9 lettres). Trouvez le cadenas caché sous l'adresse du spectacle.");
-                    break;
-            }
+        // DÉMARRAGE D'UNE ÉNIGME
+        function startEnigma(level) {
+            activeEnigma = level;
+            document.getElementById('secret-intro-modal').style.display = 'none';
+            document.getElementById('secret-start-btn').style.display = 'flex';
+            
+            if(level === 1) showRoyalNotification("🕵️‍♂️ <b>I. Le Masque de Fer</b><br>Observez le temps... Une anomalie s'est glissée dans le calendrier des festivités.");
+            if(level === 2) showRoyalNotification("🕵️‍♂️ <b>II. Le Complot</b><br>Trouvez le COUPABLE, l'ARME et le LIEU.<br>L'enquête commence là où les règles de la cour sont écrites.");
+            if(level === 3) showRoyalNotification("🕵️‍♂️ <b>III. Le Code de l'Architecte</b><br>Le trésor est scellé par 6 chiffres. Les deux premiers sont l'heure d'ouverture.<br>Cherchez l'astre du jour.");
+            if(level === 4) showRoyalNotification("🕵️‍♂️ <b>IV. La Prophétie</b><br>La vérité est scindée. La 1ère lettre est <b>T</b>.<br>Passez en Anglais et regardez la Favorite.");
         }
 
-        // Ouvre le champ final et masque le billet
-        function openFinalModal() {
+        // LECTEUR D'INDICES (Vérifie si on est sur la bonne énigme)
+        function playClue(enigmaId, clueText) {
+            if (activeEnigma !== enigmaId) return; // Ignore le clic si ce n'est pas la bonne enquête
+            showRoyalNotification(clueText);
+        }
+
+        // MODALE FINALE
+        function openFinalModal(enigmaId, questionText) {
+            if (activeEnigma !== enigmaId) return;
+            document.getElementById('final-question-text').innerText = questionText;
             document.getElementById('secret-final-modal').style.display = 'flex';
-            document.getElementById('secret-start-btn').style.display = 'none'; // Cache le billet
+            document.getElementById('secret-start-btn').style.display = 'none';
             document.getElementById('secret-password').value = '';
             setTimeout(() => { document.getElementById('secret-password').focus(); }, 100);
         }
 
-        // Referme le champ final sans valider
         function closeFinalModal() {
             document.getElementById('secret-final-modal').style.display = 'none';
-            document.getElementById('secret-start-btn').style.display = 'flex'; // Réaffiche le billet
+            document.getElementById('secret-start-btn').style.display = 'flex';
         }
 
-        // Vérifie le mot de passe final
+        // VÉRIFICATION DE LA RÉPONSE SELON L'ÉNIGME
         function checkSecretPassword() {
             const pwd = document.getElementById('secret-password').value.trim().toUpperCase();
-            if (pwd === 'MARCHIALY') {
-                // Victoire
+            let isCorrect = false;
+            let title = ""; let text = "";
+
+            if (activeEnigma === 1 && pwd === 'MARCHIALY') {
+                isCorrect = true; title = "MARCHIALY"; text = "Le Masque de Fer a retrouvé son nom.";
+            } else if (activeEnigma === 2 && (pwd === 'MONTESPAN POISON COULISSES' || pwd === 'MONTESPAN, POISON, COULISSES')) {
+                isCorrect = true; title = "COMPLOT DÉJOUÉ"; text = "Le Roi est sauf grâce à vous.";
+            } else if (activeEnigma === 3 && pwd === '071808') {
+                isCorrect = true; title = "COFFRE OUVERT"; text = "Vous avez percé le code de Le Nôtre.";
+            } else if (activeEnigma === 4 && pwd === 'TENEBRIS') {
+                isCorrect = true; title = "TENEBRIS"; text = "La lumière triomphe sur l'obscurité.";
+            }
+
+            if (isCorrect) {
                 document.getElementById('secret-final-modal').style.display = 'none';
+                document.getElementById('victory-title').innerText = title;
+                document.getElementById('victory-text').innerText = text;
                 document.getElementById('victory-screen').style.display = 'flex';
-                // Le billet reste caché définitivement
+                activeEnigma = 0; // Réinitialise
             } else {
-                // Échec
                 document.getElementById('secret-final-modal').style.display = 'none';
-                document.getElementById('secret-start-btn').style.display = 'flex'; // Réaffiche le billet pour réessayer
-                showRoyalNotification("Ce n'est pas le bon nom... Le mystère demeure dans les ténèbres.");
+                document.getElementById('secret-start-btn').style.display = 'flex';
+                showRoyalNotification("❌ Code incorrect. Le mystère demeure...");
             }
         }
 
