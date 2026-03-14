@@ -4439,7 +4439,7 @@ async function initRoyalSeats() {
         
         if(data.ok || data.E !== undefined) {
             const dates = [
-                { dateFr: "14 Mars", dateEn: "Mar 14", booked: data.E || 0, isSoldOut: false },
+                { dateFr: "14 Mars", dateEn: "Mar 14", booked: maxCap, isSoldOut: true },
                 { dateFr: "19 Mars", dateEn: "Mar 19", booked: data.F || 0, isSoldOut: false },
                 // On force le statut COMPLET pour le 21 Mars, peu importe le fichier JSON
                 { dateFr: "21 Mars", dateEn: "Mar 21", booked: maxCap, isSoldOut: true } 
