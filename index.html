@@ -967,9 +967,9 @@
    ========================================= */
 #royal-decree-overlay {
     position: fixed; inset: 0; z-index: 9998;
-    background: rgba(5, 2, 10, 0.9); backdrop-filter: blur(12px);
+    background: rgba(5, 2, 10, 0.9); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
     display: none; justify-content: center; align-items: center;
-    opacity: 0; transition: opacity 0.8s ease;
+    opacity: 0; transition: opacity 0.8s ease; cursor: pointer;
 }
 #royal-decree-overlay.show {
     display: flex; opacity: 1;
@@ -1330,7 +1330,7 @@
         🤫 Pensez à baisser la luminosité de votre écran et à couper la sonnerie. Bon spectacle ! </span>
     </div>
 
-<div id="royal-decree-overlay">
+<div id="royal-decree-overlay" onclick="closeDecree()">
         <div class="decree-parchment">
             <div class="decree-border">
                 <div class="decree-header">
@@ -3127,7 +3127,8 @@
             const overlay = document.getElementById('royal-decree-overlay');
             const parchment = document.querySelector('.decree-parchment');
             
-            if (overlay && parchment) {
+            // Sécurité Mac : on vérifie que l'animation n'est pas déjà en cours
+            if (overlay && parchment && !parchment.classList.contains('burn-out')) {
                 // 1. On lance l'animation de combustion lente sur le parchemin
                 parchment.classList.add('burn-out');
 
