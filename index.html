@@ -4431,7 +4431,7 @@ intro: 'The absolute monarch par excellence, Louis XIV reigned for 72 years \u20
 // --- AFFICHAGE DES SIÈGES DISPONIBLES ---
 async function initRoyalSeats() {
     const url = "capacite.json";
-    const maxCap = 330; 
+    const maxCap = 335; 
     
     try {
         const res = await fetch(url + '?t=' + new Date().getTime());
@@ -4441,8 +4441,8 @@ async function initRoyalSeats() {
             const dates = [
                 { dateFr: "14 Mars", dateEn: "Mar 14", booked: maxCap, isSoldOut: true },
                 { dateFr: "19 Mars", dateEn: "Mar 19", booked: data.F || 0, isSoldOut: false },
-                // On force le statut COMPLET pour le 21 Mars, peu importe le fichier JSON
-                { dateFr: "21 Mars", dateEn: "Mar 21", booked: maxCap, isSoldOut: true } 
+              
+                { dateFr: "21 Mars", dateEn: "Mar 21", booked: data.F || 0, isSoldOut: false } 
             ];
             
             const grid = document.getElementById("seats-grid");
